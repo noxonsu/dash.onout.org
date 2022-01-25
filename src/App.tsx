@@ -29,6 +29,14 @@ interface IAccount {
   balance: string;
 }
 
+const initialAccountState = {
+  connected: false,
+  provider: null,
+  address: '',
+  signer: null,
+  balance: utils.formatEther(0),
+}
+
 
 function App() {
   return (
@@ -41,13 +49,7 @@ function App() {
 }
 
 function Web3() {
-  const [account, setAccount] = useState<IAccount>({
-    connected: false,
-    provider: null,
-    address: '',
-    signer: null,
-    balance: utils.formatEther(0),
-  });
+  const [account, setAccount] = useState<IAccount>(initialAccountState);
 
   async function connect() {
     const web3ModalProvider = await web3Modal.connect();
@@ -55,17 +57,22 @@ function Web3() {
     const provider = new providers.Web3Provider(web3ModalProvider);
 
     async function setAccountFromProvider() {
-      const signer = await provider.getSigner(0);
-      const address = await signer.getAddress();
-      const balance = await signer.getBalance();
+      try {
+        const signer = provider.getSigner(0);
+        const address = await signer.getAddress();
+        const balance = await signer.getBalance();
 
-      setAccount({
-        connected: true,
-        provider,
-        address,
-        signer,
-        balance: utils.formatEther(balance)
-      });
+        setAccount({
+          connected: true,
+          provider,
+          address,
+          signer,
+          balance: utils.formatEther(balance)
+        });
+      } catch (error) {
+        console.log(error);
+        setAccount(initialAccountState)
+      }
     }
 
     setAccountFromProvider();
@@ -73,6 +80,26 @@ function Web3() {
     web3ModalProvider.on("accountsChanged", () => {
       setAccountFromProvider();
     });
+
+    web3ModalProvider.on("close", () => {
+      setAccount(initialAccountState);
+    });
+  }
+
+  async function disconnect() {
+
+    // @ts-ignore
+    if (account?.provider?.close) {
+      // @ts-ignore
+      await account.provider.close()
+
+      // If the cached provider is not cleared,
+      // WalletConnect will default to the existing session
+      // and does not allow to re-scan the QR code with a new wallet.
+      // Depending on your use case you may want or want not his behavir.
+    }
+
+    setAccount(initialAccountState)
   }
 
   async function signMessage() {
@@ -92,8 +119,8 @@ function Web3() {
       <div className="account">
         { account.address } - { account.balance }
 
-        <div className="button" onClick={signMessage}>
-          Sign Message
+        <div className="button" onClick={disconnect}>
+          Disconnect
         </div>
       </div>
     )
