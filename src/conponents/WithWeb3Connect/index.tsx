@@ -15,7 +15,7 @@ type Web3ConnectState = {
   balance: string;
 };
 
-const initialWeb3ConnectState = {
+const initialWeb3ConnectState: Web3ConnectState = {
   connected: false,
   provider: null,
   address: '',
@@ -39,15 +39,11 @@ const web3Modal = new Web3Modal({
   providerOptions // required
 });
 
-type SetWeb3ConnectState = (state: Web3ConnectState) => void;
-
 type WithModalProps = {
   children?: any;
 };
 
-
-export const Web3ConnectUpdaterContext = createContext({} as SetWeb3ConnectState);
-export const Web3ConnecStateContext = createContext({} as Web3ConnectState);
+export const Web3ConnecStateContext = createContext({account: initialWeb3ConnectState, isWeb3Loading: false});
 
 const WithWeb3Connect = ({ children }: WithModalProps) => {
   const [account, setAccount] = useState<Web3ConnectState>(initialWeb3ConnectState);
@@ -112,7 +108,7 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
     console.log(signedMessage);
   };
 
-  const web3ModalContent = (
+  const web3ConnectContent = (
     <div className="Web3Connect">
       { isWeb3Loading ?
         (
@@ -145,12 +141,10 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
 
 
   return (
-    <Web3ConnectUpdaterContext.Provider value={setAccount}>
-      <Web3ConnecStateContext.Provider value={account}>
-        {web3ModalContent}
-        {children}
-      </Web3ConnecStateContext.Provider>
-    </Web3ConnectUpdaterContext.Provider>
+    <Web3ConnecStateContext.Provider value={{account, isWeb3Loading}}>
+      {web3ConnectContent}
+      {children}
+    </Web3ConnecStateContext.Provider>
   );
 };
 

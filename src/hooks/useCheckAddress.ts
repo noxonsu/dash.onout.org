@@ -1,0 +1,48 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+// Set config defaults when creating the instance
+const axiosInstance = axios.create({
+  baseURL: 'http://localhost:5000'
+});
+
+export const useCheckAddress = (address: string) => {
+  const [isCheckLoading, setIsCheckLoading] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState<boolean | undefined>(undefined);
+
+  useEffect(() => {
+
+    if (!address) {
+        return setIsSubscribed(undefined);
+    }
+
+    const _checkAddress = async () => {
+      try {
+        setIsCheckLoading(true);
+
+        const _isSubscribed = await checkAddress(address);
+        setIsSubscribed(_isSubscribed);
+      } catch (err) {
+        console.error(`Error: Can't fetch space list. Description: ${err}`);
+      } finally {
+        setIsCheckLoading(false);
+      }
+    };
+    _checkAddress();
+  }, [address]);
+
+  return {
+    isSubscribed,
+    isCheckLoading,
+  };
+};
+
+export const checkAddress = async (address: string) => {
+  const relult = await axiosInstance.get('/check', {
+    params: {
+      address: address
+    }
+  });
+
+  return relult?.data?.response?.result?.length > 0;
+};
