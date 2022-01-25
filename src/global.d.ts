@@ -5,3 +5,7 @@ interface Window {
   BigNumber: any
   [name: string]: any;
 }
+
+declare interface IUniversalObj {
+  [key: string]: any;
+}
