@@ -1,0 +1,15 @@
+.Web3Connect {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem;
+}
+
+.ConnectButton {
+  
+}
+
+.DisconnectButton {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}

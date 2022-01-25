@@ -3,6 +3,8 @@ import { providers, utils } from 'ethers';
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 
+import './index.css'
+
 const INFURA_ID = '460f40a260564ac4a4f4b3fffb032dad';
 
 type Web3ConnectState = {
@@ -49,6 +51,7 @@ export const Web3ConnecStateContext = createContext({} as Web3ConnectState);
 
 const WithWeb3Connect = ({ children }: WithModalProps) => {
   const [account, setAccount] = useState<Web3ConnectState>(initialWeb3ConnectState);
+  const [isWeb3Loading, setIsWeb3Loading] = useState(false);
 
   async function connect() {
     const web3ModalProvider = await web3Modal.connect();
@@ -56,6 +59,7 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
     const provider = new providers.Web3Provider(web3ModalProvider);
 
     async function setAccountFromProvider() {
+      setIsWeb3Loading(true);
       try {
         const signer = provider.getSigner(0);
         const address = await signer.getAddress();
@@ -71,6 +75,8 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
       } catch (error) {
         console.log(error);
         setAccount(initialWeb3ConnectState)
+      } finally {
+        setIsWeb3Loading(false);
       }
     }
 
@@ -106,23 +112,36 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
     console.log(signedMessage);
   };
 
-  const web3ModalContent = !account.connected
-    ? (
-      <div
-        className="button"
-        onClick={connect}
-      >
-        Connect to Web3!
-      </div>
-    )
-    : (
-      <div className="account">
-        { account.address } - { account.balance }
-        <div className="button" onClick={disconnect}>
-          Disconnect
-        </div>
-      </div>
-    )
+  const web3ModalContent = (
+    <div className="Web3Connect">
+      { isWeb3Loading ?
+        (
+          <p>
+            Loading...
+          </p>
+        )
+      : !account.connected
+        ? (
+          <button
+            className="ConnectButton"
+            onClick={connect}
+          >
+            Connect to Web3!
+          </button>
+        )
+        : (
+          <div className="account">
+            { account.address } - { account.balance }
+            <div className="DisconnectButton">
+              <button onClick={disconnect}>
+                Disconnect
+              </button>
+            </div>
+          </div>
+        )
+      }
+    </div>
+  )
 
 
   return (
