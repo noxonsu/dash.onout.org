@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { useCheckAddress } from "../../../hooks/useCheckAddress";
+import ProductList from "../../ProductList";
 import SubscriptionForm from "../SubscriptionForm";
 
 type CheckAddressProps = { address: string };
@@ -17,7 +18,7 @@ const CheckAddress = ({address} : CheckAddressProps) => {
   if (isSubscribed === undefined) return <></>;
 
   return isSubscribed || haveSubscribed
-    ? <span>You have subscribed, soon here will be list of our products</span>
+    ? <ProductList />
     : <div style={{ margin: "0 1rem"}}>
       <p>You have't subscriber, please fill form bellow that subscribe to our company then you will get links list to buy our products (all filds is required)</p>
       <SubscriptionForm address={address} toggleSubscribed={toggleSetHaveSubscribed} />
