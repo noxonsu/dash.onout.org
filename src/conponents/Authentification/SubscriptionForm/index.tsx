@@ -1,12 +1,20 @@
-import { useState } from "react";
+import React, { useMemo, useState } from "react";
 import axios from "../../../helpers/axios";
+import { isValidEmail } from "../../../helpers/email";
 
-type SubscriptionFormProps = { address: string };
+type SubscriptionFormProps = { address: string, toggleSubscribed: () => void};
 
-const SubscriptionForm = ({address} : SubscriptionFormProps) => {
+const SubscriptionForm = ({ address, toggleSubscribed } : SubscriptionFormProps) => {
   const [email, setEmail] = useState("");
   const [emailNews, setEmailNews] = useState(false);
   const [investmentOpportunities, setInvestmentOpportunities] = useState(false);
+
+  const [errors, setErrors] = useState<string[]>([]);
+
+  const hasWrongFild = useMemo(
+    () => (!isValidEmail(email) || !emailNews || !investmentOpportunities),
+    [email, emailNews, investmentOpportunities]
+  );
 
   const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.name === "email") {
@@ -18,7 +26,27 @@ const SubscriptionForm = ({address} : SubscriptionFormProps) => {
     if (event.target.name === "investmentOpportunities") {
       setInvestmentOpportunities(event.target.checked)
     };
+
+    setErrors([]);
   };
+
+  const checkFilds = () => {
+    const wrongFilds = [];
+
+    if (!isValidEmail(email)) {
+      wrongFilds.push("Please enter or fill correct email.");
+    };
+
+    if (!emailNews) {
+      wrongFilds.push('Checkbox "Email me news" is required');
+    };
+
+    if (!investmentOpportunities) {
+      wrongFilds.push('Checkbox "Interested in investment opportunities" is required');
+    };
+
+    return (wrongFilds as string[]);
+  }
 
   const handleSubmit = async () => {
     const subscribeData = {
@@ -27,10 +55,16 @@ const SubscriptionForm = ({address} : SubscriptionFormProps) => {
       emailNews: emailNews ? 1 : 0,
       investmentOpportunities: investmentOpportunities ? 1 : 0,
     };
-    console.log('subscribeData', subscribeData);
+
+    if (hasWrongFild) {
+      return setErrors(checkFilds())
+    }
+
     try {
-      const response = axios.post("/subscribe", subscribeData);
-      console.log('response', response)
+      const response = await axios.put("/subscribe", subscribeData);
+      if (response?.data?.statusText === "Successfully subscribed!") {
+        toggleSubscribed()
+      }
     } catch (error) {
       console.log(error);
     };
@@ -79,6 +113,13 @@ const SubscriptionForm = ({address} : SubscriptionFormProps) => {
           Subscribe
         </button>
       </div>
+      {errors.length > 0 && errors.map((error, i) => {
+          return (
+            <div key={i} style={{color: "red"}}>
+              <span>{error}</span>
+            </div>
+          )
+      })}
     </form>
   );
 };
