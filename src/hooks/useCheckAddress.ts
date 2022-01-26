@@ -1,10 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-
-// Set config defaults when creating the instance
-const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5000'
-});
+import axios from "../helpers/axios";
 
 export const useCheckAddress = (address: string) => {
   const [isCheckLoading, setIsCheckLoading] = useState(false);
@@ -38,7 +33,7 @@ export const useCheckAddress = (address: string) => {
 };
 
 export const checkAddress = async (address: string) => {
-  const relult = await axiosInstance.get('/check', {
+  const relult = await axios.get('/check', {
     params: {
       address: address
     }
