@@ -20,7 +20,7 @@ const CheckAddress = ({address} : CheckAddressProps) => {
   return isSubscribed || haveSubscribed
     ? <ProductList />
     : <div style={{ margin: "0 1rem"}}>
-      <p>You have't subscriber, please fill form bellow that subscribe to our company then you will get links list to buy our products (all filds is required)</p>
+      <p>Please enter your email to complete registration</p>
       <SubscriptionForm address={address} toggleSubscribed={toggleSetHaveSubscribed} />
     </div>;
 
