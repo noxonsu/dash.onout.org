@@ -1,22 +1,21 @@
-
 import { useContext } from "react";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 import CheckAddress from "./CheckAddress";
 
-import './index.css'
+import "./index.css";
 
 const Authentification = () => {
-  const {account, isWeb3Loading} = useContext(Web3ConnecStateContext);
+  const { account, isWeb3Loading } = useContext(Web3ConnecStateContext);
 
   return (
     <div className="auth">
-      {
-        isWeb3Loading
-        ? <></>
-        : !account.address
-        ? <span>Please connect to wallet for access to links</span>
-        : <CheckAddress address={account.address} />
-      }
+      {isWeb3Loading ? (
+        <></>
+      ) : !account.address ? (
+        <span>Please connect your wallet for access the products</span>
+      ) : (
+        <CheckAddress account={account} />
+      )}
     </div>
   );
 };
