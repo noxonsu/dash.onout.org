@@ -21,26 +21,20 @@ const CheckAddress = ({ account }: CheckAddressProps) => {
     setHaveSubscribed(!haveSubscribed);
   };
 
-  return <ProductList />;
+  if (isCheckLoading) return <span>Checking your address...</span>;
+  if (isSubscribed === undefined) return <></>;
 
-  // if (isCheckLoading) return <span>Checking your address...</span>;
-  // if (isSubscribed === undefined) return <></>;
-
-  // return isSubscribed || haveSubscribed ? (
-  //   <ProductList />
-  // ) : (
-  //   <div style={{ margin: "0 1rem" }}>
-  //     <p>
-  //       You have't subscriber, please fill form bellow that subscribe to our
-  //       company then you will get links list to buy our products (all filds is
-  //       required)
-  //     </p>
-  //     <SubscriptionForm
-  //       address={account.address}
-  //       toggleSubscribed={toggleSetHaveSubscribed}
-  //     />
-  //   </div>
-  // );
+  return true ? ( // isSubscribed || haveSubscribed
+    <ProductList />
+  ) : (
+    <div style={{ margin: "0 1rem" }}>
+      <p>Please enter your email to complete registration</p>
+      <SubscriptionForm
+        address={account.address}
+        toggleSubscribed={toggleSetHaveSubscribed}
+      />
+    </div>
+  );
 };
 
 export default CheckAddress;
