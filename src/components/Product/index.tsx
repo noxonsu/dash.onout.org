@@ -11,7 +11,7 @@ const Product = ({ id }: ProductProps) => {
   const [paymentPending, setPaymentPending] = useState(false);
   const [paidFor, setPaidFor] = useState(false);
   const { dispatch, state } = useUser();
-  const { products } = state;
+  const { products, signed } = state;
   const { name, description, price } = PRODUCTS[id];
 
   useEffect(() => {
@@ -55,13 +55,11 @@ const Product = ({ id }: ProductProps) => {
         </button>
       </div>
       <p>{description}</p>
-      {paidFor && (
-        <p>You already have this product</p>
-      )}
+      {paidFor && <p>You already have this product</p>}
       <button
         onClick={payForProduct}
         className="paymentBtn"
-        disabled={paymentPending || paidFor}
+        disabled={paymentPending || paidFor || !signed}
       >
         {paymentPending ? "Pending..." : `Buy for $${price}`}
       </button>

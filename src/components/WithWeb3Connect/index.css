@@ -4,12 +4,20 @@
   margin-top: 0.5rem;
 }
 
-.ConnectButton {
-  
+.connectButton,
+.disconnectButton {
+  margin-top: 1rem;
+  padding: .5rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border-color);
+  background-color: transparent;
 }
 
-.DisconnectButton {
+.connectButton {
+  background-color: var(--brand-color);
+}
+
+.account {
   display: flex;
-  justify-content: center;
-  margin-top: 1rem;
+  flex-direction: column;
 }

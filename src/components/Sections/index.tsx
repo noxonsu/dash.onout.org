@@ -40,6 +40,8 @@ const Sections = () => {
     </div>
   );
 
+  if (!signed) return null;
+
   return (
     <div>
       {Tabs}

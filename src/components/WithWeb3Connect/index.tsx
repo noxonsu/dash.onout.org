@@ -95,6 +95,10 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
       type: UserActions.signed,
       payload: false,
     })
+    dispatch({
+      type: UserActions.changeView,
+      payload: 'products',
+    })
     // @ts-ignore
     if (account?.provider?.close) {
       // @ts-ignore
@@ -125,7 +129,7 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
       : !account.connected
         ? (
           <button
-            className="ConnectButton"
+            className="connectButton"
             onClick={connect}
           >
             Connect to Web3!
@@ -133,12 +137,12 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
         )
         : (
           <div className="account">
-            { account.address } - { account.balance }
-            <div className="DisconnectButton">
-              <button onClick={disconnect}>
-                Disconnect
-              </button>
+            <div>
+              { account.address } - { account.balance }
             </div>
+            <button className="disconnectButton" onClick={disconnect}>
+              Disconnect
+            </button>
           </div>
         )
       }

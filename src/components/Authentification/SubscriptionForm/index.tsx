@@ -2,6 +2,8 @@ import React, { useMemo, useState } from "react";
 import axios from "../../../helpers/axios";
 import { isValidEmail } from "../../../helpers/email";
 
+import '../index.css'
+
 type SubscriptionFormProps = { address: string, toggleSubscribed: () => void};
 
 const SubscriptionForm = ({ address, toggleSubscribed } : SubscriptionFormProps) => {
@@ -108,6 +110,7 @@ const SubscriptionForm = ({ address, toggleSubscribed } : SubscriptionFormProps)
       <div className="sf-row">
         <button
           type="button"
+          className="subscribeBtn"
           onClick={handleSubmit}
         >
           Subscribe

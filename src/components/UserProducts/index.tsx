@@ -16,7 +16,7 @@ const UserProducts = () => {
           ))}
         </>
       ) : (
-        <p>You do not have any products yet</p>
+        <p className="noProductInfo">You do not have any products yet</p>
       )}
     </div>
   );
