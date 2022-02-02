@@ -2,6 +2,8 @@ import { createContext, useState } from "react";
 import { providers, utils } from 'ethers';
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import useUser from "../../hooks/useUser";
+import { UserActions } from "../UserProvider";
 
 import './index.css'
 
@@ -48,6 +50,7 @@ export const Web3ConnecStateContext = createContext({account: initialWeb3Connect
 const WithWeb3Connect = ({ children }: WithModalProps) => {
   const [account, setAccount] = useState<Web3ConnectState>(initialWeb3ConnectState);
   const [isWeb3Loading, setIsWeb3Loading] = useState(false);
+  const {dispatch} = useUser()
 
   async function connect() {
     const web3ModalProvider = await web3Modal.connect();
@@ -88,7 +91,10 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
   };
 
   async function disconnect() {
-
+    dispatch({
+      type: UserActions.signed,
+      payload: false,
+    })
     // @ts-ignore
     if (account?.provider?.close) {
       // @ts-ignore

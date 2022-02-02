@@ -1,5 +1,5 @@
 import { PRODUCTS } from "../../constants";
-import { UserActions } from "../User";
+import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
 
 import "./index.css";
@@ -16,8 +16,6 @@ const ProductList = () => {
 
   return (
     <section>
-      <h2 className="title">PRODUCTS</h2>
-
       <div className="products">
         {Object.keys(PRODUCTS).map((id) => {
           const { name, description, imgSrc, imgAlt } = PRODUCTS[id];

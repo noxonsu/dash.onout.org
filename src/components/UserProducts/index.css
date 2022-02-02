@@ -1,0 +1,35 @@
+.userProducts {
+  max-width: 60rem;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.userProduct {
+  max-width: 25rem;
+  min-width: 13rem;
+  width: 25%;
+  margin: 1%;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  border-radius: 1.2rem;
+  background-color: var(--card-color);
+}
+
+.userProduct .top {
+  margin-bottom: 2rem;
+}
+
+.userProduct .title {
+  margin: 0;
+}
+
+.downloadBtn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 1rem;
+  background-color: var(--brand-color);
+}

@@ -1,6 +1,7 @@
 import { COVERS } from "../images";
 
 export interface Product {
+  id: string;
   name: string;
   demo: string;
   description: string;
@@ -14,6 +15,7 @@ export interface Product {
 
 export const PRODUCTS: { [id: string]: Product } = {
   multicyrrencyWallet: {
+    id: "multicyrrencyWallet",
     name: "MCW (Wallet + Exchange)",
     demo: "wallet.wpmix.net",
     description: "",
@@ -27,6 +29,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     price: 999,
   },
   definance: {
+    id: "definance",
     name: "DeFinance (DEX)",
     demo: "definance.wpmix.net",
     description: "",
@@ -39,6 +42,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     price: 899,
   },
   farmfactory: {
+    id: "farmfactory",
     name: "FarmFactory",
     demo: "farm.wpmix.net",
     description: "",
@@ -52,6 +56,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     price: 799,
   },
   daofactory: {
+    id: "daofactory",
     name: "DaoFactory",
     demo: "dao.wpmix.net",
     description: "",
@@ -64,6 +69,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     price: 499,
   },
   lotteryFactory: {
+    id: "lotteryFactory",
     name: "LotteryFactory",
     demo: "lottery.wpmix.net",
     description: "",

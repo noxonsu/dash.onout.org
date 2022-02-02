@@ -1,10 +1,12 @@
 import { createContext, useReducer } from "react";
+import { Product } from "../../constants";
 
 type Action = { type: string; payload: any };
 type Dispatch = (action: Action) => void;
 type UserState = {
   signed: boolean;
   view: string;
+  products: Product[];
 };
 
 export const UserContext = createContext<
@@ -18,6 +20,8 @@ export const UserContext = createContext<
 export const UserActions = {
   changeView: "changeView",
   signed: "signed",
+  addProduct: "addProduct",
+  removeProduct: "addProduct",
 };
 
 const userReducer = (state: UserState, action: Action) => {
@@ -26,6 +30,13 @@ const userReducer = (state: UserState, action: Action) => {
       return { ...state, view: action.payload };
     case UserActions.signed:
       return { ...state, signed: action.payload };
+    case UserActions.addProduct:
+      return { ...state, products: [...state.products, action.payload] };
+    case UserActions.removeProduct:
+      return {
+        ...state,
+        products: state.products.filter((item) => item.id !== action.payload),
+      };
     default:
       return state;
   }
@@ -33,8 +44,9 @@ const userReducer = (state: UserState, action: Action) => {
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(userReducer, {
-    view: "",
+    view: "products",
     signed: false,
+    products: [],
   });
 
   return (

@@ -1,17 +1,20 @@
 import { PRODUCTS } from "../../constants";
 import useUser from "../../hooks/useUser";
-import { UserActions } from "../User";
+import { UserActions } from "../UserProvider";
 import ProductList from "../ProductList";
 import UserProducts from "../UserProducts";
 import Product from "../Product";
+
+import "./index.css";
 
 const Sections = () => {
   const { state, dispatch } = useUser();
   const { signed, view } = state;
 
   const Tabs = (
-    <div>
+    <div className="tabs">
       <button
+        className={`${view === "products" ? "active" : ""}`}
         onClick={() => {
           dispatch({
             type: UserActions.changeView,
@@ -23,6 +26,7 @@ const Sections = () => {
       </button>
       {signed && (
         <button
+          className={`${view === "userProducts" ? "active" : ""}`}
           onClick={() => {
             dispatch({
               type: UserActions.changeView,

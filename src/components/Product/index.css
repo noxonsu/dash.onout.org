@@ -1,0 +1,44 @@
+.product {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.4rem;
+  font-size: 1.5rem;
+  border-radius: 1.2rem;
+  background-color: var(--card-color);
+}
+
+.header {
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  padding: 0;
+  margin: 0;
+}
+
+.backBtn,
+.paymentBtn {
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border: 1px solid var(--color);
+  transition: 0.2s;
+}
+
+.backBtn {
+  border-radius: 1rem;
+  font-size: 1rem;
+}
+
+.paymentBtn {
+  border-radius: 1rem;
+  background-color: var(--color);
+  color: var(--brand-color);
+}
+
+.paymentBtn:hover,
+.paymentBtn:disabled {
+  opacity: 0.5;
+}
