@@ -31,6 +31,7 @@ body
   --brand-color: #5f48b0;
   --border-color: #333c4b;
   --card-color: #343a46;
+  --color-warning: #ff9c0833;
 }
 
 body[data-theme="light"] {
@@ -59,4 +60,8 @@ button {
   font-size: inherit;
   font-family: inherit;
   color: var(--color);
+}
+
+.warning {
+  background-color: var(--color-warning);
 }

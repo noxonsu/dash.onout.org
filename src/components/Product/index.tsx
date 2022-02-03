@@ -105,15 +105,21 @@ const Product = ({ id }: ProductProps) => {
         </button>
       </div>
       <p>{description}</p>
-      {paidFor && <p>You already have this product</p>}
+      {paidFor ? (
+        <p>You already have this product</p>
+      ) : (
+        <p className="warning">
+          Do not leave this page until successful payment
+        </p>
+      )}
       <button
         onClick={payForProduct}
-        className="paymentBtn"
+        className={`paymentBtn ${paymentPending ? "pending" : ""}`}
         disabled={
           paymentPending || paidFor || !signed || isWeb3Loading || !account
         }
       >
-        {paymentPending ? "Pending..." : `Buy for $${USDPrice}`}
+        {paymentPending ? "Pending" : `Buy for $${USDPrice}`}
       </button>
     </div>
   );
