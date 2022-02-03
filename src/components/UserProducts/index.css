@@ -32,9 +32,16 @@
   margin: 0;
 }
 
-.downloadBtn {
+.downloadLink {
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 1rem;
+  text-decoration: none;
   background-color: var(--brand-color);
+  color: var(--color);
+  transition: 0.2s;
+}
+
+.downloadLink:hover {
+  opacity: 0.6;
 }

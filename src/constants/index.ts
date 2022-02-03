@@ -37,8 +37,8 @@ export interface Product {
 }
 
 export const PRODUCTS: { [id: string]: Product } = {
-  multicyrrencyWallet: {
-    id: "multicyrrencyWallet",
+  multicyrrencywallet: {
+    id: "multicyrrencywallet",
     name: "MCW (Wallet + Exchange)",
     demo: "wallet.wpmix.net",
     description: "",
@@ -91,8 +91,8 @@ export const PRODUCTS: { [id: string]: Product } = {
       "https://codecanyon.net/item/dao-factory-governance-and-proposals-plugin-for-your-token-for-wordpress/35608699",
     price: 499,
   },
-  lotteryFactory: {
-    id: "lotteryFactory",
+  lotteryfactory: {
+    id: "lotteryfactory",
     name: "LotteryFactory",
     demo: "lottery.wpmix.net",
     description: "",

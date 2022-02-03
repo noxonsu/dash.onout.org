@@ -10,19 +10,15 @@ type ItemProps = {
 };
 
 const Item = ({ id }: ItemProps) => {
-  const { state, dispatch } = useUser();
+  // const { dispatch } = useUser();
   const { name } = PRODUCTS[id];
 
-  const download = () => {
-    // TODO
-  };
-
-  const removeProduct = () => {
-    dispatch({
-      type: UserActions.removeProduct,
-      payload: id,
-    });
-  };
+  // const removeProduct = () => {
+  //   dispatch({
+  //     type: UserActions.removeProduct,
+  //     payload: id,
+  //   });
+  // };
 
   return (
     <div className="userProduct">
@@ -31,9 +27,13 @@ const Item = ({ id }: ItemProps) => {
       </div>
 
       <div className="bottom">
-        <button onClick={download} className="downloadBtn">
+        <a
+          href={`../../secret/${id.toLowerCase()}.zip`}
+          className="downloadLink"
+          download
+        >
           Download
-        </button>
+        </a>
       </div>
     </div>
   );
