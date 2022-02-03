@@ -1,13 +1,20 @@
-import Authentification from "./conponents/Authentification";
-import WithWeb3Connect from "./conponents/WithWeb3Connect";
+import WithWeb3Connect from "./components/WithWeb3Connect";
+import UserProvider from "./components/UserProvider";
+import Authentification from "./components/Authentification";
+import Sections from "./components/Sections";
 
 function App() {
   return (
     <div className="App">
-      <WithWeb3Connect>
-        <div className="App-header"></div>
-        <Authentification />
-      </WithWeb3Connect>
+      <UserProvider>
+        <WithWeb3Connect>
+          <div className="App-header">
+            <Authentification />
+          </div>
+
+          <Sections />
+        </WithWeb3Connect>
+      </UserProvider>
     </div>
   );
 }

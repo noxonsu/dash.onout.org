@@ -7,3 +7,9 @@
 .sf-row {
   margin-bottom: 0.5rem;
 }
+
+.subscribeBtn {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  background-color: var(--brand-color);
+}
