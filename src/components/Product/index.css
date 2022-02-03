@@ -19,6 +19,7 @@
   margin: 0;
 }
 
+.error,
 .warning {
   padding: 0.6rem;
   border-radius: 0.6rem;

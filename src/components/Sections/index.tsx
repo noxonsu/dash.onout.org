@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useContext } from "react";
+import { useCallback, useEffect, useContext, useState } from "react";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
-import { PRODUCTS } from "../../constants";
+import { PRODUCTS, NETWORKS } from "../../constants";
 import useUser from "../../hooks/useUser";
 import { UserActions } from "../UserProvider";
 import ProductList from "../ProductList";
@@ -68,7 +68,16 @@ const Sections = () => {
     </div>
   );
 
-  if (!signed) return null;
+  const [wrongNetwork, setWrongNetwork] = useState(true);
+
+  useEffect(() => {
+    //@ts-ignore
+    if (NETWORKS[account.networkId]) {
+      setWrongNetwork(false);
+    }
+  }, [account]);
+
+  if (!signed || wrongNetwork) return null;
 
   return (
     <div>

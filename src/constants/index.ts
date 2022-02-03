@@ -1,22 +1,25 @@
 import { COVERS } from "../images";
 
-export const PAYMENT_ADDRESS = "0xDA873Ff72bd4eA9c122C51a837DA3f88307D1DB5";
+export const PAYMENT_ADDRESS = "0x3B85D38c3A7AEabABA8B7DEb7a73177688270abC";
 // 50 calls per minute
 export const PRICE_ENDPOINT = "https://api.coingecko.com/api/v3";
 
 // https://docs.google.com/spreadsheets/d/1wTTuxXt8n9q7C4NDXqQpI3wpKu1_5bGVmP9Xz0XGSyU/edit#gid=0
 export const NETWORKS = {
   1: {
+    name: "Ethereum",
     currency: {
       id: "ethereum",
     },
   },
   56: {
+    name: "Binance Smart Chain",
     currency: {
       id: "binancecoin",
     },
   },
   137: {
+    name: "Polygon",
     currency: {
       id: "aave-polygon-wmatic",
     },

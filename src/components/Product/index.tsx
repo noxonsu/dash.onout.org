@@ -14,6 +14,7 @@ type ProductProps = { id: string };
 const Product = ({ id }: ProductProps) => {
   const { account, isWeb3Loading } = useContext(Web3ConnecStateContext);
   const [paymentPending, setPaymentPending] = useState(false);
+  const [wrongNetwork, setWrongNetwork] = useState(false);
   const [paidFor, setPaidFor] = useState(false);
   const { dispatch, state } = useUser();
   const { products, signed } = state;
@@ -34,6 +35,8 @@ const Product = ({ id }: ProductProps) => {
   };
 
   const getPaymentParameters = async () => {
+    if (!PAYMENT_ADDRESS) return;
+
     BigNumber.config({
       ROUNDING_MODE: BigNumber.ROUND_CEIL,
       DECIMAL_PLACES: 0,
@@ -75,6 +78,21 @@ const Product = ({ id }: ProductProps) => {
 
     const params = await getPaymentParameters();
 
+    // TODO: find better solution. Use a different connection way
+    // quick fix the problem when user can switch to testnet and pay there
+    // with current provider we can get a network error if user on a
+    // different network then on first connection
+    try {
+      await account.provider.getNetwork();
+    } catch (error) {
+      // Error: underlying network changed...
+      console.group("%c payment", "color: red");
+      console.error(error);
+      console.groupEnd();
+      setWrongNetwork(true);
+      return;
+    }
+
     if (params) {
       const confirmedTx = await send(params);
 
@@ -105,6 +123,12 @@ const Product = ({ id }: ProductProps) => {
         </button>
       </div>
       <p>{description}</p>
+      {wrongNetwork && (
+        <p className="error">
+          You cannot pay on this network. Switch to supported network and reload
+          this page
+        </p>
+      )}
       {paidFor ? (
         <p>You already have this product</p>
       ) : (

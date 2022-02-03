@@ -32,6 +32,7 @@ body
   --border-color: #333c4b;
   --card-color: #343a46;
   --color-warning: #ff9c0833;
+  --color-error: #ff080833;
 }
 
 body[data-theme="light"] {
@@ -64,4 +65,8 @@ button {
 
 .warning {
   background-color: var(--color-warning);
+}
+
+.error {
+  background-color: var(--color-error);
 }
