@@ -1,16 +1,27 @@
 import { COVERS } from "../images";
 
-export const PAYMENT_ADDRESS = ''
+export const PAYMENT_ADDRESS = "0xDA873Ff72bd4eA9c122C51a837DA3f88307D1DB5";
 // 50 calls per minute
-export const PRICE_ENDPOINT = 'https://api.coingecko.com/api/v3'
+export const PRICE_ENDPOINT = "https://api.coingecko.com/api/v3";
 
-export const ALLOWED_NETWORKS_ID = [
-  1, // Ethereum
-  56, // BSC
-  137, // Polygon
-  421611, // Arbitrum
-  43114, // Avalanche
-];
+// https://docs.google.com/spreadsheets/d/1wTTuxXt8n9q7C4NDXqQpI3wpKu1_5bGVmP9Xz0XGSyU/edit#gid=0
+export const NETWORKS = {
+  1: {
+    currency: {
+      id: "ethereum",
+    },
+  },
+  56: {
+    currency: {
+      id: "binancecoin",
+    },
+  },
+  137: {
+    currency: {
+      id: "aave-polygon-wmatic",
+    },
+  },
+};
 
 export interface Product {
   id: string;

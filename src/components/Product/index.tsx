@@ -1,6 +1,8 @@
 import { useContext, useState, useEffect } from "react";
-import { PRODUCTS, PAYMENT_ADDRESS } from "../../constants";
+import { BigNumber } from "bignumber.js";
+import { PRODUCTS, PAYMENT_ADDRESS, NETWORKS } from "../../constants";
 import { send } from "../../helpers/transaction";
+import { getPrice } from "../../helpers/currency";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
@@ -15,7 +17,7 @@ const Product = ({ id }: ProductProps) => {
   const [paidFor, setPaidFor] = useState(false);
   const { dispatch, state } = useUser();
   const { products, signed } = state;
-  const { name, description, price } = PRODUCTS[id];
+  const { name, description, price: USDPrice } = PRODUCTS[id];
 
   useEffect(() => {
     const inProducts =
@@ -31,33 +33,64 @@ const Product = ({ id }: ProductProps) => {
     });
   };
 
+  const getPaymentParameters = async () => {
+    BigNumber.config({
+      ROUNDING_MODE: BigNumber.ROUND_CEIL,
+      DECIMAL_PLACES: 0,
+    });
+    //@ts-ignore
+    if (!NETWORKS[account?.networkId]) return;
+    //@ts-ignore
+    const assetId = NETWORKS[account.networkId].currency.id;
+    const data = await getPrice({
+      assetId,
+      vsCurrency: "usd",
+    });
+
+    if (data) {
+      const cryptoPrice = new BigNumber(USDPrice)
+        .div(data[assetId]?.usd)
+        .toNumber();
+
+      const params = {
+        // use a Web3 provider for trouble-free sending
+        provider: account.web3Provider,
+        from: account.address,
+        to: PAYMENT_ADDRESS,
+        amount: cryptoPrice,
+        // tokenAddress: "",
+        // decimals: ,
+      };
+
+      return params;
+    }
+
+    return false;
+  };
+
   const payForProduct = async () => {
     if (!account.provider) return;
 
     setPaymentPending(true);
 
-    // TODO: calc the price from USD to Crypto
-    const amount = 0.001;
+    const params = await getPaymentParameters();
 
-    const result = await send({
-      provider: account.provider,
-      from: account.address,
-      to: PAYMENT_ADDRESS,
-      amount,
-      //
-      tokenAddress: "0x8b979c2DEF34A53608004e00aC5f7dE4dd32Cf79",
-      decimals: 18,
-    });
+    if (params) {
+      const confirmedTx = await send(params);
 
-    console.group("%c payment result", "color: orange; font-size: 14px");
-    console.log("result: ", result);
-    console.groupEnd();
-
-    if (result) {
-      dispatch({
-        type: UserActions.addProduct,
-        payload: PRODUCTS[id],
-      });
+      if (confirmedTx?.status) {
+        dispatch({
+          type: UserActions.paid,
+          payload: {
+            key: `${account.address}_${id}`,
+            value: `${new Date().toISOString()}`,
+          },
+        });
+        dispatch({
+          type: UserActions.addProduct,
+          payload: PRODUCTS[id],
+        });
+      }
     }
 
     setPaymentPending(false);
@@ -80,7 +113,7 @@ const Product = ({ id }: ProductProps) => {
           paymentPending || paidFor || !signed || isWeb3Loading || !account
         }
       >
-        {paymentPending ? "Pending..." : `Buy for $${price}`}
+        {paymentPending ? "Pending..." : `Buy for $${USDPrice}`}
       </button>
     </div>
   );

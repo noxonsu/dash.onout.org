@@ -26,3 +26,15 @@ export const decrypt = async (account: string, data: string) => {
 
   return decrypted;
 };
+
+/* 
+
+local storage
+
+<user address>_<product id>: payment date
+
+*/
+
+export const saveLocal = ({ key, value }: { key: string; value: string }) => {
+  window.localStorage.setItem(key, value);
+};

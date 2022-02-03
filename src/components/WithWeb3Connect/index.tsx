@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import { providers, utils } from 'ethers';
+import Web3 from "web3";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import useUser from "../../hooks/useUser";
@@ -12,6 +13,7 @@ const INFURA_ID = '460f40a260564ac4a4f4b3fffb032dad';
 type Web3ConnectState = {
   connected: boolean;
   provider: providers.Web3Provider | null;
+  web3Provider: any;
   networkId: number | undefined
   address: string;
   signer: providers.JsonRpcSigner | null;
@@ -21,6 +23,7 @@ type Web3ConnectState = {
 const initialWeb3ConnectState: Web3ConnectState = {
   connected: false,
   provider: null,
+  web3Provider: null,
   networkId: undefined,
   address: '',
   signer: null,
@@ -56,8 +59,9 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
 
   async function connect() {
     const web3ModalProvider = await web3Modal.connect();
-
     const provider = new providers.Web3Provider(web3ModalProvider);
+    // * Web3 provider solve the problem with sending transactions
+    const web3Provider = new Web3(web3ModalProvider)
 
     async function setAccountFromProvider() {
       setIsWeb3Loading(true);
@@ -70,6 +74,7 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
         setAccount({
           connected: true,
           provider,
+          web3Provider,
           networkId: network.chainId,
           address,
           signer,

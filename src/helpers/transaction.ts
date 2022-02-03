@@ -1,8 +1,8 @@
-import { providers, utils, Contract } from "ethers";
+import { utils } from "ethers";
 import ERC20_ABI from "../constants/erc20.json";
 
 type TxParameters = {
-  provider: providers.Web3Provider;
+  provider: any;
   from: string;
   to: string;
   amount: number;
@@ -21,11 +21,21 @@ const sendToken = async ({
   tokenAddress: string;
   decimals: number;
 }) => {
-  const contract = new Contract(tokenAddress, ERC20_ABI);
+  const contract = new provider.eth.Contract(ERC20_ABI, tokenAddress, {
+    from,
+  });
   const unitAmount = utils.parseUnits(String(amount), decimals);
-  const result = await contract.transfer(to, unitAmount);
 
-  return result;
+  try {
+    return await contract.methods.transfer(to, unitAmount).send({
+      from,
+    });
+  } catch (error) {
+    console.group("%c send token", "color: red;");
+    console.error(error);
+    console.groupEnd();
+    return false;
+  }
 };
 
 export const send = async ({
@@ -54,10 +64,7 @@ export const send = async ({
   }
 
   try {
-    // const result = await provider.send("eth_sendTransaction", [tx]);
-    const result = await provider.send("eth_sendTransaction", [tx]);
-
-    return result;
+    return await provider.eth.sendTransaction(tx);
   } catch (error) {
     console.group("%c send", "color: red;");
     console.error(error);

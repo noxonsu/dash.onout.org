@@ -1,4 +1,5 @@
 import { createContext, useReducer } from "react";
+import { saveLocal } from "../../helpers/storage";
 import { Product } from "../../constants";
 
 type Action = { type: string; payload: any };
@@ -22,6 +23,7 @@ export const UserActions = {
   signed: "signed",
   addProduct: "addProduct",
   removeProduct: "addProduct",
+  paid: "paid",
 };
 
 const userReducer = (state: UserState, action: Action) => {
@@ -37,6 +39,10 @@ const userReducer = (state: UserState, action: Action) => {
         ...state,
         products: state.products.filter((item) => item.id !== action.payload),
       };
+    case UserActions.paid:
+      const { key, value } = action.payload;
+      saveLocal({ key, value });
+      return state;
     default:
       return state;
   }
