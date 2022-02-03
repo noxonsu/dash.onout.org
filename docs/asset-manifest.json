@@ -1,15 +1,23 @@
 {
   "files": {
-    "main.css": "/static/css/main.68d4b295.css",
-    "main.js": "/static/js/main.03be188f.js",
+    "main.css": "/static/css/main.b316d92e.css",
+    "main.js": "/static/js/main.41620931.js",
     "static/js/787.de7b3d37.chunk.js": "/static/js/787.de7b3d37.chunk.js",
+    "static/media/nftsy-cover.jpg": "/static/media/nftsy-cover.72fedd3eebb0cf7b0f26.jpg",
+    "static/media/lottery-cover.jpg": "/static/media/lottery-cover.97a34a9c1aa834d0cc1b.jpg",
+    "static/media/exchange-cover.jpg": "/static/media/exchange-cover.4b245a3d846854edf8a5.jpg",
+    "static/media/farming-cover.jpg": "/static/media/farming-cover.b908d87fdad9f74a2063.jpg",
+    "static/media/wallet-cover.jpg": "/static/media/wallet-cover.3518343472c0a261a5ce.jpg",
+    "static/media/dex-cover.jpg": "/static/media/dex-cover.03ea07b18edf8f3ec756.jpg",
+    "static/media/dao-cover.jpg": "/static/media/dao-cover.234eb37ad9117148956d.jpg",
+    "static/media/cross-chain-cover.jpg": "/static/media/cross-chain-cover.0be1f6bd8d9ff8b164b5.jpg",
     "index.html": "/index.html",
-    "main.68d4b295.css.map": "/static/css/main.68d4b295.css.map",
-    "main.03be188f.js.map": "/static/js/main.03be188f.js.map",
+    "main.b316d92e.css.map": "/static/css/main.b316d92e.css.map",
+    "main.41620931.js.map": "/static/js/main.41620931.js.map",
     "787.de7b3d37.chunk.js.map": "/static/js/787.de7b3d37.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.68d4b295.css",
-    "static/js/main.03be188f.js"
+    "static/css/main.b316d92e.css",
+    "static/js/main.41620931.js"
   ]
 }
