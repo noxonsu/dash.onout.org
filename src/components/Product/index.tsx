@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
-import { PRODUCTS } from "../../constants";
+import { useContext, useState, useEffect } from "react";
+import { PRODUCTS, PAYMENT_ADDRESS } from "../../constants";
+import { send } from "../../helpers/transaction";
+import { Web3ConnecStateContext } from "../WithWeb3Connect";
 import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
 
@@ -8,6 +10,7 @@ import "./index.css";
 type ProductProps = { id: string };
 
 const Product = ({ id }: ProductProps) => {
+  const { account, isWeb3Loading } = useContext(Web3ConnecStateContext);
   const [paymentPending, setPaymentPending] = useState(false);
   const [paidFor, setPaidFor] = useState(false);
   const { dispatch, state } = useUser();
@@ -28,22 +31,36 @@ const Product = ({ id }: ProductProps) => {
     });
   };
 
-  const payForProduct = () => {
+  const payForProduct = async () => {
+    if (!account.provider) return;
+
     setPaymentPending(true);
 
-    // TODO: payment and confirmation
-    const isOk = true;
+    // TODO: calc the price from USD to Crypto
+    const amount = 0.001;
 
-    setTimeout(() => {
-      if (isOk) {
-        dispatch({
-          type: UserActions.addProduct,
-          payload: PRODUCTS[id],
-        });
-      }
+    const result = await send({
+      provider: account.provider,
+      from: account.address,
+      to: PAYMENT_ADDRESS,
+      amount,
+      //
+      tokenAddress: "0x8b979c2DEF34A53608004e00aC5f7dE4dd32Cf79",
+      decimals: 18,
+    });
 
-      setPaymentPending(false);
-    }, 2000);
+    console.group("%c payment result", "color: orange; font-size: 14px");
+    console.log("result: ", result);
+    console.groupEnd();
+
+    if (result) {
+      dispatch({
+        type: UserActions.addProduct,
+        payload: PRODUCTS[id],
+      });
+    }
+
+    setPaymentPending(false);
   };
 
   return (
@@ -59,7 +76,9 @@ const Product = ({ id }: ProductProps) => {
       <button
         onClick={payForProduct}
         className="paymentBtn"
-        disabled={paymentPending || paidFor || !signed}
+        disabled={
+          paymentPending || paidFor || !signed || isWeb3Loading || !account
+        }
       >
         {paymentPending ? "Pending..." : `Buy for $${price}`}
       </button>

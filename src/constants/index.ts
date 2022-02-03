@@ -1,5 +1,17 @@
 import { COVERS } from "../images";
 
+export const PAYMENT_ADDRESS = ''
+// 50 calls per minute
+export const PRICE_ENDPOINT = 'https://api.coingecko.com/api/v3'
+
+export const ALLOWED_NETWORKS_ID = [
+  1, // Ethereum
+  56, // BSC
+  137, // Polygon
+  421611, // Arbitrum
+  43114, // Avalanche
+];
+
 export interface Product {
   id: string;
   name: string;

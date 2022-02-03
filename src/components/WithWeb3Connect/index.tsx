@@ -12,6 +12,7 @@ const INFURA_ID = '460f40a260564ac4a4f4b3fffb032dad';
 type Web3ConnectState = {
   connected: boolean;
   provider: providers.Web3Provider | null;
+  networkId: number | undefined
   address: string;
   signer: providers.JsonRpcSigner | null;
   balance: string;
@@ -20,6 +21,7 @@ type Web3ConnectState = {
 const initialWeb3ConnectState: Web3ConnectState = {
   connected: false,
   provider: null,
+  networkId: undefined,
   address: '',
   signer: null,
   balance: utils.formatEther(0),
@@ -63,10 +65,12 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
         const signer = provider.getSigner(0);
         const address = await signer.getAddress();
         const balance = await signer.getBalance();
+        const network = await provider.getNetwork()
 
         setAccount({
           connected: true,
           provider,
+          networkId: network.chainId,
           address,
           signer,
           balance: utils.formatEther(balance)

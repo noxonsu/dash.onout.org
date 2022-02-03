@@ -7,14 +7,19 @@
 .connectButton,
 .disconnectButton {
   margin-top: 1rem;
-  padding: .5rem;
+  padding: 0.5rem;
   border-radius: 1rem;
   border: 1px solid var(--border-color);
   background-color: transparent;
+  transition: 0.2s;
 }
 
 .connectButton {
   background-color: var(--brand-color);
+}
+
+.connectButton:hover {
+  opacity: 0.6;
 }
 
 .account {
