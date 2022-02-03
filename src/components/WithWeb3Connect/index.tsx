@@ -138,7 +138,7 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
         : (
           <div className="account">
             <div>
-              { account.address } - { account.balance }
+              { account.address }
             </div>
             <button className="disconnectButton" onClick={disconnect}>
               Disconnect

@@ -14,8 +14,8 @@ const SubscriptionForm = ({ address, toggleSubscribed } : SubscriptionFormProps)
   const [errors, setErrors] = useState<string[]>([]);
 
   const hasWrongFild = useMemo(
-    () => (!isValidEmail(email) || !emailNews || !investmentOpportunities),
-    [email, emailNews, investmentOpportunities]
+    () => (!isValidEmail(email)),
+    [email]
   );
 
   const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,14 +37,6 @@ const SubscriptionForm = ({ address, toggleSubscribed } : SubscriptionFormProps)
 
     if (!isValidEmail(email)) {
       wrongFilds.push("Please enter or fill correct email.");
-    };
-
-    if (!emailNews) {
-      wrongFilds.push('Checkbox "Email me news" is required');
-    };
-
-    if (!investmentOpportunities) {
-      wrongFilds.push('Checkbox "Interested in investment opportunities" is required');
     };
 
     return (wrongFilds as string[]);
