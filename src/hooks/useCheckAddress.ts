@@ -39,5 +39,5 @@ export const checkAddress = async (address: string) => {
     }
   });
 
-  return relult?.data?.response?.result?.length > 0;
+  return relult?.data?.hasAccount;
 };
