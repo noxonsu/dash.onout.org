@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.b316d92e.css",
-    "main.js": "/static/js/main.41620931.js",
+    "main.js": "/static/js/main.b22e6bf6.js",
     "static/js/787.de7b3d37.chunk.js": "/static/js/787.de7b3d37.chunk.js",
     "static/media/nftsy-cover.jpg": "/static/media/nftsy-cover.72fedd3eebb0cf7b0f26.jpg",
     "static/media/lottery-cover.jpg": "/static/media/lottery-cover.97a34a9c1aa834d0cc1b.jpg",
@@ -13,11 +13,11 @@
     "static/media/cross-chain-cover.jpg": "/static/media/cross-chain-cover.0be1f6bd8d9ff8b164b5.jpg",
     "index.html": "/index.html",
     "main.b316d92e.css.map": "/static/css/main.b316d92e.css.map",
-    "main.41620931.js.map": "/static/js/main.41620931.js.map",
+    "main.b22e6bf6.js.map": "/static/js/main.b22e6bf6.js.map",
     "787.de7b3d37.chunk.js.map": "/static/js/787.de7b3d37.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b316d92e.css",
-    "static/js/main.41620931.js"
+    "static/js/main.b22e6bf6.js"
   ]
 }
