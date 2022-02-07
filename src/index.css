@@ -65,6 +65,12 @@ button {
   color: var(--color);
 }
 
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .warning {
   background-color: var(--color-warning);
 }
