@@ -2,32 +2,32 @@ import React, { useMemo, useState } from "react";
 import axios from "../../../helpers/axios";
 import { isValidEmail } from "../../../helpers/email";
 
-import '../index.css'
+import "../index.css";
 
-type SubscriptionFormProps = { address: string, toggleSubscribed: () => void};
+type SubscriptionFormProps = { address: string; toggleSubscribed: () => void };
 
-const SubscriptionForm = ({ address, toggleSubscribed } : SubscriptionFormProps) => {
+const SubscriptionForm = ({
+  address,
+  toggleSubscribed,
+}: SubscriptionFormProps) => {
   const [email, setEmail] = useState("");
   const [emailNews, setEmailNews] = useState(false);
   const [investmentOpportunities, setInvestmentOpportunities] = useState(false);
 
   const [errors, setErrors] = useState<string[]>([]);
 
-  const hasWrongFild = useMemo(
-    () => (!isValidEmail(email)),
-    [email]
-  );
+  const hasWrongFild = useMemo(() => !isValidEmail(email), [email]);
 
   const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.name === "email") {
-      setEmail(event.target.value)
-    };
+      setEmail(event.target.value);
+    }
     if (event.target.name === "emailNews") {
-      setEmailNews(event.target.checked)
-    };
+      setEmailNews(event.target.checked);
+    }
     if (event.target.name === "investmentOpportunities") {
-      setInvestmentOpportunities(event.target.checked)
-    };
+      setInvestmentOpportunities(event.target.checked);
+    }
 
     setErrors([]);
   };
@@ -37,10 +37,10 @@ const SubscriptionForm = ({ address, toggleSubscribed } : SubscriptionFormProps)
 
     if (!isValidEmail(email)) {
       wrongFilds.push("Please enter or fill correct email.");
-    };
+    }
 
-    return (wrongFilds as string[]);
-  }
+    return wrongFilds as string[];
+  };
 
   const handleSubmit = async () => {
     const subscribeData = {
@@ -51,24 +51,26 @@ const SubscriptionForm = ({ address, toggleSubscribed } : SubscriptionFormProps)
     };
 
     if (hasWrongFild) {
-      return setErrors(checkFilds())
+      return setErrors(checkFilds());
     }
 
     try {
       const response = await axios.put("/subscribe", subscribeData);
       if (response?.data?.statusText === "Successfully subscribed!") {
-        toggleSubscribed()
+        toggleSubscribed();
       }
     } catch (error) {
       console.log(error);
-    };
+    }
   };
 
   return (
-    <form>
-      <div className="sf-row">
+    <form className="subscriptionForm">
+      <div className="sf-row sf-rowColumn">
         <label htmlFor="email">Email </label>
         <input
+          className="primaryInput"
+          id="email"
           type="email"
           value={email}
           name="email"
@@ -77,18 +79,18 @@ const SubscriptionForm = ({ address, toggleSubscribed } : SubscriptionFormProps)
       </div>
       <div className="sf-row">
         <input
+          className="primaryCheckbox"
           type="checkbox"
           id="emailNews"
           name="emailNews"
           checked={emailNews}
           onChange={onChangeInput}
         />
-        <label htmlFor="emailNews">
-          Email me news about your products
-        </label>
+        <label htmlFor="emailNews">Email me news about your products</label>
       </div>
       <div className="sf-row">
         <input
+          className="primaryCheckbox"
           type="checkbox"
           id="investmentOpportunities"
           name="investmentOpportunities"
@@ -96,25 +98,23 @@ const SubscriptionForm = ({ address, toggleSubscribed } : SubscriptionFormProps)
           onChange={onChangeInput}
         />
         <label htmlFor="investmentOpportunities">
-          I am also interested in investment opportunities such as launchpads, farming, etc...
+          I am also interested in investment opportunities such as launchpads,
+          farming, etc.
         </label>
       </div>
       <div className="sf-row">
-        <button
-          type="button"
-          className="subscribeBtn"
-          onClick={handleSubmit}
-        >
+        <button type="button" className="primaryButton" onClick={handleSubmit}>
           Subscribe
         </button>
       </div>
-      {errors.length > 0 && errors.map((error, i) => {
+      {errors.length > 0 &&
+        errors.map((error, i) => {
           return (
-            <div key={i} style={{color: "red"}}>
+            <div key={i} style={{ color: "red" }}>
               <span>{error}</span>
             </div>
-          )
-      })}
+          );
+        })}
     </form>
   );
 };

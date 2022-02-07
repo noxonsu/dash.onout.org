@@ -162,7 +162,7 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
           </div>
 
           {/* @ts-ignore */}
-          {NETWORKS[account.networkId]?.name || (
+          {!NETWORKS[account.networkId] && (
             <div className="warning">
               Please switch to one of the supported networks and reload this
               page:
