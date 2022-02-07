@@ -37,6 +37,8 @@ export interface Product {
   promoPageLink: string;
   buyLink: string;
   price: number; // USD
+  howToEarn?: string;
+  adminCanEdit?: string;
 }
 
 export const PRODUCTS: { [id: string]: Product } = {
@@ -44,6 +46,9 @@ export const PRODUCTS: { [id: string]: Product } = {
     id: "multicyrrencywallet",
     name: "MCW (Wallet + Exchange)",
     demo: "wallet.wpmix.net",
+    howToEarn:
+      "Add 'Withdraw' comission (BTC, ETH, Tokens), exchange comission (0x.org connected)",
+    adminCanEdit: "Logo, colors, styles, list of assets (BTC, ETH, Tokens)",
     description: "",
     imgSrc: COVERS.walletCover,
     imgAlt: "multicurrency wallet promo",
@@ -58,6 +63,9 @@ export const PRODUCTS: { [id: string]: Product } = {
     id: "definance",
     name: "DeFinance (DEX)",
     demo: "definance.wpmix.net",
+    howToEarn: "0.01% - 99% each trade",
+    adminCanEdit:
+      "Logo, colors, list of assets, links, fee percent, admin and fee addresses",
     description: "",
     imgSrc: COVERS.dexCover,
     imgAlt: "",
@@ -71,6 +79,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     id: "farmfactory",
     name: "FarmFactory",
     demo: "farm.wpmix.net",
+    howToEarn: "No comissions",
     description: "",
     imgSrc: COVERS.farmingCover,
     imgAlt: "",
@@ -85,6 +94,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     id: "daofactory",
     name: "DaoFactory",
     demo: "dao.wpmix.net",
+    howToEarn: "No comissions",
     description: "",
     imgSrc: COVERS.daoCover,
     imgAlt: "",
@@ -97,6 +107,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   lotteryfactory: {
     id: "lotteryfactory",
     name: "LotteryFactory",
+    howToEarn: "No comissions",
     demo: "lottery.wpmix.net",
     description: "",
     imgSrc: COVERS.lotteryCover,

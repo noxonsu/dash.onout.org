@@ -42,7 +42,7 @@ const Sections = () => {
   const Tabs = (
     <div className="tabs">
       <button
-        className={`${view === "products" ? "active" : ""}`}
+        className={`tabBtn ${view === "products" ? "active" : ""}`}
         onClick={() => {
           dispatch({
             type: UserActions.changeView,
@@ -54,7 +54,7 @@ const Sections = () => {
       </button>
       {signed && (
         <button
-          className={`${view === "userProducts" ? "active" : ""}`}
+          className={`tabBtn ${view === "userProducts" ? "active" : ""}`}
           onClick={() => {
             dispatch({
               type: UserActions.changeView,

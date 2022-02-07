@@ -28,6 +28,8 @@ body
   --color: #e1ddf0;
   --shadow-color: rgb(0, 0, 0);
   --gray: rgb(29, 29, 29);
+  --transparent-light-1: rgba(255, 255, 255, 0.2);
+  --transparent-light-2: rgba(255, 255, 255, 0.1);
   --brand-color: #5f48b0;
   --border-color: #333c4b;
   --card-color: #343a46;
@@ -69,4 +71,29 @@ button {
 
 .error {
   background-color: var(--color-error);
+}
+
+.primaryButton,
+.secondaryBtn {
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  color: inherit;
+  padding: 0.8rem 2rem;
+  background-color: var(--brand-color);
+  border: 0.125rem solid var(--transparent-light-1);
+  border-radius: 0.8rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.secondaryBtn {
+  background-color: var(--transparent-light-2);
+}
+
+.primaryButton:hover,
+.primaryButton:focus,
+.secondaryBtn:hover,
+.secondaryBtn:focus {
+  opacity: 0.5;
 }

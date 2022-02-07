@@ -18,7 +18,8 @@ const ProductList = () => {
     <section>
       <div className="products">
         {Object.keys(PRODUCTS).map((id) => {
-          const { name, description, imgSrc, imgAlt } = PRODUCTS[id];
+          const { name, howToEarn, adminCanEdit, description, imgSrc, imgAlt } =
+            PRODUCTS[id];
 
           return (
             <div
@@ -28,8 +29,20 @@ const ProductList = () => {
             >
               <img src={imgSrc} alt={imgAlt} />
               <div className="textContent">
-                <h3>{name}</h3>
-                <p>{description}</p>
+                <h3 className="contentTitle">{name}</h3>
+                {description && <p className="description">{description}</p>}
+                {howToEarn && (
+                  <div className="subsection">
+                    <h4 className="subtitle">How to earn</h4>
+                    <p className="subdescription">{howToEarn}</p>
+                  </div>
+                )}
+                {adminCanEdit && (
+                  <div className="subsection">
+                    <h4 className="subtitle">Admin can edit</h4>
+                    <p className="subdescription">{adminCanEdit}</p>
+                  </div>
+                )}
               </div>
             </div>
           );

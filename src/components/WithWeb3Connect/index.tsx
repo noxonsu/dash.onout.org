@@ -135,35 +135,44 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
     console.log(signedMessage);
   }
 
+  const { address } = account;
+
   const web3ConnectContent = (
     <div className="Web3Connect">
       {isWeb3Loading ? (
         <p>Loading...</p>
       ) : !account.connected ? (
-        <button className="connectButton" onClick={connect}>
-          Connect to Web3!
+        <button className="primaryButton connectButton" onClick={connect}>
+          Connect to wallet
         </button>
       ) : (
         <div className="account">
-          <div>
-            {account.address}
-            <br />
-            {/* @ts-ignore */}
-            {NETWORKS[account.networkId]?.name || (
-              <div className="warning">
-                Please switch to one of the supported networks and reload this
-                page:
-                <ul className="networksList">
-                  {Object.values(NETWORKS).map(({ name }, index) => (
-                    <li key={index}>{name}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
+          <div className="accountHeader">
+            <span className="address">
+              {address.slice(0, 6)}...
+              {address.slice(address.length - 4, address.length)}
+            </span>
+
+            <button
+              className="secondaryBtn disconnectButton"
+              onClick={disconnect}
+            >
+              Disconnect
+            </button>
           </div>
-          <button className="disconnectButton" onClick={disconnect}>
-            Disconnect
-          </button>
+
+          {/* @ts-ignore */}
+          {NETWORKS[account.networkId]?.name || (
+            <div className="warning">
+              Please switch to one of the supported networks and reload this
+              page:
+              <ul className="networksList">
+                {Object.values(NETWORKS).map(({ name }, index) => (
+                  <li key={index}>{name}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       )}
     </div>

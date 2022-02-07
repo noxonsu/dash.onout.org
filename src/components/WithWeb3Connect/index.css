@@ -1,30 +1,29 @@
 .Web3Connect {
   display: flex;
   justify-content: center;
-  margin-top: 0.5rem;
-}
-
-.connectButton,
-.disconnectButton {
-  margin-top: 1rem;
-  padding: 0.5rem;
-  border-radius: 1rem;
-  border: 1px solid var(--border-color);
-  background-color: transparent;
-  transition: 0.2s;
-}
-
-.connectButton {
-  background-color: var(--brand-color);
-}
-
-.connectButton:hover {
-  opacity: 0.6;
+  margin-top: 1.8%;
 }
 
 .account {
   display: flex;
   flex-direction: column;
+  width: 80%;
+}
+
+.accountHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.disconnectButton {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
+
+.address {
+  font-size: 1.4rem;
 }
 
 .warning {

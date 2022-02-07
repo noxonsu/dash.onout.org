@@ -35,9 +35,15 @@
   padding: 1rem;
 }
 
-.productCard p {
-  font-weight: 300;
+.description,
+.subdescription {
+  margin: 0;
+  padding: 0;
   font-size: 15px;
   line-height: 25px;
-  margin-bottom: 14px;
+}
+
+.subtitle {
+  margin: 1.4rem 0 0.7rem;
+  font-size: 1.1rem;
 }
