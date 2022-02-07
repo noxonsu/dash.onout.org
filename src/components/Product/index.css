@@ -19,32 +19,25 @@
   margin: 0;
 }
 
+.externalLink {
+  text-decoration: none;
+  color: var(--color);
+}
+
+.externalLinkIcon {
+  font-size: 1rem;
+}
+
 .error,
 .warning {
   padding: 0.6rem;
   border-radius: 0.6rem;
 }
 
-.backBtn,
-.paymentBtn {
-  padding: 0.5rem 1rem;
-  background-color: transparent;
-  border: 1px solid var(--color);
-  transition: 0.2s;
-}
-
 .backBtn {
-  border-radius: 1rem;
-  font-size: 1rem;
+  padding: 0.6rem 1rem;
 }
 
-.paymentBtn {
-  border-radius: 1rem;
-  background-color: var(--color);
-  color: var(--brand-color);
-}
-
-.paymentBtn:hover,
 .paymentBtn:disabled {
   opacity: 0.5;
 }

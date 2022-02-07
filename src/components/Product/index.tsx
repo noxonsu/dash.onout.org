@@ -1,4 +1,5 @@
 import { useContext, useState, useEffect } from "react";
+import { ImArrowUpRight2 } from "react-icons/im";
 import { BigNumber } from "bignumber.js";
 import { PRODUCTS, PAYMENT_ADDRESS, NETWORKS } from "../../constants";
 import { send } from "../../helpers/transaction";
@@ -6,6 +7,7 @@ import { getPrice } from "../../helpers/currency";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
+import Modal from "../Modal";
 
 import "./index.css";
 
@@ -15,10 +17,11 @@ const Product = ({ id }: ProductProps) => {
   const { account, isWeb3Loading } = useContext(Web3ConnecStateContext);
   const [paymentPending, setPaymentPending] = useState(false);
   const [wrongNetwork, setWrongNetwork] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [paidFor, setPaidFor] = useState(false);
   const { dispatch, state } = useUser();
   const { products, signed } = state;
-  const { name, description, price: USDPrice } = PRODUCTS[id];
+  const { name, promoPageLink, description, price: USDPrice } = PRODUCTS[id];
 
   useEffect(() => {
     const inProducts =
@@ -116,12 +119,27 @@ const Product = ({ id }: ProductProps) => {
 
   return (
     <div className="product">
+      {modalOpen && (
+        <Modal
+          onClose={() => setModalOpen(false)}
+          iframeSource={promoPageLink}
+          iframeTitle={name}
+        />
+      )}
+
       <div className="header">
         <h3 className="title">{name}</h3>
-        <button onClick={toProducts} className="backBtn">
+        <button onClick={toProducts} className="secondaryBtn backBtn">
           Back
         </button>
       </div>
+
+      {!promoPageLink.match(/codecanyon\.net/) && (
+        <button className="secondaryBtn" onClick={() => setModalOpen(true)}>
+          More details
+        </button>
+      )}
+
       <p>{description}</p>
       {wrongNetwork && (
         <p className="error">
@@ -138,7 +156,7 @@ const Product = ({ id }: ProductProps) => {
       )}
       <button
         onClick={payForProduct}
-        className={`paymentBtn ${paymentPending ? "pending" : ""}`}
+        className={`primaryBtn paymentBtn ${paymentPending ? "pending" : ""}`}
         disabled={
           paymentPending || paidFor || !signed || isWeb3Loading || !account
         }

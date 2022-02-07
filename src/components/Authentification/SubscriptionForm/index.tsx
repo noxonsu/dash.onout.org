@@ -103,7 +103,7 @@ const SubscriptionForm = ({
         </label>
       </div>
       <div className="sf-row">
-        <button type="button" className="primaryButton" onClick={handleSubmit}>
+        <button type="button" className="primaryBtn" onClick={handleSubmit}>
           Subscribe
         </button>
       </div>

@@ -142,7 +142,7 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
       {isWeb3Loading ? (
         <p>Loading...</p>
       ) : !account.connected ? (
-        <button className="primaryButton connectButton" onClick={connect}>
+        <button className="primaryBtn connectButton" onClick={connect}>
           Connect to wallet
         </button>
       ) : (

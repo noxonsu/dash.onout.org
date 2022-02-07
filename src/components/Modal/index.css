@@ -1,0 +1,33 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--transparent-dark-1);
+  z-index: 1;
+}
+
+.modal {
+  max-width: 67rem;
+  width: 84%;
+  max-height: 52rem;
+  height: 82%;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  background-color: var(--bg-color);
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+iframe {
+  width: 100%;
+  height: 88%;
+}

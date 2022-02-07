@@ -28,9 +28,15 @@ body
   --color: #e1ddf0;
   --shadow-color: rgb(0, 0, 0);
   --gray: rgb(29, 29, 29);
+
   --transparent-light-1: rgba(255, 255, 255, 0.2);
   --transparent-light-2: rgba(255, 255, 255, 0.1);
   --transparent-light-3: rgba(255, 255, 255, 0.05);
+
+  --transparent-dark-1: rgba(0, 0, 0, 0.2);
+  --transparent-dark-2: rgba(0, 0, 0, 0.1);
+  --transparent-dark-3: rgba(0, 0, 0, 0.05);
+
   --brand-color: #5f48b0;
   --border-color: #333c4b;
   --card-color: #343a46;
@@ -81,7 +87,7 @@ button {
   background-color: var(--color-error);
 }
 
-.primaryButton,
+.primaryBtn,
 .secondaryBtn {
   font-weight: bold;
   font-size: 0.9rem;
@@ -99,8 +105,8 @@ button {
   background-color: var(--transparent-light-2);
 }
 
-.primaryButton:hover,
-.primaryButton:focus,
+.primaryBtn:hover,
+.primaryBtn:focus,
 .secondaryBtn:hover,
 .secondaryBtn:focus {
   opacity: 0.5;
