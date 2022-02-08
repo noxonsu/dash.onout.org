@@ -18,13 +18,13 @@ const sendToken = async ({
 }: TxParameters & {
   tokenAddress: string;
 }) => {
-  const contract = new provider.eth.Contract(ERC20_ABI, tokenAddress, {
-    from,
-  });
-  const decimals = await contract.methods.decimals().call();
-  const unitAmount = utils.parseUnits(String(amount), decimals);
-
   try {
+    const contract = new provider.eth.Contract(ERC20_ABI, tokenAddress, {
+      from,
+    });
+    const decimals = await contract.methods.decimals().call();
+    const unitAmount = utils.parseUnits(String(amount), decimals);
+
     return await contract.methods.transfer(to, unitAmount).send({
       from,
     });
