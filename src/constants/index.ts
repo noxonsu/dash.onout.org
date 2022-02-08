@@ -4,6 +4,8 @@ export const PAYMENT_ADDRESS = "0x3B85D38c3A7AEabABA8B7DEb7a73177688270abC";
 // 50 calls per minute
 export const PRICE_ENDPOINT = "https://api.coingecko.com/api/v3";
 
+export const FIAT_TICKER = "USD";
+
 // https://docs.google.com/spreadsheets/d/1wTTuxXt8n9q7C4NDXqQpI3wpKu1_5bGVmP9Xz0XGSyU/edit#gid=0
 export const NETWORKS = {
   1: {
@@ -37,6 +39,8 @@ export interface Product {
   promoPageLink: string;
   buyLink: string;
   price: number; // USD
+  howToEarn?: string;
+  adminCanEdit?: string;
 }
 
 export const PRODUCTS: { [id: string]: Product } = {
@@ -44,6 +48,9 @@ export const PRODUCTS: { [id: string]: Product } = {
     id: "multicyrrencywallet",
     name: "MCW (Wallet + Exchange)",
     demo: "wallet.wpmix.net",
+    howToEarn:
+      "Add 'Withdraw' comission (BTC, ETH, Tokens), exchange comission (0x.org connected)",
+    adminCanEdit: "Logo, colors, styles, list of assets (BTC, ETH, Tokens)",
     description: "",
     imgSrc: COVERS.walletCover,
     imgAlt: "multicurrency wallet promo",
@@ -58,6 +65,9 @@ export const PRODUCTS: { [id: string]: Product } = {
     id: "definance",
     name: "DeFinance (DEX)",
     demo: "definance.wpmix.net",
+    howToEarn: "0.01% - 99% each trade",
+    adminCanEdit:
+      "Logo, colors, list of assets, links, fee percent, admin and fee addresses",
     description: "",
     imgSrc: COVERS.dexCover,
     imgAlt: "",
@@ -71,6 +81,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     id: "farmfactory",
     name: "FarmFactory",
     demo: "farm.wpmix.net",
+    howToEarn: "No comissions",
     description: "",
     imgSrc: COVERS.farmingCover,
     imgAlt: "",
@@ -85,6 +96,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     id: "daofactory",
     name: "DaoFactory",
     demo: "dao.wpmix.net",
+    howToEarn: "No comissions",
     description: "",
     imgSrc: COVERS.daoCover,
     imgAlt: "",
@@ -97,6 +109,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   lotteryfactory: {
     id: "lotteryfactory",
     name: "LotteryFactory",
+    howToEarn: "No comissions",
     demo: "lottery.wpmix.net",
     description: "",
     imgSrc: COVERS.lotteryCover,

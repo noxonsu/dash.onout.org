@@ -1,11 +1,17 @@
 import { useContext, useState, useEffect } from "react";
 import { BigNumber } from "bignumber.js";
-import { PRODUCTS, PAYMENT_ADDRESS, NETWORKS } from "../../constants";
+import {
+  PRODUCTS,
+  PAYMENT_ADDRESS,
+  NETWORKS,
+  FIAT_TICKER,
+} from "../../constants";
 import { send } from "../../helpers/transaction";
 import { getPrice } from "../../helpers/currency";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
+import Modal from "../Modal";
 
 import "./index.css";
 
@@ -15,10 +21,11 @@ const Product = ({ id }: ProductProps) => {
   const { account, isWeb3Loading } = useContext(Web3ConnecStateContext);
   const [paymentPending, setPaymentPending] = useState(false);
   const [wrongNetwork, setWrongNetwork] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [paidFor, setPaidFor] = useState(false);
   const { dispatch, state } = useUser();
   const { products, signed } = state;
-  const { name, description, price: USDPrice } = PRODUCTS[id];
+  const { name, promoPageLink, description, price: USDPrice } = PRODUCTS[id];
 
   useEffect(() => {
     const inProducts =
@@ -38,8 +45,8 @@ const Product = ({ id }: ProductProps) => {
     if (!PAYMENT_ADDRESS) return;
 
     BigNumber.config({
-      ROUNDING_MODE: BigNumber.ROUND_CEIL,
-      DECIMAL_PLACES: 0,
+      ROUNDING_MODE: BigNumber.ROUND_HALF_EVEN,
+      DECIMAL_PLACES: 18,
     });
     //@ts-ignore
     if (!NETWORKS[account?.networkId]) return;
@@ -47,7 +54,7 @@ const Product = ({ id }: ProductProps) => {
     const assetId = NETWORKS[account.networkId].currency.id;
     const data = await getPrice({
       assetId,
-      vsCurrency: "usd",
+      vsCurrency: FIAT_TICKER.toLowerCase(),
     });
 
     if (data) {
@@ -62,7 +69,6 @@ const Product = ({ id }: ProductProps) => {
         to: PAYMENT_ADDRESS,
         amount: cryptoPrice,
         // tokenAddress: "",
-        // decimals: ,
       };
 
       return params;
@@ -116,12 +122,27 @@ const Product = ({ id }: ProductProps) => {
 
   return (
     <div className="product">
+      {modalOpen && (
+        <Modal
+          onClose={() => setModalOpen(false)}
+          iframeSource={promoPageLink}
+          iframeTitle={name}
+        />
+      )}
+
       <div className="header">
         <h3 className="title">{name}</h3>
-        <button onClick={toProducts} className="backBtn">
+        <button onClick={toProducts} className="secondaryBtn backBtn">
           Back
         </button>
       </div>
+
+      {!promoPageLink.match(/codecanyon\.net/) && (
+        <button className="secondaryBtn" onClick={() => setModalOpen(true)}>
+          More details
+        </button>
+      )}
+
       <p>{description}</p>
       {wrongNetwork && (
         <p className="error">
@@ -138,7 +159,7 @@ const Product = ({ id }: ProductProps) => {
       )}
       <button
         onClick={payForProduct}
-        className={`paymentBtn ${paymentPending ? "pending" : ""}`}
+        className={`primaryBtn paymentBtn ${paymentPending ? "pending" : ""}`}
         disabled={
           paymentPending || paidFor || !signed || isWeb3Loading || !account
         }

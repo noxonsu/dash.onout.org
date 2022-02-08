@@ -27,7 +27,8 @@ const CheckAddress = ({ account }: CheckAddressProps) => {
 
   return isSubscribed || haveSubscribed ? null : (
     <div style={{ margin: "0 1rem" }}>
-      <p>Please enter your email to complete registration</p>
+      <h3>Please enter your email to complete registration</h3>
+
       <SubscriptionForm
         address={account.address}
         toggleSubscribed={toggleSetHaveSubscribed}

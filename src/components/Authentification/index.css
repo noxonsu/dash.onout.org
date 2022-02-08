@@ -4,12 +4,29 @@
   margin-top: 1rem;
 }
 
-.sf-row {
-  margin-bottom: 0.5rem;
+.subscriptionForm {
+  max-width: 38rem;
 }
 
-.subscribeBtn {
-  padding: 0.4rem 0.8rem;
-  border: none;
-  background-color: var(--brand-color);
+.sf-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.sf-rowColumn {
+  flex-direction: column;
+}
+
+.sf-rowColumn label {
+  margin-bottom: 0.2rem;
+}
+
+.sf-row input[type="checkbox"] {
+  margin-right: 0.7rem;
+  margin-top: 0.4rem;
+}
+
+.input {
+  width: auto;
 }

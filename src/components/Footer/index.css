@@ -1,0 +1,35 @@
+footer {
+  margin-top: auto;
+  padding: 2rem 0 1rem;
+}
+
+.linksList {
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+}
+
+.linkItem:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.linkItem a {
+  padding: 0.3rem;
+  font-size: 1.8rem;
+  text-decoration: none;
+  color: inherit;
+  transition: 0.1s;
+}
+
+.linkItem a:hover {
+  opacity: 0.5;
+}
+
+.icon {
+  /* show a link title on icon hover */
+  position: relative;
+  z-index: -1;
+}

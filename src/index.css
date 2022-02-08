@@ -28,6 +28,15 @@ body
   --color: #e1ddf0;
   --shadow-color: rgb(0, 0, 0);
   --gray: rgb(29, 29, 29);
+
+  --transparent-light-1: rgba(255, 255, 255, 0.2);
+  --transparent-light-2: rgba(255, 255, 255, 0.1);
+  --transparent-light-3: rgba(255, 255, 255, 0.05);
+
+  --transparent-dark-1: rgba(0, 0, 0, 0.2);
+  --transparent-dark-2: rgba(0, 0, 0, 0.1);
+  --transparent-dark-3: rgba(0, 0, 0, 0.05);
+
   --brand-color: #5f48b0;
   --border-color: #333c4b;
   --card-color: #343a46;
@@ -40,7 +49,6 @@ body[data-theme="light"] {
 
 body {
   margin: 0;
-  padding: 0 5%;
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
     "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -56,11 +64,19 @@ code {
     monospace;
 }
 
+label,
+input,
 button {
   cursor: pointer;
   font-size: inherit;
   font-family: inherit;
   color: var(--color);
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .warning {
@@ -69,4 +85,43 @@ button {
 
 .error {
   background-color: var(--color-error);
+}
+
+.primaryBtn,
+.secondaryBtn {
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  color: inherit;
+  padding: 0.8rem 2rem;
+  background-color: var(--brand-color);
+  border: 0.125rem solid var(--transparent-light-1);
+  border-radius: 0.8rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.secondaryBtn {
+  background-color: var(--transparent-light-2);
+}
+
+.primaryBtn:hover,
+.primaryBtn:focus,
+.secondaryBtn:hover,
+.secondaryBtn:focus {
+  opacity: 0.5;
+}
+
+.primaryInput {
+  padding: 0.5rem;
+  border-radius: 0.4rem;
+  border: 0.125rem solid var(--transparent-light-1);
+  background-color: var(--transparent-light-3);
+  transition: all 0.1s ease-in-out;
+}
+
+.primaryInput:hover,
+.primaryInput:focus {
+  border-color: 0.125rem solid var(--color);
+  outline: none;
 }

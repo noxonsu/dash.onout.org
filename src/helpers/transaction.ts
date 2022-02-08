@@ -7,7 +7,6 @@ type TxParameters = {
   to: string;
   amount: number;
   tokenAddress?: string;
-  decimals?: number;
 };
 
 const sendToken = async ({
@@ -16,17 +15,16 @@ const sendToken = async ({
   to,
   amount,
   tokenAddress,
-  decimals,
 }: TxParameters & {
   tokenAddress: string;
-  decimals: number;
 }) => {
-  const contract = new provider.eth.Contract(ERC20_ABI, tokenAddress, {
-    from,
-  });
-  const unitAmount = utils.parseUnits(String(amount), decimals);
-
   try {
+    const contract = new provider.eth.Contract(ERC20_ABI, tokenAddress, {
+      from,
+    });
+    const decimals = await contract.methods.decimals().call();
+    const unitAmount = utils.parseUnits(String(amount), decimals);
+
     return await contract.methods.transfer(to, unitAmount).send({
       from,
     });
@@ -44,7 +42,6 @@ export const send = async ({
   to,
   amount,
   tokenAddress,
-  decimals,
 }: TxParameters) => {
   const tx = {
     from,
@@ -52,14 +49,13 @@ export const send = async ({
     value: utils.parseUnits(String(amount), "ether").toHexString(),
   };
 
-  if (tokenAddress && decimals !== undefined) {
+  if (tokenAddress) {
     return sendToken({
       provider,
       from,
       to,
       amount,
       tokenAddress,
-      decimals,
     });
   }
 
