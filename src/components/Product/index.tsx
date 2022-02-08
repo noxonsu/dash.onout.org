@@ -1,7 +1,11 @@
 import { useContext, useState, useEffect } from "react";
-import { ImArrowUpRight2 } from "react-icons/im";
 import { BigNumber } from "bignumber.js";
-import { PRODUCTS, PAYMENT_ADDRESS, NETWORKS } from "../../constants";
+import {
+  PRODUCTS,
+  PAYMENT_ADDRESS,
+  NETWORKS,
+  FIAT_TICKER,
+} from "../../constants";
 import { send } from "../../helpers/transaction";
 import { getPrice } from "../../helpers/currency";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
@@ -41,8 +45,8 @@ const Product = ({ id }: ProductProps) => {
     if (!PAYMENT_ADDRESS) return;
 
     BigNumber.config({
-      ROUNDING_MODE: BigNumber.ROUND_CEIL,
-      DECIMAL_PLACES: 0,
+      ROUNDING_MODE: BigNumber.ROUND_HALF_EVEN,
+      DECIMAL_PLACES: 18,
     });
     //@ts-ignore
     if (!NETWORKS[account?.networkId]) return;
@@ -50,7 +54,7 @@ const Product = ({ id }: ProductProps) => {
     const assetId = NETWORKS[account.networkId].currency.id;
     const data = await getPrice({
       assetId,
-      vsCurrency: "usd",
+      vsCurrency: FIAT_TICKER.toLowerCase(),
     });
 
     if (data) {
@@ -65,7 +69,6 @@ const Product = ({ id }: ProductProps) => {
         to: PAYMENT_ADDRESS,
         amount: cryptoPrice,
         // tokenAddress: "",
-        // decimals: ,
       };
 
       return params;

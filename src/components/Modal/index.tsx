@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import useKeyPress from "../../hooks/useKeyPress";
 import "./index.css";
 
@@ -10,10 +11,14 @@ const Modal = ({
   iframeSource?: string;
   iframeTitle?: string;
 }) => {
-  const closePress = useKeyPress("d");
+  const closePress = useKeyPress("Escape");
+
+  useEffect(() => {
+    if (closePress) onClose();
+  }, [closePress, onClose]);
 
   return (
-    <div className="modalOverlay" onKeyDown={(e) => console.log(e.key)}>
+    <div className="modalOverlay">
       <div className="modal">
         <div className="modalHeader">
           {iframeTitle && <h3>{iframeTitle}</h3>}
