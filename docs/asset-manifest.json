@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.54ad9076.css",
-    "main.js": "/static/js/main.8cb680f9.js",
+    "main.css": "/static/css/main.31906a3c.css",
+    "main.js": "/static/js/main.37a9f642.js",
     "static/js/787.de7b3d37.chunk.js": "/static/js/787.de7b3d37.chunk.js",
     "static/media/nftsy-cover.jpg": "/static/media/nftsy-cover.72fedd3eebb0cf7b0f26.jpg",
     "static/media/lottery-cover.jpg": "/static/media/lottery-cover.97a34a9c1aa834d0cc1b.jpg",
@@ -11,12 +11,12 @@
     "static/media/dao-cover.jpg": "/static/media/dao-cover.234eb37ad9117148956d.jpg",
     "static/media/cross-chain-cover.jpg": "/static/media/cross-chain-cover.0be1f6bd8d9ff8b164b5.jpg",
     "index.html": "/index.html",
-    "main.54ad9076.css.map": "/static/css/main.54ad9076.css.map",
-    "main.8cb680f9.js.map": "/static/js/main.8cb680f9.js.map",
+    "main.31906a3c.css.map": "/static/css/main.31906a3c.css.map",
+    "main.37a9f642.js.map": "/static/js/main.37a9f642.js.map",
     "787.de7b3d37.chunk.js.map": "/static/js/787.de7b3d37.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.54ad9076.css",
-    "static/js/main.8cb680f9.js"
+    "static/css/main.31906a3c.css",
+    "static/js/main.37a9f642.js"
   ]
 }
