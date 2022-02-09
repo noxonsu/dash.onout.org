@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCheckAddress } from "../../../hooks/useCheckAddress";
 import useUser from "../../../hooks/useUser";
 import { UserActions } from "../../UserProvider";
@@ -15,26 +15,33 @@ const CheckAddress = ({ account }: CheckAddressProps) => {
     setHaveSubscribed(!haveSubscribed);
   };
 
+  useEffect(() => {
+    if (isSubscribed || haveSubscribed) {
+      if (!state.signed) {
+        dispatch({
+          type: UserActions.signed,
+          payload: true,
+        });
+      }
+      if (!state.subscribed) {
+        dispatch({
+          type: UserActions.subscribed,
+          payload: true,
+        });
+      }
+    } else if (state.subscribed) {
+      dispatch({
+        type: UserActions.subscribed,
+        payload: false,
+      });
+    }
+  }, [isSubscribed, haveSubscribed, state, dispatch]);
+
   if (isCheckLoading) {
     return <span className="pending">Checking your address</span>;
   }
 
   if (isSubscribed === undefined) return <></>;
-
-  if (isSubscribed || haveSubscribed) {
-    if (!state.signed) {
-      dispatch({
-        type: UserActions.signed,
-        payload: true,
-      });
-    }
-    if (!state.subscribed) {
-      dispatch({
-        type: UserActions.subscribed,
-        payload: true,
-      });
-    }
-  }
 
   return isSubscribed || haveSubscribed ? null : (
     <div style={{ margin: "0 1rem" }}>

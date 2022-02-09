@@ -66,10 +66,6 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     products: [],
   });
 
-  console.group("%c Log", "color: orange; font-size: 14px");
-  console.log("state: ", state);
-  console.groupEnd();
-
   return (
     <UserContext.Provider value={{ state, dispatch }}>
       {children}

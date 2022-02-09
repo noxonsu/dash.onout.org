@@ -144,10 +144,6 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
 
   const { address, wrongNetwork } = account;
 
-  console.group("%c Log", "color: orange; font-size: 14px");
-  console.log("wrongNetwork: ", wrongNetwork);
-  console.groupEnd();
-
   const web3ConnectContent = (
     <div className="Web3Connect">
       {isWeb3Loading ? (
