@@ -9,18 +9,21 @@ export const FIAT_TICKER = "USD";
 // https://docs.google.com/spreadsheets/d/1wTTuxXt8n9q7C4NDXqQpI3wpKu1_5bGVmP9Xz0XGSyU/edit#gid=0
 export const NETWORKS = {
   1: {
+    id: 1,
     name: "Ethereum",
     currency: {
       id: "ethereum",
     },
   },
   56: {
-    name: "Binance Smart Chain",
+    id: 56,
+    name: "BSC",
     currency: {
       id: "binancecoin",
     },
   },
   137: {
+    id: 137,
     name: "Polygon",
     currency: {
       id: "aave-polygon-wmatic",

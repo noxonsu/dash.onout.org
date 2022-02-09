@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { providers, utils } from "ethers";
+import { utils } from "ethers";
 import Web3 from "web3";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
@@ -13,21 +13,19 @@ const INFURA_ID = "460f40a260564ac4a4f4b3fffb032dad";
 
 type Web3ConnectState = {
   connected: boolean;
-  provider: providers.Web3Provider | null;
-  web3Provider: any;
+  provider: any | null;
   networkId: number | undefined;
+  wrongNetwork: boolean;
   address: string;
-  signer: providers.JsonRpcSigner | null;
   balance: string;
 };
 
 const initialWeb3ConnectState: Web3ConnectState = {
   connected: false,
   provider: null,
-  web3Provider: null,
   networkId: undefined,
+  wrongNetwork: false,
   address: "",
-  signer: null,
   balance: utils.formatEther(0),
 };
 
@@ -65,25 +63,22 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
 
   async function connect() {
     const web3ModalProvider = await web3Modal.connect();
-    const provider = new providers.Web3Provider(web3ModalProvider);
-    // * Web3 provider solve the problem with sending transactions
-    const web3Provider = new Web3(web3ModalProvider);
+    const provider = new Web3(web3ModalProvider);
 
     async function setAccountFromProvider() {
       setIsWeb3Loading(true);
       try {
-        const signer = provider.getSigner(0);
-        const address = await signer.getAddress();
-        const balance = await signer.getBalance();
-        const network = await provider.getNetwork();
+        const accaunts = await provider.eth.getAccounts();
+        const balance = await provider.eth.getBalance(accaunts[0]);
+        const networkId = await provider.eth.net.getId();
 
         setAccount({
           connected: true,
           provider,
-          web3Provider,
-          networkId: network.chainId,
-          address,
-          signer,
+          networkId,
+          //@ts-ignore
+          wrongNetwork: !NETWORKS[networkId],
+          address: accaunts[0],
           balance: utils.formatEther(balance),
         });
       } catch (error) {
@@ -96,12 +91,31 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
 
     setAccountFromProvider();
 
-    web3ModalProvider.on("accountsChanged", () => {
+    web3ModalProvider.on("accountsChanged", (accounts: string[]) => {
+      if (accounts[0].toLowerCase() !== account.address.toLowerCase()) {
+        dispatch({
+          type: UserActions.signed,
+          payload: false,
+        });
+        dispatch({
+          type: UserActions.signed,
+          payload: false,
+        });
+      }
+
       setAccountFromProvider();
     });
 
     web3ModalProvider.on("close", () => {
       setAccount(initialWeb3ConnectState);
+    });
+
+    web3ModalProvider.on("chainChanged", (chainId: number) => {
+      setAccount((prevState) => ({
+        ...prevState,
+        //@ts-ignore
+        wrongNetwork: !NETWORKS[Number(chainId)],
+      }));
     });
   }
 
@@ -128,19 +142,12 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
     setAccount(initialWeb3ConnectState);
   }
 
-  async function signMessage() {
-    const signedMessage = await account.signer?.signMessage(
-      "Please Login to our website!"
-    );
-    console.log(signedMessage);
-  }
-
-  const { address } = account;
+  const { address, wrongNetwork } = account;
 
   const web3ConnectContent = (
     <div className="Web3Connect">
       {isWeb3Loading ? (
-        <p>Loading...</p>
+        <p className="pending">Loading</p>
       ) : !account.connected ? (
         <button className="primaryBtn connectButton" onClick={connect}>
           Connect to wallet
@@ -161,11 +168,9 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
             </button>
           </div>
 
-          {/* @ts-ignore */}
-          {!NETWORKS[account.networkId] && (
+          {wrongNetwork && (
             <div className="warning">
-              Please switch to one of the supported networks and reload this
-              page:
+              Please switch to one of the supported networks:
               <ul className="networksList">
                 {Object.values(NETWORKS).map(({ name }, index) => (
                   <li key={index}>{name}</li>

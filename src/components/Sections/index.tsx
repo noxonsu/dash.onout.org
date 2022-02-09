@@ -12,7 +12,7 @@ import "./index.css";
 const Sections = () => {
   const { account } = useContext(Web3ConnecStateContext);
   const { state, dispatch } = useUser();
-  const { signed, view, products } = state;
+  const { signed, subscribed, view, products } = state;
 
   // For now, while we save it in localStorage, retrive all saved user products from here
   const retriveSavedProducts = useCallback(() => {
@@ -68,16 +68,7 @@ const Sections = () => {
     </div>
   );
 
-  const [wrongNetwork, setWrongNetwork] = useState(true);
-
-  useEffect(() => {
-    //@ts-ignore
-    if (NETWORKS[account.networkId]) {
-      setWrongNetwork(false);
-    }
-  }, [account]);
-
-  if (!signed || wrongNetwork) return null;
+  if (!signed || !subscribed || account.wrongNetwork) return null;
 
   return (
     <div>
