@@ -68,16 +68,7 @@ const Sections = () => {
     </div>
   );
 
-  const [wrongNetwork, setWrongNetwork] = useState(true);
-
-  useEffect(() => {
-    //@ts-ignore
-    if (NETWORKS[account.networkId]) {
-      setWrongNetwork(false);
-    }
-  }, [account]);
-
-  if (!signed || wrongNetwork) return null;
+  if (!signed || account.wrongNetwork) return null;
 
   return (
     <div>

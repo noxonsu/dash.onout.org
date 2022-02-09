@@ -15,14 +15,25 @@ const CheckAddress = ({ account }: CheckAddressProps) => {
     setHaveSubscribed(!haveSubscribed);
   };
 
-  if (isCheckLoading) return <span>Checking your address...</span>;
+  if (isCheckLoading) {
+    return <span className="pending">Checking your address</span>;
+  }
+
   if (isSubscribed === undefined) return <></>;
 
-  if ((isSubscribed || haveSubscribed) && !state.signed) {
-    dispatch({
-      type: UserActions.signed,
-      payload: true,
-    });
+  if (isSubscribed || haveSubscribed) {
+    if (!state.signed) {
+      dispatch({
+        type: UserActions.signed,
+        payload: true,
+      });
+    }
+    if (!state.subscribed) {
+      dispatch({
+        type: UserActions.subscribed,
+        payload: true,
+      });
+    }
   }
 
   return isSubscribed || haveSubscribed ? null : (

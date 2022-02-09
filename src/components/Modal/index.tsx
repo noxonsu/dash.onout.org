@@ -5,11 +5,13 @@ import "./index.css";
 const Modal = ({
   onClose,
   iframeSource,
-  iframeTitle,
+  title,
+  content,
 }: {
   onClose: () => void;
+  content: JSX.Element;
   iframeSource?: string;
-  iframeTitle?: string;
+  title?: string;
 }) => {
   const closePress = useKeyPress("Escape");
 
@@ -21,19 +23,13 @@ const Modal = ({
     <div className="modalOverlay">
       <div className="modal">
         <div className="modalHeader">
-          {iframeTitle && <h3>{iframeTitle}</h3>}
+          {title && <h3>{title}</h3>}
           <button className="secondaryBtn" onClick={onClose}>
             Close
           </button>
         </div>
 
-        {iframeSource && iframeTitle && (
-          <iframe
-            title={iframeTitle}
-            src={iframeSource}
-            frameBorder="0"
-          ></iframe>
-        )}
+        {content}
       </div>
     </div>
   );

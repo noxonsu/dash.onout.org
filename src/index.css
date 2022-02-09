@@ -125,3 +125,27 @@ button {
   border-color: 0.125rem solid var(--color);
   outline: none;
 }
+
+.pending {
+  cursor: wait;
+}
+
+.pending::after {
+  display: inline-block;
+  animation: ellipsis 1.25s infinite;
+  content: ".";
+  width: 1em;
+  text-align: left;
+}
+
+@keyframes ellipsis {
+  0% {
+    content: ".";
+  }
+  33% {
+    content: "..";
+  }
+  66% {
+    content: "...";
+  }
+}

@@ -20,7 +20,6 @@ type ProductProps = { id: string };
 const Product = ({ id }: ProductProps) => {
   const { account, isWeb3Loading } = useContext(Web3ConnecStateContext);
   const [paymentPending, setPaymentPending] = useState(false);
-  const [wrongNetwork, setWrongNetwork] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [paidFor, setPaidFor] = useState(false);
   const { dispatch, state } = useUser();
@@ -63,8 +62,7 @@ const Product = ({ id }: ProductProps) => {
         .toNumber();
 
       const params = {
-        // use a Web3 provider for trouble-free sending
-        provider: account.web3Provider,
+        provider: account.provider,
         from: account.address,
         to: PAYMENT_ADDRESS,
         amount: cryptoPrice,
@@ -78,26 +76,11 @@ const Product = ({ id }: ProductProps) => {
   };
 
   const payForProduct = async () => {
-    if (!account.provider) return;
+    if (!account.provider || account.wrongNetwork) return;
 
     setPaymentPending(true);
 
     const params = await getPaymentParameters();
-
-    // TODO: find better solution. Use a different connection way
-    // quick fix the problem when user can switch to testnet and pay there
-    // with current provider we can get a network error if user on a
-    // different network then on first connection
-    try {
-      await account.provider.getNetwork();
-    } catch (error) {
-      // Error: underlying network changed...
-      console.group("%c payment", "color: red");
-      console.error(error);
-      console.groupEnd();
-      setWrongNetwork(true);
-      return;
-    }
 
     if (params) {
       const confirmedTx = await send(params);
@@ -120,13 +103,30 @@ const Product = ({ id }: ProductProps) => {
     setPaymentPending(false);
   };
 
+  const [paymentAvailable, setPaymentAvailable] = useState(false);
+
+  useEffect(() => {
+    setPaymentAvailable(
+      !paymentPending &&
+        !paidFor &&
+        signed &&
+        !isWeb3Loading &&
+        account &&
+        !account.wrongNetwork
+    );
+  }, [paymentPending, paidFor, signed, isWeb3Loading, account]);
+
   return (
     <div className="product">
       {modalOpen && (
         <Modal
           onClose={() => setModalOpen(false)}
-          iframeSource={promoPageLink}
-          iframeTitle={name}
+          title={name}
+          content={
+            <>
+              <iframe title={name} src={promoPageLink} frameBorder="0"></iframe>
+            </>
+          }
         />
       )}
 
@@ -144,12 +144,6 @@ const Product = ({ id }: ProductProps) => {
       )}
 
       <p>{description}</p>
-      {wrongNetwork && (
-        <p className="error">
-          You cannot pay on this network. Switch to supported network and reload
-          this page
-        </p>
-      )}
       {paidFor ? (
         <p>You already have this product</p>
       ) : (
@@ -160,9 +154,7 @@ const Product = ({ id }: ProductProps) => {
       <button
         onClick={payForProduct}
         className={`primaryBtn paymentBtn ${paymentPending ? "pending" : ""}`}
-        disabled={
-          paymentPending || paidFor || !signed || isWeb3Loading || !account
-        }
+        disabled={!paymentAvailable}
       >
         {paymentPending ? "Pending" : `Buy for $${USDPrice}`}
       </button>
