@@ -1,4 +1,4 @@
-import { COVERS } from "../images";
+import { COVERS } from "../assets";
 
 export const PAYMENT_ADDRESS = "0x3B85D38c3A7AEabABA8B7DEb7a73177688270abC";
 // 50 calls per minute

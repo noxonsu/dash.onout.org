@@ -27,7 +27,7 @@
     "helpers/*": ["src/helpers/*"],
     "hooks": ["src/hooks"],
     "hooks/*": ["src/hooks/*"],
-    "images": ["src/images"],
-    "images/*": ["src/images/*"]
+    "assets": ["src/assets"],
+    "assets/*": ["src/assets/*"]
   }
 }

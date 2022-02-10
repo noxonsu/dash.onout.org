@@ -119,9 +119,7 @@ const Product = ({ id }: ProductProps) => {
           onClose={() => setModalOpen(false)}
           title={name}
           content={
-            <>
-              <iframe title={name} src={promoPageLink} frameBorder="0"></iframe>
-            </>
+            <iframe title={name} src={promoPageLink} frameBorder="0"></iframe>
           }
         />
       )}
