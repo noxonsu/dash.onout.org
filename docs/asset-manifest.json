@@ -1,8 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.31906a3c.css",
-    "main.js": "/static/js/main.a78f09ac.js",
+    "main.css": "/static/css/main.96e6c539.css",
+    "main.js": "/static/js/main.af201208.js",
     "static/js/787.de7b3d37.chunk.js": "/static/js/787.de7b3d37.chunk.js",
+    "static/media/definance.zip": "/static/media/definance.54ee0ba1f5b1df67f26c.zip",
+    "static/media/lotteryfactory.zip": "/static/media/lotteryfactory.e16e17015d7764386f95.zip",
+    "static/media/multicurrencywallet.zip": "/static/media/multicurrencywallet.221e31a256691a3c1790.zip",
+    "static/media/daofactory.zip": "/static/media/daofactory.f2b968d902785078b76c.zip",
+    "static/media/farmfactory.zip": "/static/media/farmfactory.59b29a7d6fb3b6ea17d7.zip",
     "static/media/nftsy-cover.jpg": "/static/media/nftsy-cover.72fedd3eebb0cf7b0f26.jpg",
     "static/media/lottery-cover.jpg": "/static/media/lottery-cover.97a34a9c1aa834d0cc1b.jpg",
     "static/media/dex-cover.jpg": "/static/media/dex-cover.4b245a3d846854edf8a5.jpg",
@@ -11,12 +16,12 @@
     "static/media/dao-cover.jpg": "/static/media/dao-cover.234eb37ad9117148956d.jpg",
     "static/media/cross-chain-cover.jpg": "/static/media/cross-chain-cover.0be1f6bd8d9ff8b164b5.jpg",
     "index.html": "/index.html",
-    "main.31906a3c.css.map": "/static/css/main.31906a3c.css.map",
-    "main.a78f09ac.js.map": "/static/js/main.a78f09ac.js.map",
+    "main.96e6c539.css.map": "/static/css/main.96e6c539.css.map",
+    "main.af201208.js.map": "/static/js/main.af201208.js.map",
     "787.de7b3d37.chunk.js.map": "/static/js/787.de7b3d37.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.31906a3c.css",
-    "static/js/main.a78f09ac.js"
+    "static/css/main.96e6c539.css",
+    "static/js/main.af201208.js"
   ]
 }
