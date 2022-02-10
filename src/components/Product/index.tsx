@@ -42,34 +42,30 @@ const Product = ({ id }: ProductProps) => {
 
   const getPaymentParameters = async () => {
     if (!PAYMENT_ADDRESS) return;
-
-    BigNumber.config({
-      ROUNDING_MODE: BigNumber.ROUND_HALF_EVEN,
-      DECIMAL_PLACES: 18,
-    });
+    // fetch the current id right before prices to be sure of the correct currency for this network
+    const networkId = await account.provider.eth.net.getId();
     //@ts-ignore
-    if (!NETWORKS[account?.networkId]) return;
+    if (!NETWORKS[networkId]) return;
     //@ts-ignore
-    const assetId = NETWORKS[account.networkId].currency.id;
+    const assetId = NETWORKS[networkId].currency.id;
     const data = await getPrice({
       assetId,
       vsCurrency: FIAT_TICKER.toLowerCase(),
     });
 
     if (data) {
-      const cryptoPrice = new BigNumber(USDPrice)
-        .div(data[assetId]?.usd)
-        .toNumber();
+      BigNumber.config({
+        ROUNDING_MODE: BigNumber.ROUND_HALF_EVEN,
+        DECIMAL_PLACES: 18,
+      });
 
-      const params = {
+      return {
         provider: account.provider,
         from: account.address,
         to: PAYMENT_ADDRESS,
-        amount: cryptoPrice,
+        amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
         // tokenAddress: "",
       };
-
-      return params;
     }
 
     return false;
@@ -123,9 +119,7 @@ const Product = ({ id }: ProductProps) => {
           onClose={() => setModalOpen(false)}
           title={name}
           content={
-            <>
-              <iframe title={name} src={promoPageLink} frameBorder="0"></iframe>
-            </>
+            <iframe title={name} src={promoPageLink} frameBorder="0"></iframe>
           }
         />
       )}

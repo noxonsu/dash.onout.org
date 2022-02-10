@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
 import { PRODUCTS } from "../../constants";
 import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
+import { PLUGINS } from "../../assets";
 
 import "./index.css";
 
@@ -13,13 +13,6 @@ const Item = ({ id }: ItemProps) => {
   // const { dispatch } = useUser();
   const { name } = PRODUCTS[id];
 
-  // const removeProduct = () => {
-  //   dispatch({
-  //     type: UserActions.removeProduct,
-  //     payload: id,
-  //   });
-  // };
-
   return (
     <div className="userProduct">
       <div className="top">
@@ -27,11 +20,7 @@ const Item = ({ id }: ItemProps) => {
       </div>
 
       <div className="bottom">
-        <a
-          href={`../../secret/${id.toLowerCase()}.zip`}
-          className="downloadLink"
-          download
-        >
+        <a href={PLUGINS[id]} className="downloadLink" download>
           Download
         </a>
       </div>

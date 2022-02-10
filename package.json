@@ -34,6 +34,7 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
+    "serve": "npx serve -s build",
     "eject": "react-app-rewired eject"
   },
   "eslintConfig": {
@@ -53,5 +54,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "serve": "^13.0.2"
   }
 }
