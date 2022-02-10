@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { utils } from "ethers";
 import Web3 from "web3";
 import Web3Modal from "web3modal";
@@ -38,12 +38,6 @@ const providerOptions = {
   },
 };
 
-const web3Modal = new Web3Modal({
-  network: "mainnet", // optional
-  cacheProvider: false, // optional
-  disableInjectedProvider: false, // optional. For MetaMask / Brave / Opera
-  providerOptions, // required
-});
 
 type WithModalProps = {
   children?: any;
@@ -55,6 +49,13 @@ export const Web3ConnecStateContext = createContext({
 });
 
 const WithWeb3Connect = ({ children }: WithModalProps) => {
+  const web3Modal = new Web3Modal({
+    network: "mainnet", // optional
+    cacheProvider: true, // optional
+    disableInjectedProvider: false, // optional. For MetaMask / Brave / Opera
+    providerOptions, // required
+  });
+
   const [account, setAccount] = useState<Web3ConnectState>(
     initialWeb3ConnectState
   );
@@ -92,22 +93,24 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
     setAccountFromProvider();
 
     web3ModalProvider.on("accountsChanged", (accounts: string[]) => {
-      if (accounts[0].toLowerCase() !== account.address.toLowerCase()) {
-        dispatch({
-          type: UserActions.signed,
-          payload: false,
-        });
+      if (accounts[0]?.toLowerCase() !== account.address.toLowerCase()) {
         dispatch({
           type: UserActions.signed,
           payload: false,
         });
       }
 
-      setAccountFromProvider();
+      const isUnlocked = web3ModalProvider._state.isUnlocked;
+
+      if (accounts.length > 0 && isUnlocked) {
+        setAccountFromProvider()
+      } else {
+        disconnect()
+      };
     });
 
     web3ModalProvider.on("close", () => {
-      setAccount(initialWeb3ConnectState);
+      disconnect()
     });
 
     web3ModalProvider.on("chainChanged", (chainId: number) => {
@@ -116,6 +119,11 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
         //@ts-ignore
         wrongNetwork: !NETWORKS[Number(chainId)],
       }));
+    });
+
+    // Subscribe to provider disconnection
+    web3ModalProvider.on("disconnect", (error: { code: number; message: string }) => {
+      disconnect()
     });
   }
 
@@ -132,14 +140,15 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
     if (account?.provider?.close) {
       // @ts-ignore
       await account.provider.close();
-
-      // If the cached provider is not cleared,
-      // WalletConnect will default to the existing session
-      // and does not allow to re-scan the QR code with a new wallet.
-      // Depending on your use case you may want or want not his behavir.
     }
 
     setAccount(initialWeb3ConnectState);
+
+    // If the cached provider is not cleared,
+    // WalletConnect will default to the existing session
+    // and does not allow to re-scan the QR code with a new wallet.
+    // Depending on your use case you may want or want not his behavir.
+    web3Modal.clearCachedProvider();
   }
 
   const { address, wrongNetwork } = account;
@@ -182,6 +191,16 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
       )}
     </div>
   );
+
+  useEffect(() => {
+    const web3ConnectCachedProvider = web3Modal.cachedProvider;
+    const hasCashedProvider = !!web3ConnectCachedProvider
+
+    if (!account.connected && !isWeb3Loading && hasCashedProvider) {
+      console.log("Try reconnecting")
+      connect();
+    }
+  }, [])
 
   return (
     <Web3ConnecStateContext.Provider value={{ account, isWeb3Loading }}>
