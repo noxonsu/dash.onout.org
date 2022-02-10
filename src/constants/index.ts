@@ -29,6 +29,13 @@ export const NETWORKS = {
       id: "aave-polygon-wmatic",
     },
   },
+  43114: {
+    id: 43114,
+    name: "Avalanche",
+    currency: {
+      id: "avalanche-2",
+    },
+  },
 };
 
 export interface Product {
@@ -47,8 +54,8 @@ export interface Product {
 }
 
 export const PRODUCTS: { [id: string]: Product } = {
-  multicyrrencywallet: {
-    id: "multicyrrencywallet",
+  multicurrencywallet: {
+    id: "multicurrencywallet",
     name: "MCW (Wallet + Exchange)",
     demo: "wallet.wpmix.net",
     howToEarn:
@@ -107,7 +114,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     promoPageLink: "https://tools.onout.org/dao/",
     buyLink:
       "https://codecanyon.net/item/dao-factory-governance-and-proposals-plugin-for-your-token-for-wordpress/35608699",
-    price: 499,
+    price: 600,
   },
   lotteryfactory: {
     id: "lotteryfactory",
