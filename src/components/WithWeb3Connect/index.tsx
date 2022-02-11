@@ -38,7 +38,6 @@ const providerOptions = {
   },
 };
 
-
 type WithModalProps = {
   children?: any;
 };
@@ -103,14 +102,14 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
       const isUnlocked = web3ModalProvider._state.isUnlocked;
 
       if (accounts.length > 0 && isUnlocked) {
-        setAccountFromProvider()
+        setAccountFromProvider();
       } else {
-        disconnect()
-      };
+        disconnect();
+      }
     });
 
     web3ModalProvider.on("close", () => {
-      disconnect()
+      disconnect();
     });
 
     web3ModalProvider.on("chainChanged", (chainId: number) => {
@@ -122,9 +121,12 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
     });
 
     // Subscribe to provider disconnection
-    web3ModalProvider.on("disconnect", (error: { code: number; message: string }) => {
-      disconnect()
-    });
+    web3ModalProvider.on(
+      "disconnect",
+      (error: { code: number; message: string }) => {
+        disconnect();
+      }
+    );
   }
 
   async function disconnect() {
@@ -194,13 +196,17 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
 
   useEffect(() => {
     const web3ConnectCachedProvider = web3Modal.cachedProvider;
-    const hasCashedProvider = !!web3ConnectCachedProvider
+    const hasCashedProvider = !!web3ConnectCachedProvider;
 
     if (!account.connected && !isWeb3Loading && hasCashedProvider) {
-      console.log("Try reconnecting")
+      console.log("Try reconnecting");
+      dispatch({
+        type: UserActions.signed,
+        payload: false,
+      });
       connect();
     }
-  }, [])
+  }, []);
 
   return (
     <Web3ConnecStateContext.Provider value={{ account, isWeb3Loading }}>

@@ -14,12 +14,24 @@ export const NETWORKS = {
     currency: {
       id: "ethereum",
     },
+    tokens: {
+      usdt: {
+        address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
+        id: '',
+      },
+    },
   },
   56: {
     id: 56,
     name: "BSC",
     currency: {
       id: "binancecoin",
+    },
+    tokens: {
+      usdt: {
+        address: '0x55d398326f99059fF775485246999027B3197955',
+        id: '',
+      },
     },
   },
   137: {
@@ -28,12 +40,11 @@ export const NETWORKS = {
     currency: {
       id: "aave-polygon-wmatic",
     },
-  },
-  43114: {
-    id: 43114,
-    name: "Avalanche",
-    currency: {
-      id: "avalanche-2",
+    tokens: {
+      usdt: {
+        address: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
+        id: '',
+      },
     },
   },
 };
@@ -47,8 +58,8 @@ export interface Product {
   imgAlt: string;
   promoPage: string;
   promoPageLink: string;
-  buyLink: string;
-  price: number; // USD
+  codecanyonLink?: string;
+  price: number | undefined; // USD
   howToEarn?: string;
   adminCanEdit?: string;
 }
@@ -64,10 +75,9 @@ export const PRODUCTS: { [id: string]: Product } = {
     description: "",
     imgSrc: COVERS.walletCover,
     imgAlt: "multicurrency wallet promo",
-    promoPage: "Codecanyon",
-    promoPageLink:
-      "https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064",
-    buyLink:
+    promoPage: "OnOut wallet",
+    promoPageLink: "https://tools.onout.org/wallet/",
+    codecanyonLink:
       "https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064",
     price: 999,
   },
@@ -80,10 +90,10 @@ export const PRODUCTS: { [id: string]: Product } = {
       "Logo, colors, list of assets, links, fee percent, admin and fee addresses",
     description: "",
     imgSrc: COVERS.dexCover,
-    imgAlt: "",
+    imgAlt: "DeFinance promo",
     promoPage: "OnOut DEX",
     promoPageLink: "https://tools.onout.org/dex/",
-    buyLink:
+    codecanyonLink:
       "https://codecanyon.net/item/definance-ethereum-defi-plugin-for-wordpress/29099232",
     price: 899,
   },
@@ -94,11 +104,10 @@ export const PRODUCTS: { [id: string]: Product } = {
     howToEarn: "No comissions",
     description: "",
     imgSrc: COVERS.farmingCover,
-    imgAlt: "",
+    imgAlt: "Farmfactory promo",
     promoPage: "Codecanyon",
-    promoPageLink:
-      "https://codecanyon.net/item/farmfactory-ethereum-assets-staking-yield-farming/29987071",
-    buyLink:
+    promoPageLink: "https://tools.onout.org/farming/",
+    codecanyonLink:
       "https://codecanyon.net/item/farmfactory-ethereum-assets-staking-yield-farming/29987071",
     price: 799,
   },
@@ -109,25 +118,37 @@ export const PRODUCTS: { [id: string]: Product } = {
     howToEarn: "No comissions",
     description: "",
     imgSrc: COVERS.daoCover,
-    imgAlt: "",
+    imgAlt: "Daofactory promo",
     promoPage: "OnOut DAO",
     promoPageLink: "https://tools.onout.org/dao/",
-    buyLink:
+    codecanyonLink:
       "https://codecanyon.net/item/dao-factory-governance-and-proposals-plugin-for-your-token-for-wordpress/35608699",
     price: 600,
   },
   lotteryfactory: {
     id: "lotteryfactory",
     name: "LotteryFactory",
-    howToEarn: "No comissions",
+    howToEarn: "0 - 30% from selling tickets",
     demo: "lottery.wpmix.net",
     description: "",
     imgSrc: COVERS.lotteryCover,
-    imgAlt: "",
+    imgAlt: "Lotteryfactory promo",
     promoPage: "OnOut Lottery",
     promoPageLink: "https://tools.onout.org/lottery/",
-    buyLink:
+    codecanyonLink:
       "https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064",
     price: 999,
+  },
+  nftmarketplace: {
+    id: "nftmarketplace",
+    name: "NFT Marketplace",
+    howToEarn: "",
+    demo: "https://nft.wpmix.net/",
+    description: "",
+    imgSrc: COVERS.nftsyCover,
+    imgAlt: "NFT Marketplace promo",
+    promoPage: "OnOut NFT Marketplace",
+    promoPageLink: "https://tools.onout.org/nft/",
+    price: 500,
   },
 };
