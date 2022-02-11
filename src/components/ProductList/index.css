@@ -2,18 +2,27 @@
   max-width: 60rem;
   margin: 0 auto;
   width: 95%;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1.2rem;
+}
+
+@media screen and (max-width: 840px) {
+  .products {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .products {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .productCard {
   cursor: pointer;
-  width: 28%;
   min-width: 14rem;
-  min-height: 20rem;
-  height: calc(100% - 40px);
   border-radius: 1.2rem;
-  margin: 0 2rem 2rem 0;
   background: var(--card-color);
   display: flex;
   flex-direction: column;

@@ -14,12 +14,24 @@ export const NETWORKS = {
     currency: {
       id: "ethereum",
     },
+    tokens: {
+      usdt: {
+        address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
+        id: '',
+      },
+    },
   },
   56: {
     id: 56,
     name: "BSC",
     currency: {
       id: "binancecoin",
+    },
+    tokens: {
+      usdt: {
+        address: '0x55d398326f99059fF775485246999027B3197955',
+        id: '',
+      },
     },
   },
   137: {
@@ -28,12 +40,11 @@ export const NETWORKS = {
     currency: {
       id: "aave-polygon-wmatic",
     },
-  },
-  43114: {
-    id: 43114,
-    name: "Avalanche",
-    currency: {
-      id: "avalanche-2",
+    tokens: {
+      usdt: {
+        address: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
+        id: '',
+      },
     },
   },
 };
@@ -138,6 +149,6 @@ export const PRODUCTS: { [id: string]: Product } = {
     imgAlt: "NFT Marketplace promo",
     promoPage: "OnOut NFT Marketplace",
     promoPageLink: "https://tools.onout.org/nft/",
-    price: undefined,
+    price: 500,
   },
 };
