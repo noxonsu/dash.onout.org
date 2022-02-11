@@ -3,9 +3,16 @@ footer {
   padding: 2rem 0 1rem;
 }
 
-.linksList {
+.footerRiskNotice {
+  max-width: 56rem;
   margin: 0 auto;
-  padding: 0;
+  padding: 1rem;
+  color: var(--color-notice);
+}
+
+.linksList {
+  margin: 1rem auto 0;
+  padding: 0.7rem 0;
   display: flex;
   align-items: center;
   justify-content: center;

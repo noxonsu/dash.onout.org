@@ -2,7 +2,7 @@
   max-width: 40rem;
   margin: 0 auto;
   padding: 1.4rem;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   border-radius: 1.2rem;
   background-color: var(--card-color);
 }
@@ -29,7 +29,8 @@
 }
 
 .error,
-.warning {
+.warning,
+.notice {
   padding: 0.6rem;
   border-radius: 0.6rem;
 }

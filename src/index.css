@@ -42,6 +42,8 @@ body
   --card-color: #343a46;
   --color-warning: #ff9c0833;
   --color-error: #ff080833;
+  --color-notice: #bfcaffbb;
+  --color-notice-bg: #bfcaff3d;
 }
 
 body[data-theme="light"] {
@@ -85,6 +87,10 @@ button {
 
 .error {
   background-color: var(--color-error);
+}
+
+.notice {
+  background-color: var(--color-notice-bg);
 }
 
 .primaryBtn,

@@ -41,7 +41,7 @@ const Product = ({ id }: ProductProps) => {
   };
 
   const getPaymentParameters = async () => {
-    if (!PAYMENT_ADDRESS) return;
+    if (!PAYMENT_ADDRESS || !USDPrice) return;
     // fetch the current id right before prices to be sure of the correct currency for this network
     const networkId = await account.provider.eth.net.getId();
     //@ts-ignore
@@ -103,14 +103,15 @@ const Product = ({ id }: ProductProps) => {
 
   useEffect(() => {
     setPaymentAvailable(
-      !paymentPending &&
+      !!USDPrice &&
+        !paymentPending &&
         !paidFor &&
         signed &&
         !isWeb3Loading &&
         account &&
         !account.wrongNetwork
     );
-  }, [paymentPending, paidFor, signed, isWeb3Loading, account]);
+  }, [paymentPending, paidFor, signed, isWeb3Loading, account, USDPrice]);
 
   return (
     <div className="product">
@@ -137,7 +138,7 @@ const Product = ({ id }: ProductProps) => {
         </button>
       )}
 
-      <p>{description}</p>
+      {description && <p>{description}</p>}
       {paidFor ? (
         <p>You already have this product</p>
       ) : (
@@ -145,12 +146,18 @@ const Product = ({ id }: ProductProps) => {
           Do not leave this page until successful payment
         </p>
       )}
+      <p className="notice">The price may vary slightly</p>
+
       <button
         onClick={payForProduct}
         className={`primaryBtn paymentBtn ${paymentPending ? "pending" : ""}`}
         disabled={!paymentAvailable}
       >
-        {paymentPending ? "Pending" : `Buy for $${USDPrice}`}
+        {paymentPending
+          ? "Pending"
+          : USDPrice
+          ? `Buy for $${USDPrice}`
+          : "Not available"}
       </button>
     </div>
   );
