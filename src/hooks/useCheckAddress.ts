@@ -4,12 +4,14 @@ import axios from "../helpers/axios";
 export const useCheckAddress = (address: string) => {
   const [isCheckLoading, setIsCheckLoading] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState<boolean | undefined>(undefined);
+  const [errors, setErrors] = useState<string[]>([]);
 
   useEffect(() => {
 
     if (!address) {
         return setIsSubscribed(undefined);
     }
+    setErrors([]);
 
     const _checkAddress = async () => {
       try {
@@ -18,7 +20,8 @@ export const useCheckAddress = (address: string) => {
         const _isSubscribed = await checkAddress(address);
         setIsSubscribed(_isSubscribed);
       } catch (err) {
-        console.error(`Error: Can't fetch space list. Description: ${err}`);
+        console.error(`Error: Can't check subscription. Description: ${err}`);
+        setErrors(["Can't check subscription. Please, update page or try later."])
       } finally {
         setIsCheckLoading(false);
       }
@@ -29,6 +32,7 @@ export const useCheckAddress = (address: string) => {
   return {
     isSubscribed,
     isCheckLoading,
+    checkerErrors: errors,
   };
 };
 
