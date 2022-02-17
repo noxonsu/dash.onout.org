@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/static/css/main.5f10edb9.css",
-    "main.js": "/static/js/main.1016bfb1.js",
+    "main.js": "/static/js/main.f482b1a8.js",
     "static/js/787.de7b3d37.chunk.js": "/static/js/787.de7b3d37.chunk.js",
-    "static/media/definance.zip": "/static/media/definance.6d2132dd7412b40447f4.zip",
-    "static/media/lotteryfactory.zip": "/static/media/lotteryfactory.9467cd6cdf523ee4c817.zip",
-    "static/media/multicurrencywallet.zip": "/static/media/multicurrencywallet.9556dff991b753903804.zip",
-    "static/media/daofactory.zip": "/static/media/daofactory.18ccec0644c9c459d0c0.zip",
-    "static/media/farmfactory.zip": "/static/media/farmfactory.4f7991cf9b0dd63633d4.zip",
+    "static/media/definance.zip": "/static/media/definance.e22f4761a3dda1d37d18.zip",
+    "static/media/lotteryfactory.zip": "/static/media/lotteryfactory.19da2a0726536bbc445e.zip",
+    "static/media/multicurrencywallet.zip": "/static/media/multicurrencywallet.3cdd14144fb50aafc990.zip",
+    "static/media/daofactory.zip": "/static/media/daofactory.c9587b1d8e86a39d1f25.zip",
+    "static/media/farmfactory.zip": "/static/media/farmfactory.146638d0e30267336812.zip",
     "static/media/nftsy-cover.jpg": "/static/media/nftsy-cover.72fedd3eebb0cf7b0f26.jpg",
     "static/media/lottery-cover.jpg": "/static/media/lottery-cover.97a34a9c1aa834d0cc1b.jpg",
     "static/media/dex-cover.jpg": "/static/media/dex-cover.4b245a3d846854edf8a5.jpg",
@@ -20,11 +20,11 @@
     "index.html": "/index.html",
     "static/media/bsc.svg": "/static/media/bsc.61eb245e3e4ae578879a18d6019d2c81.svg",
     "main.5f10edb9.css.map": "/static/css/main.5f10edb9.css.map",
-    "main.1016bfb1.js.map": "/static/js/main.1016bfb1.js.map",
+    "main.f482b1a8.js.map": "/static/js/main.f482b1a8.js.map",
     "787.de7b3d37.chunk.js.map": "/static/js/787.de7b3d37.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5f10edb9.css",
-    "static/js/main.1016bfb1.js"
+    "static/js/main.f482b1a8.js"
   ]
 }
