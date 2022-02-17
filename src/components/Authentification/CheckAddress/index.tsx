@@ -8,7 +8,7 @@ type CheckAddressProps = { account: any };
 
 const CheckAddress = ({ account }: CheckAddressProps) => {
   const { state, dispatch } = useUser();
-  const { isCheckLoading, isSubscribed } = useCheckAddress(account.address);
+  const { isCheckLoading, isSubscribed, checkerErrors } = useCheckAddress(account.address);
   const [haveSubscribed, setHaveSubscribed] = useState<boolean>(false);
 
   const toggleSetHaveSubscribed = () => {
@@ -36,6 +36,16 @@ const CheckAddress = ({ account }: CheckAddressProps) => {
       });
     }
   }, [isSubscribed, haveSubscribed, state, dispatch]);
+
+  if (checkerErrors.length > 0) {
+    return (
+      <>
+        {checkerErrors.map(((error, i) => {
+          return <span key={i} className="error">{error}</span>
+        }))}
+      </>
+    )
+  }
 
   if (isCheckLoading) {
     return <span className="pending">Checking your address</span>;

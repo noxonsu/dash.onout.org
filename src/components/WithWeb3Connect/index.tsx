@@ -47,14 +47,14 @@ export const Web3ConnecStateContext = createContext({
   isWeb3Loading: false,
 });
 
-const WithWeb3Connect = ({ children }: WithModalProps) => {
-  const web3Modal = new Web3Modal({
-    network: "mainnet", // optional
-    cacheProvider: true, // optional
-    disableInjectedProvider: false, // optional. For MetaMask / Brave / Opera
-    providerOptions, // required
-  });
+const web3Modal = new Web3Modal({
+  network: "mainnet", // optional
+  cacheProvider: true, // optional
+  disableInjectedProvider: false, // optional. For MetaMask / Brave / Opera
+  providerOptions, // required
+});
 
+const WithWeb3Connect = ({ children }: WithModalProps) => {
   const [account, setAccount] = useState<Web3ConnectState>(
     initialWeb3ConnectState
   );
