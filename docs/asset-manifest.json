@@ -1,12 +1,13 @@
 {
   "files": {
     "main.css": "/static/css/main.5f10edb9.css",
-    "main.js": "/static/js/main.0d4b745f.js",
+    "main.js": "/static/js/main.63b1a0bb.js",
     "static/js/787.de7b3d37.chunk.js": "/static/js/787.de7b3d37.chunk.js",
     "static/media/definance.zip": "/static/media/definance.b95897fdf4534f3e7288.zip",
     "static/media/lotteryfactory.zip": "/static/media/lotteryfactory.09dfa46a8e0cb942cd0e.zip",
     "static/media/multicurrencywallet.zip": "/static/media/multicurrencywallet.9556dff991b753903804.zip",
     "static/media/daofactory.zip": "/static/media/daofactory.a6a43db03e60489bd5be.zip",
+    "static/media/nftmarketplace.zip": "/static/media/nftmarketplace.5611bd821195d9f086fd.zip",
     "static/media/farmfactory.zip": "/static/media/farmfactory.004b3e6256fb31da06f4.zip",
     "static/media/nftsy-cover.jpg": "/static/media/nftsy-cover.72fedd3eebb0cf7b0f26.jpg",
     "static/media/lottery-cover.jpg": "/static/media/lottery-cover.97a34a9c1aa834d0cc1b.jpg",
@@ -20,11 +21,11 @@
     "index.html": "/index.html",
     "static/media/bsc.svg": "/static/media/bsc.61eb245e3e4ae578879a18d6019d2c81.svg",
     "main.5f10edb9.css.map": "/static/css/main.5f10edb9.css.map",
-    "main.0d4b745f.js.map": "/static/js/main.0d4b745f.js.map",
+    "main.63b1a0bb.js.map": "/static/js/main.63b1a0bb.js.map",
     "787.de7b3d37.chunk.js.map": "/static/js/787.de7b3d37.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5f10edb9.css",
-    "static/js/main.0d4b745f.js"
+    "static/js/main.63b1a0bb.js"
   ]
 }
