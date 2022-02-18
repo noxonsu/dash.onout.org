@@ -20,6 +20,8 @@ import farmfactory from "./plugins/farmfactory.zip";
 import lotteryfactory from "./plugins/lotteryfactory.zip";
 //@ts-ignore
 import multicurrencywallet from "./plugins/multicurrencywallet.zip";
+//@ts-ignore
+import nftmarketplace from "./plugins/nftmarketplace.zip";
 
 export const COVERS: { [k: string]: string } = {
   walletCover,
@@ -43,4 +45,5 @@ export const PLUGINS: { [id: string]: string } = {
   farmfactory,
   lotteryfactory,
   multicurrencywallet,
+  nftmarketplace,
 };
