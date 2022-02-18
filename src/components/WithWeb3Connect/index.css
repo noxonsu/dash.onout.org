@@ -22,6 +22,11 @@
   font-size: 0.9rem;
   padding: 0.5rem 1rem;
 }
+.documentationBtn{
+  margin-right: 20px;
+  text-decoration: none;
+}
+
 
 .address {
   font-size: 1.4rem;
@@ -37,4 +42,37 @@
 .networksList {
   padding: 0 0 0 1.3rem;
   margin: 1rem 0 0 0;
+}
+
+@media(max-width: 660px){
+  .disconnect-btn-block{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .disconnect-btn-block a{
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+}
+@media(max-width: 510px){
+  .btn-block{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .documentationBtn{
+    margin-right: 0;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+}
+@media(max-width: 460px){
+  .accountHeader{
+    flex-direction: column;
+    justify-content: center;
+  }
+  .disconnect-btn-block a{
+    margin-top: 15px;
+  }
 }

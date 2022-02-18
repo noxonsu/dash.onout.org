@@ -160,9 +160,14 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
       {isWeb3Loading ? (
         <p className="pending">Loading</p>
       ) : !account.connected ? (
-        <button className="primaryBtn connectButton" onClick={connect}>
+        <div className="btn-block">
+          <a href="https://support.onout.org/hc/1331700057" target="_blank" className="primaryBtn documentationBtn">
+          Documentation
+          </a>
+          <button className="primaryBtn connectButton" onClick={connect}>
           Connect to wallet
-        </button>
+          </button>
+        </div>
       ) : (
         <div className="account">
           <div className="accountHeader">
@@ -170,13 +175,17 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
               {address.slice(0, 6)}...
               {address.slice(address.length - 4, address.length)}
             </span>
-
-            <button
+            <div className="disconnect-btn-block">
+              <a href="https://support.onout.org/hc/1331700057" target="_blank" className="secondaryBtn disconnectButton documentationBtn">
+              Documentation
+              </a>
+              <button
               className="secondaryBtn disconnectButton"
               onClick={disconnect}
             >
               Disconnect
             </button>
+            </div>
           </div>
 
           {wrongNetwork && (
