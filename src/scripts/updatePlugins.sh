@@ -1,9 +1,9 @@
 #!/bin/sh
 
 # TODO: how to make key-value structure?
-SOURCES=("noxonsu" "noxonsu" "noxonsu" "noxonsu" "swaponline", "noxonsu")
-REPO_NAMES=("DAOwidget" "definance" "farmfactory" "LotteryFactory" "multi-currency-wallet-pro", "NFTsy")
-PLUGIN_IDS=("daofactory" "definance" "farmfactory" "lotteryfactory" "multicurrencywallet", "nftmarketplace")
+SOURCES=("noxonsu" "noxonsu" "noxonsu" "noxonsu" "swaponline" "noxonsu")
+REPO_NAMES=("DAOwidget" "definance" "farmfactory" "LotteryFactory" "multi-currency-wallet-pro" "NFTsy")
+PLUGIN_IDS=("daofactory" "definance" "farmfactory" "lotteryfactory" "multicurrencywallet" "nftmarketplace")
 
 for ((i = 0; i < ${#REPO_NAMES[@]}; i++)); do
   SOURCE=${SOURCES[$i]}

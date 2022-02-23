@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.7e821801.css",
-    "main.js": "/static/js/main.434bead1.js",
+    "main.css": "/static/css/main.51b9ce46.css",
+    "main.js": "/static/js/main.33629a53.js",
     "static/js/787.de7b3d37.chunk.js": "/static/js/787.de7b3d37.chunk.js",
-    "static/media/definance.zip": "/static/media/definance.b95897fdf4534f3e7288.zip",
-    "static/media/lotteryfactory.zip": "/static/media/lotteryfactory.09dfa46a8e0cb942cd0e.zip",
-    "static/media/multicurrencywallet.zip": "/static/media/multicurrencywallet.9556dff991b753903804.zip",
-    "static/media/daofactory.zip": "/static/media/daofactory.a6a43db03e60489bd5be.zip",
-    "static/media/nftmarketplace.zip": "/static/media/nftmarketplace.5611bd821195d9f086fd.zip",
-    "static/media/farmfactory.zip": "/static/media/farmfactory.004b3e6256fb31da06f4.zip",
+    "static/media/definance.zip": "/static/media/definance.54f36d1cb199c11d161f.zip",
+    "static/media/lotteryfactory.zip": "/static/media/lotteryfactory.c341923e7e2db2e3b3b1.zip",
+    "static/media/multicurrencywallet.zip": "/static/media/multicurrencywallet.864fdbe6a46283bc5407.zip",
+    "static/media/daofactory.zip": "/static/media/daofactory.028fcbf4a1ea3a117dc1.zip",
+    "static/media/nftmarketplace.zip": "/static/media/nftmarketplace.c487f382578d5bc43f29.zip",
+    "static/media/farmfactory.zip": "/static/media/farmfactory.d832e9ccfd050289b367.zip",
     "static/media/nftsy-cover.jpg": "/static/media/nftsy-cover.72fedd3eebb0cf7b0f26.jpg",
     "static/media/lottery-cover.jpg": "/static/media/lottery-cover.97a34a9c1aa834d0cc1b.jpg",
     "static/media/dex-cover.jpg": "/static/media/dex-cover.4b245a3d846854edf8a5.jpg",
@@ -20,12 +20,12 @@
     "static/media/polygon.svg": "/static/media/polygon.97ff139cc7379a42cf141d74a6595fff.svg",
     "index.html": "/index.html",
     "static/media/bsc.svg": "/static/media/bsc.61eb245e3e4ae578879a18d6019d2c81.svg",
-    "main.7e821801.css.map": "/static/css/main.7e821801.css.map",
-    "main.434bead1.js.map": "/static/js/main.434bead1.js.map",
+    "main.51b9ce46.css.map": "/static/css/main.51b9ce46.css.map",
+    "main.33629a53.js.map": "/static/js/main.33629a53.js.map",
     "787.de7b3d37.chunk.js.map": "/static/js/787.de7b3d37.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7e821801.css",
-    "static/js/main.434bead1.js"
+    "static/css/main.51b9ce46.css",
+    "static/js/main.33629a53.js"
   ]
 }
