@@ -144,6 +144,19 @@ button {
   text-align: left;
 }
 
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.pb-1 {
+ padding-bottom: 1rem;
+}
+
 @keyframes ellipsis {
   0% {
     content: ".";
