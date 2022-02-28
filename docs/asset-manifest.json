@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/static/css/main.51b9ce46.css",
-    "main.js": "/static/js/main.33629a53.js",
+    "main.js": "/static/js/main.b667df4a.js",
     "static/js/787.de7b3d37.chunk.js": "/static/js/787.de7b3d37.chunk.js",
-    "static/media/definance.zip": "/static/media/definance.54f36d1cb199c11d161f.zip",
-    "static/media/lotteryfactory.zip": "/static/media/lotteryfactory.c341923e7e2db2e3b3b1.zip",
-    "static/media/multicurrencywallet.zip": "/static/media/multicurrencywallet.864fdbe6a46283bc5407.zip",
-    "static/media/daofactory.zip": "/static/media/daofactory.028fcbf4a1ea3a117dc1.zip",
-    "static/media/nftmarketplace.zip": "/static/media/nftmarketplace.c487f382578d5bc43f29.zip",
-    "static/media/farmfactory.zip": "/static/media/farmfactory.d832e9ccfd050289b367.zip",
+    "static/media/definance.zip": "/static/media/definance.160f50e8f8d9c88eb420.zip",
+    "static/media/lotteryfactory.zip": "/static/media/lotteryfactory.2aafa5c92e3e2421dab6.zip",
+    "static/media/multicurrencywallet.zip": "/static/media/multicurrencywallet.ccb9c7979e87a029e013.zip",
+    "static/media/daofactory.zip": "/static/media/daofactory.d6a8f16a3a90b764ae9e.zip",
+    "static/media/nftmarketplace.zip": "/static/media/nftmarketplace.0d028d2a3d5a427747d5.zip",
+    "static/media/farmfactory.zip": "/static/media/farmfactory.c3d33c41443466a093e7.zip",
     "static/media/nftsy-cover.jpg": "/static/media/nftsy-cover.72fedd3eebb0cf7b0f26.jpg",
     "static/media/lottery-cover.jpg": "/static/media/lottery-cover.97a34a9c1aa834d0cc1b.jpg",
     "static/media/dex-cover.jpg": "/static/media/dex-cover.4b245a3d846854edf8a5.jpg",
@@ -21,11 +21,11 @@
     "index.html": "/index.html",
     "static/media/bsc.svg": "/static/media/bsc.61eb245e3e4ae578879a18d6019d2c81.svg",
     "main.51b9ce46.css.map": "/static/css/main.51b9ce46.css.map",
-    "main.33629a53.js.map": "/static/js/main.33629a53.js.map",
+    "main.b667df4a.js.map": "/static/js/main.b667df4a.js.map",
     "787.de7b3d37.chunk.js.map": "/static/js/787.de7b3d37.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.51b9ce46.css",
-    "static/js/main.33629a53.js"
+    "static/js/main.b667df4a.js"
   ]
 }
