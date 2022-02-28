@@ -7,6 +7,8 @@ type TxParameters = {
   to: string;
   amount: number;
   tokenAddress?: string;
+  onHash?: (hash: string) => void;
+  data?: any;
 };
 
 const sendToken = async ({
@@ -42,11 +44,14 @@ export const send = async ({
   to,
   amount,
   tokenAddress,
+  onHash,
+  data,
 }: TxParameters) => {
   const tx = {
     from,
     to,
     value: utils.parseUnits(String(amount), "ether").toHexString(),
+    data,
   };
 
   if (tokenAddress) {
@@ -60,7 +65,11 @@ export const send = async ({
   }
 
   try {
-    return await provider.eth.sendTransaction(tx);
+    return await provider.eth
+      .sendTransaction(tx)
+      .on("transactionHash", (hash: string) => {
+        if (typeof onHash === "function") onHash(hash);
+      });
   } catch (error) {
     console.group("%c send", "color: red;");
     console.error(error);
