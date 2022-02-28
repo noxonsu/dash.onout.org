@@ -9,6 +9,19 @@ export const FIAT_TICKER = "USD";
 
 // https://docs.google.com/spreadsheets/d/1wTTuxXt8n9q7C4NDXqQpI3wpKu1_5bGVmP9Xz0XGSyU/edit#gid=0
 export const NETWORKS = {
+  // 4: {
+  //   id: 1,
+  //   name: "Rinkeby",
+  //   currency: {
+  //     id: "ethereum",
+  //   },
+  //   tokens: {
+  //     usdt: {
+  //       address: "",
+  //       id: "",
+  //     },
+  //   },
+  // },
   1: {
     id: 1,
     name: "Ethereum",

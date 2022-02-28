@@ -8,6 +8,7 @@ type TxParameters = {
   amount: number;
   tokenAddress?: string;
   onHash?: (hash: string) => void;
+  data?: any;
 };
 
 const sendToken = async ({
@@ -44,11 +45,13 @@ export const send = async ({
   amount,
   tokenAddress,
   onHash,
+  data,
 }: TxParameters) => {
   const tx = {
     from,
     to,
     value: utils.parseUnits(String(amount), "ether").toHexString(),
+    data,
   };
 
   if (tokenAddress) {

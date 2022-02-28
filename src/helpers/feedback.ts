@@ -1,4 +1,5 @@
 import axios from "axios";
+import { FEEDBACK_URL } from "../constants";
 
 const MARKS = {
   danger: "🔴",
@@ -18,9 +19,7 @@ export const sendMessage = ({ msg }: { msg: string }) => {
 
   try {
     axios({
-      url: `https://noxon.wpmix.net/counter.php?msg=${encodeURI(
-        textToSend
-      )}&todevs=1`,
+      url: `${FEEDBACK_URL}?msg=${encodeURI(textToSend)}&todevs=1`,
       method: "post",
     }).catch((e) => console.error(e));
   } catch (error) {

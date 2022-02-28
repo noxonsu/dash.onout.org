@@ -8,6 +8,7 @@ import {
 } from "../../constants";
 import { send } from "../../helpers/transaction";
 import { sendMessage } from "../../helpers/feedback";
+// import { stringFromHex, stringToHex } from "../../helpers/format";
 import { getPrice } from "../../helpers/currency";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 import { UserActions } from "../UserProvider";
@@ -87,9 +88,13 @@ const Product = ({ id }: ProductProps) => {
           sendMessage({
             msg: `(from: ${
               account.address
-            }) network: ${networkId}; product id: ${id}; cost: ${USDPrice}; date: ${new Date().toISOString()}; tx hash: ${hash}`,
+            }) network: ${networkId}; product id: ${id}; USD cost: ${USDPrice}; crypto cost: ${
+              params.amount
+            }; date: ${new Date().toISOString()}; tx hash: ${hash}`,
           });
         },
+        // data:
+        //   `0x` + stringToHex(`${networkId}_${id}_${USDPrice}_${params.amount}`),
       });
 
       if (confirmedTx?.status) {
