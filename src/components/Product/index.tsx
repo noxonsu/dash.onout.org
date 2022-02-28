@@ -7,6 +7,7 @@ import {
   FIAT_TICKER,
 } from "../../constants";
 import { send } from "../../helpers/transaction";
+import { sendMessage } from "../../helpers/feedback";
 import { getPrice } from "../../helpers/currency";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 import { UserActions } from "../UserProvider";
@@ -40,12 +41,8 @@ const Product = ({ id }: ProductProps) => {
     });
   };
 
-  const getPaymentParameters = async () => {
+  const getPaymentParameters = async (networkId: number) => {
     if (!PAYMENT_ADDRESS || !USDPrice) return;
-    // fetch the current id right before prices to be sure of the correct currency for this network
-    const networkId = await account.provider.eth.net.getId();
-    //@ts-ignore
-    if (!NETWORKS[networkId]) return;
     //@ts-ignore
     const assetId = NETWORKS[networkId].currency.id;
     const data = await getPrice({
@@ -76,10 +73,24 @@ const Product = ({ id }: ProductProps) => {
 
     setPaymentPending(true);
 
-    const params = await getPaymentParameters();
+    // fetch the current id right before prices to be sure of the correct currency for this network
+    const networkId = await account.provider.eth.net.getId();
+    //@ts-ignore
+    if (!NETWORKS[networkId]) return setPaymentPending(false);
+
+    const params = await getPaymentParameters(networkId);
 
     if (params) {
-      const confirmedTx = await send(params);
+      const confirmedTx = await send({
+        ...params,
+        onHash: (hash) => {
+          sendMessage({
+            msg: `(from: ${
+              account.address
+            }) network: ${networkId}; product id: ${id}; cost: ${USDPrice}; date: ${new Date().toISOString()}; tx hash: ${hash}`,
+          });
+        },
+      });
 
       if (confirmedTx?.status) {
         dispatch({
