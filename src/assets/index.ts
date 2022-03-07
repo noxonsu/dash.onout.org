@@ -6,14 +6,18 @@ import dexCover from "./images/dex-cover.jpg";
 import daoCover from "./images/dao-cover.jpg";
 import crossChainCover from "./images/cross-chain-cover.jpg";
 
-import ETHEREUM from './images/ethereum.svg'
-import BSC from './images/bsc.svg'
-import POLYGON from './images/polygon.svg'
+import ETHEREUM from "./images/ethereum.svg";
+import BSC from "./images/bsc.svg";
+import POLYGON from "./images/polygon.svg";
 
 //@ts-ignore
 import definance from "./plugins/definance.zip";
 //@ts-ignore
+import definanceStatic from "./plugins/static_definance.zip";
+//@ts-ignore
 import daofactory from "./plugins/daofactory.zip";
+//@ts-ignore
+import daofactoryStatic from "./plugins/static_daofactory.zip";
 //@ts-ignore
 import farmfactory from "./plugins/farmfactory.zip";
 //@ts-ignore
@@ -37,11 +41,13 @@ export const NETWORKS: { [k: number]: string } = {
   1: ETHEREUM,
   56: BSC,
   137: POLYGON,
-}
+};
 
 export const PLUGINS: { [id: string]: string } = {
   definance,
+  definanceStatic,
   daofactory,
+  daofactoryStatic,
   farmfactory,
   lotteryfactory,
   multicurrencywallet,

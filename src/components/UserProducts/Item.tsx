@@ -20,12 +20,22 @@ const Item = ({ id }: ItemProps) => {
         <h3 className="title">{name}</h3>
       </div>
 
-      {id === "multicurrencywallet" && <p>Your plugin licence: <strong>{MCWalletLicense}</strong></p>}
+      {id === "multicurrencywallet" && (
+        <p>
+          Your plugin licence: <strong>{MCWalletLicense}</strong>
+        </p>
+      )}
 
       <div className="bottom">
         <a href={PLUGINS[id]} className="downloadLink" download>
-          Download
+          WP version
         </a>
+
+        {!!PLUGINS[`${id}Static`] && (
+          <a href={PLUGINS[`${id}Static`]} className="downloadLink" download>
+            Static version
+          </a>
+        )}
       </div>
     </div>
   );
