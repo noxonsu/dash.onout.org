@@ -4,16 +4,16 @@ footer {
 }
 
 .footerRiskNotice {
-  max-width: 56rem;
+  max-width: 44rem;
   margin: 0 auto;
-  padding: 1rem;
-  font-size: 1rem;
+  padding: 0 1rem;
+  font-size: 0.84rem;
   color: var(--color-notice);
 }
 
 .linksList {
   margin: 1rem auto 0;
-  padding: 0.7rem 0;
+  padding: 0.7rem 0 1.4rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,6 +26,9 @@ footer {
 
 .linkItem a {
   padding: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1.8rem;
   text-decoration: none;
   color: inherit;

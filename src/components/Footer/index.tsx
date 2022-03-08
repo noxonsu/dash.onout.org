@@ -4,6 +4,29 @@ import { SiTelegram, SiDiscord } from "react-icons/si";
 import "./index.css";
 
 const Footer = () => {
+  const links = [
+    {
+      to: "mailto:support@onout.org",
+      title: "Email: support@onout.org",
+      icon: <MdEmail size="2rem" className="icon" />,
+    },
+    {
+      to: "https://support.onout.org/chat/widget/form/3882717100",
+      title: "Online chat",
+      icon: <MdChat size="1.9rem" className="icon" />,
+    },
+    {
+      to: "https://t.me/onoutsupportbot",
+      title: "Telegram",
+      icon: <SiTelegram size="1.7rem" className="icon" />,
+    },
+    {
+      to: "https://discord.gg/VwKEmHEgVN",
+      title: "Discord",
+      icon: <SiDiscord size="1.9rem" className="icon" />,
+    },
+  ];
+
   return (
     <footer>
       <p className="footerRiskNotice">
@@ -23,46 +46,13 @@ const Footer = () => {
       </p>
 
       <ul className="linksList">
-        <li className="linkItem">
-          <a
-            href="mailto:support@onout.org"
-            target="_blank"
-            rel="noreferrer"
-            title="Email: support@onout.org"
-          >
-            <MdEmail className="icon" />
-          </a>
-        </li>
-        <li className="linkItem">
-          <a
-            href="https://support.onout.org/chat/widget/form/3882717100"
-            target="_blank"
-            rel="noreferrer"
-            title="Online chat"
-          >
-            <MdChat className="icon" />
-          </a>
-        </li>
-        <li className="linkItem">
-          <a
-            href="https://t.me/onoutsupportbot"
-            target="_blank"
-            rel="noreferrer"
-            title="Telegram"
-          >
-            <SiTelegram className="icon" />
-          </a>
-        </li>
-        <li className="linkItem">
-          <a
-            href="https://discord.gg/VwKEmHEgVN"
-            target="_blank"
-            rel="noreferrer"
-            title="Discord"
-          >
-            <SiDiscord className="icon" />
-          </a>
-        </li>
+        {links.map(({ to, title, icon }, index) => (
+          <li className="linkItem" key={index}>
+            <a href={to} target="_blank" rel="noreferrer" title={title}>
+              {icon}
+            </a>
+          </li>
+        ))}
       </ul>
     </footer>
   );
