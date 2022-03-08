@@ -53,9 +53,9 @@ const UserProducts = () => {
       {products.length ? (
         <>
           <div className="howToUseWrapper">
-            <h3>How to use</h3>
+            <h3 className="howToUseTitle">How to use</h3>
 
-            <p>
+            <p className="howToUseDescription">
               <b>Wordpress version</b> : from your admin panel go to a Plugins
               section. Press the button "Add New" and "Upload Plugin". Press the
               button "Choose File" and select the downloaded WP version of the
@@ -69,11 +69,11 @@ const UserProducts = () => {
                 rel="noreferrer"
                 href="https://www.wpbeginner.com/wp-tutorials/how-to-increase-the-maximum-file-upload-size-in-wordpress/"
               >
-                Solve problem with plugin size
+                solve problem with plugin size
               </a>
               .
             </p>
-            <p>
+            <p className="howToUseDescription">
               <b>Static version</b>: you need hosting with file manager.
               Download the static version. Open file manager and go to
               "public_html" folder. You need to upload downloaded zip file there

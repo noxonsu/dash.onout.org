@@ -155,7 +155,7 @@ button {
 }
 
 .pb-1 {
- padding-bottom: 1rem;
+  padding-bottom: 1rem;
 }
 
 @keyframes ellipsis {
@@ -168,4 +168,9 @@ button {
   66% {
     content: "...";
   }
+}
+
+#fsw-btn {
+  width: 1.4rem !important;
+  height: 1.4rem !important;
 }

@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.ed54e865.css",
-    "main.js": "/static/js/main.7019c0b8.js",
+    "main.css": "/static/css/main.422c9988.css",
+    "main.js": "/static/js/main.cc297ca4.js",
     "static/js/27.1e8e1c31.chunk.js": "/static/js/27.1e8e1c31.chunk.js",
-    "static/media/definance.zip": "/static/media/definance.807227557b7147db2537.zip",
-    "static/media/lotteryfactory.zip": "/static/media/lotteryfactory.9b53e9c41a24d62aaef7.zip",
-    "static/media/multicurrencywallet.zip": "/static/media/multicurrencywallet.53febb086f8974748f81.zip",
-    "static/media/static_definance.zip": "/static/media/static_definance.ba296978ea4e3048fc06.zip",
-    "static/media/daofactory.zip": "/static/media/daofactory.568e13d4bbf5d39409f5.zip",
-    "static/media/static_daofactory.zip": "/static/media/static_daofactory.f4529012bc5b95403a19.zip",
-    "static/media/nftmarketplace.zip": "/static/media/nftmarketplace.07ca266fc211dbf80438.zip",
-    "static/media/farmfactory.zip": "/static/media/farmfactory.797bbd4d2b1624fb8f14.zip",
+    "static/media/definance.zip": "/static/media/definance.e1bfadcc29e67cc5c17d.zip",
+    "static/media/lotteryfactory.zip": "/static/media/lotteryfactory.15658e5b575d97f622c7.zip",
+    "static/media/static_definance.zip": "/static/media/static_definance.c950acd99546d26a100d.zip",
+    "static/media/multicurrencywallet.zip": "/static/media/multicurrencywallet.4ca29934155855cb0e49.zip",
+    "static/media/daofactory.zip": "/static/media/daofactory.930f7ebef1ca56600344.zip",
+    "static/media/static_daofactory.zip": "/static/media/static_daofactory.9346496eb71feb2f2f0a.zip",
+    "static/media/nftmarketplace.zip": "/static/media/nftmarketplace.8c00306e1d49f196ad99.zip",
+    "static/media/farmfactory.zip": "/static/media/farmfactory.1c39760ac663a44e6adb.zip",
     "static/media/nftsy-cover.jpg": "/static/media/nftsy-cover.72fedd3eebb0cf7b0f26.jpg",
     "static/media/lottery-cover.jpg": "/static/media/lottery-cover.97a34a9c1aa834d0cc1b.jpg",
     "static/media/dex-cover.jpg": "/static/media/dex-cover.4b245a3d846854edf8a5.jpg",
@@ -24,7 +24,7 @@
     "static/media/bsc.svg": "/static/media/bsc.61eb245e3e4ae578879a18d6019d2c81.svg"
   },
   "entrypoints": [
-    "static/css/main.ed54e865.css",
-    "static/js/main.7019c0b8.js"
+    "static/css/main.422c9988.css",
+    "static/js/main.cc297ca4.js"
   ]
 }

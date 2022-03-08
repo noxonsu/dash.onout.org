@@ -11,8 +11,20 @@
 .howToUseWrapper {
   margin: 1%;
   padding: 2%;
+  letter-spacing: 0.02rem;
+  line-height: 1.5rem;
   border-radius: 1.2rem;
   border: 1px solid var(--border-color);
+  background-color: var(--transparent-dark-2);
+}
+
+.howToUseTitle {
+  margin: 0;
+}
+
+.howToUseDescription {
+  margin: 0;
+  padding: 1.4rem 0 0;
 }
 
 .productsList {
