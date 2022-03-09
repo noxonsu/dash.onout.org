@@ -28,6 +28,8 @@ export const NETWORKS = {
     currency: {
       id: "ethereum",
     },
+    nativePriceOracle: "0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419",
+    dash: "",
     tokens: {
       usdt: {
         address: "0xdac17f958d2ee523a2206206994597c13d831ec7",
@@ -38,6 +40,8 @@ export const NETWORKS = {
   56: {
     id: 56,
     name: "BSC",
+    nativePriceOracle: "0x0567f2323251f0aab15c8dfb1967e4e8a7d42aee",
+    dash: "",
     currency: {
       id: "binancecoin",
     },
@@ -51,6 +55,8 @@ export const NETWORKS = {
   137: {
     id: 137,
     name: "Polygon",
+    nativePriceOracle: "0xab594600376ec9fd91f8e885dadf0ce036862de0",
+    dash: "",
     currency: {
       id: "aave-polygon-wmatic",
     },
@@ -109,7 +115,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     promoPageLink: "https://tools.onout.org/dex/",
     codecanyonLink:
       "https://codecanyon.net/item/definance-ethereum-defi-plugin-for-wordpress/29099232",
-    price: 899,
+    price: 935,
   },
   farmfactory: {
     id: "farmfactory",

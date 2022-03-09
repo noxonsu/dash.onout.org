@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "private": true,
   "dependencies": {
+    "@chainlink/contracts": "^0.4.0",
     "@metamask/eth-sig-util": "^4.0.0",
     "@types/node": "^16.7.13",
     "@types/react": "^17.0.20",

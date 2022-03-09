@@ -1,15 +1,10 @@
 import { useContext, useState, useEffect } from "react";
 import { BigNumber } from "bignumber.js";
-import {
-  PRODUCTS,
-  PAYMENT_ADDRESS,
-  NETWORKS,
-  FIAT_TICKER,
-} from "../../constants";
+import { PRODUCTS, PAYMENT_ADDRESS, NETWORKS } from "../../constants";
 import { send } from "../../helpers/transaction";
 import { sendMessage } from "../../helpers/feedback";
 // import { stringFromHex, stringToHex } from "../../helpers/format";
-import { getPrice } from "../../helpers/currency";
+import { getOracleNativePrice } from "../../helpers/currency";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
@@ -42,16 +37,17 @@ const Product = ({ id }: ProductProps) => {
     });
   };
 
-  const getPaymentParameters = async (networkId: number) => {
+  const getPaymentParameters = async (chainId: number) => {
     if (!PAYMENT_ADDRESS || !USDPrice) return;
-    //@ts-ignore
-    const assetId = NETWORKS[networkId].currency.id;
-    const data = await getPrice({
-      assetId,
-      vsCurrency: FIAT_TICKER.toLowerCase(),
+
+    const { provider, address } = account;
+    const nativePrice = await getOracleNativePrice({
+      provider,
+      from: address,
+      chainId,
     });
 
-    if (data) {
+    if (nativePrice && nativePrice > 0) {
       BigNumber.config({
         ROUNDING_MODE: BigNumber.ROUND_HALF_EVEN,
         DECIMAL_PLACES: 18,
@@ -61,8 +57,7 @@ const Product = ({ id }: ProductProps) => {
         provider: account.provider,
         from: account.address,
         to: PAYMENT_ADDRESS,
-        amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
-        // tokenAddress: "",
+        amount: new BigNumber(USDPrice).div(nativePrice).toNumber(),
       };
     }
 
@@ -93,8 +88,6 @@ const Product = ({ id }: ProductProps) => {
             }; date: ${new Date().toISOString()}; tx hash: ${hash}`,
           });
         },
-        // data:
-        //   `0x` + stringToHex(`${networkId}_${id}_${USDPrice}_${params.amount}`),
       });
 
       if (confirmedTx?.status) {
@@ -110,6 +103,9 @@ const Product = ({ id }: ProductProps) => {
           payload: PRODUCTS[id],
         });
       }
+    } else {
+      // TODO: show something about payment: "Payment unavailable because of ..."
+      // maybe in modal
     }
 
     setPaymentPending(false);
