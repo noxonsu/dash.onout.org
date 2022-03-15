@@ -44,6 +44,7 @@ body
   --color-error: #ff080833;
   --color-notice: #bfcaffbb;
   --color-notice-bg: #bfcaff3d;
+  --link-color: rgb(26, 141, 236);
 }
 
 body[data-theme="light"] {
@@ -154,7 +155,7 @@ button {
 }
 
 .pb-1 {
- padding-bottom: 1rem;
+  padding-bottom: 1rem;
 }
 
 @keyframes ellipsis {
@@ -167,4 +168,9 @@ button {
   66% {
     content: "...";
   }
+}
+
+#fsw-btn {
+  width: 1.4rem !important;
+  height: 1.4rem !important;
 }

@@ -1,5 +1,6 @@
 import { COVERS } from "../assets";
 
+export const FEEDBACK_URL = "https://noxon.wpmix.net/counter.php";
 export const PAYMENT_ADDRESS = "0x3B85D38c3A7AEabABA8B7DEb7a73177688270abC";
 // 50 calls per minute
 export const PRICE_ENDPOINT = "https://api.coingecko.com/api/v3";
@@ -8,6 +9,19 @@ export const FIAT_TICKER = "USD";
 
 // https://docs.google.com/spreadsheets/d/1wTTuxXt8n9q7C4NDXqQpI3wpKu1_5bGVmP9Xz0XGSyU/edit#gid=0
 export const NETWORKS = {
+  // 4: {
+  //   id: 1,
+  //   name: "Rinkeby",
+  //   currency: {
+  //     id: "ethereum",
+  //   },
+  //   tokens: {
+  //     usdt: {
+  //       address: "",
+  //       id: "",
+  //     },
+  //   },
+  // },
   1: {
     id: 1,
     name: "Ethereum",
@@ -16,8 +30,8 @@ export const NETWORKS = {
     },
     tokens: {
       usdt: {
-        address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
-        id: '',
+        address: "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        id: "",
       },
     },
   },
@@ -29,8 +43,8 @@ export const NETWORKS = {
     },
     tokens: {
       usdt: {
-        address: '0x55d398326f99059fF775485246999027B3197955',
-        id: '',
+        address: "0x55d398326f99059fF775485246999027B3197955",
+        id: "",
       },
     },
   },
@@ -42,8 +56,8 @@ export const NETWORKS = {
     },
     tokens: {
       usdt: {
-        address: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
-        id: '',
+        address: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+        id: "",
       },
     },
   },

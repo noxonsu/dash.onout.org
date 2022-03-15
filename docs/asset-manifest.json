@@ -1,14 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.51b9ce46.css",
-    "main.js": "/static/js/main.33629a53.js",
-    "static/js/787.de7b3d37.chunk.js": "/static/js/787.de7b3d37.chunk.js",
-    "static/media/definance.zip": "/static/media/definance.54f36d1cb199c11d161f.zip",
-    "static/media/lotteryfactory.zip": "/static/media/lotteryfactory.c341923e7e2db2e3b3b1.zip",
-    "static/media/multicurrencywallet.zip": "/static/media/multicurrencywallet.864fdbe6a46283bc5407.zip",
-    "static/media/daofactory.zip": "/static/media/daofactory.028fcbf4a1ea3a117dc1.zip",
-    "static/media/nftmarketplace.zip": "/static/media/nftmarketplace.c487f382578d5bc43f29.zip",
-    "static/media/farmfactory.zip": "/static/media/farmfactory.d832e9ccfd050289b367.zip",
+    "main.css": "/static/css/main.422c9988.css",
+    "main.js": "/static/js/main.cc297ca4.js",
+    "static/js/27.1e8e1c31.chunk.js": "/static/js/27.1e8e1c31.chunk.js",
+    "static/media/definance.zip": "/static/media/definance.e1bfadcc29e67cc5c17d.zip",
+    "static/media/lotteryfactory.zip": "/static/media/lotteryfactory.15658e5b575d97f622c7.zip",
+    "static/media/static_definance.zip": "/static/media/static_definance.c950acd99546d26a100d.zip",
+    "static/media/multicurrencywallet.zip": "/static/media/multicurrencywallet.4ca29934155855cb0e49.zip",
+    "static/media/daofactory.zip": "/static/media/daofactory.930f7ebef1ca56600344.zip",
+    "static/media/static_daofactory.zip": "/static/media/static_daofactory.9346496eb71feb2f2f0a.zip",
+    "static/media/nftmarketplace.zip": "/static/media/nftmarketplace.8c00306e1d49f196ad99.zip",
+    "static/media/farmfactory.zip": "/static/media/farmfactory.1c39760ac663a44e6adb.zip",
     "static/media/nftsy-cover.jpg": "/static/media/nftsy-cover.72fedd3eebb0cf7b0f26.jpg",
     "static/media/lottery-cover.jpg": "/static/media/lottery-cover.97a34a9c1aa834d0cc1b.jpg",
     "static/media/dex-cover.jpg": "/static/media/dex-cover.4b245a3d846854edf8a5.jpg",
@@ -19,13 +21,10 @@
     "static/media/ethereum.svg": "/static/media/ethereum.2e69b5a7503953ef45a4f2a3558b52b3.svg",
     "static/media/polygon.svg": "/static/media/polygon.97ff139cc7379a42cf141d74a6595fff.svg",
     "index.html": "/index.html",
-    "static/media/bsc.svg": "/static/media/bsc.61eb245e3e4ae578879a18d6019d2c81.svg",
-    "main.51b9ce46.css.map": "/static/css/main.51b9ce46.css.map",
-    "main.33629a53.js.map": "/static/js/main.33629a53.js.map",
-    "787.de7b3d37.chunk.js.map": "/static/js/787.de7b3d37.chunk.js.map"
+    "static/media/bsc.svg": "/static/media/bsc.61eb245e3e4ae578879a18d6019d2c81.svg"
   },
   "entrypoints": [
-    "static/css/main.51b9ce46.css",
-    "static/js/main.33629a53.js"
+    "static/css/main.422c9988.css",
+    "static/js/main.cc297ca4.js"
   ]
 }

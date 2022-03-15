@@ -1,6 +1,33 @@
+.link {
+  text-decoration: none;
+  color: var(--link-color);
+}
+
 .userProducts {
   max-width: 60rem;
   margin: 0 auto;
+}
+
+.howToUseWrapper {
+  margin: 1%;
+  padding: 2%;
+  letter-spacing: 0.02rem;
+  line-height: 1.5rem;
+  border-radius: 1.2rem;
+  border: 1px solid var(--border-color);
+  background-color: var(--transparent-dark-2);
+}
+
+.howToUseTitle {
+  margin: 0;
+}
+
+.howToUseDescription {
+  margin: 0;
+  padding: 1.4rem 0 0;
+}
+
+.productsList {
   display: flex;
   flex-wrap: wrap;
 }
@@ -11,9 +38,9 @@
 }
 
 .userProduct {
-  max-width: 25rem;
+  max-width: 26rem;
   min-width: 13rem;
-  width: 25%;
+  width: 26.4%;
   margin: 1%;
   padding: 1.4rem;
   display: flex;
@@ -32,7 +59,14 @@
   margin: 0;
 }
 
+.userProduct .bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 .downloadLink {
+  margin: 0.3rem 0;
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 1rem;
@@ -44,4 +78,8 @@
 
 .downloadLink:hover {
   opacity: 0.6;
+}
+
+.userProduct .bottom .downloadLink:not(:last-child) {
+  margin-right: 0.3rem;
 }
