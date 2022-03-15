@@ -54,6 +54,9 @@
 .userProduct .top {
   margin-bottom: 2rem;
 }
+.userProduct .top > :not(:last-child) {
+  margin-bottom: 0.3rem;
+}
 
 .userProduct .title {
   margin: 0;
@@ -82,4 +85,8 @@
 
 .userProduct .bottom .downloadLink:not(:last-child) {
   margin-right: 0.3rem;
+}
+
+.documentationBtn {
+  text-decoration: none;
 }
