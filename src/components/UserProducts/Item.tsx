@@ -2,6 +2,7 @@ import { PRODUCTS } from "../../constants";
 import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
 import { PLUGINS } from "../../assets";
+import { FiExternalLink } from "react-icons/fi";
 
 import "./index.css";
 
@@ -11,13 +12,19 @@ type ItemProps = {
 
 const Item = ({ id }: ItemProps) => {
   // const { dispatch } = useUser();
-  const { name } = PRODUCTS[id];
+  const { name, docsLink } = PRODUCTS[id];
   const MCWalletLicense = "67ae17cd-8cfc-46ff-979c-c1a866fce34c";
 
   return (
     <div className="userProduct">
       <div className="top">
         <h3 className="title">{name}</h3>
+
+        {docsLink && (
+          <a href={docsLink} target="_blank" className="secondaryBtn disconnectButton documentationBtn" rel="noreferrer">
+            Docs <FiExternalLink />
+          </a>
+        )}
       </div>
 
       {id === "multicurrencywallet" && (
