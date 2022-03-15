@@ -12,10 +12,10 @@ function App() {
           <Authentification />
 
           <Sections />
+
+          <Footer />
         </WithWeb3Connect>
       </UserProvider>
-
-      <Footer />
     </div>
   );
 }
