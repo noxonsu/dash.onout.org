@@ -125,6 +125,9 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
     web3ModalProvider.on(
       "disconnect",
       (error: { code: number; message: string }) => {
+
+        if (error?.message.match(/Attempting to connect/g)) return;
+
         disconnect();
       }
     );
