@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useContext, useState } from "react";
+import GA from 'react-ga';
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 import { PRODUCTS, NETWORKS } from "../../constants";
 import useUser from "../../hooks/useUser";
@@ -48,6 +49,11 @@ const Sections = () => {
             type: UserActions.changeView,
             payload: "products",
           });
+
+          GA.event({
+            category: 'Pages Section',
+            action: 'Open Product list'
+          });
         }}
       >
         Products
@@ -59,6 +65,11 @@ const Sections = () => {
             dispatch({
               type: UserActions.changeView,
               payload: "userProducts",
+            });
+
+            GA.event({
+              category: 'Page Sections',
+              action: `Open User's Products`
             });
           }}
         >

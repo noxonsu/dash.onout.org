@@ -1,4 +1,5 @@
 import { useContext, useState, useEffect } from "react";
+import GA from 'react-ga';
 import { BigNumber } from "bignumber.js";
 import {
   PRODUCTS,
@@ -133,7 +134,14 @@ const Product = ({ id }: ProductProps) => {
     <div className="product">
       {modalOpen && (
         <Modal
-          onClose={() => setModalOpen(false)}
+          onClose={() => {
+            setModalOpen(false);
+
+            GA.event({
+              category: id,
+              action: `Close more info`
+            });
+          }}
           title={name}
           content={
             <iframe title={name} src={promoPageLink} frameBorder="0"></iframe>
@@ -143,13 +151,33 @@ const Product = ({ id }: ProductProps) => {
 
       <div className="header">
         <h3 className="title">{name}</h3>
-        <button onClick={toProducts} className="secondaryBtn backBtn">
+        <button
+          onClick={() => {
+            toProducts();
+
+            GA.event({
+              category: id,
+              action: 'Back to Product list'
+            });
+          }}
+          className="secondaryBtn backBtn"
+        >
           Back
         </button>
       </div>
 
       {!promoPageLink.match(/codecanyon\.net/) && (
-        <button className="secondaryBtn" onClick={() => setModalOpen(true)}>
+        <button
+          className="secondaryBtn"
+          onClick={() => {
+            setModalOpen(true);
+
+            GA.event({
+              category: id,
+              action: `Open more info`
+            });
+          }}
+        >
           More details
         </button>
       )}
@@ -165,7 +193,14 @@ const Product = ({ id }: ProductProps) => {
       <p className="notice">The price may vary slightly</p>
 
       <button
-        onClick={payForProduct}
+        onClick={() => {
+          payForProduct();
+
+          GA.event({
+            category: id,
+            action: 'Press on the "Buy" button'
+          });
+        }}
         className={`primaryBtn paymentBtn ${paymentPending ? "pending" : ""}`}
         disabled={!paymentAvailable}
       >

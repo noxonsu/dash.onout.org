@@ -1,4 +1,5 @@
 import { PRODUCTS } from "../../constants";
+import GA from 'react-ga';
 import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
 import { PLUGINS } from "../../assets";
@@ -21,7 +22,18 @@ const Item = ({ id }: ItemProps) => {
         <h3 className="title">{name}</h3>
 
         {docsLink && (
-          <a href={docsLink} target="_blank" className="secondaryBtn disconnectButton documentationBtn" rel="noreferrer">
+          <a
+            href={docsLink}
+            target="_blank"
+            className="secondaryBtn disconnectButton documentationBtn"
+            rel="noreferrer"
+            onClick={() => {
+              GA.event({
+                category: id,
+                action: 'Open docs'
+              });
+            }}
+          >
             Docs <FiExternalLink />
           </a>
         )}
@@ -34,12 +46,32 @@ const Item = ({ id }: ItemProps) => {
       )}
 
       <div className="bottom">
-        <a href={PLUGINS[id]} className="downloadLink" download>
+        <a
+          href={PLUGINS[id]}
+          className="downloadLink"
+          download
+          onClick={() => {
+            GA.event({
+              category: id,
+              action: 'Download WP version'
+            });
+          }}
+        >
           WP version
         </a>
 
         {!!PLUGINS[`${id}Static`] && (
-          <a href={PLUGINS[`${id}Static`]} className="downloadLink" download>
+          <a
+            href={PLUGINS[`${id}Static`]}
+            className="downloadLink"
+            download
+            onClick={() => {
+              GA.event({
+                category: id,
+                action: 'Download static version'
+              });
+            }}
+          >
             Static version
           </a>
         )}

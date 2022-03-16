@@ -1,3 +1,4 @@
+import GA from 'react-ga';
 import { MdEmail, MdChat } from "react-icons/md";
 import { SiTelegram, SiDiscord } from "react-icons/si";
 import useUser from "../../hooks/useUser";
@@ -13,21 +14,25 @@ const Footer = () => {
       to: "mailto:support@onout.org",
       title: "Email: support@onout.org",
       icon: <MdEmail size="2rem" className="icon" />,
+      gaAction: "Write Email support",
     },
     {
       to: "https://support.onout.org/chat/widget/form/3882717100",
       title: "Online chat",
       icon: <MdChat size="1.9rem" className="icon" />,
+      gaAction: "Open Online chat support",
     },
     {
       to: "https://t.me/onoutsupportbot",
       title: "Telegram",
       icon: <SiTelegram size="1.7rem" className="icon" />,
+      gaAction: "Open Telegram support bot",
     },
     {
       to: "https://discord.gg/VwKEmHEgVN",
       title: "Discord",
       icon: <SiDiscord size="1.9rem" className="icon" />,
+      gaAction: "Join to Discord channel",
     },
   ];
 
@@ -52,9 +57,20 @@ const Footer = () => {
       )}
 
       <ul className="linksList">
-        {links.map(({ to, title, icon }, index) => (
+        {links.map(({ to, title, icon, gaAction }, index) => (
           <li className="linkItem" key={index}>
-            <a href={to} target="_blank" rel="noreferrer" title={title}>
+            <a
+              href={to}
+              target="_blank"
+              rel="noreferrer"
+              title={title}
+              onClick={() => {
+                GA.event({
+                  category: 'Social links',
+                  action: gaAction,
+                });
+              }}
+            >
               {icon}
             </a>
           </li>

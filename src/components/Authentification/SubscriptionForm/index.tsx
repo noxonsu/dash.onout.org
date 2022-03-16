@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import GA from 'react-ga';
 import axios from "../../../helpers/axios";
 import { isValidEmail } from "../../../helpers/email";
 
@@ -103,7 +104,17 @@ const SubscriptionForm = ({
         </label>
       </div>
       <div className="sf-row">
-        <button type="button" className="primaryBtn" onClick={handleSubmit}>
+        <button
+          type="button"
+          className="primaryBtn"
+          onClick={() => {
+            handleSubmit();
+            GA.event({
+              category: 'Subscription',
+              action: 'Press on Subscribe button',
+            });
+          }}
+        >
           Subscribe
         </button>
       </div>
