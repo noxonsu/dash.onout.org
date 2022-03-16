@@ -7,6 +7,9 @@ export const PRICE_ENDPOINT = "https://api.coingecko.com/api/v3";
 
 export const FIAT_TICKER = "USD";
 
+// Google analytics Tracking ID
+export const GA_TRACKING_ID = "UA-219725401-1";
+
 // https://docs.google.com/spreadsheets/d/1wTTuxXt8n9q7C4NDXqQpI3wpKu1_5bGVmP9Xz0XGSyU/edit#gid=0
 export const NETWORKS = {
   // 4: {
@@ -78,6 +81,7 @@ export interface Product {
   imgAlt: string;
   promoPage: string;
   promoPageLink: string;
+  docsLink?: string;
   codecanyonLink?: string;
   price: number | undefined; // USD
   howToEarn?: string;
@@ -97,6 +101,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     imgAlt: "multicurrency wallet promo",
     promoPage: "OnOut wallet",
     promoPageLink: "https://tools.onout.org/wallet/",
+    docsLink: "https://support.onout.org/hc/1331700057/category/1",
     codecanyonLink:
       "https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064",
     price: 999,
@@ -113,6 +118,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     imgAlt: "DeFinance promo",
     promoPage: "OnOut DEX",
     promoPageLink: "https://tools.onout.org/dex/",
+    docsLink: "https://support.onout.org/hc/1331700057/category/2",
     codecanyonLink:
       "https://codecanyon.net/item/definance-ethereum-defi-plugin-for-wordpress/29099232",
     price: 935,
@@ -127,6 +133,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     imgAlt: "Farmfactory promo",
     promoPage: "Codecanyon",
     promoPageLink: "https://tools.onout.org/farming/",
+    docsLink: "https://support.onout.org/hc/1331700057/category/3",
     codecanyonLink:
       "https://codecanyon.net/item/farmfactory-ethereum-assets-staking-yield-farming/29987071",
     price: 799,
@@ -141,6 +148,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     imgAlt: "Daofactory promo",
     promoPage: "OnOut DAO",
     promoPageLink: "https://tools.onout.org/dao/",
+    docsLink: "https://support.onout.org/hc/1331700057/category/4",
     codecanyonLink:
       "https://codecanyon.net/item/dao-factory-governance-and-proposals-plugin-for-your-token-for-wordpress/35608699",
     price: 600,
@@ -155,6 +163,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     imgAlt: "Lotteryfactory promo",
     promoPage: "OnOut Lottery",
     promoPageLink: "https://tools.onout.org/lottery/",
+    docsLink: "https://support.onout.org/hc/1331700057/category/6",
     codecanyonLink:
       "https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064",
     price: 999,
@@ -169,6 +178,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     imgAlt: "NFT Marketplace promo",
     promoPage: "OnOut NFT Marketplace",
     promoPageLink: "https://tools.onout.org/nft/",
+    docsLink: "",
     price: 500,
   },
 };

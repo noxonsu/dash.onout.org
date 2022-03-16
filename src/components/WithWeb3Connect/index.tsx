@@ -1,9 +1,9 @@
 import { createContext, useEffect, useState } from "react";
+import GA from 'react-ga';
 import { utils } from "ethers";
 import Web3 from "web3";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import { FiExternalLink } from "react-icons/fi";
 import { NETWORKS } from "../../constants";
 import useUser from "../../hooks/useUser";
 import { UserActions } from "../UserProvider";
@@ -125,6 +125,9 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
     web3ModalProvider.on(
       "disconnect",
       (error: { code: number; message: string }) => {
+
+        if (error?.message.match(/Attempting to connect/g)) return;
+
         disconnect();
       }
     );
@@ -162,7 +165,17 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
         <p className="pending">Loading</p>
       ) : !account.connected ? (
         <div className="btn-block">
-          <button className="primaryBtn connectButton" onClick={connect}>
+          <button
+            className="primaryBtn connectButton"
+            onClick={() => {
+              connect();
+
+              GA.event({
+                category: 'Web3',
+                action: 'Connect an Account'
+              });
+            }}
+          >
           Connect to wallet
           </button>
         </div>
@@ -174,15 +187,19 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
               {address.slice(address.length - 4, address.length)}
             </span>
             <div className="disconnect-btn-block">
-              <a href="https://support.onout.org/hc/1331700057" target="_blank" className="secondaryBtn disconnectButton documentationBtn" rel="noreferrer">
-                Docs <FiExternalLink />
-              </a>
               <button
-              className="secondaryBtn disconnectButton"
-              onClick={disconnect}
-            >
-              Disconnect
-            </button>
+                className="secondaryBtn disconnectButton"
+                onClick={() => {
+                  disconnect();
+
+                  GA.event({
+                    category: 'Web3',
+                    action: 'Disconnect an Account'
+                  })
+                }}
+              >
+                Disconnect
+              </button>
             </div>
           </div>
 

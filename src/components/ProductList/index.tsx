@@ -1,3 +1,5 @@
+import GA from 'react-ga';
+
 import { PRODUCTS } from "../../constants";
 import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
@@ -25,7 +27,13 @@ const ProductList = () => {
             <div
               key={id}
               className="productCard"
-              onClick={() => openDetails(id)}
+              onClick={() => {
+                openDetails(id);
+                GA.event({
+                  category: 'Product list',
+                  action: `Open ${id}`,
+                });
+              }}
             >
               <img src={imgSrc} alt={imgAlt} />
               <div className="textContent">
