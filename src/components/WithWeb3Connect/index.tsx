@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import GA from 'react-ga';
 import { utils } from "ethers";
 import Web3 from "web3";
 import Web3Modal from "web3modal";
@@ -164,7 +165,17 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
         <p className="pending">Loading</p>
       ) : !account.connected ? (
         <div className="btn-block">
-          <button className="primaryBtn connectButton" onClick={connect}>
+          <button
+            className="primaryBtn connectButton"
+            onClick={() => {
+              connect();
+
+              GA.event({
+                category: 'Web3',
+                action: 'Connect an Account'
+              });
+            }}
+          >
           Connect to wallet
           </button>
         </div>
@@ -178,7 +189,14 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
             <div className="disconnect-btn-block">
               <button
                 className="secondaryBtn disconnectButton"
-                onClick={disconnect}
+                onClick={() => {
+                  disconnect();
+
+                  GA.event({
+                    category: 'Web3',
+                    action: 'Disconnect an Account'
+                  })
+                }}
               >
                 Disconnect
               </button>
