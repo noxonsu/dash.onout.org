@@ -1,7 +1,12 @@
 .auth {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
+  margin: 1rem auto;
+  width: 90%;
+}
+
+.auth:empty {
+  margin: 2vh 0 0 0;
 }
 
 .subscriptionForm {
@@ -25,6 +30,7 @@
 .sf-row input[type="checkbox"] {
   margin-right: 0.7rem;
   margin-top: 0.4rem;
+  min-width: 5%;
 }
 
 .input {

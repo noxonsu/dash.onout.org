@@ -6,6 +6,7 @@
 .userProducts {
   max-width: 60rem;
   margin: 0 auto;
+  width: 90%;
 }
 
 .howToUseWrapper {
