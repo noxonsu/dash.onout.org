@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.4f4272eb.css",
-    "main.js": "/static/js/main.53947d46.js",
+    "main.css": "/static/css/main.f0bf8dba.css",
+    "main.js": "/static/js/main.c1c1963a.js",
     "static/js/787.de7b3d37.chunk.js": "/static/js/787.de7b3d37.chunk.js",
     "static/media/lotteryfactory.zip": "/static/media/lotteryfactory.77676b929352cf517cc7.zip",
     "static/media/multicurrencywallet.zip": "/static/media/multicurrencywallet.08df57797b62787a6f50.zip",
@@ -22,12 +22,12 @@
     "static/media/polygon.svg": "/static/media/polygon.97ff139cc7379a42cf141d74a6595fff.svg",
     "index.html": "/index.html",
     "static/media/bsc.svg": "/static/media/bsc.61eb245e3e4ae578879a18d6019d2c81.svg",
-    "main.4f4272eb.css.map": "/static/css/main.4f4272eb.css.map",
-    "main.53947d46.js.map": "/static/js/main.53947d46.js.map",
+    "main.f0bf8dba.css.map": "/static/css/main.f0bf8dba.css.map",
+    "main.c1c1963a.js.map": "/static/js/main.c1c1963a.js.map",
     "787.de7b3d37.chunk.js.map": "/static/js/787.de7b3d37.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4f4272eb.css",
-    "static/js/main.53947d46.js"
+    "static/css/main.f0bf8dba.css",
+    "static/js/main.c1c1963a.js"
   ]
 }
