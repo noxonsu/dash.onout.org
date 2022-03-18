@@ -58,3 +58,20 @@
   margin: 1.4rem 0 0.7rem;
   font-size: 1.1rem;
 }
+
+.textContent.hasBuyButton {
+  margin-bottom: 4rem;
+}
+
+.buyBtn {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.newProduct img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20%;
+}

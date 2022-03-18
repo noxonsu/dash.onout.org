@@ -10,6 +10,8 @@ import ETHEREUM from "./images/ethereum.svg";
 import BSC from "./images/bsc.svg";
 import POLYGON from "./images/polygon.svg";
 
+import newProduct from "./images/new.png";
+
 //@ts-ignore
 import definance from "./plugins/definance.zip";
 //@ts-ignore
@@ -36,6 +38,10 @@ export const COVERS: { [k: string]: string } = {
   daoCover,
   crossChainCover,
 };
+
+export const IMAGES: { [k: string]: string } = {
+  newProduct,
+}
 
 export const NETWORKS: { [k: number]: string } = {
   1: ETHEREUM,
