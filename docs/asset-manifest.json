@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.f0bf8dba.css",
-    "main.js": "/static/js/main.c1c1963a.js",
-    "static/js/787.de7b3d37.chunk.js": "/static/js/787.de7b3d37.chunk.js",
-    "static/media/lotteryfactory.zip": "/static/media/lotteryfactory.77676b929352cf517cc7.zip",
-    "static/media/multicurrencywallet.zip": "/static/media/multicurrencywallet.08df57797b62787a6f50.zip",
-    "static/media/definance.zip": "/static/media/definance.f66068c9ff8c8eda5b76.zip",
-    "static/media/static_definance.zip": "/static/media/static_definance.daa865132d515d1bb08e.zip",
-    "static/media/daofactory.zip": "/static/media/daofactory.a04cbb7ba3861f319cd9.zip",
-    "static/media/static_daofactory.zip": "/static/media/static_daofactory.2b6f4d4751d309465c3c.zip",
-    "static/media/nftmarketplace.zip": "/static/media/nftmarketplace.beaeafea5051b2283d64.zip",
-    "static/media/farmfactory.zip": "/static/media/farmfactory.246d9ce42e8561e50460.zip",
+    "main.css": "/static/css/main.690ca7f0.css",
+    "main.js": "/static/js/main.baaf745e.js",
+    "static/js/27.1e8e1c31.chunk.js": "/static/js/27.1e8e1c31.chunk.js",
+    "static/media/lotteryfactory.zip": "/static/media/lotteryfactory.c10aba6ea3c4c33e0be4.zip",
+    "static/media/multicurrencywallet.zip": "/static/media/multicurrencywallet.4516b52f5e1e879bdf70.zip",
+    "static/media/definance.zip": "/static/media/definance.a7c09a6f57bb20e67bcf.zip",
+    "static/media/static_definance.zip": "/static/media/static_definance.c5353e67515329401880.zip",
+    "static/media/daofactory.zip": "/static/media/daofactory.13948ec4c4b03d66acea.zip",
+    "static/media/static_daofactory.zip": "/static/media/static_daofactory.0329322926ecd3f8ca26.zip",
+    "static/media/nftmarketplace.zip": "/static/media/nftmarketplace.28d2536ad96e47490a1b.zip",
+    "static/media/farmfactory.zip": "/static/media/farmfactory.81c045047e955fe30434.zip",
     "static/media/nftsy-cover.jpg": "/static/media/nftsy-cover.72fedd3eebb0cf7b0f26.jpg",
     "static/media/lottery-cover.jpg": "/static/media/lottery-cover.97a34a9c1aa834d0cc1b.jpg",
     "static/media/dex-cover.jpg": "/static/media/dex-cover.4b245a3d846854edf8a5.jpg",
@@ -21,13 +21,10 @@
     "static/media/ethereum.svg": "/static/media/ethereum.2e69b5a7503953ef45a4f2a3558b52b3.svg",
     "static/media/polygon.svg": "/static/media/polygon.97ff139cc7379a42cf141d74a6595fff.svg",
     "index.html": "/index.html",
-    "static/media/bsc.svg": "/static/media/bsc.61eb245e3e4ae578879a18d6019d2c81.svg",
-    "main.f0bf8dba.css.map": "/static/css/main.f0bf8dba.css.map",
-    "main.c1c1963a.js.map": "/static/js/main.c1c1963a.js.map",
-    "787.de7b3d37.chunk.js.map": "/static/js/787.de7b3d37.chunk.js.map"
+    "static/media/bsc.svg": "/static/media/bsc.61eb245e3e4ae578879a18d6019d2c81.svg"
   },
   "entrypoints": [
-    "static/css/main.f0bf8dba.css",
-    "static/js/main.c1c1963a.js"
+    "static/css/main.690ca7f0.css",
+    "static/js/main.baaf745e.js"
   ]
 }
