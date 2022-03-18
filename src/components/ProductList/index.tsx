@@ -1,5 +1,6 @@
 import GA from 'react-ga';
 
+import { IMAGES } from "../../assets";
 import { PRODUCTS } from "../../constants";
 import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
@@ -20,7 +21,7 @@ const ProductList = () => {
     <section>
       <div className="products">
         {Object.keys(PRODUCTS).map((id) => {
-          const { name, howToEarn, adminCanEdit, description, imgSrc, imgAlt, price } =
+          const { name, howToEarn, adminCanEdit, description, imgSrc, imgAlt, price, lables } =
             PRODUCTS[id];
 
           return (
@@ -35,24 +36,39 @@ const ProductList = () => {
                 });
               }}
             >
-              <img src={imgSrc} alt={imgAlt} />
-              <div className="textContent">
-                <h3 className="contentTitle">{name}</h3>
-                {price && <h4 className="subtitle">~{price} USD</h4>}
-                {description && <p className="description">{description}</p>}
-                {howToEarn && (
-                  <div className="subsection">
-                    <h4 className="subtitle">How to earn</h4>
-                    <p className="subdescription">{howToEarn}</p>
+              <>
+                <img src={imgSrc} alt={imgAlt} />
+                {lables.includes('new') && (
+                  <div className='newProduct'>
+                    <img
+                      src={IMAGES.newProduct}
+                      alt="New Product"
+                    />
                   </div>
                 )}
-                {adminCanEdit && (
-                  <div className="subsection">
-                    <h4 className="subtitle">Admin can edit</h4>
-                    <p className="subdescription">{adminCanEdit}</p>
-                  </div>
-                )}
-              </div>
+                <div className={`textContent${price ? ' hasBuyButton' : ''}`}>
+                  <h3 className="contentTitle">{name}</h3>
+                  {description && <p className="description">{description}</p>}
+                  {howToEarn && (
+                    <div className="subsection">
+                      <h4 className="subtitle">How to earn</h4>
+                      <p className="subdescription">{howToEarn}</p>
+                    </div>
+                  )}
+                  {adminCanEdit && (
+                    <div className="subsection">
+                      <h4 className="subtitle">Admin can edit</h4>
+                      <p className="subdescription">{adminCanEdit}</p>
+                    </div>
+                  )}
+                </div>
+              </>
+
+              {price && (
+                <button className="primaryBtn buyBtn">
+                  {`Buy for $${price}`}
+                </button>
+              )}
             </div>
           );
         })}

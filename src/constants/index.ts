@@ -80,9 +80,27 @@ export interface Product {
   price: number | undefined; // USD
   howToEarn?: string;
   adminCanEdit?: string;
+  lables: string[];
 }
 
 export const PRODUCTS: { [id: string]: Product } = {
+  crosschain: {
+    id: "crosschain",
+    name: "CROSS-CHAIN",
+    demo: "",
+    howToEarn: "On commission for each trade",
+    adminCanEdit:
+      "Logo, colors, list of assets, links, fee percent, admin and fee addresses",
+    description: "Presale... Development in progress. Buy now to fix the price.",
+    imgSrc: COVERS.crossChainCover,
+    imgAlt: "crosschain wallet promo",
+    promoPage: "OnOut cross-chain",
+    promoPageLink: "",
+    docsLink: "",
+    codecanyonLink: "",
+    lables: ['new'],
+    price: 999,
+  },
   multicurrencywallet: {
     id: "multicurrencywallet",
     name: "MCW (Wallet + Exchange)",
@@ -98,6 +116,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     docsLink: "https://support.onout.org/hc/1331700057/category/1",
     codecanyonLink:
       "https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064",
+    lables: [],
     price: 999,
   },
   definance: {
@@ -115,6 +134,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     docsLink: "https://support.onout.org/hc/1331700057/category/2",
     codecanyonLink:
       "https://codecanyon.net/item/definance-ethereum-defi-plugin-for-wordpress/29099232",
+    lables: [],
     price: 899,
   },
   farmfactory: {
@@ -130,6 +150,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     docsLink: "https://support.onout.org/hc/1331700057/category/3",
     codecanyonLink:
       "https://codecanyon.net/item/farmfactory-ethereum-assets-staking-yield-farming/29987071",
+    lables: [],
     price: 799,
   },
   daofactory: {
@@ -145,6 +166,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     docsLink: "https://support.onout.org/hc/1331700057/category/4",
     codecanyonLink:
       "https://codecanyon.net/item/dao-factory-governance-and-proposals-plugin-for-your-token-for-wordpress/35608699",
+    lables: [],
     price: 600,
   },
   lotteryfactory: {
@@ -160,6 +182,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     docsLink: "https://support.onout.org/hc/1331700057/category/6",
     codecanyonLink:
       "https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064",
+    lables: [],
     price: 999,
   },
   nftmarketplace: {
@@ -173,6 +196,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     promoPage: "OnOut NFT Marketplace",
     promoPageLink: "https://tools.onout.org/nft/",
     docsLink: "",
+    lables: [],
     price: 500,
   },
 };

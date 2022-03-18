@@ -16,10 +16,19 @@ const Item = ({ id }: ItemProps) => {
   const { name, docsLink } = PRODUCTS[id];
   const MCWalletLicense = "67ae17cd-8cfc-46ff-979c-c1a866fce34c";
 
+  const hasWpVersion = !!PLUGINS[`${id}`];
+  const hasStaticVersion = !!PLUGINS[`${id}Static`];
+
   return (
     <div className="userProduct">
       <div className="top">
         <h3 className="title">{name}</h3>
+
+        {!hasWpVersion && !hasStaticVersion && (
+          <p>
+            Development in progress...
+          </p>
+        )}
 
         {docsLink && (
           <a
@@ -46,21 +55,30 @@ const Item = ({ id }: ItemProps) => {
       )}
 
       <div className="bottom">
-        <a
-          href={PLUGINS[id]}
-          className="downloadLink"
-          download
-          onClick={() => {
-            GA.event({
-              category: id,
-              action: 'Download WP version'
-            });
-          }}
-        >
-          WP version
-        </a>
 
-        {!!PLUGINS[`${id}Static`] && (
+        {!hasWpVersion && !hasStaticVersion && (
+          <p>
+            As soon as the MVP version is available, a download button will appear here.
+          </p>
+        )}
+
+        {hasWpVersion && (
+          <a
+            href={PLUGINS[id]}
+            className="downloadLink"
+            download
+            onClick={() => {
+              GA.event({
+                category: id,
+                action: 'Download WP version'
+              });
+            }}
+          >
+            WP version
+          </a>
+        )}
+
+        {hasStaticVersion && (
           <a
             href={PLUGINS[`${id}Static`]}
             className="downloadLink"
