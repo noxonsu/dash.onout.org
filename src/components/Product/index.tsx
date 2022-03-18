@@ -7,7 +7,7 @@ import {
   NETWORKS,
   FIAT_TICKER,
 } from "../../constants";
-import { send, sendPoligon } from "../../helpers/transaction";
+import { send, sendPolygon } from "../../helpers/transaction";
 import { sendMessage } from "../../helpers/feedback";
 // import { stringFromHex, stringToHex } from "../../helpers/format";
 import { getPrice } from "../../helpers/currency";
@@ -84,7 +84,7 @@ const Product = ({ id }: ProductProps) => {
 
     if(networkId === 137) {
       if (params) {
-        const confirmedTx = await sendPoligon({
+        const confirmedTx = await sendPolygon({
           ...params,
           tokenAddress: '0x098844e1362c1D7346184045c155DF3c99A98700',
           onHash: (hash) => {

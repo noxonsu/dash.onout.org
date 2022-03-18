@@ -38,7 +38,7 @@ const sendToken = async ({
   }
 };
 
-const sendTokenPoligon = async ({
+const sendTokenPolygon = async ({
   provider,
   from,
   to,
@@ -105,7 +105,7 @@ export const send = async ({
     return false;
   }
 };
-export const sendPoligon = async ({
+export const sendPolygon = async ({
   provider,
   from,
   to,
@@ -122,7 +122,7 @@ export const sendPoligon = async ({
   };
 
   if (tokenAddress) {
-    return sendTokenPoligon({
+    return sendTokenPolygon({
       provider,
       from,
       to,
