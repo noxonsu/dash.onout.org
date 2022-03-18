@@ -144,7 +144,9 @@ const Product = ({ id }: ProductProps) => {
           }}
           title={name}
           content={
-            <iframe title={name} src={promoPageLink} frameBorder="0"></iframe>
+            promoPageLink 
+            ? <iframe title={name} src={promoPageLink} frameBorder="0"></iframe>
+            : <h1 style={{textAlign: "center"}}>Coming soon...</h1>
           }
         />
       )}

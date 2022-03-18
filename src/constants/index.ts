@@ -95,7 +95,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     imgSrc: COVERS.crossChainCover,
     imgAlt: "crosschain wallet promo",
     promoPage: "OnOut cross-chain",
-    promoPageLink: "https://tools.onout.org/",
+    promoPageLink: "",
     docsLink: "",
     codecanyonLink: "",
     lables: ['new'],
