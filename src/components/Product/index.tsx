@@ -7,7 +7,7 @@ import {
   NETWORKS,
   FIAT_TICKER,
 } from "../../constants";
-import { send, sendPolygon } from "../../helpers/transaction";
+import { send } from "../../helpers/transaction";
 import { sendMessage } from "../../helpers/feedback";
 // import { stringFromHex, stringToHex } from "../../helpers/format";
 import { getPrice } from "../../helpers/currency";
@@ -58,13 +58,25 @@ const Product = ({ id }: ProductProps) => {
         DECIMAL_PLACES: 18,
       });
 
-      return {
-        provider: account.provider,
-        from: account.address,
-        to: PAYMENT_ADDRESS,
-        amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
-        // tokenAddress: "",
-      };
+      if(networkId === 137) {
+        return {
+          provider: account.provider,
+          from: account.address,
+          to: PAYMENT_ADDRESS,
+          amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
+          tokenAddress: '0x098844e1362c1D7346184045c155DF3c99A98700',
+        };
+      } else {
+        return {
+          provider: account.provider,
+          from: account.address,
+          to: PAYMENT_ADDRESS,
+          amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
+          // tokenAddress: "",
+        };
+      }
+
+      
     }
 
     return false;
@@ -82,68 +94,34 @@ const Product = ({ id }: ProductProps) => {
 
     const params = await getPaymentParameters(networkId);
 
-    if(networkId === 137) {
-      if (params) {
-        const confirmedTx = await sendPolygon({
-          ...params,
-          tokenAddress: '0x098844e1362c1D7346184045c155DF3c99A98700',
-          onHash: (hash) => {
-            sendMessage({
-              msg: `(from: ${
-                account.address
-              }) network: ${networkId}; product id: ${id}; USD cost: ${USDPrice}; crypto cost: ${
-                params.amount
-              }; date: ${new Date().toISOString()}; tx hash: ${hash}`,
-            });
+    if (params) {
+      const confirmedTx = await send({
+        ...params,
+        onHash: (hash) => {
+          sendMessage({
+            msg: `(from: ${
+              account.address
+            }) network: ${networkId}; product id: ${id}; USD cost: ${USDPrice}; crypto cost: ${
+              params.amount
+            }; date: ${new Date().toISOString()}; tx hash: ${hash}`,
+          });
+        },
+        // data:
+        //   `0x` + stringToHex(`${networkId}_${id}_${USDPrice}_${params.amount}`),
+      });
+
+      if (confirmedTx?.status) {
+        dispatch({
+          type: UserActions.paid,
+          payload: {
+            key: `${account.address}_${id}`,
+            value: `${new Date().toISOString()}`,
           },
-          // data:
-          //   `0x` + stringToHex(`${networkId}_${id}_${USDPrice}_${params.amount}`),
         });
-  
-        if (confirmedTx?.status) {
-          dispatch({
-            type: UserActions.paid,
-            payload: {
-              key: `${account.address}_${id}`,
-              value: `${new Date().toISOString()}`,
-            },
-          });
-          dispatch({
-            type: UserActions.addProduct,
-            payload: PRODUCTS[id],
-          });
-        }
-      } 
-    } else {
-      if (params) {
-        const confirmedTx = await send({
-          ...params,
-          onHash: (hash) => {
-            sendMessage({
-              msg: `(from: ${
-                account.address
-              }) network: ${networkId}; product id: ${id}; USD cost: ${USDPrice}; crypto cost: ${
-                params.amount
-              }; date: ${new Date().toISOString()}; tx hash: ${hash}`,
-            });
-          },
-          // data:
-          //   `0x` + stringToHex(`${networkId}_${id}_${USDPrice}_${params.amount}`),
+        dispatch({
+          type: UserActions.addProduct,
+          payload: PRODUCTS[id],
         });
-  
-        if (confirmedTx?.status) {
-          dispatch({
-            type: UserActions.paid,
-            payload: {
-              key: `${account.address}_${id}`,
-              value: `${new Date().toISOString()}`,
-            },
-          });
-          dispatch({
-            type: UserActions.addProduct,
-            payload: PRODUCTS[id],
-          });
-        }
       }
     }
     setPaymentPending(false);

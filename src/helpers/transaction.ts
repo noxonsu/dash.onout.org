@@ -27,37 +27,18 @@ const sendToken = async ({
     const decimals = await contract.methods.decimals().call();
     const unitAmount = utils.parseUnits(String(amount), decimals);
 
-    return await contract.methods.transfer(to, unitAmount).send({
-      from,
-    });
-  } catch (error) {
-    console.group("%c send token", "color: red;");
-    console.error(error);
-    console.groupEnd();
-    return false;
-  }
-};
+    if(tokenAddress === '0x098844e1362c1D7346184045c155DF3c99A98700') {
+      return await contract.methods.transferErc20(tokenAddress, from).send({
+        from,
+        value: unitAmount,
+      });
+    } else {
+      return await contract.methods.transfer(to, unitAmount).send({
+        from,
+      });
+    }
 
-const sendTokenPolygon = async ({
-  provider,
-  from,
-  to,
-  amount,
-  tokenAddress,
-}: TxParameters & {
-  tokenAddress: string;
-}) => {
-  try {
-    const contract = new provider.eth.Contract(ERC20_ABI, tokenAddress, {
-      from,
-    });
-    const decimals = await contract.methods.decimals().call();
-    const unitAmount = utils.parseUnits(String(amount), decimals);
-
-    return await contract.methods.transferErc20(tokenAddress, from).send({
-      from,
-      value: unitAmount,
-    });
+    
   } catch (error) {
     console.group("%c send token", "color: red;");
     console.error(error);
@@ -105,42 +86,4 @@ export const send = async ({
     return false;
   }
 };
-export const sendPolygon = async ({
-  provider,
-  from,
-  to,
-  amount,
-  tokenAddress,
-  onHash,
-  data,
-}: TxParameters) => {
-  const tx = {
-    from,
-    to,
-    value: utils.parseUnits(String(amount), "ether").toHexString(),
-    data,
-  };
 
-  if (tokenAddress) {
-    return sendTokenPolygon({
-      provider,
-      from,
-      to,
-      amount,
-      tokenAddress,
-    });
-  }
-
-  try {
-    return await provider.eth
-      .sendTransaction(tx)
-      .on("transactionHash", (hash: string) => {
-        if (typeof onHash === "function") onHash(hash);
-      });
-  } catch (error) {
-    console.group("%c send", "color: red;");
-    console.error(error);
-    console.groupEnd();
-    return false;
-  }
-};
