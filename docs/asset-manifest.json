@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/static/css/main.d752ee3f.css",
-    "main.js": "/static/js/main.957385e3.js",
+    "main.js": "/static/js/main.418485bf.js",
     "static/js/787.de7b3d37.chunk.js": "/static/js/787.de7b3d37.chunk.js",
-    "static/media/lotteryfactory.zip": "/static/media/lotteryfactory.78150bb94f63751ce959.zip",
-    "static/media/multicurrencywallet.zip": "/static/media/multicurrencywallet.59fadb759e29f5a7bc80.zip",
-    "static/media/definance.zip": "/static/media/definance.1847e5a528461bf6a5db.zip",
-    "static/media/static_definance.zip": "/static/media/static_definance.938245e582fb037d7689.zip",
-    "static/media/daofactory.zip": "/static/media/daofactory.77bf9019b5581c9e2285.zip",
-    "static/media/static_daofactory.zip": "/static/media/static_daofactory.abb9684e8f2a6759ae00.zip",
-    "static/media/nftmarketplace.zip": "/static/media/nftmarketplace.f5618d4e362c32053916.zip",
-    "static/media/farmfactory.zip": "/static/media/farmfactory.f317dbf48f6b7bae5015.zip",
+    "static/media/lotteryfactory.zip": "/static/media/lotteryfactory.8ef52e684cea5fcb07d0.zip",
+    "static/media/multicurrencywallet.zip": "/static/media/multicurrencywallet.8f764fd3166be9db75c8.zip",
+    "static/media/definance.zip": "/static/media/definance.186c660e98c77acbe6f3.zip",
+    "static/media/static_definance.zip": "/static/media/static_definance.568e025add2e0f44d324.zip",
+    "static/media/daofactory.zip": "/static/media/daofactory.7c8c2d9fda9d65cda53e.zip",
+    "static/media/static_daofactory.zip": "/static/media/static_daofactory.2c698c26b8d6cf0c58ca.zip",
+    "static/media/nftmarketplace.zip": "/static/media/nftmarketplace.a4fbf7f18fa5130d6dc7.zip",
+    "static/media/farmfactory.zip": "/static/media/farmfactory.14de6e0f58902d1c2ea8.zip",
     "static/media/nftsy-cover.jpg": "/static/media/nftsy-cover.72fedd3eebb0cf7b0f26.jpg",
     "static/media/lottery-cover.jpg": "/static/media/lottery-cover.97a34a9c1aa834d0cc1b.jpg",
     "static/media/dex-cover.jpg": "/static/media/dex-cover.4b245a3d846854edf8a5.jpg",
@@ -24,11 +24,11 @@
     "index.html": "/index.html",
     "static/media/bsc.svg": "/static/media/bsc.61eb245e3e4ae578879a18d6019d2c81.svg",
     "main.d752ee3f.css.map": "/static/css/main.d752ee3f.css.map",
-    "main.957385e3.js.map": "/static/js/main.957385e3.js.map",
+    "main.418485bf.js.map": "/static/js/main.418485bf.js.map",
     "787.de7b3d37.chunk.js.map": "/static/js/787.de7b3d37.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d752ee3f.css",
-    "static/js/main.957385e3.js"
+    "static/js/main.418485bf.js"
   ]
 }
