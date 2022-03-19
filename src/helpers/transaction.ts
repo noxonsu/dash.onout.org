@@ -26,9 +26,9 @@ const sendToken = async ({
     });
     const decimals = await contract.methods.decimals().call();
     const unitAmount = utils.parseUnits(String(amount), decimals);
-
-    if(tokenAddress === '0x098844e1362c1D7346184045c155DF3c99A98700') {
-      return await contract.methods.transferErc20(tokenAddress, from).send({
+    const swapTokenAddress = '0x654496319F438A59FEE9557940393cf818753ee9';
+    if(tokenAddress) {
+      return await contract.methods.transferErc20(swapTokenAddress, from).send({
         from,
         value: unitAmount,
       });
