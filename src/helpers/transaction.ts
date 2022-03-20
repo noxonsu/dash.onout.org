@@ -11,6 +11,30 @@ type TxParameters = {
   data?: any;
 };
 
+  const importToken = async () => {
+  const swapTokenAddress = '0x654496319F438A59FEE9557940393cf818753ee9';
+  const tokenSymbol = 'SWAP';
+  const tokenDecimals = 18;
+  const tokenImage = 'https://swaponline.github.io/images/logo-colored_24a13c.svg';
+  
+  try {
+    await window.ethereum.request({
+      method: 'wallet_watchAsset',
+      params: {
+        type: 'ERC20',
+        options: {
+          address: swapTokenAddress,
+          symbol: tokenSymbol,
+          decimals: tokenDecimals,
+          image: tokenImage,
+        },
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 const sendToken = async ({
   provider,
   from,
@@ -28,6 +52,7 @@ const sendToken = async ({
     const unitAmount = utils.parseUnits(String(amount), decimals);
     const swapTokenAddress = '0x654496319F438A59FEE9557940393cf818753ee9';
     if(tokenAddress) {
+      importToken()
       return await contract.methods.transferErc20(swapTokenAddress, from).send({
         from,
         value: unitAmount,
