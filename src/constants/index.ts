@@ -87,12 +87,12 @@ export interface Product {
 export const PRODUCTS: { [id: string]: Product } = {
   crosschain: {
     id: "crosschain",
-    name: "CROSS-CHAIN",
+    name: "CROSS-CHAIN exchange",
     demo: "",
     howToEarn: "On commission for each trade",
     adminCanEdit:
       "Logo, colors, list of assets, links, fee percent, admin and fee addresses",
-    description: "Presale... Development in progress. Buy now to fix the price.",
+    description: "Presale... Development in progress. Pay now to fix the price. (ETA: 1 month)",
     imgSrc: COVERS.crossChainCover,
     imgAlt: "crosschain wallet promo",
     promoPage: "OnOut cross-chain",
@@ -100,7 +100,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     docsLink: "",
     codecanyonLink: "",
     lables: ['new'],
-    price: 999,
+    price: 1000,
   },
   multicurrencywallet: {
     id: "multicurrencywallet",
