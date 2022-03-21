@@ -52,7 +52,7 @@ const sendToken = async ({
     });
     const decimals = await contract.methods.decimals().call();
     const unitAmount = utils.parseUnits(String(amount), decimals);
-    const contractAddressCashbackPolygon = '0x098844e1362c1D7346184045c155DF3c99A98700';
+    const contractAddressCashbackPolygon = '0xb4e3F3716Eb11f58ad16Ac6400068D171A9e465F';
     
     if(contractAddress === contractAddressCashbackPolygon) {
       importToken()

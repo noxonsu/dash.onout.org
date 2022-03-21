@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.02ad5ac0.css",
-    "main.js": "/static/js/main.6680f4f5.js",
+    "main.js": "/static/js/main.679ebdd1.js",
     "static/js/787.de7b3d37.chunk.js": "/static/js/787.de7b3d37.chunk.js",
     "static/media/nftsy-cover.jpg": "/static/media/nftsy-cover.72fedd3eebb0cf7b0f26.jpg",
     "static/media/lottery-cover.jpg": "/static/media/lottery-cover.97a34a9c1aa834d0cc1b.jpg",
@@ -24,11 +24,11 @@
     "static/media/static_daofactory.zip": "/static/media/static_daofactory.31d6cfe0d16ae931b73c.zip",
     "static/media/static_definance.zip": "/static/media/static_definance.31d6cfe0d16ae931b73c.zip",
     "main.02ad5ac0.css.map": "/static/css/main.02ad5ac0.css.map",
-    "main.6680f4f5.js.map": "/static/js/main.6680f4f5.js.map",
+    "main.679ebdd1.js.map": "/static/js/main.679ebdd1.js.map",
     "787.de7b3d37.chunk.js.map": "/static/js/787.de7b3d37.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.02ad5ac0.css",
-    "static/js/main.6680f4f5.js"
+    "static/js/main.679ebdd1.js"
   ]
 }

@@ -4,21 +4,22 @@ pragma solidity ^0.8.12;
 
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol";
 
-contract NasiCoin is ERC20{
+contract CashbackContract is ERC20{
     address public addressContract;
     address public ownerContract;
     address public parther;
     address public ownerDash;
+    uint public oooo;
     uint8 public partPartner;
     uint256 public cashback = 50*10**18;
     event TransferSent(address _from, address _destAddr, uint _amount);
 
-    constructor() ERC20("NasiCoin", "NASI") {
+    constructor() ERC20("CashbackContract", "CASH") {
         _mint(address(this), 21000000 * 10 ** 18);
         addressContract = address(this);
         ownerContract = msg.sender;
-        ownerDash = 0x1C1531b28C4497C0f688A968622599f224d7FBe7;
-        parther = 0x1C1531b28C4497C0f688A968622599f224d7FBe7;
+        ownerDash = 0x3B85D38c3A7AEabABA8B7DEb7a73177688270abC;
+        parther = 0x873351e707257C28eC6fAB1ADbc850480f6e0633;
         partPartner = 10;
     }
 
@@ -40,12 +41,13 @@ contract NasiCoin is ERC20{
     }
     
     function transferErc20(IERC20 token, address to) public payable {
-        token.transfer(to, cashback);
+        if (token.balanceOf(address(this)) >= cashback) {
+            token.transfer(to, cashback);
+        }
         emit TransferSent(addressContract, to, cashback);
         address payable _to = payable(ownerDash);
         address payable _partner = payable(parther);
         _partner.transfer((addressContract.balance * partPartner) / 100);
         _to.transfer(addressContract.balance); 
     }
-
 }
