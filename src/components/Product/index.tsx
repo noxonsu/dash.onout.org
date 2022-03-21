@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import GA from 'react-ga';
+import GA from "react-ga";
 import { BigNumber } from "bignumber.js";
 import {
   PRODUCTS,
@@ -8,7 +8,7 @@ import {
   FIAT_TICKER,
 } from "../../constants";
 import { send } from "../../helpers/transaction";
-import { sendMessage } from "../../helpers/feedback";
+import { sendMessage, STATUS } from "../../helpers/feedback";
 // import { stringFromHex, stringToHex } from "../../helpers/format";
 import { getPrice } from "../../helpers/currency";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
@@ -40,6 +40,29 @@ const Product = ({ id }: ProductProps) => {
     dispatch({
       type: UserActions.changeView,
       payload: "products",
+    });
+  };
+
+  const sendFeedback = ({
+    networkId,
+    amount,
+    prefix,
+    status,
+    extra,
+  }: {
+    networkId?: number;
+    amount?: number;
+    prefix: string;
+    status: STATUS;
+    extra?: string;
+  }) => {
+    sendMessage({
+      msg: `(${prefix} from: ${account.address}) ${
+        networkId ? `network: ${networkId}; ` : ""
+      }product id: ${id}; USD cost: ${USDPrice}; ${
+        amount ? `crypto cost: ${amount}; ` : ""
+      }date: ${new Date().toISOString()};${extra ? ` ${extra}` : ""}`,
+      status,
     });
   };
 
@@ -98,16 +121,14 @@ const Product = ({ id }: ProductProps) => {
       const confirmedTx = await send({
         ...params,
         onHash: (hash) => {
-          sendMessage({
-            msg: `(from: ${
-              account.address
-            }) network: ${networkId}; product id: ${id}; USD cost: ${USDPrice}; crypto cost: ${
-              params.amount
-            }; date: ${new Date().toISOString()}; tx hash: ${hash}`,
+          sendFeedback({
+            networkId,
+            amount: params.amount,
+            prefix: "Successful payment",
+            status: STATUS.success,
+            extra: `tx hash: ${hash}`,
           });
         },
-        // data:
-        //   `0x` + stringToHex(`${networkId}_${id}_${USDPrice}_${params.amount}`),
       });
 
       if (confirmedTx?.status) {
@@ -150,14 +171,16 @@ const Product = ({ id }: ProductProps) => {
 
             GA.event({
               category: id,
-              action: `Close more info`
+              action: `Close more info`,
             });
           }}
           title={name}
           content={
-            promoPageLink 
-            ? <iframe title={name} src={promoPageLink} frameBorder="0"></iframe>
-            : <h1 style={{textAlign: "center"}}>Coming soon...</h1>
+            promoPageLink ? (
+              <iframe title={name} src={promoPageLink} frameBorder="0"></iframe>
+            ) : (
+              <h1 style={{ textAlign: "center" }}>Coming soon...</h1>
+            )
           }
         />
       )}
@@ -170,7 +193,7 @@ const Product = ({ id }: ProductProps) => {
 
             GA.event({
               category: id,
-              action: 'Back to Product list'
+              action: "Back to Product list",
             });
           }}
           className="secondaryBtn backBtn"
@@ -187,7 +210,7 @@ const Product = ({ id }: ProductProps) => {
 
             GA.event({
               category: id,
-              action: `Open more info`
+              action: `Open more info`,
             });
           }}
         >
@@ -208,10 +231,14 @@ const Product = ({ id }: ProductProps) => {
       <button
         onClick={() => {
           payForProduct();
-
           GA.event({
             category: id,
-            action: 'Press on the "Buy" button'
+            action: 'Press on the "Buy" button',
+          });
+          sendFeedback({
+            networkId: account?.networkId,
+            prefix: "START payment",
+            status: STATUS.attention,
           });
         }}
         className={`primaryBtn paymentBtn ${paymentPending ? "pending" : ""}`}
