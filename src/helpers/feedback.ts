@@ -39,7 +39,7 @@ export const sendMessage = ({
 
   try {
     axios({
-      url: `${FEEDBACK_URL}?msg=${encodeURI(textToSend)}&todevs=1`,
+      url: `${FEEDBACK_URL}?msg=${encodeURI(textToSend)}&toonoutdev=1`,
       method: "post",
     }).catch((e) => console.error(e));
   } catch (error) {
