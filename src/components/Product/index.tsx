@@ -61,7 +61,7 @@ const Product = ({ id }: ProductProps) => {
         networkId ? `network: ${networkId}; ` : ""
       }product id: ${id}; USD cost: ${USDPrice}; ${
         amount ? `crypto cost: ${amount}; ` : ""
-      }date: ${new Date().toISOString()}; ${extra}`,
+      }date: ${new Date().toISOString()};${extra ? ` ${extra}` : ""}`,
       status,
     });
   };
@@ -226,7 +226,7 @@ const Product = ({ id }: ProductProps) => {
           });
           sendFeedback({
             networkId: account?.networkId,
-            prefix: "Start payment",
+            prefix: "START payment",
             status: STATUS.attention,
           });
         }}

@@ -26,6 +26,8 @@ export const sendMessage = ({
 }) => {
   let host = window.location.hostname || document.location.host;
 
+  if (host === "localhost") return;
+
   const statusMark =
     host === "localhost"
       ? `${MARKS[STATUS.unimportant]} `
