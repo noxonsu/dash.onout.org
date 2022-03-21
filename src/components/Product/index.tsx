@@ -4,6 +4,7 @@ import { BigNumber } from "bignumber.js";
 import {
   PRODUCTS,
   PAYMENT_ADDRESS,
+  CONTRACT_ADDRESS_POLYGON,
   NETWORKS,
   FIAT_TICKER,
 } from "../../constants";
@@ -81,13 +82,25 @@ const Product = ({ id }: ProductProps) => {
         DECIMAL_PLACES: 18,
       });
 
-      return {
-        provider: account.provider,
-        from: account.address,
-        to: PAYMENT_ADDRESS,
-        amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
-        // tokenAddress: "",
-      };
+      if(networkId === 137) {
+        return {
+          provider: account.provider,
+          from: account.address,
+          to: PAYMENT_ADDRESS,
+          amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
+          contractAddress: CONTRACT_ADDRESS_POLYGON,
+        };
+      } else {
+        return {
+          provider: account.provider,
+          from: account.address,
+          to: PAYMENT_ADDRESS,
+          amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
+          // tokenAddress: "",
+        };
+      }
+
+      
     }
 
     return false;
@@ -133,7 +146,6 @@ const Product = ({ id }: ProductProps) => {
         });
       }
     }
-
     setPaymentPending(false);
   };
 

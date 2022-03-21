@@ -2,6 +2,7 @@ import { COVERS } from "../assets";
 
 export const FEEDBACK_URL = "https://noxon.wpmix.net/counter.php";
 export const PAYMENT_ADDRESS = "0x3B85D38c3A7AEabABA8B7DEb7a73177688270abC";
+export const CONTRACT_ADDRESS_POLYGON = '0xb4e3F3716Eb11f58ad16Ac6400068D171A9e465F';
 // 50 calls per minute
 export const PRICE_ENDPOINT = "https://api.coingecko.com/api/v3";
 
