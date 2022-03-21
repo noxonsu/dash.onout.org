@@ -1,21 +1,39 @@
 import axios from "axios";
 import { FEEDBACK_URL } from "../constants";
 
+export enum STATUS {
+  danger,
+  success,
+  warning,
+  attention,
+  unimportant,
+}
+
 const MARKS = {
-  danger: "🔴",
-  warning: "🔥",
-  attention: "💥",
-  unimportant: "💤",
+  [STATUS.danger]: "🔴",
+  [STATUS.success]: "🟢",
+  [STATUS.warning]: "🔥",
+  [STATUS.attention]: "💥",
+  [STATUS.unimportant]: "💤",
 };
 
-export const sendMessage = ({ msg }: { msg: string }) => {
+export const sendMessage = ({
+  msg,
+  status,
+}: {
+  msg: string;
+  status?: STATUS;
+}) => {
   let host = window.location.hostname || document.location.host;
 
-  const textToSend = [
-    host === "localhost" ? `${MARKS.unimportant} ` : "",
-    `[${host}] `,
-    msg,
-  ].join("");
+  const statusMark =
+    host === "localhost"
+      ? `${MARKS[STATUS.unimportant]} `
+      : status && MARKS[status]
+      ? `${MARKS[status]} `
+      : "";
+
+  const textToSend = [statusMark, `[${host}] `, msg].join("");
 
   try {
     axios({
