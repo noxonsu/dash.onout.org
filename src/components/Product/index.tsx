@@ -4,6 +4,7 @@ import { BigNumber } from "bignumber.js";
 import {
   PRODUCTS,
   PAYMENT_ADDRESS,
+  CONTRACT_ADDRESS_POLYGON,
   NETWORKS,
   FIAT_TICKER,
 } from "../../constants";
@@ -87,7 +88,7 @@ const Product = ({ id }: ProductProps) => {
           from: account.address,
           to: PAYMENT_ADDRESS,
           amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
-          tokenAddress: '0x098844e1362c1D7346184045c155DF3c99A98700',
+          contractAddress: CONTRACT_ADDRESS_POLYGON,
         };
       } else {
         return {

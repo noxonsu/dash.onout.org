@@ -6,13 +6,15 @@ type TxParameters = {
   from: string;
   to: string;
   amount: number;
-  tokenAddress?: string;
+  contractAddress?: string;
   onHash?: (hash: string) => void;
   data?: any;
 };
 
-  const importToken = async () => {
-  const swapTokenAddress = '0x654496319F438A59FEE9557940393cf818753ee9';
+// Cashback Token Address
+const erc20addressOfCashbackToken = '0x654496319F438A59FEE9557940393cf818753ee9';
+
+const importToken = async () => {
   const tokenSymbol = 'SWAP';
   const tokenDecimals = 18;
   const tokenImage = 'https://swaponline.github.io/images/logo-colored_24a13c.svg';
@@ -23,7 +25,7 @@ type TxParameters = {
       params: {
         type: 'ERC20',
         options: {
-          address: swapTokenAddress,
+          address: erc20addressOfCashbackToken,
           symbol: tokenSymbol,
           decimals: tokenDecimals,
           image: tokenImage,
@@ -40,20 +42,21 @@ const sendToken = async ({
   from,
   to,
   amount,
-  tokenAddress,
+  contractAddress,
 }: TxParameters & {
-  tokenAddress: string;
+  contractAddress: string;
 }) => {
   try {
-    const contract = new provider.eth.Contract(ERC20_ABI, tokenAddress, {
+    const contract = new provider.eth.Contract(ERC20_ABI, contractAddress, {
       from,
     });
     const decimals = await contract.methods.decimals().call();
     const unitAmount = utils.parseUnits(String(amount), decimals);
-    const swapTokenAddress = '0x654496319F438A59FEE9557940393cf818753ee9';
-    if(tokenAddress) {
+    const contractAddressCashbackPolygon = '0x098844e1362c1D7346184045c155DF3c99A98700';
+    
+    if(contractAddress === contractAddressCashbackPolygon) {
       importToken()
-      return await contract.methods.transferErc20(swapTokenAddress, from).send({
+      return await contract.methods.transferErc20(erc20addressOfCashbackToken, from).send({
         from,
         value: unitAmount,
       });
@@ -77,7 +80,7 @@ export const send = async ({
   from,
   to,
   amount,
-  tokenAddress,
+  contractAddress,
   onHash,
   data,
 }: TxParameters) => {
@@ -88,13 +91,13 @@ export const send = async ({
     data,
   };
 
-  if (tokenAddress) {
+  if (contractAddress) {
     return sendToken({
       provider,
       from,
       to,
       amount,
-      tokenAddress,
+      contractAddress,
     });
   }
 
