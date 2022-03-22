@@ -82,7 +82,7 @@ const Product = ({ id }: ProductProps) => {
         DECIMAL_PLACES: 18,
       });
 
-      if(networkId === 137) {
+      if (networkId === 137) {
         return {
           provider: account.provider,
           from: account.address,
@@ -99,8 +99,6 @@ const Product = ({ id }: ProductProps) => {
           // tokenAddress: "",
         };
       }
-
-      
     }
 
     return false;
@@ -119,30 +117,41 @@ const Product = ({ id }: ProductProps) => {
     const params = await getPaymentParameters(networkId);
 
     if (params) {
-      const confirmedTx = await send({
-        ...params,
-        onHash: (hash) => {
-          sendFeedback({
-            networkId,
-            amount: params.amount,
-            prefix: "Successful payment",
-            status: STATUS.success,
-            extra: `tx hash: ${hash}`,
-          });
-        },
-      });
-
-      if (confirmedTx?.status) {
-        dispatch({
-          type: UserActions.paid,
-          payload: {
-            key: `${account.address}_${id}`,
-            value: `${new Date().toISOString()}`,
+      try {
+        const confirmedTx = await send({
+          ...params,
+          onHash: (hash) => {
+            sendFeedback({
+              networkId,
+              amount: params.amount,
+              prefix: "Successful payment",
+              status: STATUS.success,
+              extra: `tx hash: ${hash}`,
+            });
           },
         });
-        dispatch({
-          type: UserActions.addProduct,
-          payload: PRODUCTS[id],
+
+        if (confirmedTx?.status) {
+          dispatch({
+            type: UserActions.paid,
+            payload: {
+              key: `${account.address}_${id}`,
+              value: `${new Date().toISOString()}`,
+            },
+          });
+          dispatch({
+            type: UserActions.addProduct,
+            payload: PRODUCTS[id],
+          });
+        }
+      } catch (error: any) {
+        console.error(error);
+        sendFeedback({
+          networkId,
+          amount: params.amount,
+          prefix: "FAIL",
+          status: STATUS.danger,
+          extra: `error: ${error.code} ${error.message}`,
         });
       }
     }
