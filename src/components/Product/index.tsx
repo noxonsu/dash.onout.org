@@ -26,6 +26,7 @@ const Product = ({ id }: ProductProps) => {
   const [paymentPending, setPaymentPending] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [paidFor, setPaidFor] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const { dispatch, state } = useUser();
   const { products, signed } = state;
   const { name, promoPageLink, description, price: USDPrice } = PRODUCTS[id];
@@ -107,12 +108,16 @@ const Product = ({ id }: ProductProps) => {
   const payForProduct = async () => {
     if (!account.provider || account.wrongNetwork) return;
 
+    setErrorMessage("");
     setPaymentPending(true);
 
     // fetch the current id right before prices to be sure of the correct currency for this network
     const networkId = await account.provider.eth.net.getId();
     //@ts-ignore
-    if (!NETWORKS[networkId]) return setPaymentPending(false);
+    if (!NETWORKS[networkId]) {
+      setErrorMessage("Wrong network");
+      return setPaymentPending(false);
+    }
 
     const params = await getPaymentParameters(networkId);
 
@@ -153,6 +158,10 @@ const Product = ({ id }: ProductProps) => {
           status: STATUS.danger,
           extra: `error: ${error.code} ${error.message}`,
         });
+
+        if (error?.code !== 4001) {
+          setErrorMessage(error.message);
+        }
       }
     }
     setPaymentPending(false);
@@ -233,10 +242,13 @@ const Product = ({ id }: ProductProps) => {
         <p>You already have this product</p>
       ) : (
         <p className="warning">
-          Do not leave this page until successful payment
+          Do not leave this page until successful payment. If you have any
+          problems with the payment, please contact us.
         </p>
       )}
       <p className="notice">The price may vary slightly</p>
+
+      {errorMessage && <p className="error">Error: {errorMessage}</p>}
 
       <button
         onClick={() => {
