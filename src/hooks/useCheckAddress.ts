@@ -25,7 +25,10 @@ export const useCheckAddress = (address: string) => {
 
         setIsSubscribed(_isSubscribed);
 
-        saveLocal({ key: `${address}${SUBSCRIPTION_POSTFIX_KEY}`, value: (Date.now() + ONE_DAY).toString() });
+        saveLocal({
+          key: `${address}${SUBSCRIPTION_POSTFIX_KEY}`,
+          value: _isSubscribed && (Date.now() + ONE_DAY).toString()
+        });
       } catch (err) {
         console.error(`Error: Can't check subscription. Description: ${err}`);
         setErrors(["Can't check subscription. Please, update page or try later."])
