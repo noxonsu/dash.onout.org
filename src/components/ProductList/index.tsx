@@ -1,5 +1,6 @@
 import GA from 'react-ga';
 
+
 import { IMAGES } from "../../assets";
 import { PRODUCTS } from "../../constants";
 import { UserActions } from "../UserProvider";
@@ -9,6 +10,8 @@ import "./index.css";
 
 const ProductList = () => {
   const { dispatch } = useUser();
+
+
 
   const openDetails = (id: string) => {
     dispatch({

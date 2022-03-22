@@ -14,6 +14,7 @@ const Sections = () => {
   const { account } = useContext(Web3ConnecStateContext);
   const { state, dispatch } = useUser();
   const { signed, subscribed, view, products } = state;
+  const [networkPolygon, setNetworkPolygon] = useState(false);
 
   // For now, while we save it in localStorage, retrive all saved user products from here
   const retriveSavedProducts = useCallback(() => {
@@ -87,7 +88,7 @@ const Sections = () => {
 
       {view === "products" && <ProductList />}
       {view === "userProducts" && signed && <UserProducts />}
-      {!!PRODUCTS[view] && <Product id={view} />}
+      {!!PRODUCTS[view] && <Product id={view} networkPolygon={networkPolygon} setNetworkPolygon={setNetworkPolygon} />}
     </div>
   );
 };
