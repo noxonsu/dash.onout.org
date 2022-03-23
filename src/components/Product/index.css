@@ -42,6 +42,18 @@
 .paymentBtn:disabled {
   opacity: 0.5;
 }
+.notesSpan {
+  cursor: pointer;
+  color: #fff;
+  font-weight: 700;
+  font-size: 21px;
+}
+.notesSpan:hover{
+  color: #acaab3;
+}
+.notesSpan.active {
+  color: #acaab3;
+}
 
 @media screen and (max-width: 840px) {
   .product {

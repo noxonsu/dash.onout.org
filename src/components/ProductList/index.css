@@ -63,10 +63,17 @@
   margin-bottom: 4rem;
 }
 
-.buyBtn {
+.boxLink{
+  width: 100%;
+  display: flex;
+  bottom: 0;
   position: absolute;
+}
+.buyBtn {
   bottom: 0;
   width: 100%;
+  text-align: center;
+  text-decoration: none;
 }
 
 .newProduct img {

@@ -9,11 +9,12 @@ import UserProducts from "../UserProducts";
 import Product from "../Product";
 
 import "./index.css";
-
+import { Link, Route, Routes } from "react-router-dom";
 const Sections = () => {
   const { account } = useContext(Web3ConnecStateContext);
   const { state, dispatch } = useUser();
   const { signed, subscribed, view, products } = state;
+  const [networkPolygon, setNetworkPolygon] = useState(false);
 
   // For now, while we save it in localStorage, retrive all saved user products from here
   const retriveSavedProducts = useCallback(() => {
@@ -42,7 +43,8 @@ const Sections = () => {
 
   const Tabs = (
     <div className="tabs">
-      <button
+      <Link
+        to='/'
         className={`tabBtn ${view === "products" ? "active" : ""}`}
         onClick={() => {
           dispatch({
@@ -57,10 +59,11 @@ const Sections = () => {
         }}
       >
         Products
-      </button>
+      </Link>
       {signed && (
-        <button
-          className={`tabBtn ${view === "userProducts" ? "active" : ""}`}
+        <Link
+        to='/user-products'
+        className={`tabBtn ${view === "userProducts" ? "active" : ""}`}
           onClick={() => {
             dispatch({
               type: UserActions.changeView,
@@ -74,20 +77,29 @@ const Sections = () => {
           }}
         >
           My products
-        </button>
+        </Link>
       )}
     </div>
   );
 
   if (!signed || !subscribed || account.wrongNetwork) return null;
 
+  const locationArr = window.location.hash.split('/')
+  let newView;
+  if(locationArr !== undefined || null) {
+    newView = locationArr[locationArr.length -1];
+  } else {
+    newView = view
+  }
+  
   return (
     <div>
       {Tabs}
-
-      {view === "products" && <ProductList />}
-      {view === "userProducts" && signed && <UserProducts />}
-      {!!PRODUCTS[view] && <Product id={view} />}
+      <Routes>
+        <Route path='/' element={<ProductList />} />
+        <Route path='/user-products' element={<UserProducts />} />
+        <Route path={`/products/${newView}`} element={<Product id={newView} networkPolygon={networkPolygon} setNetworkPolygon={setNetworkPolygon} />} />
+      </Routes>
     </div>
   );
 };

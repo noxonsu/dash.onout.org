@@ -19,9 +19,14 @@ import Modal from "../Modal";
 
 import "./index.css";
 
-type ProductProps = { id: string };
+type ProductProps = { 
+  id: string,
+  networkPolygon: any,
+  setNetworkPolygon:  any,
+};
 
-const Product = ({ id }: ProductProps) => {
+
+const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
   const { account, isWeb3Loading } = useContext(Web3ConnecStateContext);
   const [paymentPending, setPaymentPending] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -167,6 +172,18 @@ const Product = ({ id }: ProductProps) => {
     setPaymentPending(false);
   };
 
+  const changeNetworks = async () => {
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x89' }],
+      });
+      setNetworkPolygon(true);
+    } catch (err) {
+      console.log('error');
+    }
+  }
+
   const [paymentAvailable, setPaymentAvailable] = useState(false);
 
   useEffect(() => {
@@ -180,6 +197,7 @@ const Product = ({ id }: ProductProps) => {
         !account.wrongNetwork
     );
   }, [paymentPending, paidFor, signed, isWeb3Loading, account, USDPrice]);
+
 
   return (
     <div className="product">
@@ -209,7 +227,8 @@ const Product = ({ id }: ProductProps) => {
         <button
           onClick={() => {
             toProducts();
-
+          window.history.back();
+            
             GA.event({
               category: id,
               action: "Back to Product list",
@@ -272,6 +291,12 @@ const Product = ({ id }: ProductProps) => {
           ? `Buy for $${USDPrice}`
           : "Not available"}
       </button>
+      <p className="notes">Use <span
+          className={`notesSpan ${networkPolygon ? "active" : ""}`}
+          onClick={() => {
+            changeNetworks()
+          }} 
+        > Polygon</span> to get 50 SWAP tokens as bonus</p>
     </div>
   );
 };
