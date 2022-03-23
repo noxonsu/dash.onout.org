@@ -30,6 +30,7 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
   const [paymentPending, setPaymentPending] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [paidFor, setPaidFor] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const { dispatch, state } = useUser();
   const { products, signed } = state;
   const { name, promoPageLink, description, price: USDPrice } = PRODUCTS[id];
@@ -86,7 +87,7 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
         DECIMAL_PLACES: 18,
       });
 
-      if(networkId === 137) {
+      if (networkId === 137) {
         return {
           provider: account.provider,
           from: account.address,
@@ -103,8 +104,6 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
           // tokenAddress: "",
         };
       }
-
-      
     }
 
     return false;
@@ -113,41 +112,60 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
   const payForProduct = async () => {
     if (!account.provider || account.wrongNetwork) return;
 
+    setErrorMessage("");
     setPaymentPending(true);
 
     // fetch the current id right before prices to be sure of the correct currency for this network
     const networkId = await account.provider.eth.net.getId();
     //@ts-ignore
-    if (!NETWORKS[networkId]) return setPaymentPending(false);
+    if (!NETWORKS[networkId]) {
+      setErrorMessage("Wrong network");
+      return setPaymentPending(false);
+    }
 
     const params = await getPaymentParameters(networkId);
 
     if (params) {
-      const confirmedTx = await send({
-        ...params,
-        onHash: (hash) => {
-          sendFeedback({
-            networkId,
-            amount: params.amount,
-            prefix: "Successful payment",
-            status: STATUS.success,
-            extra: `tx hash: ${hash}`,
-          });
-        },
-      });
-
-      if (confirmedTx?.status) {
-        dispatch({
-          type: UserActions.paid,
-          payload: {
-            key: `${account.address}_${id}`,
-            value: `${new Date().toISOString()}`,
+      try {
+        const confirmedTx = await send({
+          ...params,
+          onHash: (hash) => {
+            sendFeedback({
+              networkId,
+              amount: params.amount,
+              prefix: "Successful payment",
+              status: STATUS.success,
+              extra: `tx hash: ${hash}`,
+            });
           },
         });
-        dispatch({
-          type: UserActions.addProduct,
-          payload: PRODUCTS[id],
+
+        if (confirmedTx?.status) {
+          dispatch({
+            type: UserActions.paid,
+            payload: {
+              key: `${account.address}_${id}`,
+              value: `${new Date().toISOString()}`,
+            },
+          });
+          dispatch({
+            type: UserActions.addProduct,
+            payload: PRODUCTS[id],
+          });
+        }
+      } catch (error: any) {
+        console.error(error);
+        sendFeedback({
+          networkId,
+          amount: params.amount,
+          prefix: "FAIL",
+          status: STATUS.danger,
+          extra: `error: ${error.code} ${error.message}`,
         });
+
+        if (error?.code !== 4001) {
+          setErrorMessage(error.message);
+        }
       }
     }
     setPaymentPending(false);
@@ -240,10 +258,13 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
         <p>You already have this product</p>
       ) : (
         <p className="warning">
-          Do not leave this page until successful payment
+          Do not leave this page until successful payment. If you have any
+          problems with the payment, please contact us.
         </p>
       )}
       <p className="notice">The price may vary slightly</p>
+
+      {errorMessage && <p className="error">Error: {errorMessage}</p>}
 
       <button
         onClick={() => {
