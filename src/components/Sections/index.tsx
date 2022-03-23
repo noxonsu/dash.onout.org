@@ -84,7 +84,7 @@ const Sections = () => {
 
   if (!signed || !subscribed || account.wrongNetwork) return null;
 
-  const locationArr = window.location.pathname.split('/')
+  const locationArr = window.location.hash.split('/')
   let newView;
   if(locationArr !== undefined || null) {
     newView = locationArr[locationArr.length -1];
