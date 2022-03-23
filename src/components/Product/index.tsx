@@ -4,7 +4,6 @@ import { BigNumber } from "bignumber.js";
 import { PRODUCTS, PAYMENT_ADDRESS, NETWORKS } from "../../constants";
 import { send } from "../../helpers/transaction";
 import { sendMessage, STATUS } from "../../helpers/feedback";
-// import { stringFromHex, stringToHex } from "../../helpers/format";
 import { getOracleNativePrice } from "../../helpers/currency";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 import { UserActions } from "../UserProvider";
