@@ -25,6 +25,7 @@ type ProductProps = {
   setNetworkPolygon:  any,
 };
 
+
 const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
   const { account, isWeb3Loading } = useContext(Web3ConnecStateContext);
   const [paymentPending, setPaymentPending] = useState(false);
@@ -197,6 +198,7 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
     );
   }, [paymentPending, paidFor, signed, isWeb3Loading, account, USDPrice]);
 
+
   return (
     <div className="product">
       {modalOpen && (
@@ -225,7 +227,8 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
         <button
           onClick={() => {
             toProducts();
-
+          window.history.back();
+            
             GA.event({
               category: id,
               action: "Back to Product list",

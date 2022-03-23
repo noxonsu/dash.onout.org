@@ -6,6 +6,7 @@ import Authentification from "./components/Authentification";
 import Sections from "./components/Sections";
 import Footer from "./components/Footer";
 import { GA_TRACKING_ID } from './constants'
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
 
@@ -27,15 +28,17 @@ function App() {
 
   return (
     <div className="app">
-      <UserProvider>
-        <WithWeb3Connect>
-          <Authentification />
+      <BrowserRouter>
+        <UserProvider>
+          <WithWeb3Connect>
+            <Authentification />
 
-          <Sections />
+            <Sections />
 
-          <Footer />
-        </WithWeb3Connect>
-      </UserProvider>
+            <Footer />
+          </WithWeb3Connect>
+        </UserProvider>
+      </BrowserRouter>
     </div>
   );
 }

@@ -7,6 +7,7 @@ import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
 
 import "./index.css";
+import { Link } from 'react-router-dom';
 
 const ProductList = () => {
   const { dispatch } = useUser();
@@ -68,9 +69,11 @@ const ProductList = () => {
               </>
 
               {price && (
-                <button className="primaryBtn buyBtn">
-                  {`Buy for $${price}`}
-                </button>
+                <div className='boxLink'>
+                  <Link to={`/products/${id}`}  className="primaryBtn buyBtn">
+                    {`Buy for $${price}`}
+                  </Link>
+                </div>
               )}
             </div>
           );
