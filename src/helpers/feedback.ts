@@ -10,7 +10,7 @@ export enum STATUS {
 }
 
 const MARKS = {
-  [STATUS.danger]: "🔴",
+  [STATUS.danger]: "⭕",
   [STATUS.success]: "🟢",
   [STATUS.warning]: "🔥",
   [STATUS.attention]: "💥",
