@@ -100,9 +100,6 @@ const Sections = () => {
         <Route path='/user-products' element={<UserProducts />} />
         <Route path={`/products/${newView}`} element={<Product id={newView} networkPolygon={networkPolygon} setNetworkPolygon={setNetworkPolygon} />} />
       </Routes>
-      {/* {!!PRODUCTS[view] && <Product id={view} networkPolygon={networkPolygon} setNetworkPolygon={setNetworkPolygon} />} */}
-      
-      
     </div>
   );
 };
