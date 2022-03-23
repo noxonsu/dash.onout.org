@@ -1,25 +1,45 @@
 import axios from "axios";
 import { FEEDBACK_URL } from "../constants";
 
+export enum STATUS {
+  danger,
+  success,
+  warning,
+  attention,
+  unimportant,
+}
+
 const MARKS = {
-  danger: "🔴",
-  warning: "🔥",
-  attention: "💥",
-  unimportant: "💤",
+  [STATUS.danger]: "⭕",
+  [STATUS.success]: "🟢",
+  [STATUS.warning]: "🔥",
+  [STATUS.attention]: "💥",
+  [STATUS.unimportant]: "💤",
 };
 
-export const sendMessage = ({ msg }: { msg: string }) => {
+export const sendMessage = ({
+  msg,
+  status,
+}: {
+  msg: string;
+  status?: STATUS;
+}) => {
   let host = window.location.hostname || document.location.host;
 
-  const textToSend = [
-    host === "localhost" ? `${MARKS.unimportant} ` : "",
-    `[${host}] `,
-    msg,
-  ].join("");
+  if (host === "localhost") return;
+
+  const statusMark =
+    host === "localhost"
+      ? `${MARKS[STATUS.unimportant]} `
+      : status && MARKS[status]
+      ? `${MARKS[status]} `
+      : "";
+
+  const textToSend = [statusMark, `[${host}] `, msg].join("");
 
   try {
     axios({
-      url: `${FEEDBACK_URL}?msg=${encodeURI(textToSend)}&todevs=1`,
+      url: `${FEEDBACK_URL}?msg=${encodeURI(textToSend)}&toonoutdev=1`,
       method: "post",
     }).catch((e) => console.error(e));
   } catch (error) {

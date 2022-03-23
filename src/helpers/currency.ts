@@ -1,3 +1,4 @@
+import { BigNumber } from "bignumber.js";
 import { PRICE_ENDPOINT, NETWORKS } from "../constants";
 import AggregatorV3Interface from "@chainlink/contracts/abi/v0.8/AggregatorV3Interface.json";
 
@@ -44,8 +45,9 @@ export const getOracleNativePrice = async ({
     const { answer } = await oracle.methods.latestRoundData().call();
 
     if (answer > 0) {
-      // TODO: name and move oracle decimals somewhere
-      return answer / 10 ** 8;
+      const ORACLE_DECIMALS = 8;
+
+      return new BigNumber(answer).div(10 ** ORACLE_DECIMALS).toNumber();
     }
 
     return false;
