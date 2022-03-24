@@ -22,6 +22,9 @@ const ACCOUNTS: { [key: string]: string[] } = {
     "farmfactory",
     "daofactory",
   ],
+  "0xa29Ac293edaa5eDf46f6af3C5b8885CF98bc5c8E": [
+    "multicurrencywallet",
+  ],
 };
 
 const UserProducts = () => {
