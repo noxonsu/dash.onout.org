@@ -299,8 +299,8 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
           {" "}
           Polygon
         </span>{" "}
-        to get 50 SWAP tokens as bonus. You can trade your currency for MATIC in
-        this bridge:{" "}
+        to get 50 SWAP tokens as bonus. You can trade your currency for MATIC
+        using this bridge:{" "}
         <a
           className="link"
           target="_blank"
