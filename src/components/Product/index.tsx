@@ -19,12 +19,11 @@ import Modal from "../Modal";
 
 import "./index.css";
 
-type ProductProps = { 
-  id: string,
-  networkPolygon: any,
-  setNetworkPolygon:  any,
+type ProductProps = {
+  id: string;
+  networkPolygon: any;
+  setNetworkPolygon: any;
 };
-
 
 const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
   const { account, isWeb3Loading } = useContext(Web3ConnecStateContext);
@@ -175,14 +174,14 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
   const changeNetworks = async () => {
     try {
       await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: '0x89' }],
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x89" }],
       });
       setNetworkPolygon(true);
     } catch (err) {
-      console.log('error');
+      console.log("error");
     }
-  }
+  };
 
   const [paymentAvailable, setPaymentAvailable] = useState(false);
 
@@ -197,7 +196,6 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
         !account.wrongNetwork
     );
   }, [paymentPending, paidFor, signed, isWeb3Loading, account, USDPrice]);
-
 
   return (
     <div className="product">
@@ -227,8 +225,8 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
         <button
           onClick={() => {
             toProducts();
-          window.history.back();
-            
+            window.history.back();
+
             GA.event({
               category: id,
               action: "Back to Product list",
@@ -291,12 +289,27 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
           ? `Buy for $${USDPrice}`
           : "Not available"}
       </button>
-      <p className="notes">Use <span
+
+      <p className="polygonNotice">
+        Use{" "}
+        <span
           className={`notesSpan ${networkPolygon ? "active" : ""}`}
-          onClick={() => {
-            changeNetworks()
-          }} 
-        > Polygon</span> to get 50 SWAP tokens as bonus</p>
+          onClick={changeNetworks}
+        >
+          {" "}
+          Polygon
+        </span>{" "}
+        to get 50 SWAP tokens as bonus. You can trade your currency for MATIC in
+        this bridge:{" "}
+        <a
+          className="link"
+          target="_blank"
+          rel="noreferrer"
+          href="https://app.debridge.finance/"
+        >
+          app.debridge.finance
+        </a>
+      </p>
     </div>
   );
 };

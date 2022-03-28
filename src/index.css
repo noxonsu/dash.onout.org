@@ -154,6 +154,11 @@ button {
   width: 100%;
 }
 
+.link {
+  text-decoration: none;
+  color: var(--link-color);
+}
+
 .pb-1 {
   padding-bottom: 1rem;
 }
@@ -168,9 +173,4 @@ button {
   66% {
     content: "...";
   }
-}
-
-#fsw-btn {
-  width: 1.4rem !important;
-  height: 1.4rem !important;
 }
