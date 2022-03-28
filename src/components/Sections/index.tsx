@@ -15,6 +15,7 @@ const Sections = () => {
   const { state, dispatch } = useUser();
   const { signed, subscribed, view, products } = state;
   const [networkPolygon, setNetworkPolygon] = useState(false);
+  const [process, setProcess] = useState('ready');
 
   // For now, while we save it in localStorage, retrive all saved user products from here
   const retriveSavedProducts = useCallback(() => {
@@ -47,6 +48,7 @@ const Sections = () => {
         to='/'
         className={`tabBtn ${view === "products" ? "active" : ""}`}
         onClick={() => {
+          setProcess('ready')
           dispatch({
             type: UserActions.changeView,
             payload: "products",
@@ -59,6 +61,24 @@ const Sections = () => {
         }}
       >
         Products
+      </Link>
+      <Link
+        to='/presale'
+        className={`tabBtn ${view === "presale" ? "active" : ""}`}
+        onClick={() => {
+          setProcess('development-in-progress')
+          dispatch({
+            type: UserActions.changeView,
+            payload: "presale",
+          });
+
+          GA.event({
+            category: 'Pages Section',
+            action: 'Open Product list'
+          });
+        }}
+      >
+        Presale
       </Link>
       {signed && (
         <Link
@@ -96,7 +116,8 @@ const Sections = () => {
     <div>
       {Tabs}
       <Routes>
-        <Route path='/' element={<ProductList />} />
+        <Route path='/' element={<ProductList process={process} />} />
+        <Route path='/presale' element={<ProductList process={process} />} />
         <Route path='/user-products' element={<UserProducts />} />
         <Route path={`/products/${newView}`} element={<Product id={newView} networkPolygon={networkPolygon} setNetworkPolygon={setNetworkPolygon} />} />
       </Routes>
