@@ -34,6 +34,7 @@ console.log(process);
                 key={id}
                 className="productCard"
                 onClick={() => {
+                window.location.assign(`#/products/${id}`);
                   openDetails(id);
                   GA.event({
                     category: 'Product list',
