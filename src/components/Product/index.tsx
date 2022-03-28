@@ -289,18 +289,26 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
           ? `Buy for $${USDPrice}`
           : "Not available"}
       </button>
-      <p className="notes">
+
+      <p className="polygonNotice">
         Use{" "}
         <span
           className={`notesSpan ${networkPolygon ? "active" : ""}`}
-          onClick={() => {
-            changeNetworks();
-          }}
+          onClick={changeNetworks}
         >
           {" "}
           Polygon
         </span>{" "}
-        to get 50 SWAP tokens as bonus
+        to get 50 SWAP tokens as bonus. You can trade your currency for MATIC
+        using this bridge:{" "}
+        <a
+          className="link"
+          target="_blank"
+          rel="noreferrer"
+          href="https://app.debridge.finance/"
+        >
+          app.debridge.finance
+        </a>
       </p>
     </div>
   );
