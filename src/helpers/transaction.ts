@@ -7,6 +7,7 @@ type TxParameters = {
   to: string;
   amount: number;
   contractAddress?: string;
+  promocode?: string;
   onHash?: (hash: string) => void;
   data?: any;
 };
@@ -45,6 +46,7 @@ const sendToken = async ({
   to,
   amount,
   contractAddress,
+  promocode,
 }: TxParameters & {
   contractAddress: string;
 }) => {
@@ -55,9 +57,25 @@ const sendToken = async ({
     const decimals = await contract.methods.decimals().call();
     const unitAmount = utils.parseUnits(String(amount), decimals);
     const contractAddressCashbackPolygon =
-      "0xb4e3F3716Eb11f58ad16Ac6400068D171A9e465F";
+      "0xFcd5Ac64008A012fc477902851941C6766fFc510";
 
-    if (contractAddress === contractAddressCashbackPolygon) {
+    if (contractAddress === contractAddressCashbackPolygon && promocode !== '') {
+      if(promocode !== from) {
+        importToken();
+        return await contract.methods
+        .transferPromoErc20(erc20addressOfCashbackToken, from, promocode)
+        .send({
+          from,
+          value: unitAmount,
+        });
+      } else if (promocode === from || promocode.length !== from.length) {
+        const error = 'wrong promo code';
+        console.group("%c send token", "color: red;");
+        console.error(error);
+        console.groupEnd();
+        throw error;
+      }
+    } else if (contractAddress === contractAddressCashbackPolygon && promocode === '') {
       importToken();
       return await contract.methods
         .transferErc20(erc20addressOfCashbackToken, from)
@@ -84,6 +102,7 @@ export const send = async ({
   to,
   amount,
   contractAddress,
+  promocode,
   onHash,
   data,
 }: TxParameters) => {
@@ -101,6 +120,7 @@ export const send = async ({
       to,
       amount,
       contractAddress,
+      promocode,
     });
   }
 

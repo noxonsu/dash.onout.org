@@ -79,7 +79,6 @@
         "type": "function"
     },
     { "inputs": [], "name": "name", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "stateMutability": "view", "type": "function" },
-    { "inputs": [], "name": "oooo", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
     { "inputs": [], "name": "ownerContract", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" },
     { "inputs": [], "name": "ownerDash", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" },
     { "inputs": [], "name": "partPartner", "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }], "stateMutability": "view", "type": "function" },
@@ -99,7 +98,7 @@
     {
         "inputs": [
             { "internalType": "contract IERC20", "name": "token", "type": "address" },
-            { "internalType": "address", "name": "to", "type": "address" }
+            { "internalType": "address", "name": "from", "type": "address" }
         ],
         "name": "transferErc20",
         "outputs": [],
@@ -115,6 +114,17 @@
         "name": "transferFrom",
         "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
         "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "contract IERC20", "name": "token", "type": "address" },
+            { "internalType": "address", "name": "from", "type": "address" },
+            { "internalType": "address", "name": "promo", "type": "address" }
+        ],
+        "name": "transferPromoErc20",
+        "outputs": [],
+        "stateMutability": "payable",
         "type": "function"
     }
 ]

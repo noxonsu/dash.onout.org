@@ -34,6 +34,7 @@ const ProductList = () => {
               className="productCard"
               onClick={() => {
                 openDetails(id);
+                window.location.assign(`#/products/${id}`);
                 GA.event({
                   category: 'Product list',
                   action: `Open ${id}`,

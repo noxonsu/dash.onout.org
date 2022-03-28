@@ -73,7 +73,9 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
     });
   };
 
-  const getPaymentParameters = async (networkId: number) => {
+  const getPaymentParameters = async (networkId: number, promocodeValue: string) => {
+    console.log(promocodeValue !== '');
+    
     if (!PAYMENT_ADDRESS || !USDPrice) return;
     //@ts-ignore
     const assetId = NETWORKS[networkId].currency.id;
@@ -88,13 +90,23 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
         DECIMAL_PLACES: 18,
       });
 
-      if (networkId === 137) {
+      if (networkId === 137 && promocodeValue !== '') {
+        return {
+          provider: account.provider,
+          from: account.address,
+          to: PAYMENT_ADDRESS,
+          amount: new BigNumber(USDPrice - 50).div(data[assetId]?.usd).toNumber(),
+          contractAddress: CONTRACT_ADDRESS_POLYGON,
+          promocode: promocodeValue,
+        };
+      } else if (networkId === 137) {
         return {
           provider: account.provider,
           from: account.address,
           to: PAYMENT_ADDRESS,
           amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
           contractAddress: CONTRACT_ADDRESS_POLYGON,
+          promocode: promocodeValue,
         };
       } else {
         return {
@@ -110,7 +122,7 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
     return false;
   };
 
-  const payForProduct = async () => {
+  const payForProduct = async (promocodeValue: string) => {
     if (!account.provider || account.wrongNetwork) return;
 
     setErrorMessage("");
@@ -123,8 +135,8 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
       setErrorMessage("Wrong network");
       return setPaymentPending(false);
     }
-
-    const params = await getPaymentParameters(networkId);
+    
+    const params = await getPaymentParameters(networkId, promocodeValue);
 
     if (params) {
       try {
@@ -154,6 +166,8 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
             payload: PRODUCTS[id],
           });
         }
+    
+        
       } catch (error: any) {
         console.error(error);
         sendFeedback({
@@ -169,6 +183,7 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
         }
       }
     }
+
     setPaymentPending(false);
   };
 
@@ -197,7 +212,21 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
         !account.wrongNetwork
     );
   }, [paymentPending, paidFor, signed, isWeb3Loading, account, USDPrice]);
-
+  
+  const PromocodeHandle = (e : any) => {
+    e.preventDefault();
+    const promocodeValue = e.target.children[0].children[0].value;
+    payForProduct(promocodeValue);
+      GA.event({
+        category: id,
+        action: 'Press on the "Buy" button',
+      });
+      sendFeedback({
+        networkId: account?.networkId,
+        prefix: "START payment",
+        status: STATUS.attention,
+      });
+  }
 
   return (
     <div className="product">
@@ -227,7 +256,7 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
         <button
           onClick={() => {
             toProducts();
-          window.history.back();
+            window.history.back();
             
             GA.event({
               category: id,
@@ -268,20 +297,14 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
       <p className="notice">The price may vary slightly</p>
 
       {errorMessage && <p className="error">Error: {errorMessage}</p>}
-
+        
+      <form className="pomoCodeForm" onSubmit={PromocodeHandle}>
+        {paidFor ? (
+          <p className="promoCodeText">Your promo-code: <span>{`${account.address}`}</span></p>
+        ) : (
+          <label>Enter promo code to get 50$ discount<input className="promoCodeInput" type="text" autoFocus placeholder="0x000...." /></label>
+        )}
       <button
-        onClick={() => {
-          payForProduct();
-          GA.event({
-            category: id,
-            action: 'Press on the "Buy" button',
-          });
-          sendFeedback({
-            networkId: account?.networkId,
-            prefix: "START payment",
-            status: STATUS.attention,
-          });
-        }}
         className={`primaryBtn paymentBtn ${paymentPending ? "pending" : ""}`}
         disabled={!paymentAvailable}
       >
@@ -291,6 +314,9 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
           ? `Buy for $${USDPrice}`
           : "Not available"}
       </button>
+
+      </form>
+
       <p className="notes">Use <span
           className={`notesSpan ${networkPolygon ? "active" : ""}`}
           onClick={() => {

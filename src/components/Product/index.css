@@ -35,6 +35,30 @@
   border-radius: 0.6rem;
 }
 
+
+.pomoCodeForm{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.promoCodeInput{
+  margin: 10px 0 20px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  outline: none;
+  background-color:  var(--transparent-light-2);
+  border: 1px solid var(--transparent-light-2);
+  cursor: text;
+  font-size: 20px;
+} 
+
+.promoCodeInput:focus{
+  border: 1px solid var(--transparent-light-1);
+}
+.promoCodeText {
+  margin-top: 0;
+}
+
 .backBtn {
   padding: 0.6rem 1rem;
 }
