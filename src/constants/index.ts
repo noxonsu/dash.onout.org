@@ -70,7 +70,7 @@ export const NETWORKS = {
 export interface Product {
   id: string;
   name: string;
-  process: string;
+  status: string;
   demo: string;
   description: string;
   imgSrc: string;
@@ -89,7 +89,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   crosschain: {
     id: "crosschain",
     name: "CROSS-CHAIN exchange",
-    process: "development-in-progress",
+    status: "development",
     demo: "",
     howToEarn: "On commission for each trade",
     adminCanEdit:
@@ -107,7 +107,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   multicurrencywallet: {
     id: "multicurrencywallet",
     name: "MCW (Wallet + Exchange)",
-    process: "ready",
+    status: "ready",
     demo: "wallet.wpmix.net",
     howToEarn:
       "Add 'Withdraw' comission (BTC, ETH, Tokens), exchange comission (0x.org connected)",
@@ -126,7 +126,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   definance: {
     id: "definance",
     name: "DeFinance (DEX)",
-    process: "ready",
+    status: "ready",
     demo: "definance.wpmix.net",
     howToEarn: "0.01% - 99% each trade",
     adminCanEdit:
@@ -145,7 +145,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   farmfactory: {
     id: "farmfactory",
     name: "FarmFactory",
-    process: "ready",
+    status: "ready",
     demo: "farm.wpmix.net",
     howToEarn: "No comissions",
     description: "",
@@ -162,7 +162,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   daofactory: {
     id: "daofactory",
     name: "DaoFactory",
-    process: "ready",
+    status: "ready",
     demo: "dao.wpmix.net",
     howToEarn: "No comissions",
     description: "",
@@ -179,7 +179,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   lotteryfactory: {
     id: "lotteryfactory",
     name: "LotteryFactory",
-    process: "ready",
+    status: "ready",
     howToEarn: "0 - 30% from selling tickets",
     demo: "lottery.wpmix.net",
     description: "",
@@ -196,7 +196,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   nftmarketplace: {
     id: "nftmarketplace",
     name: "NFT Marketplace",
-    process: "ready",
+    status: "ready",
     howToEarn: "",
     demo: "https://nft.wpmix.net/",
     description: "",

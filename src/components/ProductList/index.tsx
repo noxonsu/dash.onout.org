@@ -9,11 +9,9 @@ import useUser from "../../hooks/useUser";
 import "./index.css";
 import { Link } from 'react-router-dom';
 
-const ProductList = ({process} : any) => {
+const ProductList = () => {
   const { dispatch } = useUser();
-
-console.log(process);
-
+  
 
   const openDetails = (id: string) => {
     dispatch({
@@ -21,6 +19,16 @@ console.log(process);
       payload: id,
     });
   };
+  
+  const hash = window.location.hash.split('#/');
+  let status = '';
+  if(hash[1] === 'presale'){
+    status = 'development';
+  } else if(hash[1] === '') {
+    status = 'ready';
+  } else {
+    status = '';
+  }
 
   return (
     <section>
@@ -28,7 +36,7 @@ console.log(process);
         {Object.keys(PRODUCTS).map((id) => {
           const { name, howToEarn, adminCanEdit, description, imgSrc, imgAlt, price, lables } =
             PRODUCTS[id];
-          if(PRODUCTS[id].process === process) {
+          if(PRODUCTS[id].status === status) {
             return (
               <div
                 key={id}
