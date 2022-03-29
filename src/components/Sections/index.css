@@ -8,8 +8,8 @@
 }
 
 .tabBtn {
-  min-width: 10rem;
-  padding: 0.4rem 0rem;
+  min-width: 7rem;
+  padding: 0.4rem;
   font-size: 1.4rem;
   border: 1px solid transparent;
   background-color: transparent;
@@ -31,7 +31,13 @@
   border-color: var(--transparent-light-1);
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 415px) {
+  .tabBtn {
+    min-width: 5rem;
+    font-size: 1.3rem;
+  }
+}
+@media screen and (max-width: 350px) {
   .tabBtn {
     min-width: 0;
     font-size: 1rem;
