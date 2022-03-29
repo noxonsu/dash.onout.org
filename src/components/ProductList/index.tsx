@@ -20,11 +20,11 @@ const ProductList = () => {
     });
   };
   
-  const hash = window.location.hash.split('#/');
+  const hash = window.location.hash;
   let status = '';
-  if(hash[1] === 'presale'){
+  if(hash === '#/presale'){
     status = 'development';
-  } else if(hash[1] === '') {
+  } else if(hash === '' || hash === '#/') {
     status = 'ready';
   } else {
     status = '';
