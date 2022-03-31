@@ -59,8 +59,8 @@ const sendToken = async ({
     const contractAddressCashbackPolygon =
       "0xFcd5Ac64008A012fc477902851941C6766fFc510";
 
-    if (contractAddress === contractAddressCashbackPolygon && promocode !== '') {
-      if(promocode !== from) {
+    if (contractAddress === contractAddressCashbackPolygon && promocode !== undefined) {
+      if(promocode !== from && promocode.length === from.length) {
         importToken();
         return await contract.methods
         .transferPromoErc20(erc20addressOfCashbackToken, from, promocode)
@@ -68,14 +68,16 @@ const sendToken = async ({
           from,
           value: unitAmount,
         });
-      } else if (promocode === from || promocode.length !== from.length) {
-        const error = 'wrong promo code';
+      } else{
+        const error = 'wrong promocode code';
         console.group("%c send token", "color: red;");
         console.error(error);
         console.groupEnd();
         throw error;
       }
-    } else if (contractAddress === contractAddressCashbackPolygon && promocode === '') {
+    } else if (contractAddress === contractAddressCashbackPolygon) {
+      console.log('(');
+      
       importToken();
       return await contract.methods
         .transferErc20(erc20addressOfCashbackToken, from)

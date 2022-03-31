@@ -72,7 +72,7 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
     });
   };
 
-  const getPaymentParameters = async (networkId: number) => {
+  const getPaymentParameters = async (networkId: number, promo: string) => {
     if (!PAYMENT_ADDRESS || !USDPrice) return;
     //@ts-ignore
     const assetId = NETWORKS[networkId].currency.id;
@@ -87,14 +87,23 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
         DECIMAL_PLACES: 18,
       });
 
-      if (networkId === 137) {
+      if (networkId === 137 && promo !== '' && promo !== undefined) {
+        return {
+          provider: account.provider,
+          from: account.address,
+          to: PAYMENT_ADDRESS,
+          amount: new BigNumber(USDPrice - 50).div(data[assetId]?.usd).toNumber(),
+          contractAddress: CONTRACT_ADDRESS_POLYGON,
+          promocode: promo,
+        };
+      } else if(networkId === 137) {
         return {
           provider: account.provider,
           from: account.address,
           to: PAYMENT_ADDRESS,
           amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
           contractAddress: CONTRACT_ADDRESS_POLYGON,
-        };
+        }
       } else {
         return {
           provider: account.provider,
@@ -109,7 +118,7 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
     return false;
   };
 
-  const payForProduct = async () => {
+  const payForProduct = async (promo: string) => {
     if (!account.provider || account.wrongNetwork) return;
 
     setErrorMessage("");
@@ -123,7 +132,7 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
       return setPaymentPending(false);
     }
 
-    const params = await getPaymentParameters(networkId);
+    const params = await getPaymentParameters(networkId, promo);
 
     if (params) {
       try {
@@ -197,6 +206,21 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
     );
   }, [paymentPending, paidFor, signed, isWeb3Loading, account, USDPrice]);
 
+  const promoFormHandle = (e: any) => {
+    e.preventDefault();
+    const promo = e.target.children[0].children[0].value;
+    payForProduct(promo);
+    GA.event({
+      category: id,
+      action: 'Press on the "Buy" button',
+    });
+    sendFeedback({
+      networkId: account?.networkId,
+      prefix: "START payment",
+      status: STATUS.attention,
+    });
+  }
+
   return (
     <div className="product">
       {modalOpen && (
@@ -268,22 +292,20 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
       {errorMessage && <p className="error">Error: {errorMessage}</p>}
       
 
-      <form >
-        <label>Enter promo code to get 50$ discount<input type='text' placeholder="promocode"/></label>
+      <form className="pomoCodeForm" onSubmit={promoFormHandle} >
+        {paidFor ? (
+          <label className="promoCodeText" onClick={(e: any) => {
+            e.target.children[0].classList.toggle('active');
+          }}>I have a promo code<input className="promoCodeInput" type='text' placeholder="Enter promo code to get $50 discount" autoFocus/></label>
+        ) : (
+          <div>
+            <p>Your promo code</p>
+            <p>{`${'promocode'}`}</p>
+          </div>
+        )}
+        
 
         <button
-          onClick={() => {
-            payForProduct();
-            GA.event({
-              category: id,
-              action: 'Press on the "Buy" button',
-            });
-            sendFeedback({
-              networkId: account?.networkId,
-              prefix: "START payment",
-              status: STATUS.attention,
-            });
-          }}
           className={`primaryBtn paymentBtn ${paymentPending ? "pending" : ""}`}
           disabled={!paymentAvailable}
         >
