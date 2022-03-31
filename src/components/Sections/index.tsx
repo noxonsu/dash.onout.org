@@ -6,9 +6,11 @@ import UserProducts from "../UserProducts";
 import Product from "../Product";
 
 import "./index.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Tabs from "../tabs";
 const Sections = () => {
+  const location = useLocation();
+
   const { account } = useContext(Web3ConnecStateContext);
   const { state } = useUser();
   const { signed, subscribed, view, products } = state;
@@ -19,13 +21,15 @@ const Sections = () => {
 
   if (!signed || !subscribed || account.wrongNetwork) return null;
 
-  const locationArr = window.location.hash.split('/')
+  const locationArr = location.pathname.split('/')
   let newView;
   if(locationArr !== undefined || null) {
     newView = locationArr[locationArr.length -1];
   } else {
     newView = view
   }
+  
+
   
   return (
     <div>

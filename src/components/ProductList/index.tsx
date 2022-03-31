@@ -7,11 +7,11 @@ import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
 
 import "./index.css";
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const ProductList = () => {
+  const location = useLocation();
   const { dispatch } = useUser();
-  
 
   const openDetails = (id: string) => {
     dispatch({
@@ -20,11 +20,10 @@ const ProductList = () => {
     });
   };
   
-  const hash = window.location.hash;
   let status = '';
-  if(hash === '#/presale'){
+  if(location.pathname === '/presale'){
     status = 'development';
-  } else if(hash === '' || hash === '#/') {
+  } else if(location.pathname === '' || location.pathname === '/') {
     status = 'ready';
   } else {
     status = '';
