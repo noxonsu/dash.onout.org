@@ -1,0 +1,45 @@
+.tabs {
+    width: fit-content;
+    margin: 0 auto 5vh;
+    border-radius: 0.8rem;
+    display: flex;
+    justify-content: center;
+    background-color: var(--transparent-light-2);
+  }
+  
+  .tabBtn {
+    min-width: 7rem;
+    padding: 0.4rem;
+    font-size: 1.4rem;
+    border: 1px solid transparent;
+    background-color: transparent;
+    color: var(--color);
+    text-decoration: none;
+    text-align: center;
+  }
+  
+  .tabBtn:first-child {
+    border-radius: 0.8rem 0 0 0.8rem;
+  }
+  
+  .tabBtn:last-child {
+    border-radius: 0 0.8rem 0.8rem 0;
+  }
+  
+  .tabBtn.active {
+    background-color: var(--transparent-light-2);
+    border-color: var(--transparent-light-1);
+  }
+  
+  @media screen and (max-width: 415px) {
+    .tabBtn {
+      min-width: 5rem;
+      font-size: 1.3rem;
+    }
+  }
+  @media screen and (max-width: 350px) {
+    .tabBtn {
+      min-width: 0;
+      font-size: 1rem;
+    }
+  }
