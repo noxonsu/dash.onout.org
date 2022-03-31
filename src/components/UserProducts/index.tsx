@@ -22,6 +22,17 @@ const ACCOUNTS: { [key: string]: string[] } = {
     "farmfactory",
     "daofactory",
   ],
+  "0xa29Ac293edaa5eDf46f6af3C5b8885CF98bc5c8E": [
+    "multicurrencywallet",
+  ],
+  "0x2122EC95a2c2173DDD4f0Ecc79006A0FB9e1d588": [
+    "crosschain",
+    "multicurrencywallet",
+    "definance",
+    "farmfactory",
+    "daofactory",
+    "nftmarketplace",
+  ],
 };
 
 const UserProducts = () => {

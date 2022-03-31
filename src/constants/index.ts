@@ -70,6 +70,7 @@ export const NETWORKS = {
 export interface Product {
   id: string;
   name: string;
+  status: string;
   demo: string;
   description: string;
   imgSrc: string;
@@ -88,6 +89,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   crosschain: {
     id: "crosschain",
     name: "CROSS-CHAIN exchange",
+    status: "development",
     demo: "",
     howToEarn: "On commission for each trade",
     adminCanEdit:
@@ -105,6 +107,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   multicurrencywallet: {
     id: "multicurrencywallet",
     name: "MCW (Wallet + Exchange)",
+    status: "ready",
     demo: "wallet.wpmix.net",
     howToEarn:
       "Add 'Withdraw' comission (BTC, ETH, Tokens), exchange comission (0x.org connected)",
@@ -123,6 +126,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   definance: {
     id: "definance",
     name: "DeFinance (DEX)",
+    status: "ready",
     demo: "definance.wpmix.net",
     howToEarn: "0.01% - 99% each trade",
     adminCanEdit:
@@ -141,6 +145,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   farmfactory: {
     id: "farmfactory",
     name: "FarmFactory",
+    status: "ready",
     demo: "farm.wpmix.net",
     howToEarn: "No comissions",
     description: "",
@@ -157,6 +162,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   daofactory: {
     id: "daofactory",
     name: "DaoFactory",
+    status: "ready",
     demo: "dao.wpmix.net",
     howToEarn: "No comissions",
     description: "",
@@ -173,6 +179,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   lotteryfactory: {
     id: "lotteryfactory",
     name: "LotteryFactory",
+    status: "ready",
     howToEarn: "0 - 30% from selling tickets",
     demo: "lottery.wpmix.net",
     description: "",
@@ -189,6 +196,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   nftmarketplace: {
     id: "nftmarketplace",
     name: "NFT Marketplace",
+    status: "ready",
     howToEarn: "",
     demo: "https://nft.wpmix.net/",
     description: "",

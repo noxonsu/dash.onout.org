@@ -66,17 +66,24 @@
 .paymentBtn:disabled {
   opacity: 0.5;
 }
+
 .notesSpan {
   cursor: pointer;
   color: #fff;
   font-weight: 700;
   font-size: 21px;
 }
-.notesSpan:hover{
+
+.notesSpan:hover {
   color: #acaab3;
 }
+
 .notesSpan.active {
   color: #acaab3;
+}
+
+.polygonNotice {
+  margin: 1.6rem 0 0;
 }
 
 @media screen and (max-width: 840px) {
