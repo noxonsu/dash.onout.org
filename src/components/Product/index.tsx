@@ -15,7 +15,7 @@ import { getPrice } from "../../helpers/currency";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
-import Modal from "../Modal";
+import Modal from "../Modal"
 
 import "./index.css";
 
@@ -294,17 +294,19 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
 
       <form className="pomoCodeForm" onSubmit={promoFormHandle} >
         {paidFor ? (
-          <label className="promoCodeText" onClick={(e: any) => {
-            e.target.children[0].classList.toggle('active');
-          }}>I have a promo code<input className="promoCodeInput" type='text' placeholder="Enter promo code to get $50 discount" autoFocus/></label>
+          <label className="promocodeLabel">Your promo code 
+            <input className="promocode" onClick={(e: any) => {
+              e.target.select();
+              window.navigator.clipboard.writeText(e.target.value)
+            }} type="text" title="Сopy in one click" value={`${account.address}`} />
+          </label>
         ) : (
-          <div>
-            <p>Your promo code</p>
-            <p>{`${'promocode'}`}</p>
-          </div>
+          <label className="promoCodeText" onClick={(e: any) => {
+              e.target.children[0].classList.toggle('active');
+            }}>I have a promo code
+              <input className="promoCodeInput" type='text' placeholder="Enter promo code to get $50 discount" autoFocus/>
+          </label>
         )}
-        
-
         <button
           className={`primaryBtn paymentBtn ${paymentPending ? "pending" : ""}`}
           disabled={!paymentAvailable}
@@ -316,27 +318,26 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
             : "Not available"}
         </button>
       </form>
-
       <p className="polygonNotice">
-        Use{" "}
-        <span
-          className={`notesSpan ${networkPolygon ? "active" : ""}`}
-          onClick={changeNetworks}
-        >
-          {" "}
-          Polygon
-        </span>{" "}
-        to get 50 SWAP tokens as bonus. You can trade your currency for MATIC
-        using this bridge:{" "}
-        <a
-          className="link"
-          target="_blank"
-          rel="noreferrer"
-          href="https://app.debridge.finance/"
-        >
-          app.debridge.finance
-        </a>
-      </p>
+      Use{" "}
+      <span
+        className={`notesSpan ${networkPolygon ? "active" : ""}`}
+        onClick={changeNetworks}
+      >
+        {" "}
+        Polygon
+      </span>{" "}
+      to get 50 SWAP tokens as bonus. You can trade your currency for MATIC
+      using this bridge:{" "}
+      <a
+        className="link"
+        target="_blank"
+        rel="noreferrer"
+        href="https://app.debridge.finance/"
+      >
+        app.debridge.finance
+      </a>
+    </p>
     </div>
   );
 };
