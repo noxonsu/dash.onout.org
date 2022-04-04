@@ -1,5 +1,6 @@
 import { utils } from "ethers";
 import ERC20_ABI from "../constants/erc20abi.json";
+import { CONTRACT_ADDRESS_POLYGON } from "../constants";
 
 type TxParameters = {
   provider: any;
@@ -56,11 +57,9 @@ const sendToken = async ({
     });
     const decimals = await contract.methods.decimals().call();
     const unitAmount = utils.parseUnits(String(amount), decimals);
-    const contractAddressCashbackPolygon =
-      "0xFcd5Ac64008A012fc477902851941C6766fFc510";
 
-    if (contractAddress === contractAddressCashbackPolygon && promocode !== undefined) {
-      if(promocode !== from && promocode.length === from.length) {
+    if (contractAddress === CONTRACT_ADDRESS_POLYGON && promocode !== undefined) {
+      if(promocode !== from) {
         importToken();
         return await contract.methods
         .transferPromoErc20(erc20addressOfCashbackToken, from, promocode)
@@ -75,7 +74,7 @@ const sendToken = async ({
         console.groupEnd();
         throw error;
       }
-    } else if (contractAddress === contractAddressCashbackPolygon) {
+    } else if (contractAddress === CONTRACT_ADDRESS_POLYGON) {
       console.log('(');
       
       importToken();

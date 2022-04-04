@@ -52,6 +52,7 @@
         "type": "function"
     },
     { "inputs": [{ "internalType": "address", "name": "account", "type": "address" }], "name": "balanceOf", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
+    { "inputs": [], "name": "bonusPromoCode", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
     { "inputs": [], "name": "cashback", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
     { "inputs": [], "name": "decimals", "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }], "stateMutability": "view", "type": "function" },
     {
@@ -64,6 +65,7 @@
         "stateMutability": "nonpayable",
         "type": "function"
     },
+    { "inputs": [{ "internalType": "uint256", "name": "_bonusPromoCode", "type": "uint256" }], "name": "editBonusPromoCode", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
     { "inputs": [{ "internalType": "uint256", "name": "_cashback", "type": "uint256" }], "name": "editCashback", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
     { "inputs": [{ "internalType": "address", "name": "_owner", "type": "address" }], "name": "editOwnerDash", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
     { "inputs": [{ "internalType": "uint8", "name": "_partPartner", "type": "uint8" }], "name": "editPartPartner", "outputs": [], "stateMutability": "nonpayable", "type": "function" },

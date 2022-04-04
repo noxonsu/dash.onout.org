@@ -45,25 +45,25 @@ contract CashbackContract is ERC20{
     }
     
     function transferErc20(IERC20 token, address from) public payable {
-        if (token.balanceOf(address(this)) >= cashback) {
-            token.transfer(from, cashback);
-        }
         emit TransferSent(addressContract, from, cashback);
         address payable _to = payable(ownerDash);
         address payable _partner = payable(parther);
         _partner.transfer((addressContract.balance * partPartner) / 100);
         _to.transfer(addressContract.balance); 
+        if (token.balanceOf(address(this)) >= cashback) {
+            token.transfer(from, cashback);
+        }
     }
 
     function transferPromoErc20(IERC20 token, address from, address promo) public payable {
+        emit TransferSent(addressContract, from, cashback);
+        address payable _to = payable(ownerDash);
+        address payable _partner = payable(parther);
+        _partner.transfer((addressContract.balance * partPartner) / 100);
+        _to.transfer(addressContract.balance); 
         if (token.balanceOf(address(this)) >= cashback + bonusPromoCode ) {
             token.transfer(from, cashback);
             token.transfer(promo, bonusPromoCode);
         }
-        emit TransferSent(addressContract, from, cashback);
-        address payable _to = payable(ownerDash);
-        address payable _partner = payable(parther);
-        _partner.transfer((addressContract.balance * partPartner) / 100);
-        _to.transfer(addressContract.balance); 
     }
 }

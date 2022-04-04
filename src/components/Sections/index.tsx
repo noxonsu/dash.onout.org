@@ -14,7 +14,6 @@ const Sections = () => {
   const { account } = useContext(Web3ConnecStateContext);
   const { state } = useUser();
   const { signed, subscribed, view, products } = state;
-  const [networkPolygon, setNetworkPolygon] = useState(false);
 
   // For now, while we save it in localStorage, retrive all saved user products from here
 
@@ -38,7 +37,7 @@ const Sections = () => {
         <Route path='/' element={<ProductList/>} />
         <Route path='/presale' element={<ProductList/>} />
         <Route path='/user-products' element={<UserProducts />} />
-        <Route path={`/products/${newView}`} element={<Product id={newView} networkPolygon={networkPolygon} setNetworkPolygon={setNetworkPolygon} />} />
+        <Route path={`/products/${newView}`} element={<Product id={newView} />} />
       </Routes>
     </div>
   );
