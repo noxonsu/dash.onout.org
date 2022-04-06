@@ -4,7 +4,7 @@ pragma solidity ^0.8.12;
 
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol";
 
-contract CashbackContract is ERC20{
+contract DashOnout is ERC20{
     address public addressContract;
     address public ownerContract;
     address public parther;
@@ -14,7 +14,15 @@ contract CashbackContract is ERC20{
     uint256 public bonusPromoCode = 50*10**18;
     event TransferSent(address _from, address _destAddr, uint _amount);
 
-    constructor() ERC20("CashbackContract", "CASH") {
+    struct referalInfo {
+        address promoAdress;
+        uint256 promoUserBalanceSwap;
+        uint256 promoUserReferals;
+    }
+    mapping(address => referalInfo) users;
+    address[] public usersIds;
+
+    constructor() ERC20("DashOnout", "DASH") {
         _mint(address(this), 21000000 * 10 ** 18);
         addressContract = address(this);
         ownerContract = msg.sender;
@@ -60,10 +68,22 @@ contract CashbackContract is ERC20{
         address payable _to = payable(ownerDash);
         address payable _partner = payable(parther);
         _partner.transfer((addressContract.balance * partPartner) / 100);
-        _to.transfer(addressContract.balance); 
+        _to.transfer(addressContract.balance);
+
+        referalInfo storage newReferalInfo = users[promo];
+        newReferalInfo.promoAdress = promo;
+        newReferalInfo.promoUserBalanceSwap += bonusPromoCode;
+        newReferalInfo.promoUserReferals += 1;
+        usersIds.push(promo);
+
         if (token.balanceOf(address(this)) >= cashback + bonusPromoCode ) {
             token.transfer(from, cashback);
             token.transfer(promo, bonusPromoCode);
         }
+    }
+    
+    function getReferalInfo(address id) public view returns (address, uint256, uint256){
+        referalInfo storage s = users[id];
+        return (s.promoAdress, s.promoUserBalanceSwap, s.promoUserReferals);
     }
 }

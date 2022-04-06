@@ -39,7 +39,7 @@ const Affiliate = () => {
             className="affiliateAddress"
             onClick={(e:any) => {
                 window.navigator.clipboard.writeText(account.address)
-            }}>{`{${account.address}}`}</span> (the same as your address). Share your promo code in any suitable way: put it on your website or just send it to your friends or other potentially interested parties; When someone enters your promocode when buying a product using BNB network you will receive SWAP tokens immediately. You can use swap to earn BNB rewards at
+            }}>{`{${account.address.slice(0, 20)} ${account.address.slice(20, account.address.length)}}`}</span> (the same as your address). Share your promo code in any suitable way: put it on your website or just send it to your friends or other potentially interested parties; When someone enters your promocode when buying a product using BNB network you will receive SWAP tokens immediately. You can use swap to earn BNB rewards at
             <a className="affiliateLink" href="https://farm.onout.org/" target="_blank"> farm.onout.org</a> 
         .</p>
         <div className="faq">

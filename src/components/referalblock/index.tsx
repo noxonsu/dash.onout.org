@@ -15,7 +15,12 @@ const Referal = () => {
         <FaUsers size="4rem" className='icon referalIcon'/>
         <div className='referalTextBlock'>
           <p className='referalText'>Earn cryptocurrency by publish the referral code.</p>
-          <p className='referalText'>{account.address.slice(0, 15) + `.....`}
+          <p className='referalText defauld'>{account.address}
+            <span className='copyLink' onClick={() => {
+              window.navigator.clipboard.writeText(account.address)
+            }}>[copy]</span>
+          </p>
+          <p className='referalText wigth600'>{account.address.slice(0, 15)+'.....'}
             <span className='copyLink' onClick={() => {
               window.navigator.clipboard.writeText(account.address)
             }}>[copy]</span>

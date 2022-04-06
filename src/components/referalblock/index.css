@@ -9,12 +9,13 @@
       color: #999;
   }
   .referalTextBlock{
-    margin-left: 2.4rem;
+    margin-left: 2rem;
   }
   .referalText{
     margin: 0.4rem;
     font-size: 1.1rem;
     margin-left: 0;
+    white-space: pre-line
   }
   .copyLink{
     margin-left: 0.4rem;
@@ -28,3 +29,33 @@
     color: var(--link-color);
     text-decoration: none;
   }
+  .wigth600{
+    display: none;
+  }
+
+@media (max-width: 840px){
+  .referalTextBlock{
+    margin-left: 1rem;
+  }
+  .referalInfo {
+    max-width: 100%;
+    width: 80%;
+  }
+  .referalText, .linkAffiliale{
+    font-size: 1rem;
+  }
+}
+@media (max-width: 700px){
+  .defauld{
+    display: none;
+  }
+  .wigth600{
+    display: block;
+    margin-bottom: 0;
+  }
+}
+@media (max-width: 500px){
+  .referalText, .linkAffiliale{
+    font-size: 0.8rem;
+  }
+}
