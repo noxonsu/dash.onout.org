@@ -1,6 +1,8 @@
-import { PRICE_ENDPOINT } from "../constants";
+import { BigNumber } from "bignumber.js";
+import { PRICE_ENDPOINT, NETWORKS } from "../constants";
+import AggregatorV3Interface from "@chainlink/contracts/abi/v0.8/AggregatorV3Interface.json";
 
-export const getPrice = async ({
+export const getApiPrice = async ({
   assetId,
   vsCurrency,
 }: {
@@ -14,7 +16,43 @@ export const getPrice = async ({
 
     return data;
   } catch (error) {
-    console.group("%c getPrice", "color: red;");
+    console.group("%c getApiPrice", "color: red;");
+    console.error(error);
+    console.groupEnd();
+    return false;
+  }
+};
+
+export const getOracleNativePrice = async ({
+  provider,
+  chainId,
+  from,
+}: {
+  provider: any;
+  chainId: number;
+  from: string;
+}) => {
+  try {
+    //@ts-ignore
+    const oracleAddress = NETWORKS[chainId].nativePriceOracle;
+    const oracle = new provider.eth.Contract(
+      AggregatorV3Interface,
+      oracleAddress,
+      {
+        from,
+      }
+    );
+    const { answer } = await oracle.methods.latestRoundData().call();
+
+    if (answer > 0) {
+      const ORACLE_DECIMALS = 8;
+
+      return new BigNumber(answer).div(10 ** ORACLE_DECIMALS).toNumber();
+    }
+
+    return false;
+  } catch (error) {
+    console.group("%c getOracleNativePrice", "color: red;");
     console.error(error);
     console.groupEnd();
     return false;

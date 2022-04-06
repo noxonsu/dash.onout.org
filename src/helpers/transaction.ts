@@ -1,5 +1,8 @@
 import { utils } from "ethers";
 import ERC20_ABI from "../constants/erc20abi.json";
+import DASH_ABI from "../constants/dashAbi.json";
+import { NETWORKS } from "../constants";
+import { sendMessage, STATUS } from "../helpers/feedback";
 
 type TxParameters = {
   provider: any;
@@ -115,5 +118,57 @@ export const send = async ({
     console.error(error);
     console.groupEnd();
     throw error;
+  }
+};
+
+export const fullPayment = async ({
+  provider,
+  from,
+  amount,
+  chainId,
+  productId,
+  rewardReceiver,
+}: {
+  provider: any;
+  from: string;
+  amount: number;
+  chainId: number;
+  productId: string;
+  rewardReceiver?: string;
+}) => {
+  try {
+    //@ts-ignore
+    const dashAddress = NETWORKS[chainId].dash;
+    const contract = new provider.eth.Contract(DASH_ABI, dashAddress, {
+      from,
+    });
+
+    const oldData = await contract.methods.getData(from).call();
+
+    console.group("%c payment", "color: brown");
+    console.log("oldData: ", oldData);
+
+    const newData = JSON.stringify({
+      ...JSON.parse(oldData || "{}"),
+    });
+
+    console.log("newData: ", newData);
+    console.groupEnd();
+
+    await contract.methods
+      .payment(productId, newData, rewardReceiver || from)
+      .send({
+        from,
+        amount,
+      });
+  } catch (error) {
+    console.group("%c payment", "color: red");
+    console.error(error);
+    console.groupEnd();
+
+    sendMessage({
+      msg: `(FAIL from: ${from}) ${`network: ${chainId}; `}product id: ${productId}; ${`crypto cost: ${amount}; `}date: ${new Date().toISOString()}`,
+      status: STATUS.danger,
+    });
   }
 };

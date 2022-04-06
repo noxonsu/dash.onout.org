@@ -2,7 +2,8 @@ import { COVERS } from "../assets";
 
 export const FEEDBACK_URL = "https://noxon.wpmix.net/counter.php";
 export const PAYMENT_ADDRESS = "0x3B85D38c3A7AEabABA8B7DEb7a73177688270abC";
-export const CONTRACT_ADDRESS_POLYGON = '0xb4e3F3716Eb11f58ad16Ac6400068D171A9e465F';
+export const CONTRACT_ADDRESS_POLYGON =
+  "0xb4e3F3716Eb11f58ad16Ac6400068D171A9e465F";
 // 50 calls per minute
 export const PRICE_ENDPOINT = "https://api.coingecko.com/api/v3";
 
@@ -32,6 +33,8 @@ export const NETWORKS = {
     currency: {
       id: "ethereum",
     },
+    nativePriceOracle: "0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419",
+    dash: "",
     tokens: {
       usdt: {
         address: "0xdac17f958d2ee523a2206206994597c13d831ec7",
@@ -42,6 +45,8 @@ export const NETWORKS = {
   56: {
     id: 56,
     name: "BSC",
+    nativePriceOracle: "0x0567f2323251f0aab15c8dfb1967e4e8a7d42aee",
+    dash: "",
     currency: {
       id: "binancecoin",
     },
@@ -55,6 +60,8 @@ export const NETWORKS = {
   137: {
     id: 137,
     name: "Polygon",
+    nativePriceOracle: "0xab594600376ec9fd91f8e885dadf0ce036862de0",
+    dash: "",
     currency: {
       id: "aave-polygon-wmatic",
     },
@@ -94,14 +101,15 @@ export const PRODUCTS: { [id: string]: Product } = {
     howToEarn: "On commission for each trade",
     adminCanEdit:
       "Logo, colors, list of assets, links, fee percent, admin and fee addresses",
-    description: "Presale... Development in progress. Pay now to fix the price. (ETA: 1 month)",
+    description:
+      "Presale... Development in progress. Pay now to fix the price. (ETA: 1 month)",
     imgSrc: COVERS.crossChainCover,
     imgAlt: "crosschain wallet promo",
     promoPage: "OnOut cross-chain",
     promoPageLink: "",
     docsLink: "",
     codecanyonLink: "",
-    lables: ['new'],
+    lables: ["new"],
     price: 1000,
   },
   multicurrencywallet: {
