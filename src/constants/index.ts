@@ -2,7 +2,7 @@ import { COVERS } from "../assets";
 
 export const FEEDBACK_URL = "https://noxon.wpmix.net/counter.php";
 export const PAYMENT_ADDRESS = "0x3B85D38c3A7AEabABA8B7DEb7a73177688270abC";
-export const CONTRACT_ADDRESS_POLYGON = '0xb54C2da2F80239b57467cD3faFA9DaABa010b4B6';
+export const CONTRACT_ADDRESS_POLYGON = '0x95c588850c9b275b32730c64De17641Cac22c060';
 export const EVM_ADDRESS_REGEXP = /^0x[A-Fa-f0-9]{40}$/;
 
 // 50 calls per minute
@@ -208,6 +208,6 @@ export const PRODUCTS: { [id: string]: Product } = {
     promoPageLink: "https://tools.onout.org/nft/",
     docsLink: "",
     lables: [],
-    price: 500,
+    price: 0.01,
   },
 };

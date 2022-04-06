@@ -62,6 +62,10 @@
 .promoCodeInput.active{
   display: block;
 }
+.promoCodeInput.disabled{
+  border: none;
+  caret-color: transparent;
+}
 .promoCodeText {
   margin: 20px 0;
   width: 100%;
@@ -70,12 +74,16 @@
   color: var(--link-color);
   transition: .3s;
 }
-.disabled {
-  color : #999;
+.linkToNetworkPolygon{
+  margin-top: 15px;
+  color: var(--color);
+  display: none;
 }
-
+.linkToNetworkPolygon.active{
+  display: block;
+}
 .promocodeLabel{
-  margin-top: 0;
+  margin-top: 15px;
   margin-bottom: 20px;
   width: 100%;
   display: flex;

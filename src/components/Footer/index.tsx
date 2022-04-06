@@ -2,6 +2,7 @@ import GA from 'react-ga';
 import { MdEmail, MdChat } from "react-icons/md";
 import { SiTelegram, SiDiscord } from "react-icons/si";
 import useUser from "../../hooks/useUser";
+import Referal from '../referalblock';
 
 import "./index.css";
 
@@ -32,6 +33,7 @@ const Footer = () => {
       to: "https://discord.gg/VwKEmHEgVN",
       title: "Discord",
       icon: <SiDiscord size="1.9rem" className="icon" />,
+      // icon: <SiDiscord size="1.9rem" className="icon" />,
       gaAction: "Join to Discord channel",
     },
   ];
@@ -39,6 +41,8 @@ const Footer = () => {
   return (
     <footer>
       {signed && subscribed && (
+      <div>
+        <Referal/>
         <p className="footerRiskNotice">
           Risk notification: Our code is based on top audited sources, but our
           changes are unaudited from 3rd party auditors. We improve security but a
@@ -54,6 +58,7 @@ const Footer = () => {
           please use as less plugins as you can and the "Simply Static plugin" and
           "Wodefence" for security.
         </p>
+      </div>
       )}
 
       <ul className="linksList">

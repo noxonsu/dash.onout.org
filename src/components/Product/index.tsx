@@ -32,7 +32,7 @@ const Product = ({id}:ProductProps) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [fooActive, setFooActive] = useState(false)
   const [promo, setPromo] = useState('')
-  const [net, setNet] = useState(Number)
+  const [chainId, setChainId] = useState(Number)
   const { dispatch, state } = useUser();
   const { products, signed } = state;
   const { name, promoPageLink, description, price: USDPrice } = PRODUCTS[id];
@@ -221,9 +221,14 @@ const Product = ({id}:ProductProps) => {
       status: STATUS.attention,
     });
   }
+
   (async function () {
+    try {
       const networkId = await account.provider.eth.net.getId();
-      setNet(networkId)
+      setChainId(networkId)
+    } catch (error) {
+      console.log("error");
+    }
   }())
   
   
@@ -302,24 +307,27 @@ const Product = ({id}:ProductProps) => {
 
       <form className="pomoCodeForm" onSubmit={promoFormHandle} >
         {paidFor ? (
-          <label className="promocodeLabel">Your promo code 
-            <input className="promocode" onClick={(e: any) => {
-              e.target.select();
-              window.navigator.clipboard.writeText(e.target.value)
-            }} type="text" title="Сopy in one click" value={`${account.address}`} />
-          </label>
+          <div></div>
+          // <label className="promocodeLabel">Your promo code 
+          //   <input className="promocode" onClick={(e: any) => {
+          //     e.target.select();
+          //     window.navigator.clipboard.writeText(e.target.value)
+          //   }} type="text" title="Сopy in one click" value={`${account.address}`} />
+          // </label>
         ) : (
-          <label className={`promoCodeText ${fooActive ? 'active' : ''} ${net === 137 ? '' : 'disabled'}`} onClick={() => {
-              if(net === 137) {
+          <label className={`promoCodeText ${fooActive ? 'active' : ''}`} onClick={() => {
                 setFooActive(true)
-              }
-            }}>{`${net === 137 ? 'I have a promo code' : 'To use the promocode pay on Polygon'}`}
-              <input 
-              className={`promoCodeInput ${fooActive && net === 137 ? 'active' : ''}`} 
-              onChange={(e) => setPromo(e.target.value)}
-              type='text' 
-              placeholder="Enter promo code to get $50 discount" 
-              autoFocus/>
+            }}>I have a promo code
+              {chainId === 137 ? (
+                <input 
+                className={`promoCodeInput ${fooActive ? 'active' : ''}`} 
+                onChange={(e) => setPromo(e.target.value)}
+                type='text' 
+                placeholder="Enter promo code to get $50 discount" 
+                autoFocus/>
+              ) : (
+                <span className={`linkToNetworkPolygon ${fooActive ? 'active' : ''}`}>To use the promocode pay on <span className={`notesSpan ${chainId === 137 ? "active" : ""}`} onClick={changeNetworks}>Polygon</span></span>
+              )}
           </label>
         )}
         <button
@@ -336,7 +344,7 @@ const Product = ({id}:ProductProps) => {
       <p className="polygonNotice">
       Use{" "}
       <span
-        className={`notesSpan ${net === 137 ? "active" : ""}`}
+        className={`notesSpan ${chainId === 137 ? "active" : ""}`}
         onClick={changeNetworks}
       >
         {" "}

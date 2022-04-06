@@ -1,0 +1,30 @@
+.referalInfo{
+    margin: 0 auto 2rem;
+    max-width: 40rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .referalIcon{
+      color: #999;
+  }
+  .referalTextBlock{
+    margin-left: 2.4rem;
+  }
+  .referalText{
+    margin: 0.4rem;
+    font-size: 1.1rem;
+    margin-left: 0;
+  }
+  .copyLink{
+    margin-left: 0.4rem;
+    color: var(--link-color);
+    cursor: pointer;
+  }
+  .copyLink:active{
+    color: var(--color-notice);
+  }
+  .linkAffiliale{
+    color: var(--link-color);
+    text-decoration: none;
+  }

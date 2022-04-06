@@ -8,6 +8,7 @@ import Product from "../Product";
 import "./index.css";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Tabs from "../tabs";
+import Affiliate from "../AffiliateDashboard";
 const Sections = () => {
   const location = useLocation();
 
@@ -38,6 +39,7 @@ const Sections = () => {
         <Route path='/presale' element={<ProductList/>} />
         <Route path='/user-products' element={<UserProducts />} />
         <Route path={`/products/${newView}`} element={<Product id={newView} />} />
+        <Route path={`/affiliate`} element={<Affiliate />} />
       </Routes>
     </div>
   );
