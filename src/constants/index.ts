@@ -11,6 +11,11 @@ export const FIAT_TICKER = "USD";
 // Google analytics Tracking ID
 export const GA_TRACKING_ID = "UA-219725401-1";
 
+// Checking address cache
+export const SUBSCRIPTION_POSTFIX_KEY = "::subscriptionCheckingDate";
+export const ONE_DAY = 86400000; // in milliseconds
+export const ONE_MONTH = ONE_DAY * 30;
+
 // https://docs.google.com/spreadsheets/d/1wTTuxXt8n9q7C4NDXqQpI3wpKu1_5bGVmP9Xz0XGSyU/edit#gid=0
 export const NETWORKS = {
   // 4: {
