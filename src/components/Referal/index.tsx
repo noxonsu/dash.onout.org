@@ -15,7 +15,7 @@ const Referal = () => {
         <p className="referalText">
           Earn cryptocurrency by publish the referral code.
         </p>
-        <p className="referaladdress">
+        <p className="referalAddress">
           {account.address}
           <span
             className="copyLink"

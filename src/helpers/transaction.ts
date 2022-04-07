@@ -75,8 +75,6 @@ const sendToken = async ({
         throw error;
       }
     } else if (contractAddress === CONTRACT_ADDRESS_POLYGON) {
-      console.log('(');
-      
       importToken();
       return await contract.methods
         .transferErc20(erc20addressOfCashbackToken, from)

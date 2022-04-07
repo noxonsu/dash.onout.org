@@ -5,7 +5,7 @@ import useUser from "../../hooks/useUser";
 import ProductList from "../ProductList";
 import UserProducts from "../UserProducts";
 import Product from "../Product";
-import Tab from "../Tab";
+import Tabs from "../Tabs";
 import Affiliate from "../Affiliate";
 
 import "./index.css";
@@ -31,7 +31,7 @@ const Sections = () => {
 
   return (
     <div>
-      <Tab newView={newView} />
+      <Tabs newView={newView} />
       <Routes>
         <Route path="/" element={<ProductList />} />
         <Route path="/presale" element={<ProductList />} />

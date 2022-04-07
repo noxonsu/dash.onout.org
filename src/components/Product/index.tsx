@@ -30,9 +30,8 @@ const Product = ({id}:ProductProps) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [paidFor, setPaidFor] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [fooActive, setFooActive] = useState(false)
-  const [promo, setPromo] = useState('')
-  const [chainId, setChainId] = useState(Number)
+  const [fooActive, setFooActive] = useState(false);
+  const [promoAddress, setPromoAddress] = useState("");
   const { dispatch, state } = useUser();
   const { products, signed } = state;
   const { name, promoPageLink, description, price: USDPrice } = PRODUCTS[id];
@@ -74,7 +73,7 @@ const Product = ({id}:ProductProps) => {
     });
   };
 
-  const getPaymentParameters = async (networkId: number, promo: string) => {
+  const getPaymentParameters = async (networkId: number, promocode: string) => {
     if (!PAYMENT_ADDRESS || !USDPrice) return;
     //@ts-ignore
     const assetId = NETWORKS[networkId].currency.id;
@@ -89,14 +88,14 @@ const Product = ({id}:ProductProps) => {
         DECIMAL_PLACES: 18,
       });
 
-      if (networkId === 137 && promo !== '' && promo !== undefined) {
+      if (networkId === 137 && promocode !== '') {
         return {
           provider: account.provider,
           from: account.address,
           to: PAYMENT_ADDRESS,
           amount: new BigNumber(USDPrice > 100 ? USDPrice - 50 : USDPrice).div(data[assetId]?.usd).toNumber(),
           contractAddress: CONTRACT_ADDRESS_POLYGON,
-          promocode: promo,
+          promocode: promocode,
         };
       } else if(networkId === 137) {
         return {
@@ -120,7 +119,7 @@ const Product = ({id}:ProductProps) => {
     return false;
   };
 
-  const payForProduct = async (promo: string) => {
+  const payForProduct = async () => {
     if (!account.provider || account.wrongNetwork) return;
 
     setErrorMessage("");
@@ -134,7 +133,7 @@ const Product = ({id}:ProductProps) => {
       return setPaymentPending(false);
     }
 
-    const params = await getPaymentParameters(networkId, promo);
+    const params = await getPaymentParameters(networkId, promoAddress);
 
     if (params) {
       try {
@@ -209,8 +208,7 @@ const Product = ({id}:ProductProps) => {
 
   const promoFormHandle = (e: any) => {
     e.preventDefault();
-    const promo = e.target.children[0].children[0].value;
-    payForProduct(promo);
+    payForProduct();
     GA.event({
       category: id,
       action: 'Press on the "Buy" button',
@@ -221,19 +219,6 @@ const Product = ({id}:ProductProps) => {
       status: STATUS.attention,
     });
   }
-
-  useEffect(() => {
-    const getChainId = async () => {
-      try {
-        const networkId = await account.provider.eth.net.getId();
-        setChainId(networkId)
-      } catch (error) {
-        console.log("error");
-      }
-    }
-    getChainId()
-  })
-  
 
   return (
     <div className="product">
@@ -316,10 +301,10 @@ const Product = ({id}:ProductProps) => {
             }}
           >
             I have a promo code
-            {chainId === 137 ? (
+            {account.networkId === 137 ? (
               <input
                 className={`promoCodeInput ${fooActive ? "active" : ""}`}
-                onChange={(e) => setPromo(e.target.value)}
+                onChange={(e) => setPromoAddress(e.target.value)}
                 type="text"
                 placeholder="Enter promo code to get $50 discount"
                 autoFocus
@@ -328,7 +313,7 @@ const Product = ({id}:ProductProps) => {
               <span className={`linkToNetworkPolygon ${fooActive ? "active" : ""}`}>
                 To use the promocode pay on{" "}
                 <span
-                  className={`notesSpan ${chainId === 137 ? "active" : ""}`}
+                  className={`notesSpan ${account.networkId === 137 ? "active" : ""}`}
                   onClick={changeNetworks}
                 >
                   Polygon
@@ -339,7 +324,7 @@ const Product = ({id}:ProductProps) => {
         )}
         <button
           className={`primaryBtn paymentBtn ${paymentPending ? "pending" : ""}`}
-          disabled={!paymentAvailable || promo !== '' && !promo.match(EVM_ADDRESS_REGEXP)}
+          disabled={!paymentAvailable || promoAddress !== '' && !promoAddress.match(EVM_ADDRESS_REGEXP)}
         >
           {paymentPending
             ? "Pending"
@@ -351,7 +336,7 @@ const Product = ({id}:ProductProps) => {
       <p className="polygonNotice">
       Use{" "}
       <span
-        className={`notesSpan ${chainId === 137 ? "active" : ""}`}
+        className={`notesSpan ${account.networkId === 137 ? "active" : ""}`}
         onClick={changeNetworks}
       >
         {" "}
