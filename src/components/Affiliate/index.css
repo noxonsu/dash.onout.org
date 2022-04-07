@@ -15,7 +15,7 @@
 .affiliateAddress{
     cursor: pointer;
     color: #fff;
-
+    word-break: break-word;
 }
 .affiliateAddress:hover{
 color: inherit;
@@ -36,6 +36,7 @@ color: inherit;
 .affiliateLink{
     text-decoration: none;
     color: var(--link-color);
+    word-break: break-word;
 }
 .fagSpan{
     font-weight: 700;

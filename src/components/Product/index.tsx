@@ -222,15 +222,17 @@ const Product = ({id}:ProductProps) => {
     });
   }
 
-  (async function () {
-    try {
-      const networkId = await account.provider.eth.net.getId();
-      setChainId(networkId)
-    } catch (error) {
-      console.log("error");
+  useEffect(() => {
+    const getChainId = async () => {
+      try {
+        const networkId = await account.provider.eth.net.getId();
+        setChainId(networkId)
+      } catch (error) {
+        console.log("error");
+      }
     }
-  }())
-  
+    getChainId()
+  })
   
 
   return (
@@ -306,28 +308,33 @@ const Product = ({id}:ProductProps) => {
       
 
       <form className="pomoCodeForm" onSubmit={promoFormHandle} >
-        {paidFor ? (
-          <div></div>
-          // <label className="promocodeLabel">Your promo code 
-          //   <input className="promocode" onClick={(e: any) => {
-          //     e.target.select();
-          //     window.navigator.clipboard.writeText(e.target.value)
-          //   }} type="text" title="Сopy in one click" value={`${account.address}`} />
-          // </label>
-        ) : (
-          <label className={`promoCodeText ${fooActive ? 'active' : ''}`} onClick={() => {
-                setFooActive(true)
-            }}>I have a promo code
-              {chainId === 137 ? (
-                <input 
-                className={`promoCodeInput ${fooActive ? 'active' : ''}`} 
+        {!paidFor && (
+          <label
+            className={`promoCodeText ${fooActive ? "active" : ""}`}
+            onClick={() => {
+              setFooActive(true);
+            }}
+          >
+            I have a promo code
+            {chainId === 137 ? (
+              <input
+                className={`promoCodeInput ${fooActive ? "active" : ""}`}
                 onChange={(e) => setPromo(e.target.value)}
-                type='text' 
-                placeholder="Enter promo code to get $50 discount" 
-                autoFocus/>
-              ) : (
-                <span className={`linkToNetworkPolygon ${fooActive ? 'active' : ''}`}>To use the promocode pay on <span className={`notesSpan ${chainId === 137 ? "active" : ""}`} onClick={changeNetworks}>Polygon</span></span>
-              )}
+                type="text"
+                placeholder="Enter promo code to get $50 discount"
+                autoFocus
+              />
+            ) : (
+              <span className={`linkToNetworkPolygon ${fooActive ? "active" : ""}`}>
+                To use the promocode pay on{" "}
+                <span
+                  className={`notesSpan ${chainId === 137 ? "active" : ""}`}
+                  onClick={changeNetworks}
+                >
+                  Polygon
+                </span>
+              </span>
+            )}
           </label>
         )}
         <button

@@ -2,7 +2,7 @@ import { COVERS } from "../assets";
 
 export const FEEDBACK_URL = "https://noxon.wpmix.net/counter.php";
 export const PAYMENT_ADDRESS = "0x3B85D38c3A7AEabABA8B7DEb7a73177688270abC";
-export const CONTRACT_ADDRESS_POLYGON = '0x95c588850c9b275b32730c64De17641Cac22c060';
+export const CONTRACT_ADDRESS_POLYGON = '0x71945dE28746455B651Aab1EE84Ce06e03a90bCD';
 export const EVM_ADDRESS_REGEXP = /^0x[A-Fa-f0-9]{40}$/;
 
 // 50 calls per minute

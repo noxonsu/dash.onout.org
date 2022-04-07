@@ -7,8 +7,8 @@ import Product from "../Product";
 
 import "./index.css";
 import { Route, Routes, useLocation } from "react-router-dom";
-import Tabs from "../tabs";
-import Affiliate from "../AffiliateDashboard";
+import Tabs from "../Tabs";
+import Affiliate from "../Affiliate";
 const Sections = () => {
   const location = useLocation();
 

@@ -2,7 +2,7 @@ import GA from 'react-ga';
 import { MdEmail, MdChat } from "react-icons/md";
 import { SiTelegram, SiDiscord } from "react-icons/si";
 import useUser from "../../hooks/useUser";
-import Referal from '../referalblock';
+import Referal from '../Referal';
 
 import "./index.css";
 

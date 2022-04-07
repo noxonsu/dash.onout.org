@@ -11,11 +11,14 @@
   .referalTextBlock{
     margin-left: 2rem;
   }
-  .referalText{
+  .referalText,.referaladdress{
     margin: 0.4rem;
     font-size: 1.1rem;
     margin-left: 0;
     white-space: pre-line
+  }
+  .referaladdress{
+    word-break: break-word;
   }
   .copyLink{
     margin-left: 0.4rem;
@@ -41,21 +44,12 @@
     max-width: 100%;
     width: 80%;
   }
-  .referalText, .linkAffiliale{
+  .referalText, .referaladdress, .linkAffiliale{
     font-size: 1rem;
   }
 }
-@media (max-width: 700px){
-  .defauld{
-    display: none;
-  }
-  .wigth600{
-    display: block;
-    margin-bottom: 0;
-  }
-}
 @media (max-width: 500px){
-  .referalText, .linkAffiliale{
+  .referalText, .referaladdress, .linkAffiliale{
     font-size: 0.8rem;
   }
 }
