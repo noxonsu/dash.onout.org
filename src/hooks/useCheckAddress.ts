@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "../helpers/axios";
 import { getLocal, saveLocal } from "../helpers/storage";
+import { ONE_MONTH, SUBSCRIPTION_POSTFIX_KEY } from "../constants";
 
-const SUBSCRIPTION_POSTFIX_KEY = "::subscriptionCheckingDate";
-const ONE_DAY = 86400000; // in milliseconds
 
 export const useCheckAddress = (address: string) => {
   const [isCheckLoading, setIsCheckLoading] = useState(false);
@@ -27,7 +26,7 @@ export const useCheckAddress = (address: string) => {
 
         saveLocal({
           key: `${address}${SUBSCRIPTION_POSTFIX_KEY}`,
-          value: _isSubscribed && (Date.now() + ONE_DAY).toString()
+          value: _isSubscribed && (Date.now() + ONE_MONTH).toString()
         });
       } catch (err) {
         console.error(`Error: Can't check subscription. Description: ${err}`);
