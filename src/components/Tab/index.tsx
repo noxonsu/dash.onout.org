@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 import "./index.css";
 
-const Tabs = ({ newView }: any) => {
+const Tab = ({ newView }: any) => {
   const { account } = useContext(Web3ConnecStateContext);
   const { state, dispatch } = useUser();
   const { signed, subscribed, view, products } = state;
@@ -99,4 +99,4 @@ const Tabs = ({ newView }: any) => {
   );
 };
 
-export default Tabs;
+export default Tab;
