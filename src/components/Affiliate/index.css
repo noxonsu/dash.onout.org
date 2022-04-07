@@ -1,0 +1,51 @@
+.affiliate{
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 1.4rem;
+    border-radius: 1.2rem;
+    background-color: var(--card-color);
+}
+.referals,.swapTokens{
+    font-weight: 700;
+    color: #fff;
+}
+.affiliateContentText{
+    margin-bottom: 2rem;
+}
+.affiliateAddress{
+    cursor: pointer;
+    color: #fff;
+    word-break: break-word;
+}
+.affiliateAddress:hover{
+color: inherit;
+}
+.faq{
+    margin-bottom: 1.4rem;
+}
+.faq:last-child{
+    margin-bottom: 0;
+}
+.faqText{
+    margin-top: 0.2rem;
+    margin-bottom: 0;
+}
+.faqText, .affiliateLink{
+    font-size: 1.2rem;
+}
+.affiliateLink{
+    text-decoration: none;
+    color: var(--link-color);
+    word-break: break-word;
+}
+.fagSpan{
+    font-weight: 700;
+    color: #fff;
+}
+
+@media screen and (max-width: 840px){
+    .affiliate {
+      max-width: 100%;
+      width: 80%;
+    }
+}

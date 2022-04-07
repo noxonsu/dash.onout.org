@@ -7,6 +7,7 @@ import {
   CONTRACT_ADDRESS_POLYGON,
   NETWORKS,
   FIAT_TICKER,
+  EVM_ADDRESS_REGEXP
 } from "../../constants";
 import { send } from "../../helpers/transaction";
 import { sendMessage, STATUS } from "../../helpers/feedback";
@@ -15,22 +16,22 @@ import { getPrice } from "../../helpers/currency";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
-import Modal from "../Modal";
+import Modal from "../Modal"
 
 import "./index.css";
 
 type ProductProps = {
   id: string;
-  networkPolygon: any;
-  setNetworkPolygon: any;
 };
 
-const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
+const Product = ({id}:ProductProps) => {
   const { account, isWeb3Loading } = useContext(Web3ConnecStateContext);
   const [paymentPending, setPaymentPending] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [paidFor, setPaidFor] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [fooActive, setFooActive] = useState(false);
+  const [promoAddress, setPromoAddress] = useState("");
   const { dispatch, state } = useUser();
   const { products, signed } = state;
   const { name, promoPageLink, description, price: USDPrice } = PRODUCTS[id];
@@ -72,7 +73,7 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
     });
   };
 
-  const getPaymentParameters = async (networkId: number) => {
+  const getPaymentParameters = async (networkId: number, promocode: string) => {
     if (!PAYMENT_ADDRESS || !USDPrice) return;
     //@ts-ignore
     const assetId = NETWORKS[networkId].currency.id;
@@ -87,14 +88,23 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
         DECIMAL_PLACES: 18,
       });
 
-      if (networkId === 137) {
+      if (networkId === 137 && promocode !== '') {
+        return {
+          provider: account.provider,
+          from: account.address,
+          to: PAYMENT_ADDRESS,
+          amount: new BigNumber(USDPrice > 100 ? USDPrice - 50 : USDPrice).div(data[assetId]?.usd).toNumber(),
+          contractAddress: CONTRACT_ADDRESS_POLYGON,
+          promocode: promocode,
+        };
+      } else if(networkId === 137) {
         return {
           provider: account.provider,
           from: account.address,
           to: PAYMENT_ADDRESS,
           amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
           contractAddress: CONTRACT_ADDRESS_POLYGON,
-        };
+        }
       } else {
         return {
           provider: account.provider,
@@ -123,7 +133,7 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
       return setPaymentPending(false);
     }
 
-    const params = await getPaymentParameters(networkId);
+    const params = await getPaymentParameters(networkId, promoAddress);
 
     if (params) {
       try {
@@ -177,7 +187,6 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
         method: "wallet_switchEthereumChain",
         params: [{ chainId: "0x89" }],
       });
-      setNetworkPolygon(true);
     } catch (err) {
       console.log("error");
     }
@@ -196,6 +205,20 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
         !account.wrongNetwork
     );
   }, [paymentPending, paidFor, signed, isWeb3Loading, account, USDPrice]);
+
+  const promoFormHandle = (e: any) => {
+    e.preventDefault();
+    payForProduct();
+    GA.event({
+      category: id,
+      action: 'Press on the "Buy" button',
+    });
+    sendFeedback({
+      networkId: account?.networkId,
+      prefix: "START payment",
+      status: STATUS.attention,
+    });
+  }
 
   return (
     <div className="product">
@@ -255,61 +278,81 @@ const Product = ({ id, networkPolygon, setNetworkPolygon }: ProductProps) => {
       )}
 
       {description && <p>{description}</p>}
-      {paidFor ? (
-        <p>You already have this product</p>
-      ) : (
-        <p className="warning">
-          Do not leave this page until successful payment. If you have any
-          problems with the payment, please contact us.
-        </p>
+      {paidFor && <p>You already have this product</p>}
+      {paymentPending && (
+        <>
+          <p className="warning">
+            Do not leave this page until successful payment. If you have any
+            problems with the payment, please contact us.
+          </p>
+          <p className="notice">The price may vary slightly</p>
+        </>
       )}
-      <p className="notice">The price may vary slightly</p>
 
       {errorMessage && <p className="error">Error: {errorMessage}</p>}
+      
 
-      <button
-        onClick={() => {
-          payForProduct();
-          GA.event({
-            category: id,
-            action: 'Press on the "Buy" button',
-          });
-          sendFeedback({
-            networkId: account?.networkId,
-            prefix: "START payment",
-            status: STATUS.attention,
-          });
-        }}
-        className={`primaryBtn paymentBtn ${paymentPending ? "pending" : ""}`}
-        disabled={!paymentAvailable}
-      >
-        {paymentPending
-          ? "Pending"
-          : USDPrice
-          ? `Buy for $${USDPrice}`
-          : "Not available"}
-      </button>
-
+      <form className="pomoCodeForm" onSubmit={promoFormHandle} >
+        {!paidFor && (
+          <label
+            className={`promoCodeText ${fooActive ? "active" : ""}`}
+            onClick={() => {
+              setFooActive(true);
+            }}
+          >
+            I have a promo code
+            {account.networkId === 137 ? (
+              <input
+                className={`promoCodeInput ${fooActive ? "active" : ""}`}
+                onChange={(e) => setPromoAddress(e.target.value)}
+                type="text"
+                placeholder="Enter promo code to get $50 discount"
+                autoFocus
+              />
+            ) : (
+              <span className={`linkToNetworkPolygon ${fooActive ? "active" : ""}`}>
+                To use the promocode pay on{" "}
+                <span
+                  className={`notesSpan ${account.networkId === 137 ? "active" : ""}`}
+                  onClick={changeNetworks}
+                >
+                  Polygon
+                </span>
+              </span>
+            )}
+          </label>
+        )}
+        <button
+          className={`primaryBtn paymentBtn ${paymentPending ? "pending" : ""}`}
+          disabled={!paymentAvailable || promoAddress !== '' && !promoAddress.match(EVM_ADDRESS_REGEXP)}
+        >
+          {paymentPending
+            ? "Pending"
+            : USDPrice
+            ? `Buy for $${USDPrice}`
+            : "Not available"}
+        </button>
+      </form>
       <p className="polygonNotice">
-        Use{" "}
-        <span
-          className={`notesSpan ${networkPolygon ? "active" : ""}`}
-          onClick={changeNetworks}
-        >
-          {" "}
-          Polygon
-        </span>{" "}
-        to get 50 SWAP tokens as bonus. You can trade your currency for MATIC
-        using this bridge:{" "}
-        <a
-          className="link"
-          target="_blank"
-          rel="noreferrer"
-          href="https://app.debridge.finance/"
-        >
-          app.debridge.finance
-        </a>
-      </p>
+      Use{" "}
+      <span
+        className={`notesSpan ${account.networkId === 137 ? "active" : ""}`}
+        onClick={changeNetworks}
+      >
+        {" "}
+        Polygon
+      </span>{" "}
+      to get 50 SWAP tokens as bonus. You can trade your currency for MATIC
+      using this bridge:{" "}
+      <a
+        className="link"
+        target="_blank"
+        rel="noreferrer"
+        href="https://app.debridge.finance/"
+      >
+        app.debridge.finance
+      </a>
+    </p>
     </div>
   );
 };

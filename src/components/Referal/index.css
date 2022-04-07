@@ -1,0 +1,55 @@
+.referalInfo{
+    margin: 0 auto 2rem;
+    max-width: 40rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .referalIcon{
+      color: #999;
+  }
+  .referalTextBlock{
+    margin-left: 2rem;
+  }
+  .referalText,.referaladdress{
+    margin: 0.4rem;
+    font-size: 1.1rem;
+    margin-left: 0;
+    white-space: pre-line
+  }
+  .referaladdress{
+    word-break: break-word;
+  }
+  .copyLink{
+    margin-left: 0.4rem;
+    color: var(--link-color);
+    cursor: pointer;
+  }
+  .copyLink:active{
+    color: var(--color-notice);
+  }
+  .linkAffiliale{
+    color: var(--link-color);
+    text-decoration: none;
+  }
+  .wigth600{
+    display: none;
+  }
+
+@media (max-width: 840px){
+  .referalTextBlock{
+    margin-left: 1rem;
+  }
+  .referalInfo {
+    max-width: 100%;
+    width: 80%;
+  }
+  .referalText, .referaladdress, .linkAffiliale{
+    font-size: 1rem;
+  }
+}
+@media (max-width: 500px){
+  .referalText, .referaladdress, .linkAffiliale{
+    font-size: 0.8rem;
+  }
+}
