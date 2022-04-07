@@ -5,7 +5,7 @@ import useUser from "../../hooks/useUser";
 import ProductList from "../ProductList";
 import UserProducts from "../UserProducts";
 import Product from "../Product";
-import Tabs from "../Tabs";
+import Tabs from "../Tabs"
 import Affiliate from "../Affiliate";
 
 import "./index.css";
