@@ -33,6 +33,9 @@ const ACCOUNTS: { [key: string]: string[] } = {
     "daofactory",
     "nftmarketplace",
   ],
+  "0x242235b89475407e1475CB4D411D67aaC665279d": [
+    "farmfactory",
+  ],
 };
 
 const UserProducts = () => {

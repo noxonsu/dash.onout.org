@@ -19,7 +19,28 @@ export const ONE_DAY = 86400000; // in milliseconds
 export const ONE_MONTH = ONE_DAY * 30;
 
 // https://docs.google.com/spreadsheets/d/1wTTuxXt8n9q7C4NDXqQpI3wpKu1_5bGVmP9Xz0XGSyU/edit#gid=0
-export const NETWORKS = {
+
+export enum SupportedChainId {
+  MAINNET = 1,
+  BINANCE_SMART_CHAIN = 56,
+  POLYGON = 137,
+}
+
+export interface Network {
+  id: number;
+  name: string;
+  currency: {
+    id: string;
+  };
+  tokens: {
+    [key: string]: {
+      address: string;
+      id: string;
+    };
+  };
+}
+
+export const NETWORKS: { [key in SupportedChainId]: Network } = {
   // 4: {
   //   id: 1,
   //   name: "Rinkeby",
@@ -33,7 +54,7 @@ export const NETWORKS = {
   //     },
   //   },
   // },
-  1: {
+  [SupportedChainId.MAINNET]: {
     id: 1,
     name: "Ethereum",
     currency: {
@@ -46,7 +67,7 @@ export const NETWORKS = {
       },
     },
   },
-  56: {
+  [SupportedChainId.BINANCE_SMART_CHAIN]: {
     id: 56,
     name: "BSC",
     currency: {
@@ -59,7 +80,7 @@ export const NETWORKS = {
       },
     },
   },
-  137: {
+  [SupportedChainId.POLYGON]: {
     id: 137,
     name: "Polygon",
     currency: {

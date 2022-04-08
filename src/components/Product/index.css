@@ -44,8 +44,8 @@
 
 
 .promoCodeInput{
-  margin-top: 15px;
-  margin: 20px 0;
+  margin-bottom: 0.6rem;
+  width: 95%;
   padding: 5px 10px;
   border-radius: 10px;
   outline: none;
@@ -54,7 +54,7 @@
   cursor: text;
   font-size: 20px;
   display: none;
-} 
+}
 
 .promoCodeInput:focus{
   border: 1px solid var(--transparent-light-1);
@@ -67,15 +67,15 @@
   caret-color: transparent;
 }
 .promoCodeText {
-  margin: 20px 0;
-  width: 100%;
+  margin-top: 1.6rem;
+  margin-bottom: 0.6rem;
   display: flex;
   flex-direction: column;
   color: var(--link-color);
   transition: .3s;
 }
 .linkToNetworkPolygon{
-  margin-top: 15px;
+  margin-bottom: 0.6rem;
   color: var(--color);
   display: none;
 }

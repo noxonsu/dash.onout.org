@@ -4,7 +4,7 @@ import { utils } from "ethers";
 import Web3 from "web3";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import { NETWORKS } from "../../constants";
+import { NETWORKS, SupportedChainId } from "../../constants";
 import useUser from "../../hooks/useUser";
 import { UserActions } from "../UserProvider";
 
@@ -16,6 +16,7 @@ type Web3ConnectState = {
   connected: boolean;
   provider: any | null;
   networkId: number | undefined;
+  isPolygonNetwork: boolean;
   wrongNetwork: boolean;
   address: string;
   balance: string;
@@ -26,6 +27,7 @@ const initialWeb3ConnectState: Web3ConnectState = {
   provider: null,
   networkId: undefined,
   wrongNetwork: false,
+  isPolygonNetwork: false,
   address: "",
   balance: utils.formatEther(0),
 };
@@ -69,17 +71,17 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
     async function setAccountFromProvider() {
       setIsWeb3Loading(true);
       try {
-        const accaunts = await provider.eth.getAccounts();
-        const balance = await provider.eth.getBalance(accaunts[0]);
-        const networkId = await provider.eth.net.getId();
+        const accounts = await provider.eth.getAccounts();
+        const balance = await provider.eth.getBalance(accounts[0]);
+        const networkId = await provider.eth.net.getId() as SupportedChainId;
 
         setAccount({
           connected: true,
           provider,
           networkId,
-          //@ts-ignore
           wrongNetwork: !NETWORKS[networkId],
-          address: accaunts[0],
+          isPolygonNetwork: networkId === SupportedChainId.POLYGON,
+          address: accounts[0],
           balance: utils.formatEther(balance),
         });
       } catch (error) {
@@ -113,11 +115,12 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
       disconnect();
     });
 
-    web3ModalProvider.on("chainChanged", (chainId: number) => {
+    web3ModalProvider.on("chainChanged", (chainId: string) => {
+      const networkId = parseInt(chainId) as SupportedChainId;
       setAccount((prevState) => ({
         ...prevState,
-        //@ts-ignore
-        wrongNetwork: !NETWORKS[Number(chainId)],
+        wrongNetwork: !NETWORKS[networkId],
+        isPolygonNetwork: networkId === SupportedChainId.POLYGON,
       }));
     });
 
