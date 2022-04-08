@@ -17,6 +17,7 @@ type Web3ConnectState = {
   provider: any | null;
   networkId: number | undefined;
   isPolygonNetwork: boolean;
+  isBSCNetwork: boolean;
   wrongNetwork: boolean;
   address: string;
   balance: string;
@@ -28,6 +29,7 @@ const initialWeb3ConnectState: Web3ConnectState = {
   networkId: undefined,
   wrongNetwork: false,
   isPolygonNetwork: false,
+  isBSCNetwork: false,
   address: "",
   balance: utils.formatEther(0),
 };
@@ -81,6 +83,7 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
           networkId,
           wrongNetwork: !NETWORKS[networkId],
           isPolygonNetwork: networkId === SupportedChainId.POLYGON,
+          isBSCNetwork: networkId === SupportedChainId.BINANCE_SMART_CHAIN,
           address: accounts[0],
           balance: utils.formatEther(balance),
         });
@@ -121,6 +124,7 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
         ...prevState,
         wrongNetwork: !NETWORKS[networkId],
         isPolygonNetwork: networkId === SupportedChainId.POLYGON,
+        isBSCNetwork: networkId === SupportedChainId.BINANCE_SMART_CHAIN,
       }));
     });
 

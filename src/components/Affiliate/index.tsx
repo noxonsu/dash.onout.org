@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from "react";
-import ERC20_ABI from "../../constants/erc20abi.json";
+import ERC20_ABI from "../../constants/abiPolygon.json";
+import ERC20_ABI_BSC from "../../constants/abiBSC.json";
 import { CONTRACT_ADDRESS_POLYGON } from "../../constants";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 
