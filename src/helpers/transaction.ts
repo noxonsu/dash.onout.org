@@ -1,6 +1,8 @@
 import { utils } from "ethers";
-import ERC20_ABI from "../constants/erc20abi.json";
-import { CONTRACT_ADDRESS_POLYGON } from "../constants";
+import ERC20_ABI from "../constants/abiPolygon.json";
+import ERC20_ABI_BSC from "../constants/abiBSC.json";
+import { CONTRACT_ADDRESS_POLYGON, CONTRACT_ADDRESS_BSC } from "../constants";
+
 
 type TxParameters = {
   provider: any;
@@ -9,6 +11,7 @@ type TxParameters = {
   amount: number;
   contractAddress?: string;
   promocode?: string;
+  productId?: Number;
   onHash?: (hash: string) => void;
   data?: any;
 };
@@ -16,28 +19,51 @@ type TxParameters = {
 // Cashback Token Address
 const erc20addressOfCashbackToken =
   "0x654496319F438A59FEE9557940393cf818753ee9";
+const addressOfCashbackTokenBSC = 
+  "0x92648e4537CdFa1EE743A244465a31AA034B1ce8";
 
-const importToken = async () => {
+const importToken = async (contractAddress:any) => {
+
   const tokenSymbol = "SWAP";
   const tokenDecimals = 18;
   const tokenImage =
     "https://swaponline.github.io/images/logo-colored_24a13c.svg";
 
-  try {
-    await window.ethereum.request({
-      method: "wallet_watchAsset",
-      params: {
-        type: "ERC20",
-        options: {
-          address: erc20addressOfCashbackToken,
-          symbol: tokenSymbol,
-          decimals: tokenDecimals,
-          image: tokenImage,
+  if (CONTRACT_ADDRESS_POLYGON === contractAddress) {
+    
+    try {
+      await window.ethereum.request({
+        method: "wallet_watchAsset",
+        params: {
+          type: "ERC20",
+          options: {
+            address: erc20addressOfCashbackToken,
+            symbol: tokenSymbol,
+            decimals: tokenDecimals,
+            image: tokenImage,
+          },
         },
-      },
-    });
-  } catch (error) {
-    console.log(error);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  } else if (CONTRACT_ADDRESS_BSC === contractAddress){
+    try {
+      await window.ethereum.request({
+        method: "wallet_watchAsset",
+        params: {
+          type: "ERC20",
+          options: {
+            address: addressOfCashbackTokenBSC,
+            symbol: tokenSymbol,
+            decimals: tokenDecimals,
+            image: tokenImage,
+          },
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
 
@@ -48,19 +74,27 @@ const sendToken = async ({
   amount,
   contractAddress,
   promocode,
+  productId
 }: TxParameters & {
   contractAddress: string;
 }) => {
   try {
-    const contract = new provider.eth.Contract(ERC20_ABI, contractAddress, {
-      from,
-    });
-    const decimals = await contract.methods.decimals().call();
-    const unitAmount = utils.parseUnits(String(amount), decimals);
+    let contract;
+    if(contractAddress === CONTRACT_ADDRESS_BSC) {
+      contract = new provider.eth.Contract(ERC20_ABI_BSC, contractAddress, {
+        from,
+      });
+    } else {
+      contract = new provider.eth.Contract(ERC20_ABI, contractAddress, {
+        from,
+      });
+    }
+    // const decimals = await contract.methods.decimals().call();
+    const unitAmount = utils.parseUnits(String(amount), 18);
 
     if (contractAddress === CONTRACT_ADDRESS_POLYGON && promocode !== undefined) {
       if(promocode !== from) {
-        importToken();
+        importToken(contractAddress);
         return await contract.methods
         .transferPromoErc20(erc20addressOfCashbackToken, from, promocode)
         .send({
@@ -74,10 +108,34 @@ const sendToken = async ({
         console.groupEnd();
         throw error;
       }
+    } else if (contractAddress === CONTRACT_ADDRESS_BSC && promocode !== undefined) {
+      if(promocode !== from) {
+        importToken(contractAddress);
+        return await contract.methods
+        .transferPromoErc20(addressOfCashbackTokenBSC, from, promocode, productId)
+        .send({
+          from,
+          value: unitAmount,
+        });
+      } else{
+        const error = 'wrong promocode code';
+        console.group("%c send token", "color: red;");
+        console.error(error);
+        console.groupEnd();
+        throw error;
+      }
     } else if (contractAddress === CONTRACT_ADDRESS_POLYGON) {
-      importToken();
+      importToken(contractAddress);
       return await contract.methods
         .transferErc20(erc20addressOfCashbackToken, from)
+        .send({
+          from,
+          value: unitAmount,
+        });
+    } else if (contractAddress === CONTRACT_ADDRESS_BSC) {
+      importToken(contractAddress);
+      return await contract.methods
+        .transferErc20(addressOfCashbackTokenBSC, from, productId)
         .send({
           from,
           value: unitAmount,
@@ -102,6 +160,7 @@ export const send = async ({
   amount,
   contractAddress,
   promocode,
+  productId,
   onHash,
   data,
 }: TxParameters) => {
@@ -120,6 +179,7 @@ export const send = async ({
       amount,
       contractAddress,
       promocode,
+      productId,
     });
   }
 

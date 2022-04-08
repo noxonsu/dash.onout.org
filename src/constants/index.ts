@@ -3,6 +3,7 @@ import { COVERS } from "../assets";
 export const FEEDBACK_URL = "https://noxon.wpmix.net/counter.php";
 export const PAYMENT_ADDRESS = "0x3B85D38c3A7AEabABA8B7DEb7a73177688270abC";
 export const CONTRACT_ADDRESS_POLYGON = '0x71945dE28746455B651Aab1EE84Ce06e03a90bCD';
+export const CONTRACT_ADDRESS_BSC = '0x098844e1362c1D7346184045c155DF3c99A98700';
 export const EVM_ADDRESS_REGEXP = /^0x[A-Fa-f0-9]{40}$/;
 
 // 50 calls per minute
@@ -97,6 +98,7 @@ export const NETWORKS: { [key in SupportedChainId]: Network } = {
 
 export interface Product {
   id: string;
+  productId: Number;
   name: string;
   status: string;
   demo: string;
@@ -116,6 +118,7 @@ export interface Product {
 export const PRODUCTS: { [id: string]: Product } = {
   crosschain: {
     id: "crosschain",
+    productId: 1,
     name: "CROSS-CHAIN exchange",
     status: "development",
     demo: "",
@@ -134,6 +137,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   },
   multicurrencywallet: {
     id: "multicurrencywallet",
+    productId: 2,
     name: "MCW (Wallet + Exchange)",
     status: "ready",
     demo: "wallet.wpmix.net",
@@ -153,6 +157,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   },
   definance: {
     id: "definance",
+    productId: 3,
     name: "DeFinance (DEX)",
     status: "ready",
     demo: "definance.wpmix.net",
@@ -172,6 +177,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   },
   farmfactory: {
     id: "farmfactory",
+    productId: 4,
     name: "FarmFactory",
     status: "ready",
     demo: "farm.wpmix.net",
@@ -189,6 +195,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   },
   daofactory: {
     id: "daofactory",
+    productId: 5,
     name: "DaoFactory",
     status: "ready",
     demo: "dao.wpmix.net",
@@ -206,6 +213,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   },
   lotteryfactory: {
     id: "lotteryfactory",
+    productId: 6,
     name: "LotteryFactory",
     status: "ready",
     howToEarn: "0 - 30% from selling tickets",
@@ -223,6 +231,7 @@ export const PRODUCTS: { [id: string]: Product } = {
   },
   nftmarketplace: {
     id: "nftmarketplace",
+    productId: 7,
     name: "NFT Marketplace",
     status: "ready",
     howToEarn: "",

@@ -8,6 +8,7 @@ import {
   NETWORKS,
   FIAT_TICKER,
   EVM_ADDRESS_REGEXP,
+  CONTRACT_ADDRESS_BSC,
 } from "../../constants";
 import { send } from "../../helpers/transaction";
 import { sendMessage, STATUS } from "../../helpers/feedback";
@@ -25,7 +26,7 @@ type ProductProps = {
 };
 
 const Product = ({id}:ProductProps) => {
-  const { account, account: { isPolygonNetwork }, isWeb3Loading } = useContext(Web3ConnecStateContext);
+  const { account, account: { isPolygonNetwork, isBSCNetwork }, isWeb3Loading } = useContext(Web3ConnecStateContext); 
 
   const { dispatch, state } = useUser();
   const { products, signed } = state;
@@ -39,7 +40,7 @@ const Product = ({id}:ProductProps) => {
   const [wantToEnterPromoCode, setWantToEnterPromoCode] = useState(false);
   const [promoAddress, setPromoAddress] = useState("");
 
-  const { name, promoPageLink, description, price: USDPrice } = PRODUCTS[id];
+  const { productId, name, promoPageLink, description, price: USDPrice } = PRODUCTS[id];
 
   useEffect(() => {
     const inProducts =
@@ -87,7 +88,7 @@ const Product = ({id}:ProductProps) => {
       vsCurrency: FIAT_TICKER.toLowerCase(),
     });
 
-    const { provider, address: userAddress, isPolygonNetwork } = account;
+    const { provider, address: userAddress, isPolygonNetwork, isBSCNetwork } = account;
 
     if (data) {
       BigNumber.config({
@@ -104,6 +105,16 @@ const Product = ({id}:ProductProps) => {
           contractAddress: CONTRACT_ADDRESS_POLYGON,
           promocode,
         };
+      } else if (isBSCNetwork && promocode?.match(EVM_ADDRESS_REGEXP)) {
+        return {
+          provider,
+          from: userAddress,
+          to: PAYMENT_ADDRESS,
+          amount: new BigNumber(USDPrice > 100 ? USDPrice - 50 : USDPrice).div(data[assetId]?.usd).toNumber(),
+          contractAddress: CONTRACT_ADDRESS_BSC,
+          promocode,
+          productId,
+        };
       } else if (isPolygonNetwork) {
         return {
           provider,
@@ -111,6 +122,15 @@ const Product = ({id}:ProductProps) => {
           to: PAYMENT_ADDRESS,
           amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
           contractAddress: CONTRACT_ADDRESS_POLYGON,
+        }
+      } else if (isBSCNetwork) {
+        return {
+          provider,
+          from: userAddress,
+          to: PAYMENT_ADDRESS,
+          amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
+          contractAddress: CONTRACT_ADDRESS_BSC,
+          productId,
         }
       } else {
         return {
@@ -193,6 +213,16 @@ const Product = ({id}:ProductProps) => {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
         params: [{ chainId: "0x89" }],
+      });
+    } catch (err) {
+      console.log("error");
+    }
+  };
+  const switchOnBSCNetwork = async () => {
+    try {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x38" }],
       });
     } catch (err) {
       console.log("error");
@@ -308,7 +338,7 @@ const Product = ({id}:ProductProps) => {
             >
               {!wantToEnterPromoCode ? "I have a promo code" : "I have not a propo code"}
             </span>
-            {isPolygonNetwork ? (
+            {isPolygonNetwork || isBSCNetwork ? (
               <input
                 className={`promoCodeInput ${wantToEnterPromoCode ? "active" : ""}`}
                 onChange={(e) => setPromoAddress(e.target.value)}
@@ -324,6 +354,13 @@ const Product = ({id}:ProductProps) => {
                   onClick={switchOnPolygonNetwork}
                 >
                   Polygon
+                </span>
+                {" "}or{" "}
+                <span
+                  className={`notesSpan ${isBSCNetwork ? "active" : ""}`}
+                  onClick={switchOnBSCNetwork}
+                >
+                  BSC
                 </span>
               </span>
             )}
@@ -348,17 +385,15 @@ const Product = ({id}:ProductProps) => {
       >
         {" "}
         Polygon
-      </span>{" "}
-      to get 50 SWAP tokens as bonus. You can trade your currency for MATIC
-      using this bridge:{" "}
-      <a
-        className="link"
-        target="_blank"
-        rel="noreferrer"
-        href="https://app.debridge.finance/"
+      </span>
+      {" "}or{" "}
+      <span
+        className={`notesSpan ${isBSCNetwork ? "active" : ""}`}
+        onClick={switchOnBSCNetwork}
       >
-        app.debridge.finance
-      </a>
+        BSC
+      </span>{" "}
+      to get 50 SWAP tokens as bonus.
     </p>
     </div>
   );
