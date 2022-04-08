@@ -393,16 +393,7 @@ const Product = ({id}:ProductProps) => {
       >
         BSC
       </span>{" "}
-      to get 50 SWAP tokens as bonus. You can trade your currency for MATIC
-      using this bridge:{" "}
-      <a
-        className="link"
-        target="_blank"
-        rel="noreferrer"
-        href="https://app.debridge.finance/"
-      >
-        app.debridge.finance
-      </a>
+      to get 50 SWAP tokens as bonus.
     </p>
     </div>
   );
