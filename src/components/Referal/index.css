@@ -11,13 +11,13 @@
 .referalTextBlock{
   margin-left: 2rem;
 }
-.referalText,.referaladdress{
+.referalText,.referalAddress{
   margin: 0.4rem;
   font-size: 1.1rem;
   margin-left: 0;
   white-space: pre-line
 }
-.referaladdress{
+.referalAddress{
   word-break: break-word;
 }
 .copyLink{
@@ -44,12 +44,12 @@
     max-width: 100%;
     width: 80%;
   }
-  .referalText, .referaladdress, .linkAffiliale{
+  .referalText, .referalAddress, .linkAffiliale{
     font-size: 1rem;
   }
 }
 @media (max-width: 500px){
-  .referalText, .referaladdress, .linkAffiliale{
+  .referalText, .referalAddress, .linkAffiliale{
     font-size: 0.8rem;
   }
 }

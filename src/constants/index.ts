@@ -234,6 +234,6 @@ export const PRODUCTS: { [id: string]: Product } = {
     promoPageLink: "https://tools.onout.org/nft/",
     docsLink: "",
     lables: [],
-    price: 0.01,
+    price: 500,
   },
 };
