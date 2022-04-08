@@ -7,7 +7,7 @@ import {
   CONTRACT_ADDRESS_POLYGON,
   NETWORKS,
   FIAT_TICKER,
-  EVM_ADDRESS_REGEXP
+  EVM_ADDRESS_REGEXP,
 } from "../../constants";
 import { send } from "../../helpers/transaction";
 import { sendMessage, STATUS } from "../../helpers/feedback";
@@ -25,15 +25,20 @@ type ProductProps = {
 };
 
 const Product = ({id}:ProductProps) => {
-  const { account, isWeb3Loading } = useContext(Web3ConnecStateContext);
-  const [paymentPending, setPaymentPending] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [paidFor, setPaidFor] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [fooActive, setFooActive] = useState(false);
-  const [promoAddress, setPromoAddress] = useState("");
+  const { account, account: { isPolygonNetwork }, isWeb3Loading } = useContext(Web3ConnecStateContext);
+
   const { dispatch, state } = useUser();
   const { products, signed } = state;
+
+  const [paymentPending, setPaymentPending] = useState(false);
+  const [paidFor, setPaidFor] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const [wantToEnterPromoCode, setWantToEnterPromoCode] = useState(false);
+  const [promoAddress, setPromoAddress] = useState("");
+
   const { name, promoPageLink, description, price: USDPrice } = PRODUCTS[id];
 
   useEffect(() => {
@@ -82,33 +87,35 @@ const Product = ({id}:ProductProps) => {
       vsCurrency: FIAT_TICKER.toLowerCase(),
     });
 
+    const { provider, address: userAddress, isPolygonNetwork } = account;
+
     if (data) {
       BigNumber.config({
         ROUNDING_MODE: BigNumber.ROUND_HALF_EVEN,
         DECIMAL_PLACES: 18,
       });
 
-      if (networkId === 137 && promocode !== '') {
+      if (isPolygonNetwork && promocode?.match(EVM_ADDRESS_REGEXP)) {
         return {
-          provider: account.provider,
-          from: account.address,
+          provider,
+          from: userAddress,
           to: PAYMENT_ADDRESS,
           amount: new BigNumber(USDPrice > 100 ? USDPrice - 50 : USDPrice).div(data[assetId]?.usd).toNumber(),
           contractAddress: CONTRACT_ADDRESS_POLYGON,
-          promocode: promocode,
+          promocode,
         };
-      } else if(networkId === 137) {
+      } else if (isPolygonNetwork) {
         return {
-          provider: account.provider,
-          from: account.address,
+          provider,
+          from: userAddress,
           to: PAYMENT_ADDRESS,
           amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
           contractAddress: CONTRACT_ADDRESS_POLYGON,
         }
       } else {
         return {
-          provider: account.provider,
-          from: account.address,
+          provider: provider,
+          from: userAddress,
           to: PAYMENT_ADDRESS,
           amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
           // tokenAddress: "",
@@ -181,7 +188,7 @@ const Product = ({id}:ProductProps) => {
     setPaymentPending(false);
   };
 
-  const changeNetworks = async () => {
+  const switchOnPolygonNetwork = async () => {
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
@@ -206,8 +213,7 @@ const Product = ({id}:ProductProps) => {
     );
   }, [paymentPending, paidFor, signed, isWeb3Loading, account, USDPrice]);
 
-  const promoFormHandle = (e: any) => {
-    e.preventDefault();
+  const promoFormHandle = () => {
     payForProduct();
     GA.event({
       category: id,
@@ -290,41 +296,42 @@ const Product = ({id}:ProductProps) => {
       )}
 
       {errorMessage && <p className="error">Error: {errorMessage}</p>}
-      
 
       <form className="pomoCodeForm" onSubmit={promoFormHandle} >
         {!paidFor && (
-          <label
-            className={`promoCodeText ${fooActive ? "active" : ""}`}
-            onClick={() => {
-              setFooActive(true);
-            }}
-          >
-            I have a promo code
-            {account.networkId === 137 ? (
+          <>
+            <span
+              className={`promoCodeText ${wantToEnterPromoCode ? "active" : ""}`}
+              onClick={() => {
+                setWantToEnterPromoCode(!wantToEnterPromoCode);
+              }}
+            >
+              {!wantToEnterPromoCode ? "I have a promo code" : "I have not a propo code"}
+            </span>
+            {isPolygonNetwork ? (
               <input
-                className={`promoCodeInput ${fooActive ? "active" : ""}`}
+                className={`promoCodeInput ${wantToEnterPromoCode ? "active" : ""}`}
                 onChange={(e) => setPromoAddress(e.target.value)}
                 type="text"
                 placeholder="Enter promo code to get $50 discount"
                 autoFocus
               />
             ) : (
-              <span className={`linkToNetworkPolygon ${fooActive ? "active" : ""}`}>
-                To use the promocode pay on{" "}
+              <span className={`linkToNetworkPolygon ${wantToEnterPromoCode ? "active" : ""}`}>
+                To use the promocode pay with{" "}
                 <span
-                  className={`notesSpan ${account.networkId === 137 ? "active" : ""}`}
-                  onClick={changeNetworks}
+                  className={`notesSpan ${isPolygonNetwork ? "active" : ""}`}
+                  onClick={switchOnPolygonNetwork}
                 >
                   Polygon
                 </span>
               </span>
             )}
-          </label>
+          </>
         )}
         <button
           className={`primaryBtn paymentBtn ${paymentPending ? "pending" : ""}`}
-          disabled={!paymentAvailable || promoAddress !== '' && !promoAddress.match(EVM_ADDRESS_REGEXP)}
+          disabled={!paymentAvailable}
         >
           {paymentPending
             ? "Pending"
@@ -336,8 +343,8 @@ const Product = ({id}:ProductProps) => {
       <p className="polygonNotice">
       Use{" "}
       <span
-        className={`notesSpan ${account.networkId === 137 ? "active" : ""}`}
-        onClick={changeNetworks}
+        className={`notesSpan ${isPolygonNetwork ? "active" : ""}`}
+        onClick={switchOnPolygonNetwork}
       >
         {" "}
         Polygon
