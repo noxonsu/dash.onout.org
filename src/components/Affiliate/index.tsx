@@ -64,8 +64,8 @@ const Affiliate = () => {
       </h3>
       <p className="affiliateInfo">
         Since April 2022 you have invited{" "}
-        <span className="referals">{!referal ? 6 : referal}</span> clients and
-        earn <span className="swapTokens">{!bonusToken ? 6 : bonusToken}</span>{" "}
+        <span className="referals">{!referal ? 0 : referal}</span> clients and
+        earn <span className="swapTokens">{!bonusToken ? 0 : bonusToken}</span>{" "}
         SWAP
       </p>
       <p className="affiliateContentText">
