@@ -2,7 +2,7 @@ import axios from "axios";
 import { FEEDBACK_URL } from "../constants";
 
 export enum STATUS {
-  danger,
+  danger = 1,
   success,
   warning,
   attention,
