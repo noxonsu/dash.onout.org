@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { PRODUCTS } from "../../constants";
 
-import IdeaList from '../IdeasList';
+import IdeaList from '../IdeaList';
 import ProductCard from './ProductCard';
 
 import "./index.css";

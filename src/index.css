@@ -119,6 +119,12 @@ button {
   opacity: 0.5;
 }
 
+.secondaryBtn:disabled,
+.primaryBtn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .primaryInput {
   padding: 0.5rem;
   border-radius: 0.4rem;
@@ -161,6 +167,11 @@ button {
 
 .pb-1 {
   padding-bottom: 1rem;
+}
+
+.defaultLink{
+  color: var(--link-color);
+  text-decoration: none;
 }
 
 @keyframes ellipsis {
