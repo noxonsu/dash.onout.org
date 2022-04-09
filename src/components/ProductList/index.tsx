@@ -21,8 +21,8 @@ const ProductList = () => {
   return (
     <section>
       <div className="products">
-        {Object.keys(PRODUCTS).map((id) => {
-          if(PRODUCTS[id].status === status) return <ProductCard id={id} />
+        {Object.keys(PRODUCTS).map((id, index) => {
+          if(PRODUCTS[id].status === status) return <ProductCard key={index} id={id} />
         })}
       </div>
       {status === 'development' && <IdeaList/>}
