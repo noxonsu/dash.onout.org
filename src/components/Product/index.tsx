@@ -243,7 +243,8 @@ const Product = ({id}:ProductProps) => {
     );
   }, [paymentPending, paidFor, signed, isWeb3Loading, account, USDPrice]);
 
-  const promoFormHandle = () => {
+  const promoFormHandle = (e:any) => {
+    e.preventDefault();
     payForProduct();
     GA.event({
       category: id,
