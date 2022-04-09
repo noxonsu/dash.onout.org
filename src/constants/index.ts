@@ -246,3 +246,32 @@ export const PRODUCTS: { [id: string]: Product } = {
     price: 500,
   },
 };
+
+
+export const IDEAS = [
+  {
+    id: 'launchpad',
+    name: 'A launchpad',
+    link: '',
+  },
+  {
+    id: 'iphoneapp',
+    name: 'iPhone App',
+    link: '',
+  },
+  {
+    id: 'apponsolana',
+    name: 'Something on Solana',
+    link: '',
+  },
+  {
+    id: 'gambling',
+    name: 'More gambling (dice etc)',
+    link: '',
+  },
+  {
+    id: 'other',
+    name: 'Other',
+    link: 'https://tools.onout.org/sponsor.md',
+  },
+];

@@ -1,0 +1,27 @@
+
+.ideasHeader {
+  max-width: 60rem;
+  margin: 0 auto;
+  width: 95%;
+}
+
+.ideaList {
+  max-width: 60rem;
+  margin: 0 auto;
+  width: 95%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1.2rem;
+}
+
+@media screen and (max-width: 840px) {
+  .ideaList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .ideaList {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
