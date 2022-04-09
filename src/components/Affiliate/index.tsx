@@ -1,13 +1,19 @@
 import { useContext, useState, useEffect } from "react";
 import ERC20_ABI from "../../constants/abiPolygon.json";
 import ERC20_ABI_BSC from "../../constants/abiBSC.json";
-import { CONTRACT_ADDRESS_POLYGON } from "../../constants";
+import {
+  CONTRACT_ADDRESS_BSC,
+  CONTRACT_ADDRESS_POLYGON,
+} from "../../constants";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 
 import "./index.css";
 
 const Affiliate = () => {
-  const { account } = useContext(Web3ConnecStateContext);
+  const {
+    account,
+    account: { isPolygonNetwork, isBSCNetwork },
+  } = useContext(Web3ConnecStateContext);
 
   const [bonusToken, setBonusToken] = useState();
   const [referal, setReferal] = useState();
@@ -17,13 +23,24 @@ const Affiliate = () => {
       try {
         const provider = account.provider;
         const from = account.address;
-        const contract = new provider.eth.Contract(
-          ERC20_ABI,
-          CONTRACT_ADDRESS_POLYGON,
-          {
-            from,
-          }
-        );
+        let contract;
+        if (isPolygonNetwork) {
+          contract = new provider.eth.Contract(
+            ERC20_ABI,
+            CONTRACT_ADDRESS_POLYGON,
+            {
+              from,
+            }
+          );
+        } else if (isBSCNetwork) {
+          contract = new provider.eth.Contract(
+            ERC20_ABI_BSC,
+            CONTRACT_ADDRESS_BSC,
+            {
+              from,
+            }
+          );
+        }
 
         await contract.methods
           .getReferalInfo(from)
@@ -65,7 +82,7 @@ const Affiliate = () => {
         put it on your website or just send it to your friends or other
         potentially interested parties; When someone enters your promocode when
         buying a product using BNB network you will receive SWAP tokens
-        immediately. You can use swap to earn BNB rewards at
+        immediately. You can use SWAP to earn BNB rewards at
         <a
           className="affiliateLink"
           href="https://farm.onout.org/"
