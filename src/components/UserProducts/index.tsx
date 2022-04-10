@@ -36,6 +36,9 @@ const ACCOUNTS: { [key: string]: string[] } = {
   "0x242235b89475407e1475CB4D411D67aaC665279d": [
     "farmfactory",
   ],
+  "0x8b7286808a50584ca3ac2a69ed0818c0c0619f19": [
+    "farmfactory",
+  ]
 };
 
 const UserProducts = () => {
