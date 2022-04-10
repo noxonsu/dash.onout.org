@@ -8,7 +8,7 @@ import Item from "./Item";
 import "./index.css";
 
 const ACCOUNTS: { [key: string]: string[] } = {
-  "0xCa8Ec694d12a3Eba9b5CDB535AfE975FB8418550": [
+  "0xca8ec694d12a3eba9b5cdb535afe975fb8418550": [
     "multicurrencywallet",
     "definance",
     "farmfactory",
@@ -16,16 +16,16 @@ const ACCOUNTS: { [key: string]: string[] } = {
     "lotteryfactory",
     "nftmarketplace",
   ],
-  "0x90FF57Fded0af7bE9196Df3623Cd587aD8E7D920": [
+  "0x90ff57fded0af7be9196df3623cd587ad8e7d920": [
     "multicurrencywallet",
     "definance",
     "farmfactory",
     "daofactory",
   ],
-  "0xa29Ac293edaa5eDf46f6af3C5b8885CF98bc5c8E": [
+  "0xa29ac293edaa5edf46f6af3c5b8885cf98bc5c8e": [
     "multicurrencywallet",
   ],
-  "0x2122EC95a2c2173DDD4f0Ecc79006A0FB9e1d588": [
+  "0x2122ec95a2c2173ddd4f0ecc79006a0fb9e1d588": [
     "crosschain",
     "multicurrencywallet",
     "definance",
@@ -33,7 +33,7 @@ const ACCOUNTS: { [key: string]: string[] } = {
     "daofactory",
     "nftmarketplace",
   ],
-  "0x242235b89475407e1475CB4D411D67aaC665279d": [
+  "0x242235b89475407e1475cb4d411d67aac665279d": [
     "farmfactory",
   ],
   "0x8b7286808a50584ca3ac2a69ed0818c0c0619f19": [
@@ -48,7 +48,7 @@ const UserProducts = () => {
   const { account } = useContext(Web3ConnecStateContext);
 
   const restorePurchases = () => {
-    ACCOUNTS[account.address]?.forEach((productId) => {
+    ACCOUNTS[account.address.toLowerCase()]?.forEach((productId) => {
       if (PRODUCTS[productId]) {
         dispatch({
           type: UserActions.paid,
@@ -107,7 +107,7 @@ const UserProducts = () => {
             ))}
           </div>
         </>
-      ) : ACCOUNTS[account?.address]?.length > 0 ? (
+      ) : ACCOUNTS[account?.address?.toLowerCase()]?.length > 0 ? (
         <>
           <p className="pb-1 textInfo flex-center full-width">
             Looks like your purchases are cleaned
