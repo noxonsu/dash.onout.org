@@ -15,8 +15,8 @@ const Affiliate = () => {
     account: { isPolygonNetwork, isBSCNetwork },
   } = useContext(Web3ConnecStateContext);
 
-  const [bonusToken, setBonusToken] = useState();
-  const [referal, setReferal] = useState();
+  const [bonusToken, setBonusToken] = useState(4);
+  const [referal, setReferal] = useState(3);
 
   useEffect(() => {
     const fetchReferalInfo = async () => {
@@ -40,23 +40,25 @@ const Affiliate = () => {
               from,
             }
           );
+        } else {
+          setBonusToken(0);
+          setReferal(0);
         }
 
-        await contract.methods
+        await contract?.methods
           .getReferalInfo(from)
           .call()
           .then((res: any) => {
             setBonusToken(res[1]);
             setReferal(res[2]);
           });
-      } catch (error) {
-        console.log(error);
+      } catch (e) {
+        console.error(e);
       }
     };
 
     fetchReferalInfo();
-  }, [account.address, account.provider]);
-
+  });
   return (
     <div className="affiliate">
       <h3 className="title">
@@ -64,8 +66,8 @@ const Affiliate = () => {
       </h3>
       <p className="affiliateInfo">
         Since April 2022 you have invited{" "}
-        <span className="referals">{!referal ? 0 : referal}</span> clients and
-        earn <span className="swapTokens">{!bonusToken ? 0 : bonusToken}</span>{" "}
+        <span className="referals">{referal}</span> clients and
+        earn <span className="swapTokens">{bonusToken}</span>{" "}
         SWAP
       </p>
       <p className="affiliateContentText">
