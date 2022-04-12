@@ -363,7 +363,7 @@ const Product = ({ id }: ProductProps) => {
             >
               {!wantToEnterPromoCode
                 ? "I have a promo code"
-                : "I have not a propo code"}
+                : "I have not a promo code"}
             </span>
             {isPolygonNetwork || isBSCNetwork ? (
               <input
