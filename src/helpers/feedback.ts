@@ -7,6 +7,7 @@ export enum STATUS {
   warning,
   attention,
   unimportant,
+  voteIdea,
 }
 
 const MARKS = {
@@ -15,6 +16,7 @@ const MARKS = {
   [STATUS.warning]: "🔥",
   [STATUS.attention]: "💥",
   [STATUS.unimportant]: "💤",
+  [STATUS.voteIdea]: '🐤',
 };
 
 export const sendMessage = ({
