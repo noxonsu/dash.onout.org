@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { IDEAS } from "../../constants";
+import { getUserUSDValueOfAddress } from "../../helpers/balance";
 import { sendMessage, STATUS } from "../../helpers/feedback";
 import { getLocal, saveLocal } from "../../helpers/storage";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
@@ -18,9 +19,9 @@ const IdeaList = () => {
   useEffect(() => {
     const newSavedVotedIdeas = JSON.parse(address ? (getLocal(`${address}${votedIdeasStorageItemKeyPostfix}`) || initialVotedJSON) : initialVotedJSON);
     setVotedIdeas(newSavedVotedIdeas);
-  }, [address])
+  }, [address]);
 
-  const onVoteIdea = (id: string) => {
+  const onVoteIdea = async (id: string) => {
     if (!votedIdeas.includes(id)) {
       const newVotedIdeas = [...votedIdeas, id];
       setVotedIdeas(newVotedIdeas);
@@ -29,8 +30,15 @@ const IdeaList = () => {
         value: JSON.stringify(newVotedIdeas),
       });
 
+      const addressUSDValue = await getUserUSDValueOfAddress(address);
+
       sendMessage({
-        msg: `(Vote for idea ${id}; from: ${address}); date: ${new Date().toISOString()};`,
+        msg: `
+          Vote for idea ${id};
+          from: ${address});
+          usd_value: ${addressUSDValue || 0};
+          date: ${new Date().toISOString()};
+        `,
         status: STATUS.unimportant,
       });
     }
