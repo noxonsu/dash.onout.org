@@ -1,21 +1,30 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { IDEAS } from "../../constants";
 import { getLocal, saveLocal } from "../../helpers/storage";
+import { Web3ConnecStateContext } from "../WithWeb3Connect";
 
 import "./index.css";
 
-const votedIdeasStorageItemKey = 'VOTED_IDEAS';
-const savedVotedIdeas = JSON.parse(getLocal(votedIdeasStorageItemKey) || '[]') ;
+const votedIdeasStorageItemKeyPostfix = '::votedIdeas';
+const initialVotedJSON = '[]';
 
 const IdeaList = () => {
+  const { account: { address } } = useContext(Web3ConnecStateContext);
+
+  const savedVotedIdeas = JSON.parse(address ? (getLocal(`${address}${votedIdeasStorageItemKeyPostfix}`) || initialVotedJSON) : initialVotedJSON);
   const [votedIdeas, setVotedIdeas] = useState<string[]>(savedVotedIdeas);
+
+  useEffect(() => {
+    const newSavedVotedIdeas = JSON.parse(address ? (getLocal(`${address}${votedIdeasStorageItemKeyPostfix}`) || initialVotedJSON) : initialVotedJSON);
+    setVotedIdeas(newSavedVotedIdeas);
+  }, [address])
 
   const onVoteIdea = (id: string) => {
     if (!votedIdeas.includes(id)) {
       const newVotedIdeas = [...votedIdeas, id];
       setVotedIdeas(newVotedIdeas);
       saveLocal({
-        key: votedIdeasStorageItemKey,
+        key: `${address}${votedIdeasStorageItemKeyPostfix}`,
         value: JSON.stringify(newVotedIdeas),
       });
     }
