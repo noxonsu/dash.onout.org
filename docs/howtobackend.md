@@ -1,5 +1,5 @@
 ## How we store settings in the past
-In classic model every app has frontend and backend. Previously our apps work on wordpress and we use wordpress database to store settings. For example:
+In the classic model, every app has a frontend and backend. Previously, our apps work on WordPress, and we use WordPress database to store settings. For example:
 
 Frontend in admin dashboard:
 ```php
@@ -20,13 +20,13 @@ window.logoUrl='<?php get_option("logo_url");  ?>'
 <script scr='app.js'></script> <!-- app.js contains react.js app which can use "logoUrl" variable to display logo in proper place. 
 ```
 
-We use WordPress but this way is not secure.
+We use WordPress, but this way is not secure.
 
 ## How we store settings now
-We don't trust backend by default and now we use blockchain as our database in this way. We have deployed a Storage contract. 
+We don't trust backend by default, and now we use blockchain as our database in this way. We have deployed a Storage contract. 
 https://bscscan.com/address/0x4B2B549d0Be6013f30221f23d0165587cAc3f888#code=
 
-this is simple key-value storage. 
+This is simple key-value storage. 
 
 Plain JS example. Dashboard:
 ```js
@@ -42,7 +42,7 @@ function save() {
 </script>
 ```
 
-And on a clinet's frontend in the app, just repplace the line with getter function:
+And on a client's frontend in the app, just replace the line with getter function:
 ```html
 <script>
 window.logoUrl=web3.contractAt(0x4B2B549d0Be6013f30221f23d0165587cAc3f888).getData(keyname); 
@@ -52,10 +52,10 @@ window.logoUrl=web3.contractAt(0x4B2B549d0Be6013f30221f23d0165587cAc3f888).getDa
 
 # FAQ
 Q: Can you change the data?
-A: No we can't. Only who defined variable can change it. Also we save your address as "domain admin" and noone can edit variables which name starts from your domain name
+A: No, we can't. Only who defined variable can change it. Also, we save your address as "domain admin" and no one can edit variables which name starts from your domain name
 
-Q: Do i need to create tx for every variable?
-A: You can use arrays and json to store structured data. 
+Q: Do I need to create TX for every variable?
+A: You can use arrays and JSON to store structured data. 
 
-Q: if i forgot to define variable on my domain, can someone do this?
+Q: if I forgot to define a variable on my domain, can someone do this?
 A: No, we save your address 
