@@ -34,7 +34,7 @@ const IdeaList = () => {
 
       sendMessage({
         msg: `
-          Vote for idea ${id};
+          Vote for idea: ${id};
           from: ${address};
           usd_value: ${addressUSDValue || 0};
           date: ${new Date().toISOString()};
