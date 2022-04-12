@@ -270,6 +270,11 @@ export const IDEAS = [
     link: '',
   },
   {
+    id: 'fiatramp',
+    name: 'Fiat on/off ramp (visa, p2p or something to buy/sell crypto for fiat)',
+    link: '',
+  },
+  {
     id: 'other',
     name: 'Other',
     link: 'https://tools.onout.org/sponsor.md',

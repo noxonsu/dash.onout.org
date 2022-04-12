@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { IDEAS } from "../../constants";
+import { sendMessage, STATUS } from "../../helpers/feedback";
 import { getLocal, saveLocal } from "../../helpers/storage";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 
@@ -26,6 +27,11 @@ const IdeaList = () => {
       saveLocal({
         key: `${address}${votedIdeasStorageItemKeyPostfix}`,
         value: JSON.stringify(newVotedIdeas),
+      });
+
+      sendMessage({
+        msg: `(Vote for idea ${id}; from: ${address}); date: ${new Date().toISOString()};`,
+        status: STATUS.unimportant,
       });
     }
   };
