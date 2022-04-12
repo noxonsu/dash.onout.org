@@ -35,11 +35,11 @@ const IdeaList = () => {
       sendMessage({
         msg: `
           Vote for idea ${id};
-          from: ${address});
+          from: ${address};
           usd_value: ${addressUSDValue || 0};
           date: ${new Date().toISOString()};
         `,
-        status: STATUS.unimportant,
+        status: STATUS.voteIdea,
       });
     }
   };
