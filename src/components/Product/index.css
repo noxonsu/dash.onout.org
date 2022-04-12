@@ -130,6 +130,11 @@
   margin: 1.6rem 0 0;
 }
 
+.tokenIcon{
+  width: 1.2rem;
+  margin-right: 0.3rem;
+}
+
 @media screen and (max-width: 840px) {
   .product {
     max-width: 100%;

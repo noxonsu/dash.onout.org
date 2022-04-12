@@ -17,7 +17,10 @@ import { getPrice } from "../../helpers/currency";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
-import Modal from "../Modal"
+import Modal from "../Modal";
+import bscIcon from "../../assets/images/bsc.svg";
+import ploygonIcon from "../../assets/images/polygon.svg";
+import swapIcon from "../../assets/images/swap.svg";
 
 import "./index.css";
 
@@ -25,8 +28,12 @@ type ProductProps = {
   id: string;
 };
 
-const Product = ({id}:ProductProps) => {
-  const { account, account: { isPolygonNetwork, isBSCNetwork }, isWeb3Loading } = useContext(Web3ConnecStateContext); 
+const Product = ({ id }: ProductProps) => {
+  const {
+    account,
+    account: { isPolygonNetwork, isBSCNetwork },
+    isWeb3Loading,
+  } = useContext(Web3ConnecStateContext);
 
   const { dispatch, state } = useUser();
   const { products, signed } = state;
@@ -40,7 +47,13 @@ const Product = ({id}:ProductProps) => {
   const [wantToEnterPromoCode, setWantToEnterPromoCode] = useState(false);
   const [promoAddress, setPromoAddress] = useState("");
 
-  const { productId, name, promoPageLink, description, price: USDPrice } = PRODUCTS[id];
+  const {
+    productId,
+    name,
+    promoPageLink,
+    description,
+    price: USDPrice,
+  } = PRODUCTS[id];
 
   useEffect(() => {
     const inProducts =
@@ -88,7 +101,12 @@ const Product = ({id}:ProductProps) => {
       vsCurrency: FIAT_TICKER.toLowerCase(),
     });
 
-    const { provider, address: userAddress, isPolygonNetwork, isBSCNetwork } = account;
+    const {
+      provider,
+      address: userAddress,
+      isPolygonNetwork,
+      isBSCNetwork,
+    } = account;
 
     if (data) {
       BigNumber.config({
@@ -101,7 +119,9 @@ const Product = ({id}:ProductProps) => {
           provider,
           from: userAddress,
           to: PAYMENT_ADDRESS,
-          amount: new BigNumber(USDPrice > 100 ? USDPrice - 50 : USDPrice).div(data[assetId]?.usd).toNumber(),
+          amount: new BigNumber(USDPrice > 100 ? USDPrice - 50 : USDPrice)
+            .div(data[assetId]?.usd)
+            .toNumber(),
           contractAddress: CONTRACT_ADDRESS_POLYGON,
           promocode,
         };
@@ -110,7 +130,9 @@ const Product = ({id}:ProductProps) => {
           provider,
           from: userAddress,
           to: PAYMENT_ADDRESS,
-          amount: new BigNumber(USDPrice > 100 ? USDPrice - 50 : USDPrice).div(data[assetId]?.usd).toNumber(),
+          amount: new BigNumber(USDPrice > 100 ? USDPrice - 50 : USDPrice)
+            .div(data[assetId]?.usd)
+            .toNumber(),
           contractAddress: CONTRACT_ADDRESS_BSC,
           promocode,
           productId,
@@ -122,7 +144,7 @@ const Product = ({id}:ProductProps) => {
           to: PAYMENT_ADDRESS,
           amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
           contractAddress: CONTRACT_ADDRESS_POLYGON,
-        }
+        };
       } else if (isBSCNetwork) {
         return {
           provider,
@@ -131,7 +153,7 @@ const Product = ({id}:ProductProps) => {
           amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
           contractAddress: CONTRACT_ADDRESS_BSC,
           productId,
-        }
+        };
       } else {
         return {
           provider: provider,
@@ -243,7 +265,7 @@ const Product = ({id}:ProductProps) => {
     );
   }, [paymentPending, paidFor, signed, isWeb3Loading, account, USDPrice]);
 
-  const promoFormHandle = (e:any) => {
+  const promoFormHandle = (e: any) => {
     e.preventDefault();
     payForProduct();
     GA.event({
@@ -255,7 +277,7 @@ const Product = ({id}:ProductProps) => {
       prefix: "START payment",
       status: STATUS.attention,
     });
-  }
+  };
 
   return (
     <div className="product">
@@ -328,39 +350,51 @@ const Product = ({id}:ProductProps) => {
 
       {errorMessage && <p className="error">Error: {errorMessage}</p>}
 
-      <form className="pomoCodeForm" onSubmit={promoFormHandle} >
+      <form className="pomoCodeForm" onSubmit={promoFormHandle}>
         {!paidFor && (
           <>
             <span
-              className={`promoCodeText ${wantToEnterPromoCode ? "active" : ""}`}
+              className={`promoCodeText ${
+                wantToEnterPromoCode ? "active" : ""
+              }`}
               onClick={() => {
                 setWantToEnterPromoCode(!wantToEnterPromoCode);
               }}
             >
-              {!wantToEnterPromoCode ? "I have a promo code" : "I have not a propo code"}
+              {!wantToEnterPromoCode
+                ? "I have a promo code"
+                : "I have not a propo code"}
             </span>
             {isPolygonNetwork || isBSCNetwork ? (
               <input
-                className={`promoCodeInput ${wantToEnterPromoCode ? "active" : ""}`}
+                className={`promoCodeInput ${
+                  wantToEnterPromoCode ? "active" : ""
+                }`}
                 onChange={(e) => setPromoAddress(e.target.value)}
                 type="text"
                 placeholder="Enter promo code to get $50 discount"
                 autoFocus
               />
             ) : (
-              <span className={`linkToNetworkPolygon ${wantToEnterPromoCode ? "active" : ""}`}>
+              <span
+                className={`linkToNetworkPolygon ${
+                  wantToEnterPromoCode ? "active" : ""
+                }`}
+              >
                 To use the promocode pay with{" "}
                 <span
                   className={`notesSpan ${isPolygonNetwork ? "active" : ""}`}
                   onClick={switchOnPolygonNetwork}
                 >
+                 <img className="tokenIcon" src={ploygonIcon} alt="polygon-icon" />
                   Polygon
-                </span>
-                {" "}or{" "}
+                </span>{" "}
+                or{" "}
                 <span
                   className={`notesSpan ${isBSCNetwork ? "active" : ""}`}
                   onClick={switchOnBSCNetwork}
                 >
+                  <img className="tokenIcon" src={bscIcon} alt="bsc-icon" />
                   BSC
                 </span>
               </span>
@@ -379,23 +413,25 @@ const Product = ({id}:ProductProps) => {
         </button>
       </form>
       <p className="polygonNotice">
-      Use{" "}
-      <span
-        className={`notesSpan ${isPolygonNetwork ? "active" : ""}`}
-        onClick={switchOnPolygonNetwork}
-      >
-        {" "}
-        Polygon
-      </span>
-      {" "}or{" "}
-      <span
-        className={`notesSpan ${isBSCNetwork ? "active" : ""}`}
-        onClick={switchOnBSCNetwork}
-      >
-        BSC
-      </span>{" "}
-      to get 50 SWAP tokens as bonus.
-    </p>
+        Use{" "}
+        <span
+          className={`notesSpan ${isPolygonNetwork ? "active" : ""}`}
+          onClick={switchOnPolygonNetwork}
+        >
+          {" "}
+          <img className="tokenIcon" src={ploygonIcon} alt="polygon-icon" />
+          Polygon
+        </span>{" "}
+        or{" "}
+        <span
+          className={`notesSpan ${isBSCNetwork ? "active" : ""}`}
+          onClick={switchOnBSCNetwork}
+        >
+          <img className="tokenIcon" src={bscIcon} alt="bsc-icon" />
+          BSC
+        </span>{" "}
+        to get 50 <img className="tokenIcon" src={swapIcon} alt="swap-icon" />SWAP tokens as bonus.
+      </p>
     </div>
   );
 };
