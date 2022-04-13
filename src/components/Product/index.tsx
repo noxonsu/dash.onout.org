@@ -4,11 +4,12 @@ import { BigNumber } from "bignumber.js";
 import {
   PRODUCTS,
   PAYMENT_ADDRESS,
-  CONTRACT_ADDRESS_POLYGON,
   NETWORKS,
   FIAT_TICKER,
   EVM_ADDRESS_REGEXP,
-  CONTRACT_ADDRESS_BSC,
+  bonusAndDiscountContractsByNetworkId,
+  cashbackTokenAddresses,
+  SupportedChainId,
 } from "../../constants";
 import { send } from "../../helpers/transaction";
 import { sendMessage, STATUS } from "../../helpers/feedback";
@@ -48,7 +49,6 @@ const Product = ({ id }: ProductProps) => {
   const [promoAddress, setPromoAddress] = useState("");
 
   const {
-    productId,
     name,
     promoPageLink,
     description,
@@ -92,92 +92,69 @@ const Product = ({ id }: ProductProps) => {
     });
   };
 
-  const getPaymentParameters = async (networkId: number, promocode: string) => {
+  const getPaymentParameters = async (networkId: SupportedChainId, promocode: string) => {
     if (!PAYMENT_ADDRESS || !USDPrice) return;
-    //@ts-ignore
+
     const assetId = NETWORKS[networkId].currency.id;
     const data = await getPrice({
       assetId,
       vsCurrency: FIAT_TICKER.toLowerCase(),
     });
 
+    if (!data) return;
+
+    BigNumber.config({ // move to helpers
+      ROUNDING_MODE: BigNumber.ROUND_HALF_EVEN,
+      DECIMAL_PLACES: 18,
+    });
+
     const {
       provider,
       address: userAddress,
-      isPolygonNetwork,
-      isBSCNetwork,
     } = account;
 
-    if (data) {
-      BigNumber.config({
-        ROUNDING_MODE: BigNumber.ROUND_HALF_EVEN,
-        DECIMAL_PLACES: 18,
-      });
+    const bonusAndDiscountContract = bonusAndDiscountContractsByNetworkId[networkId];
+    const cashbackTokenAddress = cashbackTokenAddresses[networkId];
 
-      if (isPolygonNetwork && promocode?.match(EVM_ADDRESS_REGEXP)) {
-        return {
-          provider,
-          from: userAddress,
-          to: PAYMENT_ADDRESS,
-          amount: new BigNumber(USDPrice > 100 ? USDPrice - 50 : USDPrice)
-            .div(data[assetId]?.usd)
-            .toNumber(),
-          contractAddress: CONTRACT_ADDRESS_POLYGON,
-          promocode,
-        };
-      } else if (isBSCNetwork && promocode?.match(EVM_ADDRESS_REGEXP)) {
-        return {
-          provider,
-          from: userAddress,
-          to: PAYMENT_ADDRESS,
-          amount: new BigNumber(USDPrice > 100 ? USDPrice - 50 : USDPrice)
-            .div(data[assetId]?.usd)
-            .toNumber(),
-          contractAddress: CONTRACT_ADDRESS_BSC,
-          promocode,
-          productId,
-        };
-      } else if (isPolygonNetwork) {
-        return {
-          provider,
-          from: userAddress,
-          to: PAYMENT_ADDRESS,
-          amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
-          contractAddress: CONTRACT_ADDRESS_POLYGON,
-        };
-      } else if (isBSCNetwork) {
-        return {
-          provider,
-          from: userAddress,
-          to: PAYMENT_ADDRESS,
-          amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
-          contractAddress: CONTRACT_ADDRESS_BSC,
-          productId,
-        };
-      } else {
-        return {
-          provider: provider,
-          from: userAddress,
-          to: PAYMENT_ADDRESS,
-          amount: new BigNumber(USDPrice).div(data[assetId]?.usd).toNumber(),
-          // tokenAddress: "",
-        };
-      }
+    const hasValidPromoCode = !!(bonusAndDiscountContract && promocode?.match(EVM_ADDRESS_REGEXP));
+    const canToGetDiscount = hasValidPromoCode && USDPrice > 100;
+
+    const finalProductPriceInUSD = canToGetDiscount ? USDPrice - 50 : USDPrice;
+
+    const assetUSDPrice = data[assetId]?.usd;
+    const amount = new BigNumber(finalProductPriceInUSD).div(assetUSDPrice).toNumber();
+
+    return {
+      provider,
+      networkId,
+      from: userAddress,
+      to: PAYMENT_ADDRESS,
+      amount,
+      bonusAndDiscountContract,
+      cashbackTokenAddress,
+      promocode: hasValidPromoCode && promocode,
+      onHash: (hash: any) => {
+        sendFeedback({
+          networkId,
+          amount,
+          prefix: "Successful payment",
+          status: STATUS.success,
+          extra: `tx hash: ${hash}`,
+        });
+      },
     }
 
-    return false;
   };
 
   const payForProduct = async () => {
-    if (!account.provider || account.wrongNetwork) return;
+    const { wrongNetwork, networkId } = account;
+
+    if (!networkId) return;
 
     setErrorMessage("");
     setPaymentPending(true);
 
-    // fetch the current id right before prices to be sure of the correct currency for this network
-    const networkId = await account.provider.eth.net.getId();
-    //@ts-ignore
-    if (!NETWORKS[networkId]) {
+    if (wrongNetwork) {
       setErrorMessage("Wrong network");
       return setPaymentPending(false);
     }
@@ -186,18 +163,7 @@ const Product = ({ id }: ProductProps) => {
 
     if (params) {
       try {
-        const confirmedTx = await send({
-          ...params,
-          onHash: (hash) => {
-            sendFeedback({
-              networkId,
-              amount: params.amount,
-              prefix: "Successful payment",
-              status: STATUS.success,
-              extra: `tx hash: ${hash}`,
-            });
-          },
-        });
+        const confirmedTx = await send(params);
 
         if (confirmedTx?.status) {
           dispatch({

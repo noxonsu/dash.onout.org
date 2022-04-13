@@ -2,9 +2,25 @@ import { COVERS } from "../assets";
 
 export const FEEDBACK_URL = "https://noxon.wpmix.net/counter.php";
 export const PAYMENT_ADDRESS = "0x3B85D38c3A7AEabABA8B7DEb7a73177688270abC";
-export const CONTRACT_ADDRESS_POLYGON = '0x71945dE28746455B651Aab1EE84Ce06e03a90bCD';
-export const CONTRACT_ADDRESS_BSC = '0x098844e1362c1D7346184045c155DF3c99A98700';
 export const EVM_ADDRESS_REGEXP = /^0x[A-Fa-f0-9]{40}$/;
+
+export enum SupportedChainId {
+  MAINNET = 1,
+  BINANCE_SMART_CHAIN = 56,
+  POLYGON = 137,
+}
+
+export const bonusAndDiscountContractsByNetworkId = {
+  [SupportedChainId.POLYGON]: '0x71945dE28746455B651Aab1EE84Ce06e03a90bCD',
+  [SupportedChainId.BINANCE_SMART_CHAIN]: '0x098844e1362c1D7346184045c155DF3c99A98700',
+  [SupportedChainId.MAINNET]: '',
+}
+
+export const cashbackTokenAddresses = {
+  [SupportedChainId.POLYGON]: '0x654496319F438A59FEE9557940393cf818753ee9',
+  [SupportedChainId.BINANCE_SMART_CHAIN]: '0x92648e4537CdFa1EE743A244465a31AA034B1ce8',
+  [SupportedChainId.MAINNET]: '',
+}
 
 // 50 calls per minute
 export const PRICE_ENDPOINT = "https://api.coingecko.com/api/v3";
@@ -21,11 +37,6 @@ export const ONE_MONTH = ONE_DAY * 30;
 
 // https://docs.google.com/spreadsheets/d/1wTTuxXt8n9q7C4NDXqQpI3wpKu1_5bGVmP9Xz0XGSyU/edit#gid=0
 
-export enum SupportedChainId {
-  MAINNET = 1,
-  BINANCE_SMART_CHAIN = 56,
-  POLYGON = 137,
-}
 
 export interface Network {
   id: number;

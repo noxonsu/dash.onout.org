@@ -2,8 +2,8 @@ import { useContext, useState, useEffect } from "react";
 import ERC20_ABI from "../../constants/abiPolygon.json";
 import ERC20_ABI_BSC from "../../constants/abiBSC.json";
 import {
-  CONTRACT_ADDRESS_BSC,
-  CONTRACT_ADDRESS_POLYGON,
+  bonusAndDiscountContractsByNetworkId,
+  cashbackTokenAddresses,
 } from "../../constants";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 
@@ -11,8 +11,7 @@ import "./index.css";
 
 const Affiliate = () => {
   const {
-    account,
-    account: { isPolygonNetwork, isBSCNetwork },
+    account: { provider, address, networkId, wrongNetwork },
   } = useContext(Web3ConnecStateContext);
 
   const [bonusToken, setBonusToken] = useState(4);
@@ -21,44 +20,42 @@ const Affiliate = () => {
   useEffect(() => {
     const fetchReferalInfo = async () => {
       try {
-        const provider = account.provider;
-        const from = account.address;
-        let contract;
-        if (isPolygonNetwork) {
-          contract = new provider.eth.Contract(
-            ERC20_ABI,
-            CONTRACT_ADDRESS_POLYGON,
-            {
-              from,
-            }
-          );
-        } else if (isBSCNetwork) {
-          contract = new provider.eth.Contract(
-            ERC20_ABI_BSC,
-            CONTRACT_ADDRESS_BSC,
-            {
-              from,
-            }
-          );
-        } else {
+        if (
+          wrongNetwork
+          || !networkId
+          || !bonusAndDiscountContractsByNetworkId[networkId]
+          || !cashbackTokenAddresses[networkId]
+        ) {
           setBonusToken(0);
           setReferal(0);
+          return;
         }
 
-        await contract?.methods
+        const from = address;
+
+        const contract = new provider.eth.Contract(
+          ERC20_ABI_BSC,
+          cashbackTokenAddresses[networkId],
+          {
+            from,
+          }
+        );
+
+        await contract.methods
           .getReferalInfo(from)
           .call()
           .then((res: any) => {
             setBonusToken(res[1]);
             setReferal(res[2]);
           });
+
       } catch (e) {
         console.error(e);
       }
     };
 
     fetchReferalInfo();
-  });
+  }, [address, networkId, wrongNetwork]);
   return (
     <div className="affiliate">
       <h3 className="title">
@@ -75,10 +72,10 @@ const Affiliate = () => {
         <span
           className="affiliateAddress"
           onClick={(e: any) => {
-            window.navigator.clipboard.writeText(account.address);
+            window.navigator.clipboard.writeText(address);
           }}
         >
-          {account.address}
+          {address}
         </span>{" "}
         (the same as your address). Share your promo code in any suitable way:
         put it on your website or just send it to your friends or other
