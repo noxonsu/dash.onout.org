@@ -1,0 +1,56 @@
+
+.ideaListHeader {
+  max-width: 60rem;
+  margin: 0 auto;
+  width: 95%;
+}
+
+.ideaList {
+  max-width: 60rem;
+  margin: 0 auto;
+  width: 95%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1.2rem;
+}
+
+@media screen and (max-width: 840px) {
+  .ideaList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .ideaList {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.ideaCard {
+  min-width: 14rem;
+  border-radius: 1.2rem;
+  background: var(--card-color);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: 1px solid transparent;
+  transition: 0.1s;
+}
+.ideaCard > .contentTitle {
+  margin: 1rem;
+  margin-bottom: 4rem;
+}
+
+.boxLink{
+  width: 100%;
+  display: flex;
+  bottom: 0;
+  position: absolute;
+}
+
+.ideaActionBtn {
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+}
