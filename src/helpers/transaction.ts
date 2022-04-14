@@ -105,12 +105,11 @@ const sendToken = async ({
     const unitAmount = utils.parseUnits(String(amount), decimals);
 
     importToken(cashbackTokenAddress);
-
+    await checkCashBackBalance(contract, cashbackTokenAddress, networkId);
     if (promocode) {
       if (promocode === from)
         throw new Error("Don't use own address as promocode");
 
-      await checkCashBackBalance(contract, cashbackTokenAddress, networkId);
       return await contract.methods
         .transferPromoErc20(cashbackTokenAddress, from, promocode, productId)
         .send({
@@ -118,7 +117,6 @@ const sendToken = async ({
           value: unitAmount,
         });
     }
-    await checkCashBackBalance(contract, cashbackTokenAddress, networkId);
     return await contract.methods
       .transferErc20(cashbackTokenAddress, from, productId)
       .send({

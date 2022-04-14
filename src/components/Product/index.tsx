@@ -155,8 +155,6 @@ const Product = ({ id }: ProductProps) => {
 
     const params = await getPaymentParameters();
 
-    console.log('params', params)
-
     if (params) {
       try {
         const confirmedTx = await send(params);
