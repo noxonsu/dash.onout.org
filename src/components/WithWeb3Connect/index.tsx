@@ -15,7 +15,7 @@ const INFURA_ID = "460f40a260564ac4a4f4b3fffb032dad";
 type Web3ConnectState = {
   connected: boolean;
   provider: any | null;
-  networkId: number | undefined;
+  networkId: SupportedChainId | undefined;
   isPolygonNetwork: boolean;
   isBSCNetwork: boolean;
   wrongNetwork: boolean;
