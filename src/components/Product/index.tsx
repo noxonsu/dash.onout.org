@@ -112,9 +112,9 @@ const Product = ({ id }: ProductProps) => {
     const hasValidPromoCode = !!(
       bonusAndDiscountContract && promoAddress?.match(EVM_ADDRESS_REGEXP)
     );
-    const canToGetDiscount = hasValidPromoCode && USDPrice > 100;
+    const canGetDiscount = hasValidPromoCode && USDPrice > 100;
 
-    const finalProductPriceInUSD = canToGetDiscount ? USDPrice - 50 : USDPrice;
+    const finalProductPriceInUSD = canGetDiscount ? USDPrice - 50 : USDPrice;
 
     const assetUSDPrice = data[assetId]?.usd;
     const amount = new BigNumber(finalProductPriceInUSD)
