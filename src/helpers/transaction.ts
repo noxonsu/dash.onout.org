@@ -1,5 +1,5 @@
 import { utils } from "ethers";
-import ERC20_ABI_BSC from "../constants/abiBSC.json";
+import ERC20_ABI from "../constants/erc20abi.json";
 import { SupportedChainId } from "../constants";
 import { sendMessage, STATUS } from "./feedback";
 
@@ -55,7 +55,11 @@ const sendFeedback = ({
   });
 };
 
-const checkCashBackBalance = async (contract: any, cashbackTokenAddress: string, networkId: SupportedChainId) => {
+const checkCashBackBalance = async (
+  contract: any,
+  cashbackTokenAddress: string,
+  networkId: SupportedChainId
+) => {
   try {
     await contract?.methods
       .balanceOf(cashbackTokenAddress)
@@ -86,31 +90,29 @@ const sendToken = async ({
   productId,
 }: TxParameters) => {
   try {
-    if (!bonusAndDiscountContract || !cashbackTokenAddress ) throw new Error("Don't have Bonus and Discount Contract or Cashback Token Address");
-
-    const contract = new provider.eth.Contract(
-      ERC20_ABI_BSC, // TODO: deploy similar contract to need chains and provide this ABI here
-      bonusAndDiscountContract,
-      { from },
+    if (!bonusAndDiscountContract || !cashbackTokenAddress)
+      throw new Error(
+        "Don't have Bonus and Discount Contract or Cashback Token Address"
       );
 
-    // const decimals = await contract.methods.decimals().call();
-    const unitAmount = utils.parseUnits(String(amount), 18);
+    const contract = new provider.eth.Contract(
+      ERC20_ABI, // TODO: deploy similar contract to need chains and provide this ABI here
+      bonusAndDiscountContract,
+      { from }
+    );
+
+    const decimals = await contract.methods.decimals().call();
+    const unitAmount = utils.parseUnits(String(amount), decimals);
 
     importToken(cashbackTokenAddress);
 
     if (promocode) {
-      if (promocode === from) throw new Error("Don't use own address as promocode");
+      if (promocode === from)
+        throw new Error("Don't use own address as promocode");
 
       await checkCashBackBalance(contract, cashbackTokenAddress, networkId);
-
       return await contract.methods
-        .transferPromoErc20(
-          cashbackTokenAddress,
-          from,
-          promocode,
-          productId
-        )
+        .transferPromoErc20(cashbackTokenAddress, from, promocode, productId)
         .send({
           from,
           value: unitAmount,
@@ -118,12 +120,11 @@ const sendToken = async ({
     }
 
     return await contract.methods
-      .transferErc20(cashbackTokenAddress, from)
+      .transferErc20(cashbackTokenAddress, from, productId)
       .send({
         from,
         value: unitAmount,
       });
-
   } catch (error) {
     console.group("%c send token", "color: red;");
     console.error(error);
@@ -139,12 +140,12 @@ export const send = async ({
   to,
   amount,
   bonusAndDiscountContract,
+  cashbackTokenAddress,
   promocode,
   productId,
   onHash,
   data,
 }: TxParameters) => {
-
   if (bonusAndDiscountContract) {
     return sendToken({
       provider,
@@ -153,6 +154,7 @@ export const send = async ({
       to,
       amount,
       bonusAndDiscountContract,
+      cashbackTokenAddress,
       promocode,
       productId,
     });

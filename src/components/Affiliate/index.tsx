@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
-import ERC20_ABI from "../../constants/abiPolygon.json";
-import ERC20_ABI_BSC from "../../constants/abiBSC.json";
+// import ERC20_ABI from "../../constants/abiPolygon.json";
+import ERC20_ABI from "../../constants/erc20abi.json";
 import {
   bonusAndDiscountContractsByNetworkId,
   cashbackTokenAddresses,
@@ -14,17 +14,17 @@ const Affiliate = () => {
     account: { provider, address, networkId, wrongNetwork },
   } = useContext(Web3ConnecStateContext);
 
-  const [bonusToken, setBonusToken] = useState(4);
-  const [referal, setReferal] = useState(3);
+  const [bonusToken, setBonusToken] = useState(0);
+  const [referal, setReferal] = useState(0);
 
   useEffect(() => {
     const fetchReferalInfo = async () => {
       try {
         if (
-          wrongNetwork
-          || !networkId
-          || !bonusAndDiscountContractsByNetworkId[networkId]
-          || !cashbackTokenAddresses[networkId]
+          wrongNetwork ||
+          !networkId ||
+          !bonusAndDiscountContractsByNetworkId[networkId] ||
+          !cashbackTokenAddresses[networkId]
         ) {
           setBonusToken(0);
           setReferal(0);
@@ -34,8 +34,8 @@ const Affiliate = () => {
         const from = address;
 
         const contract = new provider.eth.Contract(
-          ERC20_ABI_BSC,
-          cashbackTokenAddresses[networkId],
+          ERC20_ABI,
+          bonusAndDiscountContractsByNetworkId[networkId],
           {
             from,
           }
@@ -48,7 +48,6 @@ const Affiliate = () => {
             setBonusToken(res[1]);
             setReferal(res[2]);
           });
-
       } catch (e) {
         console.error(e);
       }
@@ -63,9 +62,8 @@ const Affiliate = () => {
       </h3>
       <p className="affiliateInfo">
         Since April 2022 you have invited{" "}
-        <span className="referals">{referal}</span> clients and
-        earn <span className="swapTokens">{bonusToken}</span>{" "}
-        SWAP
+        <span className="referals">{referal}</span> clients and earn{" "}
+        <span className="swapTokens">{bonusToken}</span> SWAP
       </p>
       <p className="affiliateContentText">
         Your promocode is{" "}

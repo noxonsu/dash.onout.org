@@ -24,6 +24,7 @@ import ploygonIcon from "../../assets/images/polygon.svg";
 import swapIcon from "../../assets/images/swap.svg";
 
 import "./index.css";
+import { ListFormat } from "typescript";
 
 type ProductProps = {
   id: string;
@@ -53,11 +54,13 @@ const Product = ({ id }: ProductProps) => {
     promoPageLink,
     description,
     price: USDPrice,
+    productId,
   } = PRODUCTS[id];
 
   useEffect(() => {
     const inProducts =
       !!products.length && products.find((product) => product.id === id);
+    console.log(inProducts);
 
     if (inProducts) setPaidFor(true);
   }, [id, products]);
@@ -92,7 +95,10 @@ const Product = ({ id }: ProductProps) => {
     });
   };
 
-  const getPaymentParameters = async (networkId: SupportedChainId, promocode: string) => {
+  const getPaymentParameters = async (
+    networkId: SupportedChainId,
+    promocode: string
+  ) => {
     if (!PAYMENT_ADDRESS || !USDPrice) return;
 
     const assetId = NETWORKS[networkId].currency.id;
@@ -102,27 +108,28 @@ const Product = ({ id }: ProductProps) => {
     });
 
     if (!data) return;
-
-    BigNumber.config({ // move to helpers
+    BigNumber.config({
       ROUNDING_MODE: BigNumber.ROUND_HALF_EVEN,
       DECIMAL_PLACES: 18,
     });
 
-    const {
-      provider,
-      address: userAddress,
-    } = account;
+    const { provider, address: userAddress } = account;
 
-    const bonusAndDiscountContract = bonusAndDiscountContractsByNetworkId[networkId];
+    const bonusAndDiscountContract =
+      bonusAndDiscountContractsByNetworkId[networkId];
     const cashbackTokenAddress = cashbackTokenAddresses[networkId];
 
-    const hasValidPromoCode = !!(bonusAndDiscountContract && promocode?.match(EVM_ADDRESS_REGEXP));
+    const hasValidPromoCode = !!(
+      bonusAndDiscountContract && promocode?.match(EVM_ADDRESS_REGEXP)
+    );
     const canToGetDiscount = hasValidPromoCode && USDPrice > 100;
 
     const finalProductPriceInUSD = canToGetDiscount ? USDPrice - 50 : USDPrice;
 
     const assetUSDPrice = data[assetId]?.usd;
-    const amount = new BigNumber(finalProductPriceInUSD).div(assetUSDPrice).toNumber();
+    const amount = new BigNumber(finalProductPriceInUSD)
+      .div(assetUSDPrice)
+      .toNumber();
 
     return {
       provider,
@@ -133,6 +140,7 @@ const Product = ({ id }: ProductProps) => {
       bonusAndDiscountContract,
       cashbackTokenAddress,
       promocode: hasValidPromoCode && promocode,
+      productId,
       onHash: (hash: any) => {
         sendFeedback({
           networkId,
@@ -142,8 +150,7 @@ const Product = ({ id }: ProductProps) => {
           extra: `tx hash: ${hash}`,
         });
       },
-    }
-
+    };
   };
 
   const payForProduct = async () => {
@@ -202,8 +209,8 @@ const Product = ({ id }: ProductProps) => {
         method: "wallet_switchEthereumChain",
         params: [{ chainId: "0x89" }],
       });
-    } catch (err) {
-      console.log("error");
+    } catch (e) {
+      console.error(e);
     }
   };
   const switchOnBSCNetwork = async () => {
@@ -212,8 +219,8 @@ const Product = ({ id }: ProductProps) => {
         method: "wallet_switchEthereumChain",
         params: [{ chainId: "0x38" }],
       });
-    } catch (err) {
-      console.log("error");
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -352,7 +359,11 @@ const Product = ({ id }: ProductProps) => {
                   className={`notesSpan ${isPolygonNetwork ? "active" : ""}`}
                   onClick={switchOnPolygonNetwork}
                 >
-                 <img className="tokenIcon" src={ploygonIcon} alt="polygon-icon" />
+                  <img
+                    className="tokenIcon"
+                    src={ploygonIcon}
+                    alt="polygon-icon"
+                  />
                   Polygon
                 </span>{" "}
                 or{" "}
@@ -396,7 +407,8 @@ const Product = ({ id }: ProductProps) => {
           <img className="tokenIcon" src={bscIcon} alt="bsc-icon" />
           BSC
         </span>{" "}
-        to get 50 <img className="tokenIcon" src={swapIcon} alt="swap-icon" />SWAP tokens as bonus.
+        to get 50 <img className="tokenIcon" src={swapIcon} alt="swap-icon" />
+        SWAP tokens as bonus.
       </p>
     </div>
   );
