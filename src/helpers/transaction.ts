@@ -1,5 +1,5 @@
 import { utils } from "ethers";
-import ERC20_ABI from "../constants/erc20abi.json";
+import bonusAndDiscountContractAbi from "../constants/bonusAndDiscountContractAbi.json";
 import { SupportedChainId } from "../constants";
 import { sendMessage, STATUS } from "./feedback";
 
@@ -96,7 +96,7 @@ const sendToken = async ({
       );
 
     const contract = new provider.eth.Contract(
-      ERC20_ABI, // TODO: deploy similar contract to need chains and provide this ABI here
+      bonusAndDiscountContractAbi,
       bonusAndDiscountContract,
       { from }
     );

@@ -122,6 +122,7 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
       const networkId = parseInt(chainId) as SupportedChainId;
       setAccount((prevState) => ({
         ...prevState,
+        networkId,
         wrongNetwork: !NETWORKS[networkId],
         isPolygonNetwork: networkId === SupportedChainId.POLYGON,
         isBSCNetwork: networkId === SupportedChainId.BINANCE_SMART_CHAIN,

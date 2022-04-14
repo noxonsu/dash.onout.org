@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 // import ERC20_ABI from "../../constants/abiPolygon.json";
-import ERC20_ABI from "../../constants/erc20abi.json";
+import bonusAndDiscountContractAbi from "../../constants/bonusAndDiscountContractAbi.json";
 import {
   bonusAndDiscountContractsByNetworkId,
   cashbackTokenAddresses,
@@ -34,7 +34,7 @@ const Affiliate = () => {
         const from = address;
 
         const contract = new provider.eth.Contract(
-          ERC20_ABI,
+          bonusAndDiscountContractAbi,
           bonusAndDiscountContractsByNetworkId[networkId],
           {
             from,

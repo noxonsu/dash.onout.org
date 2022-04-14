@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useCallback } from "react";
 import GA from "react-ga";
 import { BigNumber } from "bignumber.js";
 import {
@@ -24,7 +24,6 @@ import ploygonIcon from "../../assets/images/polygon.svg";
 import swapIcon from "../../assets/images/swap.svg";
 
 import "./index.css";
-import { ListFormat } from "typescript";
 
 type ProductProps = {
   id: string;
@@ -33,7 +32,7 @@ type ProductProps = {
 const Product = ({ id }: ProductProps) => {
   const {
     account,
-    account: { isPolygonNetwork, isBSCNetwork },
+    account: { isPolygonNetwork, isBSCNetwork, networkId, address, provider, wrongNetwork },
     isWeb3Loading,
   } = useContext(Web3ConnecStateContext);
 
@@ -72,34 +71,29 @@ const Product = ({ id }: ProductProps) => {
     });
   };
 
-  const sendFeedback = ({
-    networkId,
+  const sendFeedback = useCallback(({
     amount,
     prefix,
     status,
     extra,
   }: {
-    networkId?: number;
     amount?: number;
     prefix: string;
     status: STATUS;
     extra?: string;
   }) => {
     sendMessage({
-      msg: `(${prefix} from: ${account.address}) ${
+      msg: `(${prefix} from: ${address}) ${
         networkId ? `network: ${networkId}; ` : ""
       }product id: ${id}; USD cost: ${USDPrice}; ${
         amount ? `crypto cost: ${amount}; ` : ""
       }date: ${new Date().toISOString()};${extra ? ` ${extra}` : ""}`,
       status,
     });
-  };
+  }, [address, networkId]);
 
-  const getPaymentParameters = async (
-    networkId: SupportedChainId,
-    promocode: string
-  ) => {
-    if (!PAYMENT_ADDRESS || !USDPrice) return;
+  const getPaymentParameters = useCallback(async () => {
+    if (!PAYMENT_ADDRESS || !USDPrice || !networkId) return;
 
     const assetId = NETWORKS[networkId].currency.id;
     const data = await getPrice({
@@ -113,14 +107,12 @@ const Product = ({ id }: ProductProps) => {
       DECIMAL_PLACES: 18,
     });
 
-    const { provider, address: userAddress } = account;
-
     const bonusAndDiscountContract =
       bonusAndDiscountContractsByNetworkId[networkId];
     const cashbackTokenAddress = cashbackTokenAddresses[networkId];
 
     const hasValidPromoCode = !!(
-      bonusAndDiscountContract && promocode?.match(EVM_ADDRESS_REGEXP)
+      bonusAndDiscountContract && promoAddress?.match(EVM_ADDRESS_REGEXP)
     );
     const canToGetDiscount = hasValidPromoCode && USDPrice > 100;
 
@@ -134,16 +126,15 @@ const Product = ({ id }: ProductProps) => {
     return {
       provider,
       networkId,
-      from: userAddress,
+      from: address,
       to: PAYMENT_ADDRESS,
       amount,
       bonusAndDiscountContract,
       cashbackTokenAddress,
-      promocode: hasValidPromoCode && promocode,
+      promocode: hasValidPromoCode && promoAddress,
       productId,
       onHash: (hash: any) => {
         sendFeedback({
-          networkId,
           amount,
           prefix: "Successful payment",
           status: STATUS.success,
@@ -151,11 +142,9 @@ const Product = ({ id }: ProductProps) => {
         });
       },
     };
-  };
+  }, [networkId, promoAddress, address]);
 
-  const payForProduct = async () => {
-    const { wrongNetwork, networkId } = account;
-
+  const payForProduct = useCallback(async () => {
     if (!networkId) return;
 
     setErrorMessage("");
@@ -166,7 +155,9 @@ const Product = ({ id }: ProductProps) => {
       return setPaymentPending(false);
     }
 
-    const params = await getPaymentParameters(networkId, promoAddress);
+    const params = await getPaymentParameters();
+
+    console.log('params', params)
 
     if (params) {
       try {
@@ -176,7 +167,7 @@ const Product = ({ id }: ProductProps) => {
           dispatch({
             type: UserActions.paid,
             payload: {
-              key: `${account.address}_${id}`,
+              key: `${address}_${id}`,
               value: `${new Date().toISOString()}`,
             },
           });
@@ -188,7 +179,6 @@ const Product = ({ id }: ProductProps) => {
       } catch (error: any) {
         console.error(error);
         sendFeedback({
-          networkId,
           amount: params.amount,
           prefix: "FAIL",
           status: STATUS.danger,
@@ -201,7 +191,7 @@ const Product = ({ id }: ProductProps) => {
       }
     }
     setPaymentPending(false);
-  };
+  }, [networkId, wrongNetwork, getPaymentParameters, address, sendFeedback]);
 
   const switchOnPolygonNetwork = async () => {
     try {
@@ -238,7 +228,7 @@ const Product = ({ id }: ProductProps) => {
     );
   }, [paymentPending, paidFor, signed, isWeb3Loading, account, USDPrice]);
 
-  const promoFormHandle = (e: any) => {
+  const promoFormHandle = useCallback((e: any) => {
     e.preventDefault();
     payForProduct();
     GA.event({
@@ -246,11 +236,10 @@ const Product = ({ id }: ProductProps) => {
       action: 'Press on the "Buy" button',
     });
     sendFeedback({
-      networkId: account?.networkId,
       prefix: "START payment",
       status: STATUS.attention,
     });
-  };
+  }, [payForProduct, sendFeedback]);
 
   return (
     <div className="product">
