@@ -9,7 +9,6 @@ import {
   EVM_ADDRESS_REGEXP,
   bonusAndDiscountContractsByNetworkId,
   cashbackTokenAddresses,
-  SupportedChainId,
 } from "../../constants";
 import { send } from "../../helpers/transaction";
 import { sendMessage, STATUS } from "../../helpers/feedback";
@@ -59,7 +58,6 @@ const Product = ({ id }: ProductProps) => {
   useEffect(() => {
     const inProducts =
       !!products.length && products.find((product) => product.id === id);
-    console.log(inProducts);
 
     if (inProducts) setPaidFor(true);
   }, [id, products]);

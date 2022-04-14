@@ -118,7 +118,7 @@ const sendToken = async ({
           value: unitAmount,
         });
     }
-
+    await checkCashBackBalance(contract, cashbackTokenAddress, networkId);
     return await contract.methods
       .transferErc20(cashbackTokenAddress, from, productId)
       .send({

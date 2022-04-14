@@ -1,5 +1,4 @@
 import { useContext, useState, useEffect } from "react";
-// import ERC20_ABI from "../../constants/abiPolygon.json";
 import bonusAndDiscountContractAbi from "../../constants/bonusAndDiscountContractAbi.json";
 import {
   bonusAndDiscountContractsByNetworkId,

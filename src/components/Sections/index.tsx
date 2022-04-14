@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 import { Route, Routes, useLocation } from "react-router-dom";
 import useUser from "../../hooks/useUser";
@@ -15,9 +15,7 @@ const Sections = () => {
 
   const { account } = useContext(Web3ConnecStateContext);
   const { state } = useUser();
-  const { signed, subscribed, view, products } = state;
-
-  // For now, while we save it in localStorage, retrive all saved user products from here
+  const { signed, subscribed, view} = state;
 
   if (!signed || !subscribed || account.wrongNetwork) return null;
 
