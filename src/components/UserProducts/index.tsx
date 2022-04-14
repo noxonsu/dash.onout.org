@@ -38,6 +38,9 @@ const ACCOUNTS: { [key: string]: string[] } = {
   ],
   "0x8b7286808a50584ca3ac2a69ed0818c0c0619f19": [
     "farmfactory",
+  ],
+  "0x597691f48a7219301c47180075421ca497865a4e": [
+    "definance",
   ]
 };
 
