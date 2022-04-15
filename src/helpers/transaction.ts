@@ -18,8 +18,11 @@ type TxParameters = {
   data?: any;
 };
 
-const importToken = async (cashbackTokenAddress: string) => {
-  if (!getLocal(`ADDED_SWAP_TOKKEN_${cashbackTokenAddress}`)) {
+const importToken = async (cashbackTokenAddress: string, from: string ) => {
+
+  const isTokenAlreadyAdded = `ADDED_SWAP_TOKKEN_${cashbackTokenAddress}_${from}`
+
+  if (!getLocal(isTokenAlreadyAdded)) {
     const tokenSymbol = "SWAP";
     const tokenDecimals = 18;
     const tokenImage =
@@ -41,7 +44,7 @@ const importToken = async (cashbackTokenAddress: string) => {
         })
         .then(() => {
           saveLocal({
-            key: `ADDED_SWAP_TOKKEN_${cashbackTokenAddress}`,
+            key: isTokenAlreadyAdded,
             value: cashbackTokenAddress,
           });
         })
@@ -118,7 +121,7 @@ const sendToken = async ({
     const decimals = await contract.methods.decimals().call();
     const unitAmount = utils.parseUnits(String(amount), decimals);
 
-    importToken(cashbackTokenAddress);
+    importToken(cashbackTokenAddress, from);
     await checkCashBackBalance(contract, cashbackTokenAddress, networkId);
     if (promocode) {
       if (promocode === from)
