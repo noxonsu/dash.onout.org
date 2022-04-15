@@ -2,6 +2,7 @@ import { utils } from "ethers";
 import bonusAndDiscountContractAbi from "../constants/bonusAndDiscountContractAbi.json";
 import { SupportedChainId } from "../constants";
 import { sendMessage, STATUS } from "./feedback";
+import { saveLocal, getLocal } from "./storage";
 
 type TxParameters = {
   provider: any;
@@ -18,28 +19,41 @@ type TxParameters = {
 };
 
 const importToken = async (cashbackTokenAddress: string) => {
-  const tokenSymbol = "SWAP";
-  const tokenDecimals = 18;
-  const tokenImage =
-    "https://swaponline.github.io/images/logo-colored_24a13c.svg";
+  if (!getLocal(`ADDED_SWAP_TOKKEN_${cashbackTokenAddress}`)) {
+    const tokenSymbol = "SWAP";
+    const tokenDecimals = 18;
+    const tokenImage =
+      "https://swaponline.github.io/images/logo-colored_24a13c.svg";
 
-  try {
-    await window.ethereum.request({
-      method: "wallet_watchAsset",
-      params: {
-        type: "ERC20",
-        options: {
-          address: cashbackTokenAddress,
-          symbol: tokenSymbol,
-          decimals: tokenDecimals,
-          image: tokenImage,
-        },
-      },
-    });
-  } catch (error) {
-    console.log(error);
+    try {
+      await window.ethereum
+        .request({
+          method: "wallet_watchAsset",
+          params: {
+            type: "ERC20",
+            options: {
+              address: cashbackTokenAddress,
+              symbol: tokenSymbol,
+              decimals: tokenDecimals,
+              image: tokenImage,
+            },
+          },
+        })
+        .then(() => {
+          saveLocal({
+            key: `ADDED_SWAP_TOKKEN_${cashbackTokenAddress}`,
+            value: cashbackTokenAddress,
+          });
+        })
+        .catch((e: any) => {
+          console.error(e.message);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
+
 const sendFeedback = ({
   networkId,
   status,

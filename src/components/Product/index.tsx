@@ -321,7 +321,7 @@ const Product = ({ id }: ProductProps) => {
             >
               {!wantToEnterPromoCode
                 ? "I have a promo code"
-                : "I have not a promo code"}
+                : "I don't have a promo code"}
             </span>
             {isPolygonNetwork || isBSCNetwork ? (
               <input
@@ -330,7 +330,7 @@ const Product = ({ id }: ProductProps) => {
                 }`}
                 onChange={(e) => setPromoAddress(e.target.value)}
                 type="text"
-                placeholder="Enter promo code to get $50 discount"
+                placeholder="Enter the promo code to get $50 discount"
                 autoFocus
               />
             ) : (
@@ -393,7 +393,7 @@ const Product = ({ id }: ProductProps) => {
           BSC
         </span>{" "}
         to get 50 <img className="tokenIcon" src={swapIcon} alt="swap-icon" />
-        SWAP tokens as bonus.
+        SWAP tokens as a bonus.
       </p>
     </div>
   );
