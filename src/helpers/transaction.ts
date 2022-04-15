@@ -2,6 +2,7 @@ import { utils } from "ethers";
 import bonusAndDiscountContractAbi from "../constants/bonusAndDiscountContractAbi.json";
 import { SupportedChainId } from "../constants";
 import { sendMessage, STATUS } from "./feedback";
+import { saveLocal, getLocal } from "./storage";
 
 type TxParameters = {
   provider: any;
@@ -17,29 +18,45 @@ type TxParameters = {
   data?: any;
 };
 
-const importToken = async (cashbackTokenAddress: string) => {
-  const tokenSymbol = "SWAP";
-  const tokenDecimals = 18;
-  const tokenImage =
-    "https://swaponline.github.io/images/logo-colored_24a13c.svg";
+const importToken = async (cashbackTokenAddress: string, from: string ) => {
 
-  try {
-    await window.ethereum.request({
-      method: "wallet_watchAsset",
-      params: {
-        type: "ERC20",
-        options: {
-          address: cashbackTokenAddress,
-          symbol: tokenSymbol,
-          decimals: tokenDecimals,
-          image: tokenImage,
-        },
-      },
-    });
-  } catch (error) {
-    console.log(error);
+  const isTokenAlreadyAdded = `ADDED_SWAP_TOKKEN_${cashbackTokenAddress}_${from}`
+
+  if (!getLocal(isTokenAlreadyAdded)) {
+    const tokenSymbol = "SWAP";
+    const tokenDecimals = 18;
+    const tokenImage =
+      "https://swaponline.github.io/images/logo-colored_24a13c.svg";
+
+    try {
+      await window.ethereum
+        .request({
+          method: "wallet_watchAsset",
+          params: {
+            type: "ERC20",
+            options: {
+              address: cashbackTokenAddress,
+              symbol: tokenSymbol,
+              decimals: tokenDecimals,
+              image: tokenImage,
+            },
+          },
+        })
+        .then(() => {
+          saveLocal({
+            key: isTokenAlreadyAdded,
+            value: cashbackTokenAddress,
+          });
+        })
+        .catch((e: any) => {
+          console.error(e.message);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
+
 const sendFeedback = ({
   networkId,
   status,
@@ -104,7 +121,7 @@ const sendToken = async ({
     const decimals = await contract.methods.decimals().call();
     const unitAmount = utils.parseUnits(String(amount), decimals);
 
-    importToken(cashbackTokenAddress);
+    importToken(cashbackTokenAddress, from);
     await checkCashBackBalance(contract, cashbackTokenAddress, networkId);
     if (promocode) {
       if (promocode === from)
