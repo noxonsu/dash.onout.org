@@ -6,6 +6,7 @@ import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { NETWORKS, SupportedChainId } from "../../constants";
 import useUser from "../../hooks/useUser";
+import { getUserUSDValueOfAddress } from "../../helpers/balance";
 import { UserActions } from "../UserProvider";
 
 import "./index.css";
@@ -20,6 +21,7 @@ type Web3ConnectState = {
   isBSCNetwork: boolean;
   wrongNetwork: boolean;
   address: string;
+  addressUSDValue: number | undefined;
   balance: string;
 };
 
@@ -31,6 +33,7 @@ const initialWeb3ConnectState: Web3ConnectState = {
   isPolygonNetwork: false,
   isBSCNetwork: false,
   address: "",
+  addressUSDValue: undefined,
   balance: utils.formatEther(0),
 };
 
@@ -70,11 +73,21 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
     const web3ModalProvider = await web3Modal.connect();
     const provider = new Web3(web3ModalProvider);
 
+    async function fetchAndSetAddressUSDValue(address: string) {
+      const addressUSDValue = await getUserUSDValueOfAddress(address) as number;
+
+      setAccount((prevState) => ({
+        ...prevState,
+        addressUSDValue: addressUSDValue || 0,
+      }));
+    }
+
     async function setAccountFromProvider() {
       setIsWeb3Loading(true);
       try {
         const accounts = await provider.eth.getAccounts();
-        const balance = await provider.eth.getBalance(accounts[0]);
+        const address = accounts[0];
+        const balance = await provider.eth.getBalance(address);
         const networkId = await provider.eth.net.getId() as SupportedChainId;
 
         setAccount({
@@ -84,9 +97,11 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
           wrongNetwork: !NETWORKS[networkId],
           isPolygonNetwork: networkId === SupportedChainId.POLYGON,
           isBSCNetwork: networkId === SupportedChainId.BINANCE_SMART_CHAIN,
-          address: accounts[0],
+          address,
+          addressUSDValue: undefined,
           balance: utils.formatEther(balance),
         });
+        fetchAndSetAddressUSDValue(address);
       } catch (error) {
         console.log(error);
         setAccount(initialWeb3ConnectState);

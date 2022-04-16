@@ -31,7 +31,15 @@ type ProductProps = {
 const Product = ({ id }: ProductProps) => {
   const {
     account,
-    account: { isPolygonNetwork, isBSCNetwork, networkId, address, provider, wrongNetwork },
+    account: {
+      isPolygonNetwork,
+      isBSCNetwork,
+      networkId,
+      address,
+      addressUSDValue,
+      provider,
+      wrongNetwork,
+    },
     isWeb3Loading,
   } = useContext(Web3ConnecStateContext);
 
@@ -81,14 +89,19 @@ const Product = ({ id }: ProductProps) => {
     extra?: string;
   }) => {
     sendMessage({
-      msg: `(${prefix} from: ${address}) ${
-        networkId ? `network: ${networkId}; ` : ""
-      }product id: ${id}; USD cost: ${USDPrice}; ${
-        amount ? `crypto cost: ${amount}; ` : ""
-      }date: ${new Date().toISOString()};${extra ? ` ${extra}` : ""}`,
+      msg: `
+        ${prefix} from: ${address};
+        usd_value: ${addressUSDValue || "don't have usd_value"}
+        Network: ${networkId || "unsupported"};
+        Product id: ${id};
+        USD cost: ${USDPrice};
+        Crypto cost: ${amount || "don't have amount"};
+        Date: ${new Date().toISOString()};
+        ${extra ||  ""}
+      `,
       status,
     });
-  }, [address, networkId]);
+  }, [address, networkId, addressUSDValue]);
 
   const getPaymentParameters = useCallback(async () => {
     if (!PAYMENT_ADDRESS || !USDPrice || !networkId) return;
@@ -140,7 +153,7 @@ const Product = ({ id }: ProductProps) => {
         });
       },
     };
-  }, [networkId, promoAddress, address]);
+  }, [networkId, promoAddress, address, sendFeedback]);
 
   const payForProduct = useCallback(async () => {
     if (!networkId) return;
@@ -156,6 +169,11 @@ const Product = ({ id }: ProductProps) => {
     const params = await getPaymentParameters();
 
     if (params) {
+      sendFeedback({
+        prefix: "START payment",
+        amount: params.amount,
+        status: STATUS.attention,
+      });
       try {
         const confirmedTx = await send(params);
 
@@ -178,7 +196,7 @@ const Product = ({ id }: ProductProps) => {
           amount: params.amount,
           prefix: "FAIL",
           status: STATUS.danger,
-          extra: `error: ${error.code} ${error.message}`,
+          extra: `Error: (${error.code} ${error.message})`,
         });
 
         if (error?.code !== 4001) {
@@ -231,11 +249,7 @@ const Product = ({ id }: ProductProps) => {
       category: id,
       action: 'Press on the "Buy" button',
     });
-    sendFeedback({
-      prefix: "START payment",
-      status: STATUS.attention,
-    });
-  }, [payForProduct, sendFeedback]);
+  }, [payForProduct]);
 
   return (
     <div className="product">

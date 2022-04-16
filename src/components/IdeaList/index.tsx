@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import { IDEAS } from "../../constants";
-import { getUserUSDValueOfAddress } from "../../helpers/balance";
 import { sendMessage, STATUS } from "../../helpers/feedback";
 import { getLocal, saveLocal } from "../../helpers/storage";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
@@ -11,7 +10,7 @@ const votedIdeasStorageItemKeyPostfix = '::votedIdeas';
 const initialVotedJSON = '[]';
 
 const IdeaList = () => {
-  const { account: { address } } = useContext(Web3ConnecStateContext);
+  const { account: { address, addressUSDValue } } = useContext(Web3ConnecStateContext);
 
   const savedVotedIdeas = JSON.parse(address ? (getLocal(`${address}${votedIdeasStorageItemKeyPostfix}`) || initialVotedJSON) : initialVotedJSON);
   const [votedIdeas, setVotedIdeas] = useState<string[]>(savedVotedIdeas);
@@ -29,8 +28,6 @@ const IdeaList = () => {
         key: `${address}${votedIdeasStorageItemKeyPostfix}`,
         value: JSON.stringify(newVotedIdeas),
       });
-
-      const addressUSDValue = await getUserUSDValueOfAddress(address);
 
       sendMessage({
         msg: `
