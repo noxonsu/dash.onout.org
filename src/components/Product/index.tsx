@@ -135,8 +135,6 @@ const Product = ({ id }: ProductProps) => {
     const amount = new BigNumber(finalProductPriceInUSD)
       .div(assetUSDPrice)
       .toNumber();
-    console.log(assetUSDPrice);
-
     return {
       provider,
       networkId,
