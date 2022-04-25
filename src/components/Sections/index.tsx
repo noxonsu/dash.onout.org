@@ -9,13 +9,14 @@ import Tabs from "../Tabs";
 import Affiliate from "../Affiliate";
 
 import "./index.css";
+import Statistics from "../Statistics";
 
 const Sections = () => {
   const location = useLocation();
 
   const { account } = useContext(Web3ConnecStateContext);
   const { state } = useUser();
-  const { signed, subscribed, view} = state;
+  const { signed, subscribed, view } = state;
 
   if (!signed || !subscribed || account.wrongNetwork) return null;
 
@@ -39,6 +40,7 @@ const Sections = () => {
           element={<Product id={newView} />}
         />
         <Route path={`/affiliate`} element={<Affiliate />} />
+        <Route path={`/statistics`} element={<Statistics />} />
       </Routes>
     </div>
   );

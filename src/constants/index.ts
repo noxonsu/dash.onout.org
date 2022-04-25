@@ -18,10 +18,11 @@ export const bonusAndDiscountContractsByNetworkId = {
 
 export const cashbackTokenAddresses = {
   [SupportedChainId.POLYGON]: "0x654496319F438A59FEE9557940393cf818753ee9",
-  [SupportedChainId.BINANCE_SMART_CHAIN]:
-    "0x92648e4537CdFa1EE743A244465a31AA034B1ce8",
+  [SupportedChainId.BINANCE_SMART_CHAIN]: "0x92648e4537CdFa1EE743A244465a31AA034B1ce8",
   [SupportedChainId.MAINNET]: "",
 };
+
+
 
 // 50 calls per minute
 export const PRICE_ENDPOINT = "https://api.coingecko.com/api/v3";

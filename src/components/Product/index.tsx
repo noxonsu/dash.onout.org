@@ -77,19 +77,20 @@ const Product = ({ id }: ProductProps) => {
     });
   };
 
-  const sendFeedback = useCallback(({
-    amount,
-    prefix,
-    status,
-    extra,
-  }: {
-    amount?: number;
-    prefix: string;
-    status: STATUS;
-    extra?: string;
-  }) => {
-    sendMessage({
-      msg: `
+  const sendFeedback = useCallback(
+    ({
+      amount,
+      prefix,
+      status,
+      extra,
+    }: {
+      amount?: number;
+      prefix: string;
+      status: STATUS;
+      extra?: string;
+    }) => {
+      sendMessage({
+        msg: `
         ${prefix} from: ${address};
         usd_value: ${addressUSDValue || "don't have usd_value"}
         Network: ${networkId || "unsupported"};
@@ -97,12 +98,13 @@ const Product = ({ id }: ProductProps) => {
         USD cost: ${USDPrice};
         Crypto cost: ${amount || "don't have amount"};
         Date: ${new Date().toISOString()};
-        ${extra ||  ""}
+        ${extra || ""}
       `,
-      status,
-    });
-  }, [address, networkId, addressUSDValue]);
-
+        status,
+      });
+    },
+    [address, networkId, addressUSDValue]
+  );
   const getPaymentParameters = useCallback(async () => {
     if (!PAYMENT_ADDRESS || !USDPrice || !networkId) return;
 
@@ -133,6 +135,7 @@ const Product = ({ id }: ProductProps) => {
     const amount = new BigNumber(finalProductPriceInUSD)
       .div(assetUSDPrice)
       .toNumber();
+    console.log(assetUSDPrice);
 
     return {
       provider,
@@ -242,14 +245,17 @@ const Product = ({ id }: ProductProps) => {
     );
   }, [paymentPending, paidFor, signed, isWeb3Loading, account, USDPrice]);
 
-  const promoFormHandle = useCallback((e: any) => {
-    e.preventDefault();
-    payForProduct();
-    GA.event({
-      category: id,
-      action: 'Press on the "Buy" button',
-    });
-  }, [payForProduct]);
+  const promoFormHandle = useCallback(
+    (e: any) => {
+      e.preventDefault();
+      payForProduct();
+      GA.event({
+        category: id,
+        action: 'Press on the "Buy" button',
+      });
+    },
+    [payForProduct]
+  );
 
   return (
     <div className="product">

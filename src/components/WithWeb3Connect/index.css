@@ -18,7 +18,12 @@
   justify-content: space-between;
 }
 
-.disconnectButton {
+.linkStatistics{
+  margin-right: 15px;
+  text-decoration: none;
+}
+
+.disconnectButton, .linkStatistics {
   font-size: 0.9rem;
   padding: 0.5rem 1rem;
 }
