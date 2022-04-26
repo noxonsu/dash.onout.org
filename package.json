@@ -37,7 +37,8 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "serve": "npx serve -s build",
-    "eject": "react-app-rewired eject"
+    "eject": "react-app-rewired eject",
+    "check-domains": "jest tests/checkIPFSDomain.test.ts --detectOpenHandles"
   },
   "eslintConfig": {
     "extends": [
@@ -58,6 +59,10 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/jest": "^27.0.1",
+    "jest": "^27.0.0",
+    "puppeteer": "^11.0.0",
     "serve": "^13.0.2"
   }
 }
