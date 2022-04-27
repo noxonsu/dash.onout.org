@@ -26,10 +26,10 @@ describe('Check health of domains', () => {
             timeout: ONE_MINUTE,
           });
 
-          await timeOut(ONE_MINUTE);
+          await timeOut(ONE_MINUTE * 2);
 
           await testPage.waitForSelector('#connect-wallet', {
-            timeout: ONE_MINUTE * 4,
+            timeout: ONE_MINUTE,
           });
 
           await takeScreenshot(testPage, `CheckDomain_${projectName}`);
