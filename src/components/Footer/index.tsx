@@ -1,14 +1,16 @@
-import GA from 'react-ga';
+import GA from "react-ga";
 import { MdEmail, MdChat } from "react-icons/md";
 import { SiTelegram, SiDiscord } from "react-icons/si";
+import { Link } from "react-router-dom";
 import useUser from "../../hooks/useUser";
-import Referal from '../Referal';
+import Referal from "../Referal";
 
 import "./index.css";
 
 const Footer = () => {
-
-  const { state: { signed, subscribed } } = useUser();
+  const {
+    state: { signed, subscribed },
+  } = useUser();
 
   const links = [
     {
@@ -41,24 +43,50 @@ const Footer = () => {
   return (
     <footer>
       {signed && subscribed && (
-      <div>
-        <Referal/>
-        <p className="footerRiskNotice">
-          Risk notification: Our code is based on top audited sources, but our
-          changes are unaudited from 3rd party auditors. We improve security but a
-          lot of things are out of our control, for example, 3rd party software
-          like WordPress, your server's software, your hosting provider. We have
-          delivered dapps for hundreds of clients which handle tens of thousands
-          of users. For the past 3 years, we have received about 10 incident
-          reports kind of "a user lost funds". Unfortunately, not all of them have
-          been resolved. Ask yourself who other than you can access your server?
-          When was your last time installing security updates? The most secure
-          choice would be our cloud solution (with a "revenue-share" payment
-          model) contact support for more information. For WP standalone versions
-          please use as less plugins as you can and the "Simply Static plugin" and
-          "Wodefence" for security.
-        </p>
-      </div>
+        <div>
+          <Referal />
+          <ul className="footerItems">
+            <li className="footerItem">
+              <Link to="/statistics" className="footerLink">
+                stats
+              </Link>
+            </li>
+            <li className="footerItem">
+              <a
+                href="https://tools.onout.org/sponsor.md"
+                target="_blanck"
+                className="footerLink"
+              >
+                become a sponsor
+              </a>
+            </li>
+            <li className="footerItem">
+              <a
+                href="https://t.me/onoutsupportbot"
+                target="_blanck"
+                className="footerLink"
+              >
+                contact support
+              </a>
+            </li>
+          </ul>
+          <p className="footerRiskNotice">
+            Risk notification: Our code is based on top audited sources, but our
+            changes are unaudited from 3rd party auditors. We improve security
+            but a lot of things are out of our control, for example, 3rd party
+            software like WordPress, your server's software, your hosting
+            provider. We have delivered dapps for hundreds of clients which
+            handle tens of thousands of users. For the past 3 years, we have
+            received about 10 incident reports kind of "a user lost funds".
+            Unfortunately, not all of them have been resolved. Ask yourself who
+            other than you can access your server? When was your last time
+            installing security updates? The most secure choice would be our
+            cloud solution (with a "revenue-share" payment model) contact
+            support for more information. For WP standalone versions please use
+            as less plugins as you can and the "Simply Static plugin" and
+            "Wodefence" for security.
+          </p>
+        </div>
       )}
 
       <ul className="linksList">
@@ -71,7 +99,7 @@ const Footer = () => {
               title={title}
               onClick={() => {
                 GA.event({
-                  category: 'Social links',
+                  category: "Social links",
                   action: gaAction,
                 });
               }}

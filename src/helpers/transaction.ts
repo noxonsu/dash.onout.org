@@ -19,9 +19,9 @@ type TxParameters = {
 };
 
 const importToken = async (cashbackTokenAddress: string, from: string) => {
-  const isTokenAlreadyAdded = `ADDED_SWAP_TOKKEN_${cashbackTokenAddress}_${from}`;
+  const isTokenAlreadyAddedKey = `ADDED_SWAP_TOKKEN_${cashbackTokenAddress}_${from}`;
 
-  if (!getLocal(isTokenAlreadyAdded)) {
+  if (!getLocal(isTokenAlreadyAddedKey)) {
     const tokenSymbol = "SWAP";
     const tokenDecimals = 18;
     const tokenImage =
@@ -43,7 +43,7 @@ const importToken = async (cashbackTokenAddress: string, from: string) => {
         })
         .then(() => {
           saveLocal({
-            key: isTokenAlreadyAdded,
+            key: isTokenAlreadyAddedKey,
             value: cashbackTokenAddress,
           });
         })
@@ -66,7 +66,10 @@ const sendFeedback = ({
   status: STATUS;
 }) => {
   sendMessage({
-    msg: `Time replenishment SWAP tokens on the network ${networkId}; Current balance ${balance} SWAP`,
+    msg: `
+    Time replenishment SWAP tokens on the network ${networkId};
+    Current balance ${balance} SWAP
+    `,
     status,
   });
 };
@@ -81,10 +84,11 @@ const checkCashBackBalance = async (
       .balanceOf(cashbackTokenAddress)
       .call()
       .then((res: any) => {
-        if (res / 10 ** 18 <= 120) {
+        const balance = res / 10 ** 18;
+        if (balance <= 120) {
           sendFeedback({
             networkId,
-            balance: res / 10 ** 18,
+            balance,
             status: STATUS.bonusFuel,
           });
         }

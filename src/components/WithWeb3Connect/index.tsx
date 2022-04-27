@@ -211,12 +211,6 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
               {address.slice(address.length - 4, address.length)}
             </span>
             <div className="disconnect-btn-block">
-              <Link
-                className="secondaryBtn linkStatistics"
-                to="/statistics"
-              >
-                View Statistics
-              </Link>
               <button
                 className="secondaryBtn disconnectButton"
                 onClick={() => {

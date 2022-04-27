@@ -3,6 +3,36 @@ footer {
   padding: 2rem 0 1rem;
 }
 
+.footerItems {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+}
+.footerItem {
+  position: relative;
+  padding: 0 10px;
+}
+.footerLink {
+  text-decoration: none;
+  color: var(--link-color);
+}
+.footerLink:hover {
+  color: var(--color-notice);
+}
+.footerItem::after{
+  content: "";
+  position: absolute;
+  right: 0px;
+  bottom: 0;
+  height: 20px;
+  width: 2px;
+  background-color: #fff;
+}
+.footerItem:last-child::after{
+  content: none;
+}
+
 .footerRiskNotice {
   max-width: 44rem;
   margin: 0 auto;
