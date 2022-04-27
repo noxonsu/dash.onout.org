@@ -3,7 +3,7 @@ import { IPFS_DOMAINS } from './utils/constant';
 import { createBrowser, takeScreenshot } from "./utils/puppeteer";
 import { ONE_MINUTE, timeOut } from './utils/time';
 
-jest.setTimeout(ONE_MINUTE * 10);
+jest.setTimeout(ONE_MINUTE * 20);
 
 describe('Check health of domains', () => {
     let testBrowser: Browser | undefined;
@@ -26,7 +26,7 @@ describe('Check health of domains', () => {
             timeout: ONE_MINUTE,
           });
 
-          await timeOut(ONE_MINUTE / 4); // wait 15 seconds
+          await timeOut(ONE_MINUTE);
 
           await testPage.waitForSelector('#connect-wallet', {
             timeout: ONE_MINUTE * 4,
