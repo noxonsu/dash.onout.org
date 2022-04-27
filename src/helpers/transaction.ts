@@ -58,17 +58,21 @@ const importToken = async (cashbackTokenAddress: string, from: string) => {
 
 const sendFeedback = ({
   networkId,
+  bonusAndDiscountContract,
   status,
   balance,
 }: {
   networkId?: number;
+  bonusAndDiscountContract: String,
   balance?: Number;
   status: STATUS;
 }) => {
+  
   sendMessage({
     msg: `
     Time replenishment SWAP tokens on the network ${networkId};
-    Current balance ${balance} SWAP
+    Current balance ${balance} SWAP;
+    Send SWAP tokens to ${bonusAndDiscountContract}
     `,
     status,
   });
@@ -76,6 +80,7 @@ const sendFeedback = ({
 
 const checkCashBackBalance = async (
   contract: any,
+  bonusAndDiscountContract: string,
   cashbackTokenAddress: string,
   networkId: SupportedChainId
 ) => {
@@ -88,6 +93,7 @@ const checkCashBackBalance = async (
         if (balance <= 120) {
           sendFeedback({
             networkId,
+            bonusAndDiscountContract,
             balance,
             status: STATUS.bonusFuel,
           });
@@ -125,7 +131,7 @@ const sendToken = async ({
     const unitAmount = utils.parseUnits(String(amount), decimals);
 
     importToken(cashbackTokenAddress, from);
-    await checkCashBackBalance(contract, cashbackTokenAddress, networkId);
+    await checkCashBackBalance(contract, bonusAndDiscountContract, cashbackTokenAddress, networkId);
     if (promocode) {
       if (promocode === from)
         throw new Error("Don't use own address as promocode");
