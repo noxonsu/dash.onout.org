@@ -23,13 +23,13 @@ describe('Check health of domains', () => {
       if (testPage) {
         try {
           await testPage.goto(domain, {
-            timeout: ONE_MINUTE,
+            timeout: ONE_MINUTE * 2,
           });
 
           await timeOut(ONE_MINUTE * 2);
 
           await testPage.waitForSelector('#connect-wallet', {
-            timeout: ONE_MINUTE,
+            timeout: ONE_MINUTE * 2,
           });
 
           await takeScreenshot(testPage, `CheckDomain_${projectName}`);
