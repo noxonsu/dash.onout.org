@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [17.x]
 
     steps:
       - name: Checkout
@@ -26,8 +26,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
-        run: |
-          npm i
+        run: npm i
 
       - name: Check domains
         run: |
