@@ -6,7 +6,7 @@ import axios from "../../helpers/axios";
 import {
   FIAT_TICKER,
   NETWORKS,
-  urlForReceivingTransactionData,
+  statisticUrlsDataByNetwork,
   SupportedChainId,
 } from "../../constants";
 import "./index.css";
@@ -34,25 +34,34 @@ const Statistics = () => {
   const millisecund = 1000;
   const decimals = 18;
   const sum = 10 ** decimals;
+  const statisticUrlsDataByNetworkArray = Object.values(
+    statisticUrlsDataByNetwork
+  );
+
+  const chainId = {
+    mainnet: 1,
+    binance_smart_chain: 56,
+    polygon: 137,
+  }
 
   useEffect(() => {
-    urlForReceivingTransactionData.map(async (urlObject) => {
+    statisticUrlsDataByNetworkArray.map(async (object: any) => {
       let assetId = "";
-      if (Object.keys(urlObject)[0] === "1") {
+      if (object.networkId === chainId.mainnet) {
         assetId = NETWORKS[1].currency.id;
         const data = await getPrice({
           assetId,
           vsCurrency: FIAT_TICKER.toLowerCase(),
         });
         setEthTokenRate(data[assetId]?.usd);
-      } else if (Object.keys(urlObject)[0] === "56") {
+      } else if (object.networkId === chainId.binance_smart_chain) {
         assetId = NETWORKS[56].currency.id;
         const data = await getPrice({
           assetId,
           vsCurrency: FIAT_TICKER.toLowerCase(),
         });
         setBscTokenRate(data[assetId]?.usd);
-      } else if (Object.keys(urlObject)[0] === "137") {
+      } else if (object.networkId === chainId.polygon) {
         assetId = NETWORKS[137].currency.id;
         const data = await getPrice({
           assetId,
@@ -66,19 +75,19 @@ const Statistics = () => {
   }, [address, networkId, wrongNetwork]);
 
   useEffect(() => {
-    urlForReceivingTransactionData.map(async (urlObject: any) => {
-      const objectValue = Object.values(urlObject);
+    statisticUrlsDataByNetworkArray.map(async (object: any) => {
+      const objectValue = Object.values(object);
       try {
         await axios({
-          url: `${objectValue[0]}`,
+          url: `${object.apiLink}`,
           method: "get",
         })
           .then(({ data }) => {
-            if (Object.keys(urlObject)[0] === "1") {
+            if (object.networkId === chainId.mainnet) {
               setEthTransationsResult(data.result);
-            } else if (Object.keys(urlObject)[0] === "56") {
+            } else if (object.networkId === chainId.binance_smart_chain) {
               setBscTransationsResult(data.result);
-            } else if (Object.keys(urlObject)[0] === "137") {
+            } else if (object.networkId === chainId.polygon) {
               setPolygonTransationsResult(data.result);
             } else {
               return;
@@ -91,18 +100,18 @@ const Statistics = () => {
     });
   }, [address, networkId, wrongNetwork]);
 
-  const supportedChainIdValue = Object.values(SupportedChainId).filter((supportedChainId) =>
-    Number(supportedChainId)
+  const supportedChainIdValue = Object.values(SupportedChainId).filter(
+    (supportedChainId) => Number(supportedChainId)
   );
 
   useEffect(() => {
     const date = new Date();
     const thisWeek = date.setHours(date.getHours() - WeekInHours);
     const lastWeek = date.setHours(date.getHours() - WeekInHours * 2);
-    supportedChainIdValue.map((chainId) => {
+    supportedChainIdValue.map((networkId) => {
       let transationThisWeek = [""];
       let transationLastWeek = [""];
-      if (chainId === 1) {
+      if (networkId === chainId.mainnet) {
         transationThisWeek = ethTransationsResult.filter(
           (transactionData: any) => {
             return (
@@ -120,7 +129,7 @@ const Statistics = () => {
             );
           }
         );
-      } else if (chainId === 56) {
+      } else if (networkId === chainId.binance_smart_chain) {
         transationThisWeek = bscTransationsResult.filter(
           (transactionData: any) => {
             return (
@@ -138,7 +147,7 @@ const Statistics = () => {
             );
           }
         );
-      } else if (chainId === 137) {
+      } else if (networkId === chainId.polygon) {
         transationThisWeek = polygonTransationsResult.filter(
           (transactionData: any) => {
             return (
@@ -170,21 +179,21 @@ const Statistics = () => {
         },
         0
       );
-      if (chainId === 1) {
+      if (networkId === chainId.mainnet) {
         salesThisWeekSum += Math.floor(
           (getSalesBalanceThisWeek / sum) * ethTokenRate
         );
         salesLastWeekSum += Math.floor(
           (getSalesBalanceLastWeek / sum) * ethTokenRate
         );
-      } else if (chainId === 56) {
+      } else if (networkId === chainId.binance_smart_chain) {
         salesThisWeekSum += Math.floor(
           (getSalesBalanceThisWeek / sum) * bscTokenRate
         );
         salesLastWeekSum += Math.floor(
           (getSalesBalanceLastWeek / sum) * bscTokenRate
         );
-      } else if (chainId === 137) {
+      } else if (networkId === chainId.polygon) {
         salesThisWeekSum += Math.floor(
           (getSalesBalanceThisWeek / sum) * polygonTokenRate
         );
@@ -200,7 +209,7 @@ const Statistics = () => {
   useEffect(() => {
     setSalesThisWeek(salesThisWeekSum);
     setSalesLastWeek(salesLastWeekSum);
-    
+
     try {
       const profitPercentage =
         ((salesThisWeek - salesLastWeek) * 100) / salesLastWeek;

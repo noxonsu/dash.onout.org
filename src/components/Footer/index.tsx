@@ -48,7 +48,7 @@ const Footer = () => {
           <ul className="footerItems">
             <li className="footerItem">
               <Link to="/statistics" className="footerLink">
-                stats
+                Stats
               </Link>
             </li>
             <li className="footerItem">
@@ -57,7 +57,7 @@ const Footer = () => {
                 target="_blanck"
                 className="footerLink"
               >
-                become a sponsor
+                Become a sponsor
               </a>
             </li>
             <li className="footerItem">
@@ -66,7 +66,7 @@ const Footer = () => {
                 target="_blanck"
                 className="footerLink"
               >
-                contact support
+                Contact support
               </a>
             </li>
           </ul>

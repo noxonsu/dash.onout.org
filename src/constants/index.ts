@@ -22,17 +22,38 @@ export const bonusAndDiscountContractsByNetworkId = {
   [SupportedChainId.MAINNET]: "",
 };
 
+export const statisticUrlsDataByNetwork = {
+  [SupportedChainId.POLYGON]: {
+    networkId: 137,
+    apiKey: "4JB4UXHBIE2I5285T18J8SSPUS2M3K7X3V",
+    apiLink: `https://api.polygonscan.com/api?module=account&action=txlist&address=${bonusAndDiscountContractsByNetworkId[SupportedChainId.POLYGON]}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=${apiKey.POLYGON}`,
+    fetchingAddress: bonusAndDiscountContractsByNetworkId[SupportedChainId.POLYGON]
+  },
+  [SupportedChainId.BINANCE_SMART_CHAIN]: {
+    networkId: 56,
+    apiKey: "2JEI3SQQ8VFNVHFC8XSSNBRNCHZP3632QD",
+    apiLink: `https://api.bscscan.com/api?module=account&action=txlist&address=${bonusAndDiscountContractsByNetworkId[SupportedChainId.BINANCE_SMART_CHAIN]}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=${apiKey.BINANCE_SMART_CHAIN}`,
+    fetchingAddress: bonusAndDiscountContractsByNetworkId[SupportedChainId.BINANCE_SMART_CHAIN]
+  },
+  [SupportedChainId.MAINNET]: {
+    networkId: 1,
+    apiKey: "RZ7N3TCPHFIU7Q4KA1V93MZWRN4X7F8HIT",
+    apiLink: `https://api.etherscan.io/api?module=account&action=txlist&address=${PAYMENT_ADDRESS}&startblock=0&endblock=99999999&page=1&offset=1000&sort=asc&apikey=${apiKey.MAINNET}`,
+    fetchingAddress: PAYMENT_ADDRESS
+  }
+}
+
 export const cashbackTokenAddresses = {
   [SupportedChainId.POLYGON]: "0x654496319F438A59FEE9557940393cf818753ee9",
   [SupportedChainId.BINANCE_SMART_CHAIN]: "0x92648e4537CdFa1EE743A244465a31AA034B1ce8",
   [SupportedChainId.MAINNET]: "",
 };
 
-export const urlForReceivingTransactionData = [
-  {[SupportedChainId.POLYGON]: `https://api.polygonscan.com/api?module=account&action=txlist&address=${bonusAndDiscountContractsByNetworkId[SupportedChainId.POLYGON]}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=${apiKey.POLYGON}`},
-  {[SupportedChainId.BINANCE_SMART_CHAIN]: `https://api.bscscan.com/api?module=account&action=txlist&address=${bonusAndDiscountContractsByNetworkId[SupportedChainId.BINANCE_SMART_CHAIN]}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=${apiKey.BINANCE_SMART_CHAIN}`},
-  {[SupportedChainId.MAINNET]: `https://api.etherscan.io/api?module=account&action=txlist&address=${PAYMENT_ADDRESS}&startblock=0&endblock=99999999&page=1&offset=1000&sort=asc&apikey=${apiKey.MAINNET}`},
-]
+// export const urlForReceivingTransactionData = {
+//   [SupportedChainId.POLYGON]: `https://api.polygonscan.com/api?module=account&action=txlist&address=${bonusAndDiscountContractsByNetworkId[SupportedChainId.POLYGON]}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=${apiKey.POLYGON}`,
+//   [SupportedChainId.BINANCE_SMART_CHAIN]: `https://api.bscscan.com/api?module=account&action=txlist&address=${bonusAndDiscountContractsByNetworkId[SupportedChainId.BINANCE_SMART_CHAIN]}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=${apiKey.BINANCE_SMART_CHAIN}`,
+//   [SupportedChainId.MAINNET]: `https://api.etherscan.io/api?module=account&action=txlist&address=${PAYMENT_ADDRESS}&startblock=0&endblock=99999999&page=1&offset=1000&sort=asc&apikey=${apiKey.MAINNET}`,
+// }
 
 
 // 50 calls per minute
