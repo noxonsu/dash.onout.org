@@ -28,6 +28,9 @@ import lotteryfactory from "./plugins/lotteryfactory.zip";
 import multicurrencywallet from "./plugins/multicurrencywallet.zip";
 //@ts-ignore
 import nftmarketplace from "./plugins/nftmarketplace.zip";
+//@ts-ignore
+import crosschainStatic from "./plugins/static_crosschain.zip";
+
 
 export const COVERS: { [k: string]: string } = {
   walletCover,
@@ -58,4 +61,5 @@ export const PLUGINS: { [id: string]: string } = {
   lotteryfactory,
   multicurrencywallet,
   nftmarketplace,
+  crosschainStatic,
 };
