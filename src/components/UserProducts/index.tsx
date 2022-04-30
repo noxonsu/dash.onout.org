@@ -15,6 +15,7 @@ const ACCOUNTS: { [key: string]: string[] } = {
     "daofactory",
     "lotteryfactory",
     "nftmarketplace",
+    "crosschain",
   ],
   "0x90ff57fded0af7be9196df3623cd587ad8e7d920": [
     "multicurrencywallet",
