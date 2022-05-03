@@ -256,6 +256,22 @@ export const PRODUCTS: { [id: string]: Product } = {
     lables: [],
     price: 500,
   },
+  lenda: {
+    id: "lenda",
+    productId: 8,
+    name: "Lenda",
+    status: "development",
+    demo: "lenda.onout.xyz",
+    description: "",
+    imgSrc: COVERS.lendaCover,
+    imgAlt: "Lenda promo",
+    promoPage: "OnOut lenda",
+    promoPageLink: "",
+    docsLink: "",
+    codecanyonLink: "",
+    lables: ["new"],
+    price: 1000,
+  },
 };
 
 export const IDEAS = [
