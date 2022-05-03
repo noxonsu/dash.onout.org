@@ -18,12 +18,15 @@ type TxParameters = {
   data?: any;
 };
 
-const importToken = async (cashbackTokenAddress: string, from: string) => {
+const importToken = async (
+  cashbackTokenAddress: string,
+  from: string,
+  decimals: number
+) => {
   const isTokenAlreadyAddedKey = `ADDED_SWAP_TOKKEN_${cashbackTokenAddress}_${from}`;
 
   if (!getLocal(isTokenAlreadyAddedKey)) {
     const tokenSymbol = "SWAP";
-    const tokenDecimals = 18;
     const tokenImage =
       "https://swaponline.github.io/images/logo-colored_24a13c.svg";
 
@@ -36,7 +39,7 @@ const importToken = async (cashbackTokenAddress: string, from: string) => {
             options: {
               address: cashbackTokenAddress,
               symbol: tokenSymbol,
-              decimals: tokenDecimals,
+              decimals: decimals,
               image: tokenImage,
             },
           },
@@ -63,11 +66,10 @@ const sendFeedback = ({
   balance,
 }: {
   networkId?: number;
-  bonusAndDiscountContract: String,
+  bonusAndDiscountContract: String;
   balance?: Number;
   status: STATUS;
 }) => {
-  
   sendMessage({
     msg: `
     Time replenishment SWAP tokens on the network ${networkId};
@@ -79,17 +81,19 @@ const sendFeedback = ({
 };
 
 const checkCashBackBalance = async (
-  contract: any,
+  decimals: number,
+  contractSwapBalanceOf: any,
   bonusAndDiscountContract: string,
-  cashbackTokenAddress: string,
   networkId: SupportedChainId
 ) => {
   try {
-    await contract?.methods
-      .balanceOf(cashbackTokenAddress)
+    await contractSwapBalanceOf.methods
+      .balanceOf(bonusAndDiscountContract)
       .call()
       .then((res: any) => {
-        const balance = res / 10 ** 18;
+        const balance = res / 10 ** decimals;
+        console.log(balance);
+        
         if (balance <= 120) {
           sendFeedback({
             networkId,
@@ -120,18 +124,27 @@ const sendToken = async ({
       throw new Error(
         "Don't have Bonus and Discount Contract or Cashback Token Address"
       );
-
     const contract = new provider.eth.Contract(
       bonusAndDiscountContractAbi,
       bonusAndDiscountContract,
+      { from }
+    );
+    const contractSwapBalanceOf = new provider.eth.Contract(
+      bonusAndDiscountContractAbi,
+      cashbackTokenAddress,
       { from }
     );
 
     const decimals = await contract.methods.decimals().call();
     const unitAmount = utils.parseUnits(String(amount), decimals);
 
-    importToken(cashbackTokenAddress, from);
-    await checkCashBackBalance(contract, bonusAndDiscountContract, cashbackTokenAddress, networkId);
+    importToken(cashbackTokenAddress, from, decimals);
+    await checkCashBackBalance(
+      decimals,
+      contractSwapBalanceOf,
+      bonusAndDiscountContract,
+      networkId
+    );
     if (promocode) {
       if (promocode === from)
         throw new Error("Don't use own address as promocode");
