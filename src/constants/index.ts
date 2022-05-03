@@ -161,13 +161,12 @@ export const PRODUCTS: { [id: string]: Product } = {
     id: "crosschain",
     productId: 1,
     name: "CROSS-CHAIN exchange",
-    status: "development",
-    demo: "",
+    status: "ready",
+    demo: "crosschain.onout.org",
     howToEarn: "On commission for each trade",
     adminCanEdit:
-      "Logo, colors, list of assets, links, fee percent, admin and fee addresses",
-    description:
-      "Presale... Development in progress. Pay now to fix the price. (ETA: 1 month)",
+      "Logo, colors, list of assets, links, fee percent",
+    description: "",
     imgSrc: COVERS.crossChainCover,
     imgAlt: "crosschain wallet promo",
     promoPage: "OnOut cross-chain",
