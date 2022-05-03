@@ -53,7 +53,7 @@ const Affiliate = () => {
     };
 
     fetchReferalInfo();
-  }, [address, networkId, wrongNetwork]);
+  }, [provider, address, networkId, wrongNetwork]);
   return (
     <div className="affiliate">
       <h3 className="title">
@@ -83,6 +83,7 @@ const Affiliate = () => {
           className="affiliateLink"
           href="https://farm.onout.org/"
           target="_blank"
+          rel="noopener noreferrer"
         >
           {" "}
           farm.onout.org
@@ -111,6 +112,7 @@ const Affiliate = () => {
             className="affiliateLink"
             href="mailto:support@onout.org"
             target="_blank"
+            rel="noopener noreferrer"
           >
             {" "}
             support@onout.org{" "}
@@ -120,6 +122,7 @@ const Affiliate = () => {
             className="affiliateLink"
             href="https://t.me/onoutsupportbot/?start=dash_affiliate"
             target="_blank"
+            rel="noopener noreferrer"
           >
             {" "}
             https://t.me/onoutsupportbot/?start=dash_affiliate
