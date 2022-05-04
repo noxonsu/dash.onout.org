@@ -18,8 +18,10 @@ type TxParameters = {
   data?: any;
 };
 
-const importToken = async (cashbackTokenAddress: string, from: string ) => {
-
+export const importToken = async (
+  cashbackTokenAddress: string,
+  from: string
+) => {
   const addedTokenLSKey = `ADDED_SWAP_TOKKEN_${cashbackTokenAddress}_${from}`;
   const isTokenAlreadyAdded = getLocal(addedTokenLSKey);
 
@@ -30,19 +32,18 @@ const importToken = async (cashbackTokenAddress: string, from: string ) => {
       "https://swaponline.github.io/images/logo-colored_24a13c.svg";
 
     try {
-      await window.ethereum
-        .request({
-          method: "wallet_watchAsset",
-          params: {
-            type: "ERC20",
-            options: {
-              address: cashbackTokenAddress,
-              symbol: tokenSymbol,
-              decimals: tokenDecimals,
-              image: tokenImage,
-            },
+      await window.ethereum.request({
+        method: "wallet_watchAsset",
+        params: {
+          type: "ERC20",
+          options: {
+            address: cashbackTokenAddress,
+            symbol: tokenSymbol,
+            decimals: tokenDecimals,
+            image: tokenImage,
           },
-        });
+        },
+      });
 
       saveLocal({
         key: addedTokenLSKey,
@@ -52,24 +53,6 @@ const importToken = async (cashbackTokenAddress: string, from: string ) => {
       console.log(error);
     }
   }
-};
-
-const sendFeedback = ({
-  networkId,
-  status,
-  balance,
-}: {
-  networkId?: number;
-  balance: number;
-  status: STATUS;
-}) => {
-  sendMessage({
-    msg: `
-      Time replenishment SWAP tokens on the network: ${networkId};
-      Current balance: ${balance} SWAP
-    `,
-    status,
-  });
 };
 
 const checkCashBackBalance = async (
@@ -83,10 +66,16 @@ const checkCashBackBalance = async (
       .call()
       .then((res: any) => {
         const balance = res / 10 ** 18;
+
+        console.log('res: ', res)
+        console.log('balance: ', balance)
+
         if (balance <= 120) {
-          sendFeedback({
-            networkId,
-            balance,
+          sendMessage({
+            msg: `
+              Time replenishment SWAP tokens on the network: ${networkId};
+              Current balance: ${balance} SWAP
+            `,
             status: STATUS.bonusFuel,
           });
         }
@@ -122,8 +111,8 @@ const sendToken = async ({
     const decimals = await contract.methods.decimals().call();
     const unitAmount = utils.parseUnits(String(amount), decimals);
 
-    importToken(cashbackTokenAddress, from);
     await checkCashBackBalance(contract, cashbackTokenAddress, networkId);
+
     if (promocode) {
       if (promocode === from)
         throw new Error("Don't use own address as promocode");

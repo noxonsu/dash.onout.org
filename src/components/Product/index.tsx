@@ -10,7 +10,7 @@ import {
   bonusAndDiscountContractsByNetworkId,
   cashbackTokenAddresses,
 } from "../../constants";
-import { send } from "../../helpers/transaction";
+import { send, importToken } from "../../helpers/transaction";
 import { sendMessage, STATUS } from "../../helpers/feedback";
 // import { stringFromHex, stringToHex } from "../../helpers/format";
 import { getPrice } from "../../helpers/currency";
@@ -101,7 +101,7 @@ const Product = ({ id }: ProductProps) => {
       `,
       status,
     });
-  }, [address, networkId, addressUSDValue]);
+  }, [address, networkId, addressUSDValue, USDPrice, id]);
 
   const getPaymentParameters = useCallback(async () => {
     if (!PAYMENT_ADDRESS || !USDPrice || !networkId) return;
@@ -153,7 +153,7 @@ const Product = ({ id }: ProductProps) => {
         });
       },
     };
-  }, [networkId, promoAddress, address, sendFeedback]);
+  }, [networkId, promoAddress, address, sendFeedback, USDPrice, productId, provider]);
 
   const payForProduct = useCallback(async () => {
     if (!networkId) return;
@@ -205,7 +205,7 @@ const Product = ({ id }: ProductProps) => {
       }
     }
     setPaymentPending(false);
-  }, [networkId, wrongNetwork, getPaymentParameters, address, sendFeedback]);
+  }, [networkId, wrongNetwork, getPaymentParameters, address, sendFeedback, dispatch, id]);
 
   const switchOnPolygonNetwork = async () => {
     try {
@@ -217,6 +217,7 @@ const Product = ({ id }: ProductProps) => {
       console.error(e);
     }
   };
+
   const switchOnBSCNetwork = async () => {
     try {
       await window.ethereum.request({
@@ -227,6 +228,12 @@ const Product = ({ id }: ProductProps) => {
       console.error(e);
     }
   };
+
+  const importSwapToken = () => {
+    if (networkId) {
+      importToken(cashbackTokenAddresses[networkId], address)
+    }
+  }
 
   const [paymentAvailable, setPaymentAvailable] = useState(false);
 
@@ -249,7 +256,7 @@ const Product = ({ id }: ProductProps) => {
       category: id,
       action: 'Press on the "Buy" button',
     });
-  }, [payForProduct]);
+  }, [payForProduct, id]);
 
   return (
     <div className="product">
@@ -406,8 +413,12 @@ const Product = ({ id }: ProductProps) => {
           <img className="tokenIcon" src={bscIcon} alt="bsc-icon" />
           BSC
         </span>{" "}
-        to get 50 <img className="tokenIcon" src={swapIcon} alt="swap-icon" />
-        SWAP tokens as a bonus.
+        to get 50
+        <button onClick={importSwapToken}>
+          <img className="tokenIcon" src={swapIcon} alt="swap-token-icon" />
+          SWAP
+        </button>
+        tokens as a bonus.
       </p>
     </div>
   );
