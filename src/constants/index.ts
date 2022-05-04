@@ -12,7 +12,8 @@ export enum SupportedChainId {
 
 export const bonusAndDiscountContractsByNetworkId = {
   [SupportedChainId.POLYGON]: "0xd9f89Dec54CbF10011FDc8D9FA06E1f30c3F74d4",
-  [SupportedChainId.BINANCE_SMART_CHAIN]: "0xB0A06daCa7F05D86D8fC1e289E08f734398EaE89",
+  [SupportedChainId.BINANCE_SMART_CHAIN]:
+    "0xB0A06daCa7F05D86D8fC1e289E08f734398EaE89",
   [SupportedChainId.MAINNET]: "",
 };
 
@@ -40,6 +41,7 @@ export const ONE_MONTH = ONE_DAY * 30;
 
 export interface Network {
   id: number;
+  chainId: string;
   name: string;
   currency: {
     id: string;
@@ -68,6 +70,7 @@ export const NETWORKS: { [key in SupportedChainId]: Network } = {
   // },
   [SupportedChainId.MAINNET]: {
     id: 1,
+    chainId: `0x${(1).toString(16)}`,
     name: "Ethereum",
     currency: {
       id: "ethereum",
@@ -81,6 +84,7 @@ export const NETWORKS: { [key in SupportedChainId]: Network } = {
   },
   [SupportedChainId.BINANCE_SMART_CHAIN]: {
     id: 56,
+    chainId: `0x${(56).toString(16)}`,
     name: "BSC",
     currency: {
       id: "binancecoin",
@@ -94,6 +98,7 @@ export const NETWORKS: { [key in SupportedChainId]: Network } = {
   },
   [SupportedChainId.POLYGON]: {
     id: 137,
+    chainId: `0x${(137).toString(16)}`,
     name: "Polygon",
     currency: {
       id: "aave-polygon-wmatic",
@@ -134,8 +139,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     status: "ready",
     demo: "crosschain.onout.org",
     howToEarn: "On commission for each trade",
-    adminCanEdit:
-      "Logo, colors, list of assets, links, fee percent",
+    adminCanEdit: "Logo, colors, list of assets, links, fee percent",
     description: "",
     imgSrc: COVERS.crossChainCover,
     imgAlt: "crosschain wallet promo",

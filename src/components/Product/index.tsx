@@ -10,7 +10,7 @@ import {
   bonusAndDiscountContractsByNetworkId,
   cashbackTokenAddresses,
 } from "../../constants";
-import { send } from "../../helpers/transaction";
+import { send, importToken } from "../../helpers/transaction";
 import { sendMessage, STATUS } from "../../helpers/feedback";
 // import { stringFromHex, stringToHex } from "../../helpers/format";
 import { getPrice } from "../../helpers/currency";
@@ -101,7 +101,7 @@ const Product = ({ id }: ProductProps) => {
       `,
       status,
     });
-  }, [address, networkId, addressUSDValue]);
+  }, [address, networkId, addressUSDValue, USDPrice, id]);
 
   const getPaymentParameters = useCallback(async () => {
     if (!PAYMENT_ADDRESS || !USDPrice || !networkId) return;
@@ -153,7 +153,7 @@ const Product = ({ id }: ProductProps) => {
         });
       },
     };
-  }, [networkId, promoAddress, address, sendFeedback]);
+  }, [networkId, promoAddress, address, sendFeedback, USDPrice, productId, provider]);
 
   const payForProduct = useCallback(async () => {
     if (!networkId) return;
@@ -205,28 +205,27 @@ const Product = ({ id }: ProductProps) => {
       }
     }
     setPaymentPending(false);
-  }, [networkId, wrongNetwork, getPaymentParameters, address, sendFeedback]);
+  }, [networkId, wrongNetwork, getPaymentParameters, address, sendFeedback, dispatch, id]);
 
-  const switchOnPolygonNetwork = async () => {
+  const switchToNetwork = async (chainId: string) => {
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0x89" }],
+        params: [{ chainId }],
       });
     } catch (e) {
       console.error(e);
     }
-  };
-  const switchOnBSCNetwork = async () => {
-    try {
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0x38" }],
-      });
-    } catch (e) {
-      console.error(e);
+  }
+
+  const switchToPolygon = () => switchToNetwork(NETWORKS[137].chainId)
+  const switchToBinance = () => switchToNetwork(NETWORKS[56].chainId)
+
+  const importSwapToken = () => {
+    if (networkId) {
+      importToken(cashbackTokenAddresses[networkId], address)
     }
-  };
+  }
 
   const [paymentAvailable, setPaymentAvailable] = useState(false);
 
@@ -249,7 +248,7 @@ const Product = ({ id }: ProductProps) => {
       category: id,
       action: 'Press on the "Buy" button',
     });
-  }, [payForProduct]);
+  }, [payForProduct, id]);
 
   return (
     <div className="product">
@@ -356,7 +355,7 @@ const Product = ({ id }: ProductProps) => {
                 To use the promocode pay with{" "}
                 <span
                   className={`notesSpan ${isPolygonNetwork ? "active" : ""}`}
-                  onClick={switchOnPolygonNetwork}
+                  onClick={switchToPolygon}
                 >
                   <img
                     className="tokenIcon"
@@ -368,7 +367,7 @@ const Product = ({ id }: ProductProps) => {
                 or{" "}
                 <span
                   className={`notesSpan ${isBSCNetwork ? "active" : ""}`}
-                  onClick={switchOnBSCNetwork}
+                  onClick={switchToBinance}
                 >
                   <img className="tokenIcon" src={bscIcon} alt="bsc-icon" />
                   BSC
@@ -392,7 +391,7 @@ const Product = ({ id }: ProductProps) => {
         Use{" "}
         <span
           className={`notesSpan ${isPolygonNetwork ? "active" : ""}`}
-          onClick={switchOnPolygonNetwork}
+          onClick={switchToPolygon}
         >
           {" "}
           <img className="tokenIcon" src={ploygonIcon} alt="polygon-icon" />
@@ -401,13 +400,17 @@ const Product = ({ id }: ProductProps) => {
         or{" "}
         <span
           className={`notesSpan ${isBSCNetwork ? "active" : ""}`}
-          onClick={switchOnBSCNetwork}
+          onClick={switchToBinance}
         >
           <img className="tokenIcon" src={bscIcon} alt="bsc-icon" />
           BSC
         </span>{" "}
-        to get 50 <img className="tokenIcon" src={swapIcon} alt="swap-icon" />
-        SWAP tokens as a bonus.
+        to get 50
+        <button className="transparentButton" onClick={importSwapToken}>
+          <img className="tokenIcon" src={swapIcon} alt="swap-token-icon" />
+          SWAP
+        </button>
+        tokens as a bonus.
       </p>
     </div>
   );
