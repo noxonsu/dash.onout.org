@@ -94,6 +94,13 @@ button {
   background-color: var(--color-notice-bg);
 }
 
+.transparentButton {
+  font-weight: bold;
+  border: none;
+  background-color: transparent;
+  color: inherit;
+}
+
 .primaryBtn,
 .secondaryBtn {
   font-weight: bold;
@@ -115,7 +122,9 @@ button {
 .primaryBtn:hover,
 .primaryBtn:focus,
 .secondaryBtn:hover,
-.secondaryBtn:focus {
+.secondaryBtn:focus,
+.transparentButton:hover,
+.transparentButton:focus {
   opacity: 0.5;
 }
 

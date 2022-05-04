@@ -207,27 +207,19 @@ const Product = ({ id }: ProductProps) => {
     setPaymentPending(false);
   }, [networkId, wrongNetwork, getPaymentParameters, address, sendFeedback, dispatch, id]);
 
-  const switchOnPolygonNetwork = async () => {
+  const switchToNetwork = async (hexId: string) => {
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0x89" }],
+        params: [{ chainId: hexId }],
       });
     } catch (e) {
       console.error(e);
     }
-  };
+  }
 
-  const switchOnBSCNetwork = async () => {
-    try {
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0x38" }],
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  const switchToPolygon = () => switchToNetwork(NETWORKS[137].hexId)
+  const switchToBinance = () => switchToNetwork(NETWORKS[56].hexId)
 
   const importSwapToken = () => {
     if (networkId) {
@@ -363,7 +355,7 @@ const Product = ({ id }: ProductProps) => {
                 To use the promocode pay with{" "}
                 <span
                   className={`notesSpan ${isPolygonNetwork ? "active" : ""}`}
-                  onClick={switchOnPolygonNetwork}
+                  onClick={switchToPolygon}
                 >
                   <img
                     className="tokenIcon"
@@ -375,7 +367,7 @@ const Product = ({ id }: ProductProps) => {
                 or{" "}
                 <span
                   className={`notesSpan ${isBSCNetwork ? "active" : ""}`}
-                  onClick={switchOnBSCNetwork}
+                  onClick={switchToBinance}
                 >
                   <img className="tokenIcon" src={bscIcon} alt="bsc-icon" />
                   BSC
@@ -399,7 +391,7 @@ const Product = ({ id }: ProductProps) => {
         Use{" "}
         <span
           className={`notesSpan ${isPolygonNetwork ? "active" : ""}`}
-          onClick={switchOnPolygonNetwork}
+          onClick={switchToPolygon}
         >
           {" "}
           <img className="tokenIcon" src={ploygonIcon} alt="polygon-icon" />
@@ -408,13 +400,13 @@ const Product = ({ id }: ProductProps) => {
         or{" "}
         <span
           className={`notesSpan ${isBSCNetwork ? "active" : ""}`}
-          onClick={switchOnBSCNetwork}
+          onClick={switchToBinance}
         >
           <img className="tokenIcon" src={bscIcon} alt="bsc-icon" />
           BSC
         </span>{" "}
         to get 50
-        <button onClick={importSwapToken}>
+        <button className="transparentButton" onClick={importSwapToken}>
           <img className="tokenIcon" src={swapIcon} alt="swap-token-icon" />
           SWAP
         </button>

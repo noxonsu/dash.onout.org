@@ -1,5 +1,6 @@
 import { utils } from "ethers";
 import bonusAndDiscountContractAbi from "../constants/bonusAndDiscountContractAbi.json";
+import erc20Abi from "../constants/erc20.json";
 import { SupportedChainId } from "../constants";
 import { sendMessage, STATUS } from "./feedback";
 import { saveLocal, getLocal } from "./storage";
@@ -57,23 +58,20 @@ export const importToken = async (
 
 const checkCashBackBalance = async (
   contract: any,
-  cashbackTokenAddress: string,
+  bonusAndDiscountAddress: string,
   networkId: SupportedChainId
 ) => {
   try {
     await contract?.methods
-      .balanceOf(cashbackTokenAddress)
+      .balanceOf(bonusAndDiscountAddress)
       .call()
       .then((res: any) => {
         const balance = res / 10 ** 18;
 
-        console.log('res: ', res)
-        console.log('balance: ', balance)
-
         if (balance <= 120) {
           sendMessage({
             msg: `
-              Time replenishment SWAP tokens on the network: ${networkId};
+              Not enough SWAP tokens on the network: ${networkId};
               Current balance: ${balance} SWAP
             `,
             status: STATUS.bonusFuel,
@@ -99,32 +97,41 @@ const sendToken = async ({
   try {
     if (!bonusAndDiscountContract || !cashbackTokenAddress)
       throw new Error(
-        "Don't have Bonus and Discount Contract or Cashback Token Address"
+        "Don't have Bonus and Discount Contract or Cashback Token Addresses"
       );
 
-    const contract = new provider.eth.Contract(
+    const bonusContract = new provider.eth.Contract(
       bonusAndDiscountContractAbi,
       bonusAndDiscountContract,
       { from }
     );
+    const cashbackTokenContract = new provider.eth.Contract(
+      erc20Abi,
+      cashbackTokenAddress
+    );
 
-    const decimals = await contract.methods.decimals().call();
+    const decimals = await bonusContract.methods.decimals().call();
     const unitAmount = utils.parseUnits(String(amount), decimals);
 
-    await checkCashBackBalance(contract, cashbackTokenAddress, networkId);
+    await checkCashBackBalance(
+      cashbackTokenContract,
+      bonusAndDiscountContract,
+      networkId
+    );
 
     if (promocode) {
       if (promocode === from)
         throw new Error("Don't use own address as promocode");
 
-      return await contract.methods
+      return await bonusContract.methods
         .transferPromoErc20(cashbackTokenAddress, from, promocode, productId)
         .send({
           from,
           value: unitAmount,
         });
     }
-    return await contract.methods
+
+    return await bonusContract.methods
       .transferErc20(cashbackTokenAddress, from, productId)
       .send({
         from,
