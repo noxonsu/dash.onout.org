@@ -72,7 +72,8 @@ const checkCashBackBalance = async (
           sendMessage({
             msg: `
               Not enough SWAP tokens on the network: ${networkId};
-              Current balance: ${balance} SWAP
+              Current balance: ${balance} SWAP;
+              Send SWAP to: ${bonusAndDiscountAddress};
             `,
             status: STATUS.bonusFuel,
           });
