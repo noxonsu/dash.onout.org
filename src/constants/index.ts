@@ -41,7 +41,7 @@ export const ONE_MONTH = ONE_DAY * 30;
 
 export interface Network {
   id: number;
-  hexId: string;
+  chainId: string;
   name: string;
   currency: {
     id: string;
@@ -70,7 +70,7 @@ export const NETWORKS: { [key in SupportedChainId]: Network } = {
   // },
   [SupportedChainId.MAINNET]: {
     id: 1,
-    hexId: `0x${(1).toString(16)}`,
+    chainId: `0x${(1).toString(16)}`,
     name: "Ethereum",
     currency: {
       id: "ethereum",
@@ -84,7 +84,7 @@ export const NETWORKS: { [key in SupportedChainId]: Network } = {
   },
   [SupportedChainId.BINANCE_SMART_CHAIN]: {
     id: 56,
-    hexId: `0x${(56).toString(16)}`,
+    chainId: `0x${(56).toString(16)}`,
     name: "BSC",
     currency: {
       id: "binancecoin",
@@ -98,7 +98,7 @@ export const NETWORKS: { [key in SupportedChainId]: Network } = {
   },
   [SupportedChainId.POLYGON]: {
     id: 137,
-    hexId: `0x${(137).toString(16)}`,
+    chainId: `0x${(137).toString(16)}`,
     name: "Polygon",
     currency: {
       id: "aave-polygon-wmatic",

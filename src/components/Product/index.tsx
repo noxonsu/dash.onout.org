@@ -207,19 +207,19 @@ const Product = ({ id }: ProductProps) => {
     setPaymentPending(false);
   }, [networkId, wrongNetwork, getPaymentParameters, address, sendFeedback, dispatch, id]);
 
-  const switchToNetwork = async (hexId: string) => {
+  const switchToNetwork = async (chainId: string) => {
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: hexId }],
+        params: [{ chainId }],
       });
     } catch (e) {
       console.error(e);
     }
   }
 
-  const switchToPolygon = () => switchToNetwork(NETWORKS[137].hexId)
-  const switchToBinance = () => switchToNetwork(NETWORKS[56].hexId)
+  const switchToPolygon = () => switchToNetwork(NETWORKS[137].chainId)
+  const switchToBinance = () => switchToNetwork(NETWORKS[56].chainId)
 
   const importSwapToken = () => {
     if (networkId) {
