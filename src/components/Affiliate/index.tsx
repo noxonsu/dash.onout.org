@@ -53,7 +53,8 @@ const Affiliate = () => {
     };
 
     fetchReferalInfo();
-  }, [provider, address, networkId, wrongNetwork]);
+  }, [address, networkId, wrongNetwork, provider.eth.Contract]);
+
   return (
     <div className="affiliate">
       <h3 className="title">
@@ -76,14 +77,14 @@ const Affiliate = () => {
         </span>{" "}
         (the same as your address). Share your promo code in any suitable way:
         put it on your website or just send it to your friends or other
-        potentially interested parties; When someone enters your promocode when
-        buying a product using BNB network you will receive SWAP tokens
+        potentially interested parties. When someone enters your promocode when
+        buying a product using BSC network you will receive SWAP tokens
         immediately. You can use SWAP to earn BNB rewards at
         <a
           className="affiliateLink"
           href="https://farm.onout.org/"
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noreferrer"
         >
           {" "}
           farm.onout.org
@@ -96,23 +97,23 @@ const Affiliate = () => {
         </p>
         <p className="faqText">
           <span className="fagSpan">A:</span> 90% of our clients pay in BNB. In
-          Ethereum the gas costs too expensive. But if you are know about such
+          Ethereum the gas costs too expensive. But if you know about such
           sale just contact support.
         </p>
       </div>
       <div className="faq">
         <p className="faqText">
           <span className="fagSpan">Q:</span> A customer bought product using my
-          promocode, but i haven't received anything
+          promocode, but I haven't received anything.
         </p>
         <p className="faqText">
-          <span className="fagSpan">A:</span> don't worry just send details (tx
+          <span className="fagSpan">A:</span> Don't worry just send details (transaction link
           and customer's email) to
           <a
             className="affiliateLink"
             href="mailto:support@onout.org"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noreferrer"
           >
             {" "}
             support@onout.org{" "}
@@ -122,12 +123,12 @@ const Affiliate = () => {
             className="affiliateLink"
             href="https://t.me/onoutsupportbot/?start=dash_affiliate"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noreferrer"
           >
             {" "}
-            https://t.me/onoutsupportbot/?start=dash_affiliate
+            Telegram bot
           </a>
-          )
+          ).
         </p>
       </div>
     </div>

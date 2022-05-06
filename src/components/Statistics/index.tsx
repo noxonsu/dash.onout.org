@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { getPrice } from "../../helpers/currency";
 import axios from "../../helpers/axios";
 import {
+  bonusAndDiscountContractsByNetworkId,
   FIAT_TICKER,
   NETWORKS,
+  PAYMENT_ADDRESS,
   statisticUrlsDataByNetwork,
 } from "../../constants";
 import "./index.css";
@@ -17,9 +19,7 @@ interface stateSalesParametres {
 }
 
 const Statistics = () => {
-  const [transactionsResult, setTransactionsResult] = useState<stateParametres>(
-    {}
-  );
+  const [transactionsResult, setTransactionsResult] = useState<stateParametres>({});
   const [tokenRate, setTokenRate] = useState<stateParametres>({});
   const [salesWeek, setSalesWeek] = useState<stateSalesParametres>({});
   const [profit, setProfit] = useState(0);
@@ -27,9 +27,7 @@ const Statistics = () => {
   const millisecund = 1000;
   const decimals = 18;
   const zeros = 10 ** decimals;
-  const statisticUrlsDataByNetworkArray = Object.values(
-    statisticUrlsDataByNetwork
-  );
+  const statisticUrlsDataByNetworkArray = Object.values(statisticUrlsDataByNetwork);
 
   const getRate = () => {
     statisticUrlsDataByNetworkArray.map(async (object: any) => {
@@ -79,51 +77,48 @@ const Statistics = () => {
     const supportedChainIdValue = Object.keys(transactionsResult);
     let salesThisWeek = 0;
     let salesLastWeek = 0;
-
     supportedChainIdValue.forEach((networkId) => {
       const transactionsResultArray = transactionsResult[networkId];
 
-      const transationThisWeek = transactionsResultArray.filter(
-        (transactionData: any) => {
-          return (
-            transactionData.timeStamp * millisecund > thisWeek &&
-            transactionData.value > 0
-          );
+      const transationThisWeek = transactionsResultArray.filter((transactionData: any) => {
+        if (
+          transactionData.to === PAYMENT_ADDRESS.toLowerCase() ||
+          transactionData.to === bonusAndDiscountContractsByNetworkId[56].toLowerCase() ||
+          transactionData.to === bonusAndDiscountContractsByNetworkId[137].toLowerCase()
+        ) {
+          return transactionData.timeStamp * millisecund > thisWeek && transactionData.value > 0;
         }
-      );
-      const getSalesBalanceThisWeek = transationThisWeek.reduce(
-        (acc: any, res: any) => {
-          return acc + res.value * 1;
-        },
-        0
-      );
+      });
 
-      salesThisWeek += Math.floor(
-        (getSalesBalanceThisWeek / zeros) * tokenRate[networkId]
-      );
+      const getSalesBalanceThisWeek = transationThisWeek.reduce((acc: any, res: any) => {
+        return acc + res.value * 1;
+      }, 0);
+
+      salesThisWeek += Math.floor((getSalesBalanceThisWeek / zeros) * tokenRate[networkId]);
 
       setSalesWeek((prevState) => {
         return { ...prevState, salesThisWeek };
       });
 
-      const transationLastWeek = transactionsResultArray.filter(
-        (transactionData: any) => {
+      const transationLastWeek = transactionsResultArray.filter((transactionData: any) => {
+        if (
+          transactionData.to === PAYMENT_ADDRESS.toLowerCase() ||
+          transactionData.to === bonusAndDiscountContractsByNetworkId[56].toLowerCase() ||
+          transactionData.to === bonusAndDiscountContractsByNetworkId[137].toLowerCase()
+        ) {
           return (
             transactionData.timeStamp * millisecund > lastWeek &&
             transactionData.timeStamp * millisecund < thisWeek &&
             transactionData.value > 0
           );
         }
-      );
-      const getSalesBalanceLastWeek = transationLastWeek.reduce(
-        (acc: any, res: any) => {
-          return acc + res.value * 1;
-        },
-        0
-      );
-      salesLastWeek += Math.floor(
-        (getSalesBalanceLastWeek / zeros) * tokenRate[networkId]
-      );
+      });
+
+      const getSalesBalanceLastWeek = transationLastWeek.reduce((acc: any, res: any) => {
+        return acc + res.value * 1;
+      }, 0);
+
+      salesLastWeek += Math.floor((getSalesBalanceLastWeek / zeros) * tokenRate[networkId]);
       setSalesWeek((prevState) => {
         return { ...prevState, salesLastWeek };
       });
@@ -139,9 +134,7 @@ const Statistics = () => {
   }, [transactionsResult, tokenRate, profit]);
 
   useEffect(() => {
-    const profitPercentage =
-      ((salesWeek.salesThisWeek - salesWeek.salesLastWeek) * 100) /
-      salesWeek.salesLastWeek;
+    const profitPercentage = ((salesWeek.salesThisWeek - salesWeek.salesLastWeek) * 100) / salesWeek.salesLastWeek;
     setProfit(!profitPercentage ? 0 : Math.floor(profitPercentage));
   }, [salesWeek]);
 
@@ -149,12 +142,12 @@ const Statistics = () => {
     <div className="statistics">
       <h3>Dashboard statistics</h3>
       {!salesWeek.salesThisWeek ? (
-        <p className="pending">Sales last week: Loading</p>
+        <p className="pending">Sales this week: Loading</p>
       ) : (
         <p>
-          Sales last week: {salesWeek.salesThisWeek}${" "}
+          Sales this week: {salesWeek.salesThisWeek}${" "}
           <span>
-            {`(${profit})`}{" "}
+            {`(${profit >= 0 ? "+" : ""}${profit}%)`}{" "}
             {profit >= 0 ? (
               <BsGraphUp className="graphUp" size="1rem" />
             ) : (

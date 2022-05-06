@@ -18,13 +18,14 @@ export const apiKey = {
 
 export const bonusAndDiscountContractsByNetworkId = {
   [SupportedChainId.POLYGON]: "0xd9f89Dec54CbF10011FDc8D9FA06E1f30c3F74d4",
-  [SupportedChainId.BINANCE_SMART_CHAIN]: "0xB0A06daCa7F05D86D8fC1e289E08f734398EaE89",
+  [SupportedChainId.BINANCE_SMART_CHAIN]:
+    "0xB0A06daCa7F05D86D8fC1e289E08f734398EaE89",
   [SupportedChainId.MAINNET]: "",
 };
 
 export const statisticUrlsDataByNetwork = {
   [SupportedChainId.POLYGON]: {
-    name: 'MAINNET',
+    name: 'POLYGON',
     networkId: 137,
     apiKey: "4JB4UXHBIE2I5285T18J8SSPUS2M3K7X3V",
     apiLink: `https://api.polygonscan.com/api?module=account&action=txlist&address=${bonusAndDiscountContractsByNetworkId[SupportedChainId.POLYGON]}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=${apiKey.POLYGON}`,
@@ -38,7 +39,7 @@ export const statisticUrlsDataByNetwork = {
     fetchingAddress: bonusAndDiscountContractsByNetworkId[SupportedChainId.BINANCE_SMART_CHAIN]
   },
   [SupportedChainId.MAINNET]: {
-    name: 'POLYGON',
+    name: 'MAINNET',
     networkId: 1,
     apiKey: "RZ7N3TCPHFIU7Q4KA1V93MZWRN4X7F8HIT",
     apiLink: `https://api.etherscan.io/api?module=account&action=txlist&address=${PAYMENT_ADDRESS}&startblock=0&endblock=99999999&page=1&offset=1000&sort=asc&apikey=${apiKey.MAINNET}`,
@@ -70,6 +71,7 @@ export const ONE_MONTH = ONE_DAY * 30;
 
 export interface Network {
   id: number;
+  chainId: string;
   name: string;
   currency: {
     id: string;
@@ -98,6 +100,7 @@ export const NETWORKS: { [key in SupportedChainId]: Network } = {
   // },
   [SupportedChainId.MAINNET]: {
     id: 1,
+    chainId: `0x${(1).toString(16)}`,
     name: "Ethereum",
     currency: {
       id: "ethereum",
@@ -111,6 +114,7 @@ export const NETWORKS: { [key in SupportedChainId]: Network } = {
   },
   [SupportedChainId.BINANCE_SMART_CHAIN]: {
     id: 56,
+    chainId: `0x${(56).toString(16)}`,
     name: "BSC",
     currency: {
       id: "binancecoin",
@@ -124,6 +128,7 @@ export const NETWORKS: { [key in SupportedChainId]: Network } = {
   },
   [SupportedChainId.POLYGON]: {
     id: 137,
+    chainId: `0x${(137).toString(16)}`,
     name: "Polygon",
     currency: {
       id: "aave-polygon-wmatic",
@@ -164,8 +169,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     status: "ready",
     demo: "crosschain.onout.org",
     howToEarn: "On commission for each trade",
-    adminCanEdit:
-      "Logo, colors, list of assets, links, fee percent",
+    adminCanEdit: "Logo, colors, list of assets, links, fee percent",
     description: "",
     imgSrc: COVERS.crossChainCover,
     imgAlt: "crosschain wallet promo",
@@ -285,6 +289,22 @@ export const PRODUCTS: { [id: string]: Product } = {
     docsLink: "",
     lables: [],
     price: 500,
+  },
+  lenda: {
+    id: "lenda",
+    productId: 8,
+    name: "Lenda",
+    status: "development",
+    demo: "lenda.onout.xyz",
+    description: "",
+    imgSrc: COVERS.lendaCover,
+    imgAlt: "Lenda promo",
+    promoPage: "OnOut lenda",
+    promoPageLink: "",
+    docsLink: "",
+    codecanyonLink: "",
+    lables: ["new"],
+    price: 1000,
   },
 };
 
