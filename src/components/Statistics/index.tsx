@@ -79,16 +79,29 @@ const Statistics = () => {
     let salesLastWeek = 0;
     supportedChainIdValue.forEach((networkId) => {
       const transactionsResultArray = transactionsResult[networkId];
+      let transationThisWeek: any = [];
+      let transationLastWeek: any = [];
 
-      const transationThisWeek = transactionsResultArray.filter((transactionData: any) => {
-        if (
-          transactionData.to === PAYMENT_ADDRESS.toLowerCase() ||
-          transactionData.to === bonusAndDiscountContractsByNetworkId[56].toLowerCase() ||
-          transactionData.to === bonusAndDiscountContractsByNetworkId[137].toLowerCase()
-        ) {
-          return transactionData.timeStamp * millisecund > thisWeek && transactionData.value > 0;
-        }
-      });
+      const getTransactionsWeek = () => {
+        transactionsResultArray.filter((transactionData: any) => {
+          if (
+            transactionData.to === PAYMENT_ADDRESS.toLowerCase() ||
+            transactionData.to === bonusAndDiscountContractsByNetworkId[56].toLowerCase() ||
+            transactionData.to === bonusAndDiscountContractsByNetworkId[137].toLowerCase()
+          ) {
+            if (transactionData.timeStamp * millisecund > thisWeek && transactionData.value > 0) {
+              transationThisWeek.push(transactionData);
+            } else if (
+              transactionData.timeStamp * millisecund > lastWeek &&
+              transactionData.timeStamp * millisecund < thisWeek &&
+              transactionData.value > 0
+            ) {
+              transationLastWeek.push(transactionData);
+            }
+          }
+        });
+      };
+      getTransactionsWeek();
 
       const getSalesBalanceThisWeek = transationThisWeek.reduce((acc: any, res: any) => {
         return acc + res.value * 1;
@@ -98,20 +111,6 @@ const Statistics = () => {
 
       setSalesWeek((prevState) => {
         return { ...prevState, salesThisWeek };
-      });
-
-      const transationLastWeek = transactionsResultArray.filter((transactionData: any) => {
-        if (
-          transactionData.to === PAYMENT_ADDRESS.toLowerCase() ||
-          transactionData.to === bonusAndDiscountContractsByNetworkId[56].toLowerCase() ||
-          transactionData.to === bonusAndDiscountContractsByNetworkId[137].toLowerCase()
-        ) {
-          return (
-            transactionData.timeStamp * millisecund > lastWeek &&
-            transactionData.timeStamp * millisecund < thisWeek &&
-            transactionData.value > 0
-          );
-        }
       });
 
       const getSalesBalanceLastWeek = transationLastWeek.reduce((acc: any, res: any) => {
@@ -124,6 +123,7 @@ const Statistics = () => {
       });
     });
   };
+
   useEffect(() => {
     getRate();
     getTransactionResutl();
