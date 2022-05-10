@@ -6,22 +6,16 @@ import {
   bonusAndDiscountContractsByNetworkId,
   FIAT_TICKER,
   NETWORKS,
+  SupportedChainId,
   PAYMENT_ADDRESS,
   statisticUrlsDataByNetwork,
 } from "../../constants";
 import "./index.css";
 
-interface stateParametres {
-  [index: string]: any;
-}
-interface stateSalesParametres {
-  [index: string]: number;
-}
-
 const Statistics = () => {
-  const [transactionsResult, setTransactionsResult] = useState<stateParametres>({});
-  const [tokenRate, setTokenRate] = useState<stateParametres>({});
-  const [salesWeek, setSalesWeek] = useState<stateSalesParametres>({});
+  const [transactionsResult, setTransactionsResult] = useState<{ [networkName: string]: any[] }>({});
+  const [tokenRate, setTokenRate] = useState<{ [coinPrice: string]: any }>({});
+  const [salesWeek, setSalesWeek] = useState<{ [sales: string]: number }>({});
   const [profit, setProfit] = useState(0);
   const WeekInHours = 168;
   const millisecund = 1000;
@@ -31,16 +25,7 @@ const Statistics = () => {
 
   const getRate = () => {
     statisticUrlsDataByNetworkArray.map(async (object: any) => {
-      let assetId = "";
-      if (object.networkId === 1) {
-        assetId = NETWORKS[1].currency.id;
-      } else if (object.networkId === 56) {
-        assetId = NETWORKS[56].currency.id;
-      } else if (object.networkId === 137) {
-        assetId = NETWORKS[137].currency.id;
-      } else {
-        return;
-      }
+      const assetId = NETWORKS[object.networkId as SupportedChainId].currency.id;
       const data = await getPrice({
         assetId,
         vsCurrency: FIAT_TICKER.toLowerCase(),
@@ -51,7 +36,7 @@ const Statistics = () => {
     });
   };
 
-  const getTransactionResutl = () => {
+  const getTransactionsResult = () => {
     statisticUrlsDataByNetworkArray.map(async (object: any) => {
       try {
         await axios({
@@ -74,11 +59,11 @@ const Statistics = () => {
     const date = new Date();
     const thisWeek = date.setHours(date.getHours() - WeekInHours);
     const lastWeek = date.setHours(date.getHours() - WeekInHours * 2);
-    const supportedChainIdValue = Object.keys(transactionsResult);
+    const supportedChainIdKeys = Object.keys(transactionsResult);
     let salesThisWeek = 0;
     let salesLastWeek = 0;
-    supportedChainIdValue.forEach((networkId) => {
-      const transactionsResultArray = transactionsResult[networkId];
+    supportedChainIdKeys.forEach((name) => {
+      const transactionsResultArray = transactionsResult[name];
       let transationThisWeek: any = [];
       let transationLastWeek: any = [];
 
@@ -99,34 +84,26 @@ const Statistics = () => {
               transationLastWeek.push(transactionData);
             }
           }
+          return false;
         });
       };
       getTransactionsWeek();
 
-      const getSalesBalanceThisWeek = transationThisWeek.reduce((acc: any, res: any) => {
-        return acc + res.value * 1;
-      }, 0);
+      const sumOfTransactionValues = (txs: { value: string }[]) => txs.reduce((acc, res) => acc + Number(res.value), 0);
+      const formatAmount = (amount: number) => Math.floor((amount / zeros) * tokenRate[name]);
 
-      salesThisWeek += Math.floor((getSalesBalanceThisWeek / zeros) * tokenRate[networkId]);
+      salesThisWeek += formatAmount(sumOfTransactionValues(transationThisWeek));
+      salesLastWeek += formatAmount(sumOfTransactionValues(transationLastWeek));
 
       setSalesWeek((prevState) => {
-        return { ...prevState, salesThisWeek };
-      });
-
-      const getSalesBalanceLastWeek = transationLastWeek.reduce((acc: any, res: any) => {
-        return acc + res.value * 1;
-      }, 0);
-
-      salesLastWeek += Math.floor((getSalesBalanceLastWeek / zeros) * tokenRate[networkId]);
-      setSalesWeek((prevState) => {
-        return { ...prevState, salesLastWeek };
+        return { ...prevState, salesThisWeek, salesLastWeek };
       });
     });
   };
 
   useEffect(() => {
     getRate();
-    getTransactionResutl();
+    getTransactionsResult();
   }, []);
 
   useEffect(() => {
