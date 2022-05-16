@@ -83,13 +83,14 @@ const Statistics = () => {
       setSalesWeek((prevState) => {
         return { ...prevState, salesThisWeek, salesLastWeek };
       });
+
+      const profitPercentage = ((salesThisWeek - salesLastWeek) * 100) / salesThisWeek;
+      setProfit(!profitPercentage ? 0 : Math.floor(profitPercentage));
     });
   };
 
   useEffect(() => {
     getTransationsBalance();
-    const profitPercentage = ((salesWeek.salesThisWeek - salesWeek.salesLastWeek) * 100) / salesWeek.salesLastWeek;
-    setProfit(!profitPercentage ? 0 : Math.floor(profitPercentage));
   }, []);
 
   return (
