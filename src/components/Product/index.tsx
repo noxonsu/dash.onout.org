@@ -193,15 +193,17 @@ const Product = ({ id }: ProductProps) => {
         }
       } catch (error: any) {
         console.error(error);
-        sendFeedback({
-          amount: params.amount,
-          prefix: "FAIL",
-          status: STATUS.danger,
-          extra: `Error: (${error.code} ${error.message})`,
-        });
 
-        if (error?.code !== 4001) {
-          setErrorMessage(error.message);
+        const canceledError = error?.message?.match('canceled');
+        const sendFeedbackError = error?.code !== 4001 && !canceledError;
+
+        if (sendFeedbackError) {
+          sendFeedback({
+            amount: params.amount,
+            prefix: "FAIL",
+            status: STATUS.danger,
+            extra: `Error: (${error.code} ${error.message})`,
+          });
         }
       }
     }

@@ -296,35 +296,49 @@ export const PRODUCTS: { [id: string]: Product } = {
   },
 };
 
-export const IDEAS = [
-  {
+interface Idea {
+  id: string,
+  name: string,
+  link: string,
+  price: number,
+}
+
+export const IDEAS: { [id: string]: Idea } = {
+  launchpad: {
     id: "launchpad",
     name: "A launchpad",
     link: "",
+    price: 1,
   },
-  {
+  iphoneapp: {
     id: "iphoneapp",
     name: "iPhone App",
     link: "",
+    price: 1,
   },
-  {
+  apponsolana: {
     id: "apponsolana",
     name: "Something on Solana",
     link: "",
+    price: 1,
   },
-  {
+  gambling: {
     id: "gambling",
     name: "More gambling (dice etc)",
     link: "",
+    price: 1,
   },
-  {
+  fiatramp: {
     id: "fiatramp",
     name: "Fiat on/off ramp (visa, p2p or something to buy/sell crypto for fiat)",
     link: "",
+    price: 1,
   },
-  {
+  other: {
     id: "other",
     name: "Other",
     link: "https://tools.onout.org/sponsor.md",
+    price: 0,
   },
-];
+
+};
