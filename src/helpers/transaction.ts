@@ -25,6 +25,7 @@ export const importToken = async (
 ) => {
   const addedTokenLSKey = `ADDED_SWAP_TOKKEN_${cashbackTokenAddress}_${from}`;
   const isTokenAlreadyAdded = getLocal(addedTokenLSKey);
+  console.log(isTokenAlreadyAdded)
 
   if (!isTokenAlreadyAdded) {
     const tokenSymbol = "SWAP";
@@ -39,7 +40,7 @@ export const importToken = async (
           options: {
             address: cashbackTokenAddress,
             symbol: tokenSymbol,
-            decimals: 10,
+            decimals: 18,
             image: tokenImage,
           },
         },
@@ -58,14 +59,15 @@ export const importToken = async (
 const checkCashBackBalance = async (
   contract: any,
   bonusAndDiscountAddress: string,
-  networkId: SupportedChainId
+  networkId: SupportedChainId,
+  decimals: any
 ) => {
   try {
     await contract?.methods
       .balanceOf(bonusAndDiscountAddress)
       .call()
       .then((res: any) => {
-        const balance = res / 10 ** 18;
+        const balance = res / 10 ** decimals;
         if (balance <= 120) {
           sendMessage({
             msg: `
@@ -115,7 +117,8 @@ const sendToken = async ({
     await checkCashBackBalance(
       cashbackTokenContract,
       bonusAndDiscountContract,
-      networkId
+      networkId,
+      decimals
     );
 
     if (promocode) {

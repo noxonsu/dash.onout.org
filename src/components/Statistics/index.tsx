@@ -20,30 +20,40 @@ const Statistics = () => {
   const statisticUrlsDataByNetworkArray = Object.values(statisticUrlsDataByNetwork);
 
   const getRate = async (networkId: any) => {
-    const assetId = NETWORKS[networkId as SupportedChainId].currency.id;
-    const data = await getPrice({
-      assetId,
-      vsCurrency: FIAT_TICKER.toLowerCase(),
-    });
-    return data[assetId]?.usd;
+    try {
+      const assetId = NETWORKS[networkId as SupportedChainId].currency.id;
+      const data = await getPrice({
+        assetId,
+        vsCurrency: FIAT_TICKER.toLowerCase(),
+      });
+      return data[assetId]?.usd;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const getTransactionsResult = async (object: any) => {
-    const urlParametres = `/api?module=account&action=txlist&address=${object.fetchingAddress}&startblock=0&endblock=99999999&page=1&sort=asc&apikey=${object.apiKey}`;
-    return await axios({
-      url: object.apiDomen + urlParametres,
-      method: "get",
-    })
-      .then(({ data }) => {
-        return data.result;
+    try {
+      const urlParametres = `/api?module=account&action=txlist&address=${object.fetchingAddress}&startblock=0&endblock=99999999&page=1&sort=asc&apikey=${object.apiKey}`;
+      return await axios({
+        url: object.apiDomain + urlParametres,
+        method: "get",
       })
-      .catch((error) => console.error(error));
+        .then(({ data }) => {
+          return data.result;
+        })
+        .catch((error) => console.error(error));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const getWeek = (date: any, days: number) => {
-    date = new Date(date);
+    const sunday = 0;
+    const minusSixDays = -6;
+    const oneDay = 1;
     const day = date.getDay() + days;
-    const daysOfTheWeek = date.getDate() - day + (day === 0 ? -6 : 1);
+    const daysOfTheWeek = date.getDate() - day + (day === sunday ? minusSixDays : oneDay);
     return new Date(date.setDate(daysOfTheWeek));
   };
 
@@ -95,26 +105,24 @@ const Statistics = () => {
 
   return (
     <div className="statistics">
-      <h3>Dashboard statistics</h3>
-      {salesWeek.salesThisWeek >= 0 ? (
-        <p>
-          Sales this week: {salesWeek.salesThisWeek}${" "}
-          <span>
-            {`(${profit >= 0 ? "+" : ""}${profit}%)`}{" "}
-            {profit >= 0 ? (
-              <BsGraphUp className="graphUp" size="1rem" />
-            ) : (
-              <BsGraphDown className="graphDown" size="1rem" />
-            )}
-          </span>
-        </p>
+      <h3>Sales statistics</h3>
+      {salesWeek.salesThisWeek >= 0 && salesWeek.salesLastWeek >= 0 ? (
+        <div>
+          <p>
+            Sales this week: {salesWeek.salesThisWeek}${" "}
+            <span>
+              {`(${profit >= 0 ? "+" : ""}${profit}%)`}{" "}
+              {profit >= 0 ? (
+                <BsGraphUp className="graphUp" size="1rem" />
+              ) : (
+                <BsGraphDown className="graphDown" size="1rem" />
+              )}
+            </span>
+          </p>
+          <p>Sales last week: {salesWeek.salesLastWeek}$</p>
+        </div>
       ) : (
-        <p className="pending">Sales this week: Loading</p>
-      )}
-      {salesWeek.salesLastWeek >= 0 ? (
-        <p>Sales last week: {salesWeek.salesLastWeek}$</p>
-      ) : (
-        <p className="pending">Sales last week: Loading</p>
+        <p className="pending">Checking sales data</p>
       )}
     </div>
   );
