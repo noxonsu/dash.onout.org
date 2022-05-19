@@ -16,37 +16,33 @@ export const bonusAndDiscountContractsByNetworkId = {
   [SupportedChainId.MAINNET]: PAYMENT_ADDRESS,
 };
 
-export interface statisticUrlsData {
+export interface StatisticUrlsData {
   name: string;
-  networkId: number;
+  networkId: SupportedChainId;
   apiKey: string;
   apiDomain: string;
-  fetchingAddress: string 
 }
 
 export const statisticUrlsDataByNetwork: {
-  [key in SupportedChainId] : statisticUrlsData
+  [key in SupportedChainId]: StatisticUrlsData;
 } = {
   [SupportedChainId.POLYGON]: {
     name: "POLYGON",
     networkId: 137,
     apiKey: "4JB4UXHBIE2I5285T18J8SSPUS2M3K7X3V",
     apiDomain: "https://api.polygonscan.com",
-    fetchingAddress: bonusAndDiscountContractsByNetworkId[SupportedChainId.POLYGON],
   },
   [SupportedChainId.BINANCE_SMART_CHAIN]: {
     name: "BINANCE_SMART_CHAIN",
     networkId: 56,
     apiKey: "2JEI3SQQ8VFNVHFC8XSSNBRNCHZP3632QD",
     apiDomain: "https://api.bscscan.com",
-    fetchingAddress: bonusAndDiscountContractsByNetworkId[SupportedChainId.BINANCE_SMART_CHAIN],
   },
   [SupportedChainId.MAINNET]: {
     name: "MAINNET",
     networkId: 1,
     apiKey: "RZ7N3TCPHFIU7Q4KA1V93MZWRN4X7F8HIT",
     apiDomain: "https://api.etherscan.io",
-    fetchingAddress: PAYMENT_ADDRESS,
   },
 };
 
@@ -307,10 +303,10 @@ export const PRODUCTS: { [id: string]: Product } = {
 };
 
 interface Idea {
-  id: string,
-  name: string,
-  link: string,
-  price: number,
+  id: string;
+  name: string;
+  link: string;
+  price: number;
 }
 
 export const IDEAS: { [id: string]: Idea } = {
@@ -350,5 +346,4 @@ export const IDEAS: { [id: string]: Idea } = {
     link: "https://tools.onout.org/sponsor.md",
     price: 0,
   },
-
 };

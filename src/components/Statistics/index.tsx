@@ -8,13 +8,13 @@ import {
   NETWORKS,
   SupportedChainId,
   statisticUrlsDataByNetwork,
-  statisticUrlsData,
+  StatisticUrlsData,
 } from "../../constants";
 import "./index.css";
 
 const Statistics = () => {
   const [salesWeek, setSalesWeek] = useState<{ [sales: string]: number }>({});
-  const [isStatisticsLoading, setIsStatisticsLoading] = useState(true);
+  const [isStatisticsLoading, setIsStatisticsLoading] = useState(false);
   const [profit, setProfit] = useState(0);
   const millisecund = 1000;
   const decimals = 18;
@@ -34,9 +34,11 @@ const Statistics = () => {
     }
   };
 
-  const getTransactionsResult = async (statisticUrlsData: statisticUrlsData) => {
+  const getTransactionsResult = async (statisticUrlsData: StatisticUrlsData) => {
     try {
-      const urlParametres = `/api?module=account&action=txlist&address=${statisticUrlsData.fetchingAddress}&startblock=0&endblock=99999999&page=1&sort=asc&apikey=${statisticUrlsData.apiKey}`;
+      const urlParametres = `/api?module=account&action=txlist&address=${bonusAndDiscountContractsByNetworkId[statisticUrlsData.networkId]}&startblock=0&endblock=99999999&page=1&sort=asc&apikey=${statisticUrlsData.apiKey}`;
+      console.log(urlParametres);
+      
       return await axios({
         url: statisticUrlsData.apiDomain + urlParametres,
         method: "get",
@@ -70,7 +72,8 @@ const Statistics = () => {
     let salesThisWeek = 0;
     let salesLastWeek = 0;
 
-    statisticUrlsDataByNetworkArray.map(async (urlData: statisticUrlsData) => {
+    await statisticUrlsDataByNetworkArray.map(async (urlData: StatisticUrlsData) => {
+      setIsStatisticsLoading(true);
       const tokenRate = await getRate(urlData.networkId);
       const transactionsResults = await getTransactionsResult(urlData);
 
@@ -98,19 +101,13 @@ const Statistics = () => {
 
       const profitPercentage = ((salesThisWeek - salesLastWeek) * 100) / salesThisWeek;
       setProfit(!profitPercentage ? 0 : Math.floor(profitPercentage));
+      setIsStatisticsLoading(false);
     });
   };
 
   useEffect(() => {
     getTransationsBalance();
   }, []);
-  useEffect(() => {
-    if (!salesWeek.salesThisWeek && !salesWeek.salesLastWeek) {
-      console.log("Loading...");
-    } else {
-      setIsStatisticsLoading(false);
-    }
-  }, [salesWeek]);
 
   return (
     <div className="statistics">
@@ -131,7 +128,7 @@ const Statistics = () => {
           <p>Sales last week: {salesWeek.salesLastWeek}$</p>
         </div>
       ) : (
-        <p className="pending">Checking sales data</p>
+        <p className="pending">Loading data</p>
       )}
     </div>
   );
