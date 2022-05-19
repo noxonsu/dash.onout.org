@@ -8,20 +8,22 @@ import {
   NETWORKS,
   SupportedChainId,
   statisticUrlsDataByNetwork,
+  statisticUrlsData,
 } from "../../constants";
 import "./index.css";
 
 const Statistics = () => {
   const [salesWeek, setSalesWeek] = useState<{ [sales: string]: number }>({});
+  const [isStatisticsLoading, setIsStatisticsLoading] = useState(true);
   const [profit, setProfit] = useState(0);
   const millisecund = 1000;
   const decimals = 18;
   const zeros = 10 ** decimals;
   const statisticUrlsDataByNetworkArray = Object.values(statisticUrlsDataByNetwork);
 
-  const getRate = async (networkId: any) => {
+  const getRate = async (networkId: SupportedChainId) => {
     try {
-      const assetId = NETWORKS[networkId as SupportedChainId].currency.id;
+      const assetId = NETWORKS[networkId].currency.id;
       const data = await getPrice({
         assetId,
         vsCurrency: FIAT_TICKER.toLowerCase(),
@@ -32,11 +34,11 @@ const Statistics = () => {
     }
   };
 
-  const getTransactionsResult = async (object: any) => {
+  const getTransactionsResult = async (statisticUrlsData: statisticUrlsData) => {
     try {
-      const urlParametres = `/api?module=account&action=txlist&address=${object.fetchingAddress}&startblock=0&endblock=99999999&page=1&sort=asc&apikey=${object.apiKey}`;
+      const urlParametres = `/api?module=account&action=txlist&address=${statisticUrlsData.fetchingAddress}&startblock=0&endblock=99999999&page=1&sort=asc&apikey=${statisticUrlsData.apiKey}`;
       return await axios({
-        url: object.apiDomain + urlParametres,
+        url: statisticUrlsData.apiDomain + urlParametres,
         method: "get",
       })
         .then(({ data }) => {
@@ -68,15 +70,15 @@ const Statistics = () => {
     let salesThisWeek = 0;
     let salesLastWeek = 0;
 
-    statisticUrlsDataByNetworkArray.map(async (Object) => {
-      const tokenRate = await getRate(Object.networkId);
-      const transactionsResults = await getTransactionsResult(Object);
+    statisticUrlsDataByNetworkArray.map(async (urlData: statisticUrlsData) => {
+      const tokenRate = await getRate(urlData.networkId);
+      const transactionsResults = await getTransactionsResult(urlData);
 
       const getWeekTransactions = async (startWeek: any, finishWeek: any) => {
         return await transactionsResults.filter((transactionData: any) => {
           return (
             transactionData.to ===
-              bonusAndDiscountContractsByNetworkId[Object.networkId as SupportedChainId].toLowerCase() &&
+              bonusAndDiscountContractsByNetworkId[urlData.networkId as SupportedChainId].toLowerCase() &&
             transactionData.timeStamp * millisecund >= startWeek &&
             transactionData.timeStamp * millisecund <= finishWeek &&
             transactionData.value > 0
@@ -102,11 +104,18 @@ const Statistics = () => {
   useEffect(() => {
     getTransationsBalance();
   }, []);
+  useEffect(() => {
+    if (!salesWeek.salesThisWeek && !salesWeek.salesLastWeek) {
+      console.log("Loading...");
+    } else {
+      setIsStatisticsLoading(false);
+    }
+  }, [salesWeek]);
 
   return (
     <div className="statistics">
       <h3>Sales statistics</h3>
-      {salesWeek.salesThisWeek >= 0 && salesWeek.salesLastWeek >= 0 ? (
+      {!isStatisticsLoading ? (
         <div>
           <p>
             Sales this week: {salesWeek.salesThisWeek}${" "}

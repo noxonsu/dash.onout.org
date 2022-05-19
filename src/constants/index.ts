@@ -16,7 +16,17 @@ export const bonusAndDiscountContractsByNetworkId = {
   [SupportedChainId.MAINNET]: PAYMENT_ADDRESS,
 };
 
-export const statisticUrlsDataByNetwork = {
+export interface statisticUrlsData {
+  name: string;
+  networkId: number;
+  apiKey: string;
+  apiDomain: string;
+  fetchingAddress: string 
+}
+
+export const statisticUrlsDataByNetwork: {
+  [key in SupportedChainId] : statisticUrlsData
+} = {
   [SupportedChainId.POLYGON]: {
     name: "POLYGON",
     networkId: 137,
