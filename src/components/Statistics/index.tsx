@@ -74,34 +74,42 @@ const Statistics = () => {
     let salesLastWeek = 0;
     setIsStatisticsLoading(true);
 
-    await statisticUrlsDataByNetworkArray.map(async (urlData: StatisticUrlsData) => {
-      const tokenRate = await getRate(urlData.networkId);
-      const transactionsResults = await getTransactionsResult(urlData);
+    await Promise.all(
+      statisticUrlsDataByNetworkArray.map(async (urlData: StatisticUrlsData) => {
+        const tokenRate = await getRate(urlData.networkId);
+        const transactionsResults = await getTransactionsResult(urlData);
 
-      const getWeekTransactions = async (startWeek: any, finishWeek: any) => {
-        return await transactionsResults.filter((transactionData: any) => {
-          return (
-            transactionData.to === bonusAndDiscountContractsByNetworkId[urlData.networkId].toLowerCase() &&
-            transactionData.timeStamp * millisecund >= startWeek &&
-            transactionData.timeStamp * millisecund <= finishWeek &&
-            transactionData.value > 0
-          );
+        const getWeekTransactions = async (startWeek: any, finishWeek: any) => {
+          return await transactionsResults.filter((transactionData: any) => {
+            return (
+              transactionData.to === bonusAndDiscountContractsByNetworkId[urlData.networkId].toLowerCase() &&
+              transactionData.timeStamp * millisecund >= startWeek &&
+              transactionData.timeStamp * millisecund <= finishWeek &&
+              transactionData.value > 0
+            );
+          });
+        };
+        const sumOfTransactionValues = (txs: { value: string }[]) =>
+          txs.reduce((acc, res) => acc + Number(res.value), 0);
+        const formatAmount = (amount: number) => Math.floor((amount / zeros) * tokenRate);
+
+        const transationThisWeek = await getWeekTransactions(thisWeekTimestamp, dateNowTimestamp);
+        const transationLastWeek = await getWeekTransactions(lastWeekTimestamp, thisWeekTimestamp);
+        if (!transationThisWeek || !transationLastWeek) {
+          return;
+        } else {
+          salesThisWeek += formatAmount(sumOfTransactionValues(transationThisWeek));
+          salesLastWeek += formatAmount(sumOfTransactionValues(transationLastWeek));
+        }
+
+        setSalesWeek((prevState) => {
+          return { ...prevState, salesThisWeek, salesLastWeek };
         });
-      };
-      const sumOfTransactionValues = (txs: { value: string }[]) => txs.reduce((acc, res) => acc + Number(res.value), 0);
-      const formatAmount = (amount: number) => Math.floor((amount / zeros) * tokenRate);
-      const transationThisWeek = await getWeekTransactions(thisWeekTimestamp, dateNowTimestamp);
-      const transationLastWeek = await getWeekTransactions(lastWeekTimestamp, thisWeekTimestamp);
-      salesThisWeek += formatAmount(sumOfTransactionValues(transationThisWeek));
-      salesLastWeek += formatAmount(sumOfTransactionValues(transationLastWeek));
 
-      setSalesWeek((prevState) => {
-        return { ...prevState, salesThisWeek, salesLastWeek };
-      });
-
-      const profitPercentage = ((salesThisWeek - salesLastWeek) * 100) / salesThisWeek;
-      setProfit(!profitPercentage ? 0 : Math.floor(profitPercentage));
-    });
+        const profitPercentage = ((salesThisWeek - salesLastWeek) * 100) / salesThisWeek;
+        setProfit(!profitPercentage ? 0 : Math.floor(profitPercentage));
+      })
+    );
     setIsStatisticsLoading(false);
   };
 
@@ -117,7 +125,7 @@ const Statistics = () => {
       ) : (
         <div>
           <p>
-            Sales this week: {salesWeek.salesThisWeek}${" "}
+            Sales this week: ${salesWeek.salesThisWeek}{" "}
             <span>
               {`(${profit >= 0 ? "+" : ""}${profit}%)`}{" "}
               {profit >= 0 ? (
@@ -127,7 +135,7 @@ const Statistics = () => {
               )}
             </span>
           </p>
-          <p>Sales last week: {salesWeek.salesLastWeek}$</p>
+          <p>Sales last week: ${salesWeek.salesLastWeek}</p>
         </div>
       )}
     </div>
