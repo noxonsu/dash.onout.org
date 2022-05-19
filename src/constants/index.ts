@@ -28,19 +28,19 @@ export const statisticUrlsDataByNetwork: {
 } = {
   [SupportedChainId.POLYGON]: {
     name: "POLYGON",
-    networkId: 137,
+    networkId: SupportedChainId.POLYGON,
     apiKey: "4JB4UXHBIE2I5285T18J8SSPUS2M3K7X3V",
     apiDomain: "https://api.polygonscan.com",
   },
   [SupportedChainId.BINANCE_SMART_CHAIN]: {
     name: "BINANCE_SMART_CHAIN",
-    networkId: 56,
+    networkId: SupportedChainId.BINANCE_SMART_CHAIN,
     apiKey: "2JEI3SQQ8VFNVHFC8XSSNBRNCHZP3632QD",
     apiDomain: "https://api.bscscan.com",
   },
   [SupportedChainId.MAINNET]: {
     name: "MAINNET",
-    networkId: 1,
+    networkId: SupportedChainId.MAINNET,
     apiKey: "RZ7N3TCPHFIU7Q4KA1V93MZWRN4X7F8HIT",
     apiDomain: "https://api.etherscan.io",
   },

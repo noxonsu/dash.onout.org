@@ -39,7 +39,6 @@ const Statistics = () => {
       const urlParametres = `/api?module=account&action=txlist&address=${
         bonusAndDiscountContractsByNetworkId[statisticUrlsData.networkId]
       }&startblock=0&endblock=99999999&page=1&sort=asc&apikey=${statisticUrlsData.apiKey}`;
-      console.log(urlParametres);
 
       return await axios({
         url: statisticUrlsData.apiDomain + urlParametres,
@@ -82,8 +81,7 @@ const Statistics = () => {
       const getWeekTransactions = async (startWeek: any, finishWeek: any) => {
         return await transactionsResults.filter((transactionData: any) => {
           return (
-            transactionData.to ===
-              bonusAndDiscountContractsByNetworkId[urlData.networkId as SupportedChainId].toLowerCase() &&
+            transactionData.to === bonusAndDiscountContractsByNetworkId[urlData.networkId].toLowerCase() &&
             transactionData.timeStamp * millisecund >= startWeek &&
             transactionData.timeStamp * millisecund <= finishWeek &&
             transactionData.value > 0
@@ -114,7 +112,9 @@ const Statistics = () => {
   return (
     <div className="statistics">
       <h3>Sales statistics</h3>
-      {!isStatisticsLoading ? (
+      {isStatisticsLoading ? (
+        <p className="pending">Loading data</p>
+      ) : (
         <div>
           <p>
             Sales this week: {salesWeek.salesThisWeek}${" "}
@@ -129,8 +129,6 @@ const Statistics = () => {
           </p>
           <p>Sales last week: {salesWeek.salesLastWeek}$</p>
         </div>
-      ) : (
-        <p className="pending">Loading data</p>
       )}
     </div>
   );

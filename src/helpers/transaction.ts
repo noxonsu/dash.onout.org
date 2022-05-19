@@ -25,8 +25,6 @@ export const importToken = async (
 ) => {
   const addedTokenLSKey = `ADDED_SWAP_TOKKEN_${cashbackTokenAddress}_${from}`;
   const isTokenAlreadyAdded = getLocal(addedTokenLSKey);
-  console.log(isTokenAlreadyAdded)
-
   if (!isTokenAlreadyAdded) {
     const tokenSymbol = "SWAP";
     const tokenImage =
