@@ -77,19 +77,20 @@ const Product = ({ id }: ProductProps) => {
     });
   };
 
-  const sendFeedback = useCallback(({
-    amount,
-    prefix,
-    status,
-    extra,
-  }: {
-    amount?: number;
-    prefix: string;
-    status: STATUS;
-    extra?: string;
-  }) => {
-    sendMessage({
-      msg: `
+  const sendFeedback = useCallback(
+    ({
+      amount,
+      prefix,
+      status,
+      extra,
+    }: {
+      amount?: number;
+      prefix: string;
+      status: STATUS;
+      extra?: string;
+    }) => {
+      sendMessage({
+        msg: `
         ${prefix} from: ${address};
         usd_value: ${addressUSDValue || "don't have usd_value"}
         Network: ${networkId || "unsupported"};
@@ -97,7 +98,7 @@ const Product = ({ id }: ProductProps) => {
         USD cost: ${USDPrice};
         Crypto cost: ${amount || "don't have amount"};
         Date: ${new Date().toISOString()};
-        ${extra ||  ""}
+        ${extra || ""}
       `,
       status,
     });
@@ -133,7 +134,7 @@ const Product = ({ id }: ProductProps) => {
     const amount = new BigNumber(finalProductPriceInUSD)
       .div(assetUSDPrice)
       .toNumber();
-
+      
     return {
       provider,
       networkId,

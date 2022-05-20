@@ -1,10 +1,10 @@
 import { useContext, useState, useEffect } from "react";
-import bonusAndDiscountContractAbi from "../../constants/bonusAndDiscountContractAbi.json";
 import {
   bonusAndDiscountContractsByNetworkId,
   cashbackTokenAddresses,
 } from "../../constants";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
+import bonusAndDiscountContractAbi from "../../constants/bonusAndDiscountContractAbi.json";
 
 import "./index.css";
 

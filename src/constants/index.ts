@@ -12,15 +12,43 @@ export enum SupportedChainId {
 
 export const bonusAndDiscountContractsByNetworkId = {
   [SupportedChainId.POLYGON]: "0xd9f89Dec54CbF10011FDc8D9FA06E1f30c3F74d4",
-  [SupportedChainId.BINANCE_SMART_CHAIN]:
-    "0xB0A06daCa7F05D86D8fC1e289E08f734398EaE89",
-  [SupportedChainId.MAINNET]: "",
+  [SupportedChainId.BINANCE_SMART_CHAIN]: "0xB0A06daCa7F05D86D8fC1e289E08f734398EaE89",
+  [SupportedChainId.MAINNET]: PAYMENT_ADDRESS,
+};
+
+export interface StatisticUrlsData {
+  name: string;
+  networkId: SupportedChainId;
+  apiKey: string;
+  apiDomain: string;
+}
+
+export const statisticUrlsDataByNetwork: {
+  [key in SupportedChainId]: StatisticUrlsData;
+} = {
+  [SupportedChainId.POLYGON]: {
+    name: "POLYGON",
+    networkId: SupportedChainId.POLYGON,
+    apiKey: "4JB4UXHBIE2I5285T18J8SSPUS2M3K7X3V",
+    apiDomain: "https://api.polygonscan.com",
+  },
+  [SupportedChainId.BINANCE_SMART_CHAIN]: {
+    name: "BINANCE_SMART_CHAIN",
+    networkId: SupportedChainId.BINANCE_SMART_CHAIN,
+    apiKey: "2JEI3SQQ8VFNVHFC8XSSNBRNCHZP3632QD",
+    apiDomain: "https://api.bscscan.com",
+  },
+  [SupportedChainId.MAINNET]: {
+    name: "MAINNET",
+    networkId: SupportedChainId.MAINNET,
+    apiKey: "RZ7N3TCPHFIU7Q4KA1V93MZWRN4X7F8HIT",
+    apiDomain: "https://api.etherscan.io",
+  },
 };
 
 export const cashbackTokenAddresses = {
   [SupportedChainId.POLYGON]: "0x654496319F438A59FEE9557940393cf818753ee9",
-  [SupportedChainId.BINANCE_SMART_CHAIN]:
-    "0x92648e4537CdFa1EE743A244465a31AA034B1ce8",
+  [SupportedChainId.BINANCE_SMART_CHAIN]: "0x92648e4537CdFa1EE743A244465a31AA034B1ce8",
   [SupportedChainId.MAINNET]: "",
 };
 
@@ -156,8 +184,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     name: "MCW (Wallet + Exchange)",
     status: "ready",
     demo: "wallet.wpmix.net",
-    howToEarn:
-      "Add 'Withdraw' comission (BTC, ETH, Tokens), exchange comission (0x.org connected)",
+    howToEarn: "Add 'Withdraw' comission (BTC, ETH, Tokens), exchange comission (0x.org connected)",
     adminCanEdit: "Logo, colors, styles, list of assets (BTC, ETH, Tokens)",
     description: "",
     imgSrc: COVERS.walletCover,
@@ -177,16 +204,14 @@ export const PRODUCTS: { [id: string]: Product } = {
     status: "ready",
     demo: "definance.wpmix.net",
     howToEarn: "0.01% - 99% each trade",
-    adminCanEdit:
-      "Logo, colors, list of assets, links, fee percent, admin and fee addresses",
+    adminCanEdit: "Logo, colors, list of assets, links, fee percent, admin and fee addresses",
     description: "",
     imgSrc: COVERS.dexCover,
     imgAlt: "DeFinance promo",
     promoPage: "OnOut DEX",
     promoPageLink: "https://tools.onout.org/dex/",
     docsLink: "https://support.onout.org/hc/1331700057/category/2",
-    codecanyonLink:
-      "https://codecanyon.net/item/definance-ethereum-defi-plugin-for-wordpress/29099232",
+    codecanyonLink: "https://codecanyon.net/item/definance-ethereum-defi-plugin-for-wordpress/29099232",
     lables: [],
     price: 899,
   },
@@ -203,8 +228,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     promoPage: "Codecanyon",
     promoPageLink: "https://tools.onout.org/farming/",
     docsLink: "https://support.onout.org/hc/1331700057/category/3",
-    codecanyonLink:
-      "https://codecanyon.net/item/farmfactory-ethereum-assets-staking-yield-farming/29987071",
+    codecanyonLink: "https://codecanyon.net/item/farmfactory-ethereum-assets-staking-yield-farming/29987071",
     lables: [],
     price: 799,
   },
@@ -279,10 +303,10 @@ export const PRODUCTS: { [id: string]: Product } = {
 };
 
 interface Idea {
-  id: string,
-  name: string,
-  link: string,
-  price: number,
+  id: string;
+  name: string;
+  link: string;
+  price: number;
 }
 
 export const IDEAS: { [id: string]: Idea } = {
@@ -322,5 +346,4 @@ export const IDEAS: { [id: string]: Idea } = {
     link: "https://tools.onout.org/sponsor.md",
     price: 0,
   },
-
 };

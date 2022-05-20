@@ -8,6 +8,7 @@ import { NETWORKS, SupportedChainId } from "../../constants";
 import useUser from "../../hooks/useUser";
 import { getUserUSDValueOfAddress } from "../../helpers/balance";
 import { UserActions } from "../UserProvider";
+import { Link } from "react-router-dom";
 
 import "./index.css";
 
