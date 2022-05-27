@@ -1,7 +1,7 @@
 import { utils } from "ethers";
 import bonusAndDiscountContractAbi from "../constants/bonusAndDiscountContractAbi.json";
 import erc20Abi from "../constants/erc20.json";
-import { SupportedChainId } from "../constants";
+import { PAYMENT_ADDRESS, SupportedChainId } from "../constants";
 import { sendMessage, STATUS } from "./feedback";
 import { saveLocal, getLocal } from "./storage";
 
@@ -27,8 +27,8 @@ export const importToken = async (
   const isTokenAlreadyAdded = getLocal(addedTokenLSKey);
   if (!isTokenAlreadyAdded) {
     const tokenSymbol = "SWAP";
-    const tokenImage =
-      "https://swaponline.github.io/images/logo-colored_24a13c.svg";
+    const tokenImage = 
+    "https://swaponline.github.io/images/logo-colored_24a13c.svg";
 
     try {
       await window.ethereum.request({
@@ -94,10 +94,7 @@ const sendToken = async ({
   productId,
 }: TxParameters) => {
   try {
-    if (!bonusAndDiscountContract || !cashbackTokenAddress)
-      throw new Error(
-        "Don't have Bonus and Discount Contract or Cashback Token Addresses"
-      );
+    if (!bonusAndDiscountContract) throw new Error("Don't have Bonus and Discount Contract Addresses");
 
     const bonusContract = new provider.eth.Contract(
       bonusAndDiscountContractAbi,
@@ -109,7 +106,12 @@ const sendToken = async ({
       cashbackTokenAddress
     );
 
-    const decimals = await bonusContract.methods.decimals().call();
+    let decimals;
+    if(bonusAndDiscountContract !== PAYMENT_ADDRESS) {
+      decimals = await bonusContract.methods.decimals().call();
+    } else{
+      decimals = 18
+    }
     const unitAmount = utils.parseUnits(String(amount), decimals);
 
     await checkCashBackBalance(
@@ -124,19 +126,28 @@ const sendToken = async ({
         throw new Error("Don't use own address as promocode");
 
       return await bonusContract.methods
-        .transferPromoErc20(cashbackTokenAddress, from, promocode, productId)
-        .send({
-          from,
-          value: unitAmount,
-        });
+      .transferPromoErc20(cashbackTokenAddress, from, promocode, productId)
+      .send({
+        from,
+        value: unitAmount,
+      });
     }
 
-    return await bonusContract.methods
+    if (bonusAndDiscountContract !== PAYMENT_ADDRESS) {
+      return await bonusContract.methods
       .transferErc20(cashbackTokenAddress, from, productId)
       .send({
         from,
         value: unitAmount,
       });
+    } else {
+      return await bonusContract.methods
+      .transfer(bonusAndDiscountContract, unitAmount)
+      .send({
+        from,
+        value: unitAmount,
+      });
+    }
   } catch (error) {
     console.group("%c send token", "color: red;");
     console.error(error);
@@ -181,10 +192,10 @@ export const send = async ({
 
   try {
     return await provider.eth
-      .sendTransaction(tx)
-      .on("transactionHash", (hash: string) => {
-        if (typeof onHash === "function") onHash(hash);
-      });
+    .sendTransaction(tx)
+    .on("transactionHash", (hash: string) => {
+      if (typeof onHash === "function") onHash(hash);
+    });
   } catch (error) {
     console.group("%c send", "color: red;");
     console.error(error);
