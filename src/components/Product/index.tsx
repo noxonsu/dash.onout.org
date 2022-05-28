@@ -9,6 +9,7 @@ import {
   EVM_ADDRESS_REGEXP,
   bonusAndDiscountContractsByNetworkId,
   cashbackTokenAddresses,
+  SupportedChainId,
 } from "../../constants";
 import { send, importToken } from "../../helpers/transaction";
 import { sendMessage, STATUS } from "../../helpers/feedback";
@@ -119,8 +120,8 @@ const Product = ({ id }: ProductProps) => {
       DECIMAL_PLACES: 18,
     });
 
-    const bonusAndDiscountContract =
-      bonusAndDiscountContractsByNetworkId[networkId];
+    const bonusAndDiscountContract = (networkId !== SupportedChainId.MAINNET) ?
+      bonusAndDiscountContractsByNetworkId[networkId] : '';
     const cashbackTokenAddress = cashbackTokenAddresses[networkId];
 
     const hasValidPromoCode = !!(
