@@ -3,7 +3,7 @@ name: Check domains of IPFS projects
 # Controls when the workflow will run
 on:
   schedule: # “Every 6 hours”
-    - cron: "0 */1 * * *"
+    - cron: "0 */12 * * *"
   # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 
 jobs:
