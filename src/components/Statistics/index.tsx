@@ -16,7 +16,7 @@ const Statistics = () => {
   const [salesWeek, setSalesWeek] = useState<{ [sales: string]: number }>({});
   const [isStatisticsLoading, setIsStatisticsLoading] = useState(false);
   const [profit, setProfit] = useState(0);
-  const millisecond  = 1000;
+  const millisecund = 1000;
   const decimals = 18;
   const zeros = 10 ** decimals;
   const statisticUrlsDataByNetworkArray = Object.values(statisticUrlsDataByNetwork);
@@ -83,8 +83,8 @@ const Statistics = () => {
           return await transactionsResults.filter((transactionData: any) => {
             return (
               transactionData.to === bonusAndDiscountContractsByNetworkId[urlData.networkId].toLowerCase() &&
-              transactionData.timeStamp * millisecond  >= startWeek &&
-              transactionData.timeStamp * millisecond  <= finishWeek &&
+              transactionData.timeStamp * millisecund >= startWeek &&
+              transactionData.timeStamp * millisecund <= finishWeek &&
               transactionData.value > 0
             );
           });
@@ -126,14 +126,18 @@ const Statistics = () => {
         <div>
           <p>
             Sales this week: ${salesWeek.salesThisWeek}{" "}
-            <span>
-              {`(${profit >= 0 ? "+" : ""}${profit}%)`}{" "}
-              {profit >= 0 ? (
-                <BsGraphUp className="graphUp" size="1rem" />
-              ) : (
-                <BsGraphDown className="graphDown" size="1rem" />
-              )}
-            </span>
+            {!salesWeek.salesThisWeek && !salesWeek.salesLastWeek ? (
+              ""
+            ) : (
+              <span>
+                {`(${profit >= 0 ? "+" : ""}${profit}%)`}{" "}
+                {profit >= 0 ? (
+                  <BsGraphUp className="graphUp" size="1rem" />
+                ) : (
+                  <BsGraphDown className="graphDown" size="1rem" />
+                )}
+              </span>
+            )}
           </p>
           <p>Sales last week: ${salesWeek.salesLastWeek}</p>
         </div>
