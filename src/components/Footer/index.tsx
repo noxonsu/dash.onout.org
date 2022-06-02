@@ -54,7 +54,7 @@ const Footer = () => {
             <li className="footerItem">
               <a
                 href="https://tools.onout.org/sponsor.md"
-                target="_blanck"
+                target="_blank"
                 className="footerLink"
               >
                 Become a sponsor
@@ -63,7 +63,7 @@ const Footer = () => {
             <li className="footerItem">
               <a
                 href="https://t.me/onoutsupportbot"
-                target="_blanck"
+                target="_blank"
                 className="footerLink"
               >
                 Contact support

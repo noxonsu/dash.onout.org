@@ -16,7 +16,7 @@ const Statistics = () => {
   const [salesWeek, setSalesWeek] = useState<{ [sales: string]: number }>({});
   const [isStatisticsLoading, setIsStatisticsLoading] = useState(false);
   const [profit, setProfit] = useState(0);
-  const millisecund = 1000;
+  const millisecond  = 1000;
   const decimals = 18;
   const zeros = 10 ** decimals;
   const statisticUrlsDataByNetworkArray = Object.values(statisticUrlsDataByNetwork);
@@ -83,8 +83,8 @@ const Statistics = () => {
           return await transactionsResults.filter((transactionData: any) => {
             return (
               transactionData.to === bonusAndDiscountContractsByNetworkId[urlData.networkId].toLowerCase() &&
-              transactionData.timeStamp * millisecund >= startWeek &&
-              transactionData.timeStamp * millisecund <= finishWeek &&
+              transactionData.timeStamp * millisecond  >= startWeek &&
+              transactionData.timeStamp * millisecond  <= finishWeek &&
               transactionData.value > 0
             );
           });
