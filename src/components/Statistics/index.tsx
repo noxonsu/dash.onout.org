@@ -126,14 +126,18 @@ const Statistics = () => {
         <div>
           <p>
             Sales this week: ${salesWeek.salesThisWeek}{" "}
-            <span>
-              {`(${profit >= 0 ? "+" : ""}${profit}%)`}{" "}
-              {profit >= 0 ? (
-                <BsGraphUp className="graphUp" size="1rem" />
-              ) : (
-                <BsGraphDown className="graphDown" size="1rem" />
-              )}
-            </span>
+            {!salesWeek.salesThisWeek && !salesWeek.salesLastWeek ? (
+              ""
+            ) : (
+              <span>
+                {`(${profit >= 0 ? "+" : ""}${profit}%)`}{" "}
+                {profit >= 0 ? (
+                  <BsGraphUp className="graphUp" size="1rem" />
+                ) : (
+                  <BsGraphDown className="graphDown" size="1rem" />
+                )}
+              </span>
+            )}
           </p>
           <p>Sales last week: ${salesWeek.salesLastWeek}</p>
         </div>
