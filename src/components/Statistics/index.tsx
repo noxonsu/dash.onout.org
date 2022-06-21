@@ -105,9 +105,16 @@ const Statistics = () => {
         setSalesWeek((prevState) => {
           return { ...prevState, salesThisWeek, salesLastWeek };
         });
-
-        const profitPercentage = ((salesThisWeek - salesLastWeek) * 100) / salesThisWeek;
-        setProfit(!profitPercentage ? 0 : Math.floor(profitPercentage));
+        if (!salesThisWeek && salesLastWeek) {
+          setProfit(-100);
+          return false;
+        }
+        const profitPercentage = (salesThisWeek * 100) / (salesLastWeek || 1);
+        if (salesThisWeek < salesLastWeek) {
+          setProfit(Math.floor(profitPercentage) - 100);
+        } else {
+          setProfit(Math.floor(profitPercentage) || 0);
+        }
       })
     );
     setIsStatisticsLoading(false);
@@ -126,14 +133,18 @@ const Statistics = () => {
         <div>
           <p>
             Sales this week: ${salesWeek.salesThisWeek}{" "}
-            <span>
-              {`(${profit >= 0 ? "+" : ""}${profit}%)`}{" "}
-              {profit >= 0 ? (
-                <BsGraphUp className="graphUp" size="1rem" />
-              ) : (
-                <BsGraphDown className="graphDown" size="1rem" />
-              )}
-            </span>
+            {!salesWeek.salesThisWeek && !salesWeek.salesLastWeek ? (
+              ""
+            ) : (
+              <span>
+                {`(${profit >= 0 ? "+" : ""}${profit}%)`}{" "}
+                {profit >= 0 ? (
+                  <BsGraphUp className="graphUp" size="1rem" />
+                ) : (
+                  <BsGraphDown className="graphDown" size="1rem" />
+                )}
+              </span>
+            )}
           </p>
           <p>Sales last week: ${salesWeek.salesLastWeek}</p>
         </div>
