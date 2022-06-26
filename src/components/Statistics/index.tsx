@@ -11,6 +11,7 @@ import {
   StatisticUrlsData,
 } from "../../constants";
 import "./index.css";
+import NumberOfSales from "../NumberOfSales";
 
 const Statistics = () => {
   const [salesWeek, setSalesWeek] = useState<{ [sales: string]: number }>({});
@@ -127,28 +128,31 @@ const Statistics = () => {
   return (
     <div className="statistics">
       <h3>Sales statistics</h3>
-      {isStatisticsLoading ? (
-        <p className="pending">Loading data</p>
-      ) : (
-        <div>
-          <p>
-            Sales this week: ${salesWeek.salesThisWeek}{" "}
-            {!salesWeek.salesThisWeek && !salesWeek.salesLastWeek ? (
-              ""
-            ) : (
-              <span>
-                {`(${profit >= 0 ? "+" : ""}${profit}%)`}{" "}
-                {profit >= 0 ? (
-                  <BsGraphUp className="graphUp" size="1rem" />
-                ) : (
-                  <BsGraphDown className="graphDown" size="1rem" />
-                )}
-              </span>
-            )}
-          </p>
-          <p>Sales last week: ${salesWeek.salesLastWeek}</p>
-        </div>
-      )}
+      <div className="statisticsWrapper">
+        {isStatisticsLoading ? (
+          <p className="pending">Loading data</p>
+        ) : (
+          <div>
+            <p>
+              Sales this week: ${salesWeek.salesThisWeek}{" "}
+              {!salesWeek.salesThisWeek && !salesWeek.salesLastWeek ? (
+                ""
+              ) : (
+                <span>
+                  {`(${profit >= 0 ? "+" : ""}${profit}%)`}{" "}
+                  {profit >= 0 ? (
+                    <BsGraphUp className="graphUp" size="1rem" />
+                  ) : (
+                    <BsGraphDown className="graphDown" size="1rem" />
+                  )}
+                </span>
+              )}
+            </p>
+            <p>Sales last week: ${salesWeek.salesLastWeek}</p>
+          </div>
+        )}
+      </div>
+      <NumberOfSales />
     </div>
   );
 };
