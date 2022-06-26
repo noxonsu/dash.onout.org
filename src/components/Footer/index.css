@@ -74,3 +74,9 @@ footer {
   position: relative;
   z-index: -1;
 }
+
+@media (max-width: 500px){
+  .footerItems{
+    font-size: 0.8rem;
+  }
+}
