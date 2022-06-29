@@ -14,7 +14,7 @@ import "./index.css";
 import NumberOfSales from "../NumberOfSales";
 
 const Statistics = () => {
-  const [salesWeek, setSalesWeek] = useState<{ [sales: string]: number }>({});
+  const [salesMonth, setSalesMonth] = useState<{ [sales: string]: number }>({});
   const [isStatisticsLoading, setIsStatisticsLoading] = useState(false);
   const [profit, setProfit] = useState(0);
   const millisecund = 1000;
@@ -54,25 +54,16 @@ const Statistics = () => {
     }
   };
 
-  const getWeek = (date: any, days: number) => {
-    const sunday = 0;
-    const minusSixDays = -6;
-    const oneDay = 1;
-    const day = date.getDay() + days;
-    const daysOfTheWeek = date.getDate() - day + (day === sunday ? minusSixDays : oneDay);
-    return new Date(date.setDate(daysOfTheWeek));
-  };
-
   const getTransationsBalance = async () => {
     const toTimestamp = (strDate: any) => Date.parse(strDate);
     const date = new Date();
-    const thisWeekDate = getWeek(date, 1);
-    const lastWeekDate = getWeek(date, 8);
-    const thisWeekTimestamp = toTimestamp(thisWeekDate);
-    const lastWeekTimestamp = toTimestamp(lastWeekDate);
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const thisMonthTimestamp = toTimestamp(new Date(year, month, 1));
+    const lastMonthTimestamp = toTimestamp(new Date(year, month - 1, 1));
     const dateNowTimestamp = Date.now();
-    let salesThisWeek = 0;
-    let salesLastWeek = 0;
+    let salesThisMonth = 0;
+    let salesLastMonth = 0;
     setIsStatisticsLoading(true);
 
     await Promise.all(
@@ -80,12 +71,12 @@ const Statistics = () => {
         const tokenRate = await getRate(urlData.networkId);
         const transactionsResults = await getTransactionsResult(urlData);
 
-        const getWeekTransactions = async (startWeek: any, finishWeek: any) => {
+        const getMonthTransactions = async (startMonth: any, finishMonth: any) => {
           return await transactionsResults.filter((transactionData: any) => {
             return (
               transactionData.to === bonusAndDiscountContractsByNetworkId[urlData.networkId].toLowerCase() &&
-              transactionData.timeStamp * millisecund >= startWeek &&
-              transactionData.timeStamp * millisecund <= finishWeek &&
+              transactionData.timeStamp * millisecund >= startMonth &&
+              transactionData.timeStamp * millisecund <= finishMonth &&
               transactionData.value > 0
             );
           });
@@ -94,24 +85,24 @@ const Statistics = () => {
           txs.reduce((acc, res) => acc + Number(res.value), 0);
         const formatAmount = (amount: number) => Math.floor((amount / zeros) * tokenRate);
 
-        const transationThisWeek = await getWeekTransactions(thisWeekTimestamp, dateNowTimestamp);
-        const transationLastWeek = await getWeekTransactions(lastWeekTimestamp, thisWeekTimestamp);
-        if (!transationThisWeek || !transationLastWeek) {
+        const transationThisMonth = await getMonthTransactions(thisMonthTimestamp, dateNowTimestamp);
+        const transationLastMonth = await getMonthTransactions(lastMonthTimestamp, thisMonthTimestamp);
+        if (!transationThisMonth || !transationLastMonth) {
           return;
         } else {
-          salesThisWeek += formatAmount(sumOfTransactionValues(transationThisWeek));
-          salesLastWeek += formatAmount(sumOfTransactionValues(transationLastWeek));
+          salesThisMonth += formatAmount(sumOfTransactionValues(transationThisMonth));
+          salesLastMonth += formatAmount(sumOfTransactionValues(transationLastMonth));
         }
 
-        setSalesWeek((prevState) => {
-          return { ...prevState, salesThisWeek, salesLastWeek };
+        setSalesMonth((prevState) => {
+          return { ...prevState, salesThisMonth, salesLastMonth };
         });
-        if (!salesThisWeek && salesLastWeek) {
+        if (!salesThisMonth && salesLastMonth) {
           setProfit(-100);
           return false;
         }
-        const profitPercentage = (salesThisWeek * 100) / (salesLastWeek || 1);
-        if (salesThisWeek < salesLastWeek) {
+        const profitPercentage = (salesThisMonth * 100) / (salesLastMonth || 1);
+        if (salesThisMonth < salesLastMonth) {
           setProfit(Math.floor(profitPercentage) - 100);
         } else {
           setProfit(Math.floor(profitPercentage) || 0);
@@ -134,8 +125,8 @@ const Statistics = () => {
         ) : (
           <div>
             <p>
-              Sales this week: ${salesWeek.salesThisWeek}{" "}
-              {!salesWeek.salesThisWeek && !salesWeek.salesLastWeek ? (
+              Sales this month: ${salesMonth.salesThisMonth}{" "}
+              {!salesMonth.salesThisMonth && !salesMonth.salesLastMonth ? (
                 ""
               ) : (
                 <span>
@@ -148,7 +139,7 @@ const Statistics = () => {
                 </span>
               )}
             </p>
-            <p>Sales last week: ${salesWeek.salesLastWeek}</p>
+            <p>Sales last month: ${salesMonth.salesLastMonth}</p>
           </div>
         )}
       </div>
