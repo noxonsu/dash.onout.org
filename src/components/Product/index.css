@@ -67,6 +67,7 @@
   caret-color: transparent;
 }
 .promoCodeText {
+  cursor: pointer;
   margin-top: 1.6rem;
   margin-bottom: 0.6rem;
   display: flex;
@@ -126,7 +127,7 @@
   color: #acaab3;
 }
 
-.polygonNotice {
+.bonusNotice {
   margin: 1.6rem 0 0;
 }
 

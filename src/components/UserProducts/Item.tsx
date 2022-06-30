@@ -1,7 +1,5 @@
 import { PRODUCTS } from "../../constants";
 import GA from 'react-ga';
-import { UserActions } from "../UserProvider";
-import useUser from "../../hooks/useUser";
 import { PLUGINS } from "../../assets";
 import { FiExternalLink } from "react-icons/fi";
 
@@ -12,7 +10,6 @@ type ItemProps = {
 };
 
 const Item = ({ id }: ItemProps) => {
-  // const { dispatch } = useUser();
   const { name, docsLink } = PRODUCTS[id];
   const MCWalletLicense = "67ae17cd-8cfc-46ff-979c-c1a866fce34c";
 

@@ -1,31 +1,33 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import { PRODUCTS } from "../../constants";
 
-import IdeaList from '../IdeaList';
-import ProductCard from './ProductCard';
+import IdeaList from "../IdeaList";
+import ProductCard from "./ProductCard";
 
 import "./index.css";
 
 const ProductList = () => {
   const location = useLocation();
 
-  let status = '';
-  if(location.pathname === '/presale'){
-    status = 'development';
-  } else if(location.pathname === '' || location.pathname === '/') {
-    status = 'ready';
+  let status = "";
+  if (location.pathname === "/presale") {
+    status = "development";
+  } else if (location.pathname === "" || location.pathname === "/") {
+    status = "ready";
   } else {
-    status = '';
+    status = "";
   }
 
   return (
     <section>
       <div className="products">
         {Object.keys(PRODUCTS).map((id, index) => {
-          if(PRODUCTS[id].status === status) return <ProductCard key={index} id={id} />
+          if (PRODUCTS[id].status === status) return <ProductCard key={index} id={id} />;
+
+          return null;
         })}
       </div>
-      {status === 'development' && <IdeaList/>}
+      {status === "development" && <IdeaList />}
     </section>
   );
 };

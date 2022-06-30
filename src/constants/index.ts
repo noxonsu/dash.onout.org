@@ -73,6 +73,7 @@ export interface Network {
   name: string;
   currency: {
     id: string;
+    symbol: string;
   };
   tokens: {
     [key: string]: {
@@ -83,25 +84,27 @@ export interface Network {
 }
 
 export const NETWORKS: { [key in SupportedChainId]: Network } = {
-  // 4: {
-  //   id: 1,
-  //   name: "Rinkeby",
-  //   currency: {
-  //     id: "ethereum",
-  //   },
-  //   tokens: {
-  //     usdt: {
-  //       address: "",
-  //       id: "",
-  //     },
-  //   },
-  // },
+/* 4: {
+    id: 1,
+    name: "Rinkeby",
+    currency: {
+      id: "ethereum",
+      symbol: "ETH",
+    },
+    tokens: {
+      usdt: {
+        address: "",
+        id: "",
+      },
+    },
+  }, */
   [SupportedChainId.MAINNET]: {
     id: 1,
     chainId: `0x${(1).toString(16)}`,
     name: "Ethereum",
     currency: {
       id: "ethereum",
+      symbol: "ETH",
     },
     tokens: {
       usdt: {
@@ -116,6 +119,7 @@ export const NETWORKS: { [key in SupportedChainId]: Network } = {
     name: "BSC",
     currency: {
       id: "binancecoin",
+      symbol: "BNB",
     },
     tokens: {
       usdt: {
@@ -130,6 +134,7 @@ export const NETWORKS: { [key in SupportedChainId]: Network } = {
     name: "Polygon",
     currency: {
       id: "aave-polygon-wmatic",
+      symbol: "MATIC",
     },
     tokens: {
       usdt: {

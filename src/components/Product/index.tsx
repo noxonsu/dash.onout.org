@@ -11,18 +11,16 @@ import {
   cashbackTokenAddresses,
   SupportedChainId,
 } from "../../constants";
-import { send, importToken } from "../../helpers/transaction";
+import { send } from "../../helpers/transaction";
 import { sendMessage, STATUS } from "../../helpers/feedback";
-// import { stringFromHex, stringToHex } from "../../helpers/format";
 import { getPrice } from "../../helpers/currency";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
+import BonusNotice from './BonusNotice'
 import Modal from "../Modal";
 import bscIcon from "../../assets/images/bsc.svg";
 import ploygonIcon from "../../assets/images/polygon.svg";
-import swapIcon from "../../assets/images/swap.svg";
-
 import "./index.css";
 
 type ProductProps = {
@@ -225,12 +223,6 @@ const Product = ({ id }: ProductProps) => {
   const switchToPolygon = () => switchToNetwork(NETWORKS[137].chainId)
   const switchToBinance = () => switchToNetwork(NETWORKS[56].chainId)
 
-  const importSwapToken = () => {
-    if (networkId) {
-      importToken(cashbackTokenAddresses[networkId], address)
-    }
-  }
-
   const [paymentAvailable, setPaymentAvailable] = useState(false);
 
   useEffect(() => {
@@ -391,31 +383,8 @@ const Product = ({ id }: ProductProps) => {
             : "Not available"}
         </button>
       </form>
-      <p className="polygonNotice">
-        Use{" "}
-        <span
-          className={`notesSpan ${isPolygonNetwork ? "active" : ""}`}
-          onClick={switchToPolygon}
-        >
-          {" "}
-          <img className="tokenIcon" src={ploygonIcon} alt="polygon-icon" />
-          Polygon
-        </span>{" "}
-        or{" "}
-        <span
-          className={`notesSpan ${isBSCNetwork ? "active" : ""}`}
-          onClick={switchToBinance}
-        >
-          <img className="tokenIcon" src={bscIcon} alt="bsc-icon" />
-          BSC
-        </span>{" "}
-        to get 50
-        <button className="transparentButton" onClick={importSwapToken}>
-          <img className="tokenIcon" src={swapIcon} alt="swap-token-icon" />
-          SWAP
-        </button>
-        tokens as a bonus.
-      </p>
+
+      <BonusNotice switchToNetwork={switchToNetwork} />
     </div>
   );
 };
