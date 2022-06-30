@@ -74,6 +74,7 @@ export interface Network {
   currency: {
     id: string;
     symbol: string;
+    binancePurchaseKey: string;
   };
   tokens: {
     [key: string]: {
@@ -105,6 +106,7 @@ export const NETWORKS: { [key in SupportedChainId]: Network } = {
     currency: {
       id: "ethereum",
       symbol: "ETH",
+      binancePurchaseKey: 'ethereum',
     },
     tokens: {
       usdt: {
@@ -120,6 +122,7 @@ export const NETWORKS: { [key in SupportedChainId]: Network } = {
     currency: {
       id: "binancecoin",
       symbol: "BNB",
+      binancePurchaseKey: 'BNB',
     },
     tokens: {
       usdt: {
@@ -135,6 +138,7 @@ export const NETWORKS: { [key in SupportedChainId]: Network } = {
     currency: {
       id: "aave-polygon-wmatic",
       symbol: "MATIC",
+      binancePurchaseKey: 'polygon-matic',
     },
     tokens: {
       usdt: {

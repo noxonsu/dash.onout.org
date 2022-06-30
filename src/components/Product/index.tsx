@@ -312,8 +312,12 @@ const Product = ({ id }: ProductProps) => {
               >
                 Buy {activeNetwork?.currency.symbol} on Changelly
               </a>
-              {/* @todo which binance url can be changed depending on symbol? */}
-              <a className="link paymentLink" href="https://www.binance.com/en/buy-BNB" target="_blank" rel="noreferrer">
+              <a
+                className="link paymentLink"
+                href={`https://www.binance.com/en/buy-${activeNetwork?.currency.binancePurchaseKey}`}
+                target="_blank"
+                rel="noreferrer"
+              >
                 Buy {activeNetwork?.currency.symbol} on Binance
               </a>
               <button
