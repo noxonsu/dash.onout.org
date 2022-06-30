@@ -35,13 +35,10 @@
   border-radius: 0.6rem;
 }
 
-
-.pomoCodeForm{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+.paymentLink {
+  display: block;
+  margin-bottom: 1rem;
 }
-
 
 .promoCodeInput{
   margin-bottom: 0.6rem;
