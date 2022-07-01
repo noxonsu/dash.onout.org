@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useCallback } from "react";
 import GA from 'react-ga';
 import { utils } from "ethers";
 import Web3 from "web3";
@@ -8,7 +8,6 @@ import { NETWORKS, SupportedChainId } from "../../constants";
 import useUser from "../../hooks/useUser";
 import { getUserUSDValueOfAddress } from "../../helpers/balance";
 import { UserActions } from "../UserProvider";
-import { Link } from "react-router-dom";
 
 import "./index.css";
 
@@ -70,7 +69,31 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
   const [isWeb3Loading, setIsWeb3Loading] = useState(false);
   const { dispatch } = useUser();
 
-  async function connect() {
+  const disconnect = useCallback(async () => {
+    dispatch({
+      type: UserActions.signed,
+      payload: false,
+    });
+    dispatch({
+      type: UserActions.changeView,
+      payload: "products",
+    });
+    // @ts-ignore
+    if (account?.provider?.close) {
+      // @ts-ignore
+      await account.provider.close();
+    }
+
+    setAccount(initialWeb3ConnectState);
+
+    // If the cached provider is not cleared,
+    // WalletConnect will default to the existing session
+    // and does not allow to re-scan the QR code with a new wallet.
+    // Depending on your use case you may want or want not his behavir.
+    web3Modal.clearCachedProvider();
+  }, [account.provider, dispatch])
+
+  const connect = useCallback(async () => {
     const web3ModalProvider = await web3Modal.connect();
     const provider = new Web3(web3ModalProvider);
 
@@ -155,31 +178,7 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
         disconnect();
       }
     );
-  }
-
-  async function disconnect() {
-    dispatch({
-      type: UserActions.signed,
-      payload: false,
-    });
-    dispatch({
-      type: UserActions.changeView,
-      payload: "products",
-    });
-    // @ts-ignore
-    if (account?.provider?.close) {
-      // @ts-ignore
-      await account.provider.close();
-    }
-
-    setAccount(initialWeb3ConnectState);
-
-    // If the cached provider is not cleared,
-    // WalletConnect will default to the existing session
-    // and does not allow to re-scan the QR code with a new wallet.
-    // Depending on your use case you may want or want not his behavir.
-    web3Modal.clearCachedProvider();
-  }
+  }, [account, disconnect, dispatch])
 
   const { address, wrongNetwork } = account;
 
@@ -254,7 +253,7 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
       });
       connect();
     }
-  }, []);
+  }, [account.connected, connect, isWeb3Loading, dispatch]);
 
   return (
     <Web3ConnecStateContext.Provider value={{ account, isWeb3Loading }}>

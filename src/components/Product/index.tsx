@@ -11,18 +11,18 @@ import {
   cashbackTokenAddresses,
   SupportedChainId,
 } from "../../constants";
-import { send, importToken } from "../../helpers/transaction";
+import { send } from "../../helpers/transaction";
 import { sendMessage, STATUS } from "../../helpers/feedback";
-// import { stringFromHex, stringToHex } from "../../helpers/format";
 import { getPrice } from "../../helpers/currency";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
+import PaymentModal from './PaymentModal'
+import IconButton from "./IconButton";
+import BonusNotice from "./BonusNotice";
 import Modal from "../Modal";
 import bscIcon from "../../assets/images/bsc.svg";
 import ploygonIcon from "../../assets/images/polygon.svg";
-import swapIcon from "../../assets/images/swap.svg";
-
 import "./index.css";
 
 type ProductProps = {
@@ -49,7 +49,7 @@ const Product = ({ id }: ProductProps) => {
 
   const [paymentPending, setPaymentPending] = useState(false);
   const [paidFor, setPaidFor] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [landingModalIsOpen, setLandingModalIsOpen] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -160,6 +160,11 @@ const Product = ({ id }: ProductProps) => {
   const payForProduct = useCallback(async () => {
     if (!networkId) return;
 
+    GA.event({
+      category: id,
+      action: 'Start payment from the modal',
+    });
+
     setErrorMessage("");
     setPaymentPending(true);
 
@@ -225,12 +230,6 @@ const Product = ({ id }: ProductProps) => {
   const switchToPolygon = () => switchToNetwork(NETWORKS[137].chainId)
   const switchToBinance = () => switchToNetwork(NETWORKS[56].chainId)
 
-  const importSwapToken = () => {
-    if (networkId) {
-      importToken(cashbackTokenAddresses[networkId], address)
-    }
-  }
-
   const [paymentAvailable, setPaymentAvailable] = useState(false);
 
   useEffect(() => {
@@ -245,21 +244,30 @@ const Product = ({ id }: ProductProps) => {
     );
   }, [paymentPending, paidFor, signed, isWeb3Loading, account, USDPrice]);
 
-  const promoFormHandle = useCallback((e: any) => {
-    e.preventDefault();
-    payForProduct();
+  const [paymentModalIsOpen, setPaymentModalIsOpen] = useState(false)
+
+  const openPaymentModal = () => {
+    setPaymentModalIsOpen(true)
     GA.event({
       category: id,
-      action: 'Press on the "Buy" button',
+      action: 'Product payment modal was OPENED',
     });
-  }, [payForProduct, id]);
+  }
+
+  const closePaymentModal = () => {
+    setPaymentModalIsOpen(false)
+    GA.event({
+      category: id,
+      action: 'Product payment modal was CLOSED',
+    });
+  }
 
   return (
     <div className="product">
-      {modalOpen && (
+      {landingModalIsOpen && (
         <Modal
           onClose={() => {
-            setModalOpen(false);
+            setLandingModalIsOpen(false);
 
             GA.event({
               category: id,
@@ -276,6 +284,15 @@ const Product = ({ id }: ProductProps) => {
           }
         />
       )}
+
+      <PaymentModal
+        isOpen={paymentModalIsOpen}
+        pending={paymentPending}
+        onClose={closePaymentModal}
+        startPayment={payForProduct}
+        usdPrice={USDPrice}
+        error={errorMessage}
+      />
 
       <div className="header">
         <h3 className="title">{name}</h3>
@@ -299,7 +316,7 @@ const Product = ({ id }: ProductProps) => {
         <button
           className="secondaryBtn"
           onClick={() => {
-            setModalOpen(true);
+            setLandingModalIsOpen(true);
 
             GA.event({
               category: id,
@@ -313,109 +330,56 @@ const Product = ({ id }: ProductProps) => {
 
       {description && <p>{description}</p>}
       {paidFor && <p>You already have this product</p>}
-      {paymentPending && (
+
+      {!paidFor && (
         <>
-          <p className="warning">
-            Do not leave this page until successful payment. If you have any
-            problems with the payment, please contact us.
-          </p>
-          <p className="notice">The price may vary slightly</p>
+          <span
+            className={`promoCodeText ${wantToEnterPromoCode ? "active" : ""}`}
+            onClick={() => {
+              setWantToEnterPromoCode(!wantToEnterPromoCode);
+            }}
+          >
+            {!wantToEnterPromoCode ? "I have a promo code" : "I don't have a promo code"}
+          </span>
+          {isPolygonNetwork || isBSCNetwork ? (
+            <input
+              className={`promoCodeInput ${wantToEnterPromoCode ? "active" : ""}`}
+              onChange={(e) => setPromoAddress(e.target.value)}
+              type="text"
+              placeholder="Enter the promo code to get $50 discount"
+              autoFocus
+            />
+          ) : (
+            <span className={`linkToNetworkPolygon ${wantToEnterPromoCode ? "active" : ""}`}>
+              To use the promocode pay with{" "}
+              <IconButton
+                name="Polygon"
+                icon={ploygonIcon}
+                alt="polygon button"
+                onClick={switchToPolygon}
+                inactive={isPolygonNetwork}
+              />{" "}
+              or{" "}
+              <IconButton
+                name="BSC"
+                icon={bscIcon}
+                alt="binance smart chain button"
+                onClick={switchToBinance}
+                inactive={isBSCNetwork}
+              />
+            </span>
+          )}
         </>
       )}
+      <button
+        className={`primaryBtn paymentBtn ${paymentPending ? "pending" : ""}`}
+        disabled={!paymentAvailable}
+        onClick={openPaymentModal}
+      >
+        Buy
+      </button>
 
-      {errorMessage && <p className="error">Error: {errorMessage}</p>}
-
-      <form className="pomoCodeForm" onSubmit={promoFormHandle}>
-        {!paidFor && (
-          <>
-            <span
-              className={`promoCodeText ${
-                wantToEnterPromoCode ? "active" : ""
-              }`}
-              onClick={() => {
-                setWantToEnterPromoCode(!wantToEnterPromoCode);
-              }}
-            >
-              {!wantToEnterPromoCode
-                ? "I have a promo code"
-                : "I don't have a promo code"}
-            </span>
-            {isPolygonNetwork || isBSCNetwork ? (
-              <input
-                className={`promoCodeInput ${
-                  wantToEnterPromoCode ? "active" : ""
-                }`}
-                onChange={(e) => setPromoAddress(e.target.value)}
-                type="text"
-                placeholder="Enter the promo code to get $50 discount"
-                autoFocus
-              />
-            ) : (
-              <span
-                className={`linkToNetworkPolygon ${
-                  wantToEnterPromoCode ? "active" : ""
-                }`}
-              >
-                To use the promocode pay with{" "}
-                <span
-                  className={`notesSpan ${isPolygonNetwork ? "active" : ""}`}
-                  onClick={switchToPolygon}
-                >
-                  <img
-                    className="tokenIcon"
-                    src={ploygonIcon}
-                    alt="polygon-icon"
-                  />
-                  Polygon
-                </span>{" "}
-                or{" "}
-                <span
-                  className={`notesSpan ${isBSCNetwork ? "active" : ""}`}
-                  onClick={switchToBinance}
-                >
-                  <img className="tokenIcon" src={bscIcon} alt="bsc-icon" />
-                  BSC
-                </span>
-              </span>
-            )}
-          </>
-        )}
-        <button
-          className={`primaryBtn paymentBtn ${paymentPending ? "pending" : ""}`}
-          disabled={!paymentAvailable}
-        >
-          {paymentPending
-            ? "Pending"
-            : USDPrice
-            ? `Buy for $${USDPrice}`
-            : "Not available"}
-        </button>
-      </form>
-      <p className="polygonNotice">
-        Use{" "}
-        <span
-          className={`notesSpan ${isPolygonNetwork ? "active" : ""}`}
-          onClick={switchToPolygon}
-        >
-          {" "}
-          <img className="tokenIcon" src={ploygonIcon} alt="polygon-icon" />
-          Polygon
-        </span>{" "}
-        or{" "}
-        <span
-          className={`notesSpan ${isBSCNetwork ? "active" : ""}`}
-          onClick={switchToBinance}
-        >
-          <img className="tokenIcon" src={bscIcon} alt="bsc-icon" />
-          BSC
-        </span>{" "}
-        to get 50
-        <button className="transparentButton" onClick={importSwapToken}>
-          <img className="tokenIcon" src={swapIcon} alt="swap-token-icon" />
-          SWAP
-        </button>
-        tokens as a bonus.
-      </p>
+      <BonusNotice switchToNetwork={switchToNetwork} />
     </div>
   );
 };

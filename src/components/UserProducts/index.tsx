@@ -42,6 +42,9 @@ const ACCOUNTS: { [key: string]: string[] } = {
   ],
   "0x597691f48a7219301c47180075421ca497865a4e": [
     "definance",
+  ],
+  "0x38234eed6740f72dd67bc0e81334dcaf1958c0b7": [
+    "definance",
   ]
 };
 
