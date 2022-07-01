@@ -23,7 +23,7 @@ const Modal = ({
     <div className="modalOverlay">
       <div className="modal" style={style}>
         <div className="modalHeader">
-          {title && <h3>{title}</h3>}
+          {title && <h3 className="modalTitle">{title}</h3>}
           <button className="secondaryBtn" onClick={onClose}>
             Close
           </button>

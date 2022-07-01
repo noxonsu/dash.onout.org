@@ -101,6 +101,10 @@
   padding: 0.6rem 1rem;
 }
 
+.paymentBtn {
+  margin-top: 0.5rem;
+}
+
 .paymentBtn:disabled {
   opacity: 0.5;
 }

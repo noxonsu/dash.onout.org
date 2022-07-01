@@ -39,8 +39,7 @@ const BonusNotice = ({ switchToNetwork }: { switchToNetwork: (chainId: string) =
         onClick={switchToBinance}
         inactive={isBSCNetwork}
       />{" "}
-      to get 50
-      {""}
+      to get 50{" "}
       <IconButton name="SWAP" icon={swapIcon} alt="swap token button" onClick={importSwapToken} inactive={true} />{" "}
       tokens as a bonus.
     </p>

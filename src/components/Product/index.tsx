@@ -5,7 +5,6 @@ import {
   PRODUCTS,
   PAYMENT_ADDRESS,
   NETWORKS,
-  Network,
   FIAT_TICKER,
   EVM_ADDRESS_REGEXP,
   bonusAndDiscountContractsByNetworkId,
@@ -18,6 +17,7 @@ import { getPrice } from "../../helpers/currency";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
+import PaymentModal from './PaymentModal'
 import IconButton from "./IconButton";
 import BonusNotice from "./BonusNotice";
 import Modal from "../Modal";
@@ -55,14 +55,6 @@ const Product = ({ id }: ProductProps) => {
 
   const [wantToEnterPromoCode, setWantToEnterPromoCode] = useState(false);
   const [promoAddress, setPromoAddress] = useState("");
-
-  const [activeNetwork, setActiveNetwork] = useState<Network | null>(null)
-
-  useEffect(() => {
-    const knownNetwork = networkId && !!NETWORKS[networkId]
-
-    setActiveNetwork(knownNetwork ? NETWORKS[networkId] : null)
-  }, [networkId])
 
   const {
     name,
@@ -293,43 +285,14 @@ const Product = ({ id }: ProductProps) => {
         />
       )}
 
-      {paymentModalIsOpen && (
-        <Modal
-          onClose={closePaymentModal}
-          title={"Payment"}
-          style={{
-            width: 'fit-content',
-            height: 'fit-content'
-          }}
-          content={
-            <>
-              <p>You can use this links to buy crypto with a bank card:</p>
-              <a
-                className="link paymentLink"
-                href={`https://changelly.com/buy/${activeNetwork?.currency.symbol}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Buy {activeNetwork?.currency.symbol} on Changelly
-              </a>
-              <a
-                className="link paymentLink"
-                href={`https://www.binance.com/en/buy-${activeNetwork?.currency.binancePurchaseKey}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Buy {activeNetwork?.currency.symbol} on Binance
-              </a>
-              <button
-                className={`primaryBtn paymentBtn ${paymentPending ? "pending" : ""}`}
-                onClick={payForProduct}
-              >
-                {paymentPending ? "Pending" : USDPrice ? `Buy for $${USDPrice}` : "Not available"}
-              </button>
-            </>
-          }
-        />
-      )}
+      <PaymentModal
+        isOpen={paymentModalIsOpen}
+        pending={paymentPending}
+        onClose={closePaymentModal}
+        startPayment={payForProduct}
+        usdPrice={USDPrice}
+        error={errorMessage}
+      />
 
       <div className="header">
         <h3 className="title">{name}</h3>
@@ -367,17 +330,6 @@ const Product = ({ id }: ProductProps) => {
 
       {description && <p>{description}</p>}
       {paidFor && <p>You already have this product</p>}
-      {paymentPending && (
-        <>
-          <p className="warning">
-            Do not leave this page until successful payment. If you have any
-            problems with the payment, please contact us.
-          </p>
-          <p className="notice">The price may vary slightly</p>
-        </>
-      )}
-
-      {errorMessage && <p className="error">Error: {errorMessage}</p>}
 
       {!paidFor && (
         <>
