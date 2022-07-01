@@ -38,7 +38,6 @@ const PaymentModal = ({
         width: "100%",
         maxWidth: "45rem",
         height: "fit-content",
-        // maxHeight: '26rem'
       }}
       content={
         <>
