@@ -21,7 +21,7 @@ const LastProducts = ({ lastProductId, isStatisticsLoading }: any) => {
       <div>
         {isStatisticsLoading ? "" : (
           <div>
-            <h3>last sold products</h3>
+            <h3>Last sold products</h3>
             <div className="lastProducts">
               {productLast.reverse().map((el) => (
                 <div className="blockProduct" key={el.date}>
