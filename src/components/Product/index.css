@@ -35,13 +35,10 @@
   border-radius: 0.6rem;
 }
 
-
-.pomoCodeForm{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+.paymentLink {
+  display: block;
+  margin-bottom: 1rem;
 }
-
 
 .promoCodeInput{
   margin-bottom: 0.6rem;
@@ -67,6 +64,7 @@
   caret-color: transparent;
 }
 .promoCodeText {
+  cursor: pointer;
   margin-top: 1.6rem;
   margin-bottom: 0.6rem;
   display: flex;
@@ -103,6 +101,10 @@
   padding: 0.6rem 1rem;
 }
 
+.paymentBtn {
+  margin-top: 0.5rem;
+}
+
 .paymentBtn:disabled {
   opacity: 0.5;
 }
@@ -126,7 +128,7 @@
   color: #acaab3;
 }
 
-.polygonNotice {
+.bonusNotice {
   margin: 1.6rem 0 0;
 }
 

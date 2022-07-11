@@ -15,20 +15,17 @@ type TxParameters = {
   bonusAndDiscountContract?: string;
   promocode?: string | false;
   productId?: Number;
-  onHash?: (hash: string) => void;
+  onHash: (hash: string) => void;
   data?: any;
 };
 
-export const importToken = async (
-  cashbackTokenAddress: string,
-  from: string
-) => {
+export const importToken = async (cashbackTokenAddress: string, from: string) => {
   const addedTokenLSKey = `ADDED_SWAP_TOKKEN_${cashbackTokenAddress}_${from}`;
   const isTokenAlreadyAdded = getLocal(addedTokenLSKey);
+
   if (!isTokenAlreadyAdded) {
     const tokenSymbol = "SWAP";
-    const tokenImage =
-      "https://swaponline.github.io/images/logo-colored_24a13c.svg";
+    const tokenImage = "https://swaponline.github.io/images/logo-colored_24a13c.svg";
 
     try {
       await window.ethereum.request({
@@ -92,51 +89,37 @@ const sendToken = async ({
   cashbackTokenAddress,
   promocode,
   productId,
+  onHash,
 }: TxParameters) => {
   try {
-    if (!bonusAndDiscountContract || !cashbackTokenAddress)
-      throw new Error(
-        "Don't have Bonus and Discount Contract or Cashback Token Addresses"
-      );
+    if (!bonusAndDiscountContract || !cashbackTokenAddress) {
+      throw new Error("Don't have Bonus and Discount Contract or Cashback Token Addresses");
+    }
 
-    const bonusContract = new provider.eth.Contract(
-      bonusAndDiscountContractAbi,
-      bonusAndDiscountContract,
-      { from }
-    );
-    const cashbackTokenContract = new provider.eth.Contract(
-      erc20Abi,
-      cashbackTokenAddress
-    );
+    const bonusContract = new provider.eth.Contract(bonusAndDiscountContractAbi, bonusAndDiscountContract, { from });
+    const cashbackTokenContract = new provider.eth.Contract(erc20Abi, cashbackTokenAddress);
 
     const decimals = await bonusContract.methods.decimals().call();
     const unitAmount = utils.parseUnits(String(amount), decimals);
 
-    await checkCashBackBalance(
-      cashbackTokenContract,
-      bonusAndDiscountContract,
-      networkId,
-      decimals
-    );
+    await checkCashBackBalance(cashbackTokenContract, bonusAndDiscountContract, networkId, decimals);
 
     if (promocode) {
-      if (promocode === from)
-        throw new Error("Don't use own address as promocode");
+      if (promocode === from) throw new Error("Don't use own address as promocode");
 
       return await bonusContract.methods
         .transferPromoErc20(cashbackTokenAddress, from, promocode, productId)
         .send({
           from,
           value: unitAmount,
-        });
+        })
+        .on("transactionHash", (hash: string) => onHash(hash));
     }
 
-    return await bonusContract.methods
-      .transferErc20(cashbackTokenAddress, from, productId)
-      .send({
-        from,
-        value: unitAmount,
-      });
+    return await bonusContract.methods.transferErc20(cashbackTokenAddress, from, productId).send({
+      from,
+      value: unitAmount,
+    });
   } catch (error) {
     console.group("%c send token", "color: red;");
     console.error(error);
@@ -155,7 +138,7 @@ export const send = async ({
   cashbackTokenAddress,
   promocode,
   productId,
-  onHash,
+  onHash = () => {},
   data,
 }: TxParameters) => {
   if (bonusAndDiscountContract) {
@@ -169,6 +152,7 @@ export const send = async ({
       cashbackTokenAddress,
       promocode,
       productId,
+      onHash,
     });
   }
 
@@ -180,11 +164,7 @@ export const send = async ({
   };
 
   try {
-    return await provider.eth
-      .sendTransaction(tx)
-      .on("transactionHash", (hash: string) => {
-        if (typeof onHash === "function") onHash(hash);
-      });
+    return await provider.eth.sendTransaction(tx).on("transactionHash", (hash: string) => onHash(hash));
   } catch (error) {
     console.group("%c send", "color: red;");
     console.error(error);
