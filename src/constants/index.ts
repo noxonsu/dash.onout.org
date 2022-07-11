@@ -166,7 +166,6 @@ export interface Product {
   howToEarn?: string;
   adminCanEdit?: string;
   lables: string[];
-  numberOfSales: number;
 }
 
 export const PRODUCTS: { [id: string]: Product } = {
@@ -187,7 +186,6 @@ export const PRODUCTS: { [id: string]: Product } = {
     codecanyonLink: "",
     lables: ["new"],
     price: 1000,
-    numberOfSales: 3,
   },
   multicurrencywallet: {
     id: "multicurrencywallet",
@@ -207,7 +205,6 @@ export const PRODUCTS: { [id: string]: Product } = {
       "https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064",
     lables: [],
     price: 999,
-    numberOfSales: 4,
   },
   definance: {
     id: "definance",
@@ -226,7 +223,6 @@ export const PRODUCTS: { [id: string]: Product } = {
     codecanyonLink: "https://codecanyon.net/item/definance-ethereum-defi-plugin-for-wordpress/29099232",
     lables: [],
     price: 899,
-    numberOfSales: 5,
   },
   farmfactory: {
     id: "farmfactory",
@@ -244,7 +240,6 @@ export const PRODUCTS: { [id: string]: Product } = {
     codecanyonLink: "https://codecanyon.net/item/farmfactory-ethereum-assets-staking-yield-farming/29987071",
     lables: [],
     price: 799,
-    numberOfSales: 0,
   },
   daofactory: {
     id: "daofactory",
@@ -263,7 +258,6 @@ export const PRODUCTS: { [id: string]: Product } = {
       "https://codecanyon.net/item/dao-factory-governance-and-proposals-plugin-for-your-token-for-wordpress/35608699",
     lables: [],
     price: 600,
-    numberOfSales: 3,
   },
   lotteryfactory: {
     id: "lotteryfactory",
@@ -282,7 +276,6 @@ export const PRODUCTS: { [id: string]: Product } = {
       "https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064",
     lables: [],
     price: 999,
-    numberOfSales: 6,
   },
   nftmarketplace: {
     id: "nftmarketplace",
@@ -299,7 +292,6 @@ export const PRODUCTS: { [id: string]: Product } = {
     docsLink: "",
     lables: [],
     price: 500,
-    numberOfSales: 1,
   },
   lenda: {
     id: "lenda",
@@ -318,7 +310,6 @@ export const PRODUCTS: { [id: string]: Product } = {
     codecanyonLink: "",
     lables: ["new"],
     price: 1000,
-    numberOfSales: 1,
   },
 };
 
