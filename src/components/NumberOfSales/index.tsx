@@ -2,22 +2,22 @@ import { useEffect, useState } from "react";
 import { PRODUCTS } from "../../constants";
 import "./index.css";
 
+interface CountSalesInreface {
+  [id: string]: Number;
+}
+
 const NumberOfSales = ({ numberOfSales, isStatisticsLoading }: any) => {
-  const [countSales, setCountSales] = useState<{ [id: string]: Number }>({});
+  const [countSales, setCountSales] = useState<CountSalesInreface>({});
 
   const getCountSales = async () => {
-    const numberOfSalesArray = await Object.values(numberOfSales);
+    const numberOfSalesArray = Object.values(numberOfSales);
     if (numberOfSalesArray.length === 0) return false;
 
-    const uniq = numberOfSalesArray
-      .map((objId: any) => {
-        return { count: 1, objId: objId.id };
-      })
-      .reduce((a: any, b: any) => {
-        a[b.objId] = (a[b.objId] || 0) + b.count;
-        return a;
-      }, {});
-    setCountSales(uniq);
+    const uniq = numberOfSalesArray.reduce((acc: any, res: any) => {
+      acc[res.id] = (acc[res.id] || 0) + 1;
+      return acc;
+    }, {});
+    setCountSales(uniq as CountSalesInreface);
   };
   useEffect(() => {
     getCountSales();
