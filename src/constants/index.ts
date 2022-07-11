@@ -217,7 +217,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     codecanyonLink: "https://codecanyon.net/item/definance-ethereum-defi-plugin-for-wordpress/29099232",
     lables: [],
     price: 899,
-    numberOfSales: 4,
+    numberOfSales: 5,
   },
   farmfactory: {
     id: "farmfactory",

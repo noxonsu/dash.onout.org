@@ -12,16 +12,19 @@ import {
 } from "../../constants";
 import "./index.css";
 import NumberOfSales from "../NumberOfSales";
+import LastProducts from "../LastProducts";
 
 const Statistics = () => {
   const [salesMonth, setSalesMonth] = useState<{ [sales: string]: number }>({});
   const [isStatisticsLoading, setIsStatisticsLoading] = useState(false);
+  const [lastProductId, setLastProductId] = useState<{ [id: string]: any }>({});
+  const [numberOfSales, setNumberOfSales] = useState<{ [id: string]: any }>({});
   const [profit, setProfit] = useState(0);
   const millisecund = 1000;
+
   const decimals = 18;
   const zeros = 10 ** decimals;
   const statisticUrlsDataByNetworkArray = Object.values(statisticUrlsDataByNetwork);
-
   const getRate = async (networkId: SupportedChainId) => {
     try {
       const assetId = NETWORKS[networkId].currency.id;
@@ -52,6 +55,28 @@ const Statistics = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const getLastProducts = async (lastProducts: any) => {
+    return lastProducts.map((el: any) => {
+      const productInfo = {
+        id: el.input[el.input.length - 1],
+        date: el.timeStamp,
+      };
+      return productInfo;
+    });
+  };
+
+  const getSalesProduct = async (transactions: any) => {
+    const transactionFind = transactions.filter((txs: any) => {
+      return txs.value > 0;
+    });
+
+    return transactionFind.map((txs: any) => {
+      return {
+        id: txs.input[txs.input.length - 1],
+      };
+    });
   };
 
   const getTransationsBalance = async () => {
@@ -87,6 +112,20 @@ const Statistics = () => {
 
         const transationThisMonth = await getMonthTransactions(thisMonthTimestamp, dateNowTimestamp);
         const transationLastMonth = await getMonthTransactions(lastMonthTimestamp, thisMonthTimestamp);
+
+        if (urlData.name !== "MAINNET") {
+          const productId = await getLastProducts(transationThisMonth);
+          const numberOfSalesId = await getSalesProduct(transactionsResults);
+
+          setNumberOfSales((prevState) => {
+            return {...prevState, ...numberOfSalesId}
+          })
+          setLastProductId((prevState) => {
+            return { ...prevState, ...productId };
+          });
+        } else {
+          return false;
+        }
         if (!transationThisMonth || !transationLastMonth) {
           return;
         } else {
@@ -143,7 +182,8 @@ const Statistics = () => {
           </div>
         )}
       </div>
-      <NumberOfSales />
+      <LastProducts lastProductId={lastProductId} isStatisticsLoading={isStatisticsLoading} />
+      <NumberOfSales numberOfSales={numberOfSales} isStatisticsLoading={isStatisticsLoading} />
     </div>
   );
 };

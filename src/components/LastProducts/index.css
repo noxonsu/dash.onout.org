@@ -1,11 +1,7 @@
-.productStatistics {
-  margin-top: 40px;
+.lastProducts{
+    padding: 0;
 }
-.productsItems {
-  list-style-type: none;
-  padding: 0;
-}
-.productsItem {
+.blockProduct {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -13,10 +9,9 @@
   padding: 0 10px 5px 10px;
   margin-bottom: 10px;
 }
-.productName {
-  margin: 0;
-  font-weight: 500;
+.blockProduct:last-child{
+    margin-bottom: 0;
 }
-.productCount{
-  margin: 0;
+.productDate{
+    margin: 0;
 }
