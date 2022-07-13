@@ -189,6 +189,7 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
       ) : !account.connected ? (
         <div className="btn-block">
           <button
+            id="connect-button"
             className="primaryBtn connectButton"
             onClick={() => {
               connect();
