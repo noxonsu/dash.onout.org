@@ -38,7 +38,7 @@
     "test": "react-app-rewired test",
     "serve": "npx serve -s build",
     "eject": "react-app-rewired eject",
-    "check-domains": "jest tests/checkIPFSDomain.test.ts --detectOpenHandles"
+    "check-domains": "jest tests/checkDemoProjects.test.ts --detectOpenHandles"
   },
   "eslintConfig": {
     "extends": [
