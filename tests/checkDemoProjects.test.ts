@@ -3,7 +3,7 @@ import { IPFS_DOMAINS } from './utils/constant';
 import { createBrowser, takeScreenshot } from "./utils/puppeteer";
 import { ONE_MINUTE, timeOut } from './utils/time';
 
-jest.setTimeout(ONE_MINUTE * 20);
+jest.setTimeout(ONE_MINUTE * 10);
 
 describe('Check health of domains', () => {
     let testBrowser: Browser | undefined;
@@ -19,17 +19,17 @@ describe('Check health of domains', () => {
 
     afterAll(async () => await testBrowser?.close());
 
-    it.each(IPFS_DOMAINS)('check %s domain', async (domain, projectName) => {
+    it.each(IPFS_DOMAINS)('check %s domain', async (domain, projectName, connectWalletId) => {
       if (testPage) {
         try {
           await testPage.goto(domain, {
-            timeout: ONE_MINUTE * 2,
+            timeout: ONE_MINUTE,
           });
 
-          await timeOut(ONE_MINUTE * 2);
+          await timeOut(ONE_MINUTE / 4);
 
-          await testPage.waitForSelector('#connect-wallet', {
-            timeout: ONE_MINUTE * 2,
+          await testPage.waitForSelector(`#${connectWalletId}`, {
+            timeout: ONE_MINUTE,
           });
 
           await takeScreenshot(testPage, `CheckDomain_${projectName}`);
