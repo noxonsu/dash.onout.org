@@ -1,0 +1,22 @@
+.productStatistics {
+  margin-top: 40px;
+}
+.productsItems {
+  list-style-type: none;
+  padding: 0;
+}
+.productsItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 0.125rem solid var(--transparent-light-1);
+  padding: 0 10px 5px 10px;
+  margin-bottom: 10px;
+}
+.productName {
+  margin: 0;
+  font-weight: 500;
+}
+.productCount{
+  margin: 0;
+}

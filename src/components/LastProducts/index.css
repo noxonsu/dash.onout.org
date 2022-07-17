@@ -1,0 +1,17 @@
+.lastProducts{
+    padding: 0;
+}
+.blockProduct {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 0.125rem solid var(--transparent-light-1);
+  padding: 0 10px 5px 10px;
+  margin-bottom: 10px;
+}
+.blockProduct:last-child{
+    margin-bottom: 0;
+}
+.productDate{
+    margin: 0;
+}

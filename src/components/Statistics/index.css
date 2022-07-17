@@ -5,7 +5,9 @@
   border-radius: 1.2rem;
   background-color: var(--card-color);
 }
-
+.statisticsWrapper{
+  padding: 0 10px;
+}
 .graphUp {
   color: greenyellow;
 }
