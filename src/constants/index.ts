@@ -275,7 +275,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     codecanyonLink:
       "https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064",
     lables: [],
-    price: 100000,
+    price: 1500,
   },
   nftmarketplace: {
     id: "nftmarketplace",
