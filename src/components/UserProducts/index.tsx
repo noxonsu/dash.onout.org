@@ -49,6 +49,7 @@ const ACCOUNTS: { [key: string]: string[] } = {
   "0xf6ecb22aceda5133788a98289852b1bceac8cf40": [
     "farmfactory",
     "definance",
+    "lotteryfactory",
   ],
   "0xc1b67ca020d73b5b40b36df89c80307046521c0f": [
     "multicurrencywallet",
