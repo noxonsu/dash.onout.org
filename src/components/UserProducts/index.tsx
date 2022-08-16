@@ -54,7 +54,13 @@ const ACCOUNTS: { [key: string]: string[] } = {
   "0xc1b67ca020d73b5b40b36df89c80307046521c0f": [
     "multicurrencywallet",
     "lotteryfactory",
-  ]
+  ],
+  "0x9eb258cd135224fc9441d20093d26e1edb5cacc9": [
+    "multicurrencywallet",
+    "definance",
+    "daofactory",
+    "lotteryfactory",
+  ],
 };
 
 const UserProducts = () => {
