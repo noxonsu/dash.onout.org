@@ -73,20 +73,15 @@ const Footer = () => {
             </li>
           </ul>
           <p className="footerRiskNotice">
-            Risk notification: Our code is based on top audited sources, but our
-            changes are unaudited from 3rd party auditors. We improve security
-            but a lot of things are out of our control, for example, 3rd party
-            software like WordPress, your server's software, your hosting
-            provider. We have delivered dapps for hundreds of clients which
+            Risk notification: Our code is based on top audited sources (if not marked as another), but our
+            changes are unaudited from 3rd party auditors. We have delivered dapps for hundreds of clients which
             handle tens of thousands of users. For the past 3 years, we have
             received about 10 incident reports kind of "a user lost funds".
-            Unfortunately, not all of them have been resolved. Ask yourself who
-            other than you can access your server? When was your last time
-            installing security updates? The most secure choice would be our
-            cloud solution (with a "revenue-share" payment model) contact
-            support for more information. For WP standalone versions please use
+            Unfortunately, not all of them have been resolved. For WP standalone versions please use
             as less plugins as you can and the "Simply Static plugin" and
-            "Wodefence" for security.
+            "Wodefence" for security. All products are licensed under MIT license (free for copy, modify and without warranty) . 
+            We provide insurance on smartcontracts, this means if smartcontract has a bug and funds were stolen 
+            then we will return up to 10000 USD but from future sales of this product. 
           </p>
         </div>
       )}
