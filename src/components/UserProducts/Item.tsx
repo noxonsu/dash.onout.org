@@ -10,8 +10,7 @@ type ItemProps = {
 };
 
 const Item = ({ id }: ItemProps) => {
-  const { name, docsLink } = PRODUCTS[id];
-  const MCWalletLicense = "67ae17cd-8cfc-46ff-979c-c1a866fce34c";
+  const { name, docsLink, license } = PRODUCTS[id];
 
   const hasWpVersion = !!PLUGINS[`${id}`];
   const hasStaticVersion = !!PLUGINS[`${id}Static`];
@@ -45,9 +44,9 @@ const Item = ({ id }: ItemProps) => {
         )}
       </div>
 
-      {id === "multicurrencywallet" && (
+      {license && (
         <p>
-          Your plugin licence: <strong>{MCWalletLicense}</strong>
+          Your plugin license: <strong>{license}</strong>
         </p>
       )}
 
