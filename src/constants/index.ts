@@ -161,6 +161,7 @@ export interface Product {
   promoPage: string;
   promoPageLink: string;
   docsLink?: string;
+  license?: string;
   codecanyonLink?: string;
   price: number | undefined; // USD
   howToEarn?: string;
@@ -201,6 +202,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     promoPage: "OnOut wallet",
     promoPageLink: "https://tools.onout.org/wallet/",
     docsLink: "https://support.onout.org/hc/1331700057/category/1",
+    license: "67ae17cd-8cfc-46ff-979c-c1a866fce34c",
     codecanyonLink:
       "https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064",
     lables: [],
@@ -237,6 +239,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     promoPage: "Codecanyon",
     promoPageLink: "https://tools.onout.org/farming/",
     docsLink: "https://support.onout.org/hc/1331700057/category/3",
+    license: "45bd94ca-b3fe-a34e-8b3c-4dc202ad7cf5",
     codecanyonLink: "https://codecanyon.net/item/farmfactory-ethereum-assets-staking-yield-farming/29987071",
     lables: [],
     price: 799,
