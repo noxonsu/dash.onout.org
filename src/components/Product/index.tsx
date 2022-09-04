@@ -17,7 +17,7 @@ import { getPrice } from "../../helpers/currency";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
-import PaymentModal from './PaymentModal'
+import PaymentModal from "./PaymentModal";
 import IconButton from "./IconButton";
 import BonusNotice from "./BonusNotice";
 import Modal from "../Modal";
@@ -32,15 +32,7 @@ type ProductProps = {
 const Product = ({ id }: ProductProps) => {
   const {
     account,
-    account: {
-      isPolygonNetwork,
-      isBSCNetwork,
-      networkId,
-      address,
-      addressUSDValue,
-      provider,
-      wrongNetwork,
-    },
+    account: { isPolygonNetwork, isBSCNetwork, networkId, address, addressUSDValue, provider, wrongNetwork },
     isWeb3Loading,
   } = useContext(Web3ConnecStateContext);
 
@@ -56,17 +48,10 @@ const Product = ({ id }: ProductProps) => {
   const [wantToEnterPromoCode, setWantToEnterPromoCode] = useState(false);
   const [promoAddress, setPromoAddress] = useState("");
 
-  const {
-    name,
-    promoPageLink,
-    description,
-    price: USDPrice,
-    productId,
-  } = PRODUCTS[id];
+  const { name, promoPageLink, description, price: USDPrice, productId } = PRODUCTS[id];
 
   useEffect(() => {
-    const inProducts =
-      !!products.length && products.find((product) => product.id === id);
+    const inProducts = !!products.length && products.find((product) => product.id === id);
 
     if (inProducts) setPaidFor(true);
   }, [id, products]);
@@ -79,17 +64,7 @@ const Product = ({ id }: ProductProps) => {
   };
 
   const sendFeedback = useCallback(
-    ({
-      amount,
-      prefix,
-      status,
-      extra,
-    }: {
-      amount?: number;
-      prefix: string;
-      status: STATUS;
-      extra?: string;
-    }) => {
+    ({ amount, prefix, status, extra }: { amount?: number; prefix: string; status: STATUS; extra?: string }) => {
       sendMessage({
         msg: `
         ${prefix} from: ${address};
@@ -101,9 +76,11 @@ const Product = ({ id }: ProductProps) => {
         Date: ${new Date().toISOString()};
         ${extra || ""}
       `,
-      status,
-    });
-  }, [address, networkId, addressUSDValue, USDPrice, id]);
+        status,
+      });
+    },
+    [address, networkId, addressUSDValue, USDPrice, id]
+  );
 
   const getPaymentParameters = useCallback(async () => {
     if (!PAYMENT_ADDRESS || !USDPrice || !networkId) return;
@@ -120,22 +97,18 @@ const Product = ({ id }: ProductProps) => {
       DECIMAL_PLACES: 18,
     });
 
-    const bonusAndDiscountContract = (networkId !== SupportedChainId.MAINNET) ?
-      bonusAndDiscountContractsByNetworkId[networkId] : '';
+    const bonusAndDiscountContract =
+      networkId !== SupportedChainId.MAINNET ? bonusAndDiscountContractsByNetworkId[networkId] : "";
     const cashbackTokenAddress = cashbackTokenAddresses[networkId];
 
-    const hasValidPromoCode = !!(
-      bonusAndDiscountContract && promoAddress?.match(EVM_ADDRESS_REGEXP)
-    );
+    const hasValidPromoCode = !!(bonusAndDiscountContract && promoAddress?.match(EVM_ADDRESS_REGEXP));
     const canGetDiscount = hasValidPromoCode && USDPrice > 100;
 
     const finalProductPriceInUSD = canGetDiscount ? USDPrice - 50 : USDPrice;
 
     const assetUSDPrice = data[assetId]?.usd;
-    const amount = new BigNumber(finalProductPriceInUSD)
-      .div(assetUSDPrice)
-      .toNumber();
-      
+    const amount = new BigNumber(finalProductPriceInUSD).div(assetUSDPrice).toNumber();
+
     return {
       provider,
       networkId,
@@ -162,7 +135,7 @@ const Product = ({ id }: ProductProps) => {
 
     GA.event({
       category: id,
-      action: 'Start payment from the modal',
+      action: "Start payment from the modal",
     });
 
     setErrorMessage("");
@@ -200,7 +173,7 @@ const Product = ({ id }: ProductProps) => {
       } catch (error: any) {
         console.error(error);
 
-        const canceledError = error?.message?.match('canceled');
+        const canceledError = error?.message?.match("canceled");
         const sendFeedbackError = error?.code !== 4001 && !canceledError;
 
         if (sendFeedbackError) {
@@ -225,42 +198,36 @@ const Product = ({ id }: ProductProps) => {
     } catch (e) {
       console.error(e);
     }
-  }
+  };
 
-  const switchToPolygon = () => switchToNetwork(NETWORKS[137].chainId)
-  const switchToBinance = () => switchToNetwork(NETWORKS[56].chainId)
+  const switchToPolygon = () => switchToNetwork(NETWORKS[137].chainId);
+  const switchToBinance = () => switchToNetwork(NETWORKS[56].chainId);
 
   const [paymentAvailable, setPaymentAvailable] = useState(false);
 
   useEffect(() => {
     setPaymentAvailable(
-      !!USDPrice &&
-        !paymentPending &&
-        !paidFor &&
-        signed &&
-        !isWeb3Loading &&
-        account &&
-        !account.wrongNetwork
+      !!USDPrice && !paymentPending && !paidFor && signed && !isWeb3Loading && account && !account.wrongNetwork
     );
   }, [paymentPending, paidFor, signed, isWeb3Loading, account, USDPrice]);
 
-  const [paymentModalIsOpen, setPaymentModalIsOpen] = useState(false)
+  const [paymentModalIsOpen, setPaymentModalIsOpen] = useState(false);
 
   const openPaymentModal = () => {
-    setPaymentModalIsOpen(true)
+    setPaymentModalIsOpen(true);
     GA.event({
       category: id,
-      action: 'Product payment modal was OPENED',
+      action: "Product payment modal was OPENED",
     });
-  }
+  };
 
   const closePaymentModal = () => {
-    setPaymentModalIsOpen(false)
+    setPaymentModalIsOpen(false);
     GA.event({
       category: id,
-      action: 'Product payment modal was CLOSED',
+      action: "Product payment modal was CLOSED",
     });
-  }
+  };
 
   return (
     <div className="product">
@@ -341,7 +308,7 @@ const Product = ({ id }: ProductProps) => {
           >
             {!wantToEnterPromoCode ? "I have a promo code" : "I don't have a promo code"}
           </span>
-          {isPolygonNetwork || isBSCNetwork ? (
+          {isBSCNetwork ? (
             <input
               className={`promoCodeInput ${wantToEnterPromoCode ? "active" : ""}`}
               onChange={(e) => setPromoAddress(e.target.value)}
@@ -352,14 +319,6 @@ const Product = ({ id }: ProductProps) => {
           ) : (
             <span className={`linkToNetworkPolygon ${wantToEnterPromoCode ? "active" : ""}`}>
               To use the promocode pay with{" "}
-              <IconButton
-                name="Polygon"
-                icon={ploygonIcon}
-                alt="polygon button"
-                onClick={switchToPolygon}
-                inactive={isPolygonNetwork}
-              />{" "}
-              or{" "}
               <IconButton
                 name="BSC"
                 icon={bscIcon}
@@ -379,6 +338,35 @@ const Product = ({ id }: ProductProps) => {
         Buy
       </button>
 
+      <div className="youWillGet">
+        <h4 className="youWillGetTitle">Item support includes:</h4>
+        <ul className="youWillGetItems">
+          <li className="youWillGetItem">
+            <p className="youWillGetText">Availability of the author to answer questions</p>
+          </li>
+          <li className="youWillGetItem">
+            <p className="youWillGetText">
+              Get assistance with reported bugs and issues (
+              <a className="youWillGetLink" href="mailto:support@onout.org">
+                support@onout.org
+              </a>
+              )
+            </p>
+          </li>
+          <li className="youWillGetItem">
+            <p className="youWillGetText">Free updates</p>
+          </li>
+        </ul>
+        <h4 className="youWillGetTitle">Additional (contact support for prices):</h4>
+        <ul className="youWillGetItems">
+          <li className="youWillGetItem">
+            <p className="youWillGetText">Adding new networks</p>
+          </li>
+          <li className="youWillGetItem">
+            <p className="youWillGetText">Installation</p>
+          </li>
+        </ul>
+      </div>
       <BonusNotice switchToNetwork={switchToNetwork} />
     </div>
   );
