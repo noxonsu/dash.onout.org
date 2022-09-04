@@ -40,26 +40,26 @@
   margin-bottom: 1rem;
 }
 
-.promoCodeInput{
+.promoCodeInput {
   margin-bottom: 0.6rem;
   width: 95%;
   padding: 5px 10px;
   border-radius: 10px;
   outline: none;
-  background-color:  var(--transparent-light-2);
+  background-color: var(--transparent-light-2);
   border: 1px solid var(--transparent-light-2);
   cursor: text;
   font-size: 20px;
   display: none;
 }
 
-.promoCodeInput:focus{
+.promoCodeInput:focus {
   border: 1px solid var(--transparent-light-1);
 }
-.promoCodeInput.active{
+.promoCodeInput.active {
   display: block;
 }
-.promoCodeInput.disabled{
+.promoCodeInput.disabled {
   border: none;
   caret-color: transparent;
 }
@@ -70,24 +70,24 @@
   display: flex;
   flex-direction: column;
   color: var(--link-color);
-  transition: .3s;
+  transition: 0.3s;
 }
-.linkToNetworkPolygon{
+.linkToNetworkPolygon {
   margin-bottom: 0.6rem;
   color: var(--color);
   display: none;
 }
-.linkToNetworkPolygon.active{
+.linkToNetworkPolygon.active {
   display: block;
 }
-.promocodeLabel{
+.promocodeLabel {
   margin-top: 15px;
   margin-bottom: 20px;
   width: 100%;
   display: flex;
   flex-direction: column;
 }
-.promocode{
+.promocode {
   margin-top: 15px;
   border: none;
   background: none;
@@ -109,7 +109,7 @@
   opacity: 0.5;
 }
 
-.titlePromocode{
+.titlePromocode {
   margin: 0px 0px 10px;
 }
 
@@ -131,10 +131,31 @@
 .bonusNotice {
   margin: 1.6rem 0 0;
 }
+.formOnoutLink {
+  color: var(--link-color);
+  text-decoration: none;
+}
 
-.tokenIcon{
+.tokenIcon {
   width: 1.2rem;
   margin-right: 0.3rem;
+}
+
+.youWillGetTitle {
+  font-size: 20px;
+  margin-bottom: 0;
+}
+.youWillGetItems {
+  margin-top: 10px;
+}
+
+.youWillGetText {
+  font-size: 18px;
+  margin: 10px 0;
+}
+.youWillGetLink {
+  color: var(--link-color);
+  text-decoration: none;
 }
 
 @media screen and (max-width: 840px) {

@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
 import bscIcon from "../../assets/images/bsc.svg";
-import ploygonIcon from "../../assets/images/polygon.svg";
 import swapIcon from "../../assets/images/swap.svg";
 import { NETWORKS, cashbackTokenAddresses } from "../../constants";
 import { importToken } from "../../helpers/transaction";
@@ -9,10 +8,9 @@ import IconButton from "./IconButton";
 
 const BonusNotice = ({ switchToNetwork }: { switchToNetwork: (chainId: string) => void }) => {
   const {
-    account: { isPolygonNetwork, isBSCNetwork, networkId, address },
+    account: { isBSCNetwork, networkId, address },
   } = useContext(Web3ConnecStateContext);
 
-  const switchToPolygon = () => switchToNetwork(NETWORKS[137].chainId);
   const switchToBinance = () => switchToNetwork(NETWORKS[56].chainId);
 
   const importSwapToken = () => {
@@ -23,15 +21,7 @@ const BonusNotice = ({ switchToNetwork }: { switchToNetwork: (chainId: string) =
 
   return (
     <p className="bonusNotice">
-      Use{" "}
-      <IconButton
-        name="Polygon"
-        icon={ploygonIcon}
-        alt="polygon button"
-        onClick={switchToPolygon}
-        inactive={isPolygonNetwork}
-      />{" "}
-      or{" "}
+      Use binance smart chain{" "}
       <IconButton
         name="BSC"
         icon={bscIcon}
@@ -39,9 +29,12 @@ const BonusNotice = ({ switchToNetwork }: { switchToNetwork: (chainId: string) =
         onClick={switchToBinance}
         inactive={isBSCNetwork}
       />{" "}
-      to get 50{" "}
+      to get{" "}
       <IconButton name="SWAP" icon={swapIcon} alt="swap token button" onClick={importSwapToken} inactive={true} />{" "}
-      tokens as a bonus.
+      tokens as a bonus. to stake at{" "}
+      <a className="formOnoutLink" target="_blank" href="https://farm.onout.org/">
+        farm.onout.org
+      </a>
     </p>
   );
 };
