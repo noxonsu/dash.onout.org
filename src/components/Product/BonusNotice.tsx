@@ -31,7 +31,7 @@ const BonusNotice = ({ switchToNetwork }: { switchToNetwork: (chainId: string) =
       />{" "}
       to get{" "}
       <IconButton name="SWAP" icon={swapIcon} alt="swap token button" onClick={importSwapToken} inactive={true} />{" "}
-      tokens as a bonus. to stake at{" "}
+      tokens as a bonus to stake at{" "}
       <a className="formOnoutLink" target="_blank" href="https://farm.onout.org/">
         farm.onout.org
       </a>
