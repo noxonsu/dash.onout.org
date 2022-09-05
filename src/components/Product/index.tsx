@@ -342,20 +342,21 @@ const Product = ({ id }: ProductProps) => {
         <h4 className="youWillGetTitle">Item support includes:</h4>
         <ul className="youWillGetItems">
           <li className="youWillGetItem">
-            <p className="youWillGetText">Availability of the author to answer questions</p>
+            <p className="youWillGetText">Any future update made available by the team is included with every purchase.</p>
+          </li>
+          <li className="youWillGetItem">
+            <p className="youWillGetText">Availability of the team to answer questions</p>
           </li>
           <li className="youWillGetItem">
             <p className="youWillGetText">
               Get assistance with reported bugs and issues (
               <a className="youWillGetLink" href="mailto:support@onout.org">
                 support@onout.org
-              </a>
+              </a> or in <a className="youWillGetLink" href="https://t.me/onoutsupportbot">telegram</a>
               )
             </p>
           </li>
-          <li className="youWillGetItem">
-            <p className="youWillGetText">Free updates</p>
-          </li>
+          
         </ul>
         <h4 className="youWillGetTitle">Additional (contact support for prices):</h4>
         <ul className="youWillGetItems">
