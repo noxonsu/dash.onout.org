@@ -61,6 +61,9 @@ const ACCOUNTS: { [key: string]: string[] } = {
     "daofactory",
     "lotteryfactory",
   ],
+  "0xf04383105574506daaf28f6c235e785278ca0967": [
+    "definance",
+  ],
 };
 
 const UserProducts = () => {
