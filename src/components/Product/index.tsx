@@ -48,7 +48,7 @@ const Product = ({ id }: ProductProps) => {
   const [wantToEnterPromoCode, setWantToEnterPromoCode] = useState(false);
   const [promoAddress, setPromoAddress] = useState("");
 
-  const { name, promoPageLink, description, price: USDPrice, productId } = PRODUCTS[id];
+  const { name, promoPageLink, description, price: USDPrice, productId, demo, videos } = PRODUCTS[id];
 
   useEffect(() => {
     const inProducts = !!products.length && products.find((product) => product.id === id);
@@ -279,21 +279,45 @@ const Product = ({ id }: ProductProps) => {
         </button>
       </div>
 
-      {!promoPageLink.match(/codecanyon\.net/) && (
-        <button
-          className="secondaryBtn"
-          onClick={() => {
-            setLandingModalIsOpen(true);
+      <div className="buttonsContaner">
+        {!promoPageLink.match(/codecanyon\.net/) && (
+          <button
+            className="secondaryBtn"
+            onClick={() => {
+              setLandingModalIsOpen(true);
 
-            GA.event({
-              category: id,
-              action: `Open more info`,
-            });
-          }}
-        >
-          More details
-        </button>
-      )}
+              GA.event({
+                category: id,
+                action: `Open more info`,
+              });
+            }}
+          >
+            More details ℹ️
+          </button>
+        )}
+        {videos && (
+          <a
+            className="secondaryBtn externalLink"
+            type="button"
+            href={videos}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Videos 📺
+          </a>
+        )}
+        {demo && (
+          <a
+            className="secondaryBtn externalLink"
+            type="button"
+            href={demo}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Demo 👀
+          </a>
+        )}
+      </div>
 
       {description && <p>{description}</p>}
       {paidFor && <p>You already have this product</p>}
