@@ -328,7 +328,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     name: "IDOFactory",
     status: "development",
     demo: "https://vitaliyshulik.github.io/launchpad",
-    videos: "",
+    videos: "https://www.youtube.com/watch?v=jiJBoMpr5tQ&list=PLLtijyRvdwnYDfXZnpaFDe2KNBB4r0FmD&index=1",
     description: "White-label Decentralized IDO Launchpad Platform",
     howToEarn: "Use your own token to creating IDO pools. Use native coin (ETH, BNB etc.) to create Token Lockers",
     adminCanEdit: "Logo, title, colors, social links, services' fees, admin and fee addresses",
