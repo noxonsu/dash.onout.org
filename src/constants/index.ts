@@ -301,7 +301,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     promoPageLink: "https://tools.onout.org/nft/",
     docsLink: "",
     lables: [],
-    price: 500,
+    price: 10,
   },
   lenda: {
     id: "lenda",
