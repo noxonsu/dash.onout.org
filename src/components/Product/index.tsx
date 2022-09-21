@@ -97,11 +97,11 @@ const Product = ({ id }: ProductProps) => {
       DECIMAL_PLACES: 18,
     });
 
-    const bonusAndDiscountContract =
-      networkId !== SupportedChainId.MAINNET ? bonusAndDiscountContractsByNetworkId[networkId] : "";
-    const cashbackTokenAddress = cashbackTokenAddresses[networkId];
+    const bonusAndDiscountContract = "";
+    //   networkId !== SupportedChainId.MAINNET ? bonusAndDiscountContractsByNetworkId[networkId] : "";
+    const cashbackTokenAddress = "" // cashbackTokenAddresses[networkId];
 
-    const hasValidPromoCode = !!(bonusAndDiscountContract && promoAddress?.match(EVM_ADDRESS_REGEXP));
+    const hasValidPromoCode = ''; // !!(bonusAndDiscountContract && promoAddress?.match(EVM_ADDRESS_REGEXP));
     const canGetDiscount = hasValidPromoCode && USDPrice > 100;
 
     const finalProductPriceInUSD = canGetDiscount ? USDPrice - 50 : USDPrice;
@@ -322,7 +322,7 @@ const Product = ({ id }: ProductProps) => {
       {description && <p>{description}</p>}
       {paidFor && <p>You already have this product</p>}
 
-      {!paidFor && (
+      {/* {!paidFor && (
         <>
           <span
             className={`promoCodeText ${wantToEnterPromoCode ? "active" : ""}`}
@@ -353,7 +353,7 @@ const Product = ({ id }: ProductProps) => {
             </span>
           )}
         </>
-      )}
+      )} */}
       <button
         className={`primaryBtn paymentBtn ${paymentPending ? "pending" : ""}`}
         disabled={!paymentAvailable}
@@ -392,7 +392,7 @@ const Product = ({ id }: ProductProps) => {
           </li>
         </ul>
       </div>
-      <BonusNotice switchToNetwork={switchToNetwork} />
+      {/* <BonusNotice switchToNetwork={switchToNetwork} /> */}
     </div>
   );
 };
