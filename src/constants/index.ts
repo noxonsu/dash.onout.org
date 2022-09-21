@@ -335,7 +335,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     imgSrc: COVERS.launchpadCover,
     imgAlt: "Launchpad promo",
     promoPage: "OnOut IDOFactory",
-    promoPageLink: "",
+    promoPageLink: "https://tools.onout.org/launchpad/",
     docsLink: "",
     codecanyonLink: "",
     lables: ["new"],
