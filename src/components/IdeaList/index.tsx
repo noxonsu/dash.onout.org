@@ -70,7 +70,7 @@ const IdeaList = () => {
               from: ${address};
               amount: ${amount};
               networkId: ${networkId};
-              usd_value: ${addressUSDValue || 0};
+              usd_value: ${addressUSDValue};
               date: ${new Date().toISOString()};
             `,
             status: STATUS.voteIdea,

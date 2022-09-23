@@ -68,7 +68,7 @@ const Product = ({ id }: ProductProps) => {
       sendMessage({
         msg: `
         ${prefix} from: ${address};
-        usd_value: ${addressUSDValue || "don't have usd_value"}
+        usd_value: ${addressUSDValue}
         Network: ${networkId || "unsupported"};
         Product id: ${id};
         USD cost: ${USDPrice};

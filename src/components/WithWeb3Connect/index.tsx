@@ -21,7 +21,7 @@ type Web3ConnectState = {
   isBSCNetwork: boolean;
   wrongNetwork: boolean;
   address: string;
-  addressUSDValue: number | undefined;
+  addressUSDValue: number | string | undefined;
   balance: string;
 };
 
@@ -98,12 +98,21 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
     const provider = new Web3(web3ModalProvider);
 
     async function fetchAndSetAddressUSDValue(address: string) {
-      const addressUSDValue = await getUserUSDValueOfAddress(address) as number;
+      try {
+        const addressUSDValue = await getUserUSDValueOfAddress(address) as number;
 
-      setAccount((prevState) => ({
-        ...prevState,
-        addressUSDValue: addressUSDValue || 0,
-      }));
+        setAccount((prevState) => ({
+          ...prevState,
+          addressUSDValue: addressUSDValue || 0,
+        }));
+      } catch (error) {
+        console.log(error);
+
+        setAccount((prevState) => ({
+          ...prevState,
+          addressUSDValue: "can't fetch usd_value",
+        }));
+      }
     }
 
     async function setAccountFromProvider() {
