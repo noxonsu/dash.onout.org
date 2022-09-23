@@ -53,7 +53,7 @@ export const cashbackTokenAddresses = {
 };
 
 // 50 calls per minute
-export const PRICE_ENDPOINT = "https://api.coingecko.com/api/v3";
+export const PRICE_ENDPOINT = "https://noxon.wpmix.net/cursAll.php";
 
 export const FIAT_TICKER = "USD";
 

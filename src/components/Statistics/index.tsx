@@ -27,12 +27,12 @@ const Statistics = () => {
   const statisticUrlsDataByNetworkArray = Object.values(statisticUrlsDataByNetwork);
   const getRate = async (networkId: SupportedChainId) => {
     try {
-      const assetId = NETWORKS[networkId].currency.id;
-      const data = await getPrice({
-        assetId,
-        vsCurrency: FIAT_TICKER.toLowerCase(),
+      const { symbol } = NETWORKS[networkId].currency;
+      const assetUSDPrice = await getPrice({
+        symbol,
+        vsCurrency: FIAT_TICKER,
       });
-      return data[assetId]?.usd;
+      return assetUSDPrice;
     } catch (error) {
       console.error(error);
     }

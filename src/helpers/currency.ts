@@ -1,18 +1,20 @@
 import { PRICE_ENDPOINT } from "../constants";
 
 export const getPrice = async ({
-  assetId,
+  symbol,
   vsCurrency,
 }: {
-  assetId: string;
+  symbol: string;
   vsCurrency: string;
 }) => {
   try {
     const data = await fetch(
-      `${PRICE_ENDPOINT}/simple/price?vs_currencies=${vsCurrency}&ids=${assetId}`
+      `${PRICE_ENDPOINT}?fiat=${vsCurrency}&tokens=${symbol}`
     ).then((response) => response.json());
 
-    return data;
+    const currencyData = data?.data?.find?.((currencyData: { symbol: string; }) => currencyData?.symbol === symbol);
+
+    return currencyData.quote[vsCurrency].price;
   } catch (error) {
     console.group("%c getPrice", "color: red;");
     console.error(error);

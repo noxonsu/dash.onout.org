@@ -85,13 +85,13 @@ const Product = ({ id }: ProductProps) => {
   const getPaymentParameters = useCallback(async () => {
     if (!PAYMENT_ADDRESS || !USDPrice || !networkId) return;
 
-    const assetId = NETWORKS[networkId].currency.id;
-    const data = await getPrice({
-      assetId,
-      vsCurrency: FIAT_TICKER.toLowerCase(),
+    const { symbol } = NETWORKS[networkId].currency;
+    const assetUSDPrice = await getPrice({
+      symbol,
+      vsCurrency: FIAT_TICKER,
     });
 
-    if (!data) return;
+    if (!assetUSDPrice) return;
     BigNumber.config({
       ROUNDING_MODE: BigNumber.ROUND_HALF_EVEN,
       DECIMAL_PLACES: 18,
@@ -106,7 +106,6 @@ const Product = ({ id }: ProductProps) => {
 
     const finalProductPriceInUSD = canGetDiscount ? USDPrice - 50 : USDPrice;
 
-    const assetUSDPrice = data[assetId]?.usd;
     const amount = new BigNumber(finalProductPriceInUSD).div(assetUSDPrice).toNumber();
 
     return {
