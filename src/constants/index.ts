@@ -7,11 +7,11 @@ export const EVM_ADDRESS_REGEXP = /^0x[A-Fa-f0-9]{40}$/;
 export enum SupportedChainId {
   MAINNET = 1,
   BINANCE_SMART_CHAIN = 56,
-  POLYGON = 137,
+  // POLYGON = 137,
 }
 
 export const bonusAndDiscountContractsByNetworkId = {
-  [SupportedChainId.POLYGON]: "0xd9f89Dec54CbF10011FDc8D9FA06E1f30c3F74d4",
+//   [SupportedChainId.POLYGON]: "0xd9f89Dec54CbF10011FDc8D9FA06E1f30c3F74d4",
   [SupportedChainId.BINANCE_SMART_CHAIN]: "0xB0A06daCa7F05D86D8fC1e289E08f734398EaE89",
   [SupportedChainId.MAINNET]: PAYMENT_ADDRESS,
 };
@@ -26,12 +26,12 @@ export interface StatisticUrlsData {
 export const statisticUrlsDataByNetwork: {
   [key in SupportedChainId]: StatisticUrlsData;
 } = {
-  [SupportedChainId.POLYGON]: {
-    name: "POLYGON",
-    networkId: SupportedChainId.POLYGON,
-    apiKey: "4JB4UXHBIE2I5285T18J8SSPUS2M3K7X3V",
-    apiDomain: "https://api.polygonscan.com",
-  },
+  // [SupportedChainId.POLYGON]: {
+  //   name: "POLYGON",
+  //   networkId: SupportedChainId.POLYGON,
+  //   apiKey: "4JB4UXHBIE2I5285T18J8SSPUS2M3K7X3V",
+  //   apiDomain: "https://api.polygonscan.com",
+  // },
   [SupportedChainId.BINANCE_SMART_CHAIN]: {
     name: "BINANCE_SMART_CHAIN",
     networkId: SupportedChainId.BINANCE_SMART_CHAIN,
@@ -47,7 +47,7 @@ export const statisticUrlsDataByNetwork: {
 };
 
 export const cashbackTokenAddresses = {
-  [SupportedChainId.POLYGON]: "0x654496319F438A59FEE9557940393cf818753ee9",
+  // [SupportedChainId.POLYGON]: "0x654496319F438A59FEE9557940393cf818753ee9",
   [SupportedChainId.BINANCE_SMART_CHAIN]: "0x92648e4537CdFa1EE743A244465a31AA034B1ce8",
   [SupportedChainId.MAINNET]: "",
 };
@@ -131,22 +131,22 @@ export const NETWORKS: { [key in SupportedChainId]: Network } = {
       },
     },
   },
-  [SupportedChainId.POLYGON]: {
-    id: 137,
-    chainId: `0x${(137).toString(16)}`,
-    name: "Polygon",
-    currency: {
-      id: "aave-polygon-wmatic",
-      symbol: "MATIC",
-      binancePurchaseKey: 'polygon-matic',
-    },
-    tokens: {
-      usdt: {
-        address: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-        id: "",
-      },
-    },
-  },
+  // [SupportedChainId.POLYGON]: {
+  //   id: 137,
+  //   chainId: `0x${(137).toString(16)}`,
+  //   name: "Polygon",
+  //   currency: {
+  //     id: "aave-polygon-wmatic",
+  //     symbol: "MATIC",
+  //     binancePurchaseKey: 'polygon-matic',
+  //   },
+  //   tokens: {
+  //     usdt: {
+  //       address: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+  //       id: "",
+  //     },
+  //   },
+  // },
 };
 
 export interface Product {

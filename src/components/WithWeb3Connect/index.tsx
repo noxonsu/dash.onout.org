@@ -17,7 +17,6 @@ type Web3ConnectState = {
   connected: boolean;
   provider: any | null;
   networkId: SupportedChainId | undefined;
-  isPolygonNetwork: boolean;
   isBSCNetwork: boolean;
   wrongNetwork: boolean;
   address: string;
@@ -30,7 +29,6 @@ const initialWeb3ConnectState: Web3ConnectState = {
   provider: null,
   networkId: undefined,
   wrongNetwork: false,
-  isPolygonNetwork: false,
   isBSCNetwork: false,
   address: "",
   addressUSDValue: undefined,
@@ -128,7 +126,6 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
           provider,
           networkId,
           wrongNetwork: !NETWORKS[networkId],
-          isPolygonNetwork: networkId === SupportedChainId.POLYGON,
           isBSCNetwork: networkId === SupportedChainId.BINANCE_SMART_CHAIN,
           address,
           addressUSDValue: undefined,
@@ -172,7 +169,7 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
         ...prevState,
         networkId,
         wrongNetwork: !NETWORKS[networkId],
-        isPolygonNetwork: networkId === SupportedChainId.POLYGON,
+        // isPolygonNetwork: networkId === SupportedChainId.POLYGON,
         isBSCNetwork: networkId === SupportedChainId.BINANCE_SMART_CHAIN,
       }));
     });
@@ -188,6 +185,18 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
       }
     );
   }, [account, disconnect, dispatch])
+
+  const switchToNetwork = async (chainId: string) => {
+    try {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId }],
+      });
+    } catch (e) {
+      console.error(e);
+      alert("Please, change network manually in your wallet app")
+    }
+  };
 
   const { address, wrongNetwork } = account;
 
@@ -239,11 +248,17 @@ const WithWeb3Connect = ({ children }: WithModalProps) => {
           {wrongNetwork && (
             <div className="warning">
               Please switch to one of the supported networks:
-              <ul className="networksList">
-                {Object.values(NETWORKS).map(({ name }, index) => (
-                  <li key={index}>{name}</li>
+              <div className="networksList">
+                {Object.values(NETWORKS).map(({ name, chainId }, index) => (
+                  <button
+                    className="secondaryBtn externalLink"
+                    onClick={() => switchToNetwork(chainId)}
+                    key={index}
+                  >
+                    {name}
+                  </button>
                 ))}
-              </ul>
+              </div>
             </div>
           )}
         </div>
