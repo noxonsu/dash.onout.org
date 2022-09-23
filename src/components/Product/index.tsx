@@ -32,7 +32,7 @@ type ProductProps = {
 const Product = ({ id }: ProductProps) => {
   const {
     account,
-    account: { isPolygonNetwork, isBSCNetwork, networkId, address, addressUSDValue, provider, wrongNetwork },
+    account: { isBSCNetwork, networkId, address, addressUSDValue, provider, wrongNetwork },
     isWeb3Loading,
   } = useContext(Web3ConnecStateContext);
 
@@ -198,9 +198,6 @@ const Product = ({ id }: ProductProps) => {
       console.error(e);
     }
   };
-
-  const switchToPolygon = () => switchToNetwork(NETWORKS[137].chainId);
-  const switchToBinance = () => switchToNetwork(NETWORKS[56].chainId);
 
   const [paymentAvailable, setPaymentAvailable] = useState(false);
 
