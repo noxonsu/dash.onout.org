@@ -99,7 +99,7 @@ const Product = ({ id }: ProductProps) => {
 
     const bonusAndDiscountContract =
       networkId !== SupportedChainId.MAINNET ? bonusAndDiscountContractsByNetworkId[networkId] : "";
-    const cashbackTokenAddress = "" // cashbackTokenAddresses[networkId];
+    const cashbackTokenAddress = cashbackTokenAddresses[networkId];
 
     const hasValidPromoCode = !!(bonusAndDiscountContract && promoAddress?.match(EVM_ADDRESS_REGEXP));
     const canGetDiscount = hasValidPromoCode && USDPrice > 100;
