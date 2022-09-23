@@ -38,12 +38,11 @@ const IdeaList = () => {
       const { id, price } = IDEAS[ideaId];
       if (!PAYMENT_ADDRESS || !price || !networkId || !provider || wrongNetwork) throw new Error("Can't generate params for transaction");
 
-      const assetId = NETWORKS[networkId].currency.id;
-      const assetsPrices = await getPrice({
-        assetId,
-        vsCurrency: FIAT_TICKER.toLowerCase(),
+      const { symbol } = NETWORKS[networkId].currency;
+      const assetUSDPrice = await getPrice({
+        symbol,
+        vsCurrency: FIAT_TICKER,
       });
-      const assetUSDPrice = assetsPrices[assetId]?.usd
 
       if (!assetUSDPrice) throw new Error("Can't generate amount of asset without price");
 
@@ -70,7 +69,7 @@ const IdeaList = () => {
               from: ${address};
               amount: ${amount};
               networkId: ${networkId};
-              usd_value: ${addressUSDValue || 0};
+              usd_value: ${addressUSDValue};
               date: ${new Date().toISOString()};
             `,
             status: STATUS.voteIdea,
