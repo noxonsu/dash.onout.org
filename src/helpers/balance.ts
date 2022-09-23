@@ -9,7 +9,7 @@ export const getUserUSDValueOfAddress = async (address: string) => {
         address
       }
     });
-    return result?.data?.total_usd_value;
+    return result?.data?.total_usd;
   } catch (error) {
     throw error;
   }
