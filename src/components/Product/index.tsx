@@ -97,11 +97,11 @@ const Product = ({ id }: ProductProps) => {
       DECIMAL_PLACES: 18,
     });
 
-    const bonusAndDiscountContract = "";
-    //   networkId !== SupportedChainId.MAINNET ? bonusAndDiscountContractsByNetworkId[networkId] : "";
-    const cashbackTokenAddress = "" // cashbackTokenAddresses[networkId];
+    const bonusAndDiscountContract =
+      networkId !== SupportedChainId.MAINNET ? bonusAndDiscountContractsByNetworkId[networkId] : "";
+    const cashbackTokenAddress = cashbackTokenAddresses[networkId];
 
-    const hasValidPromoCode = ''; // !!(bonusAndDiscountContract && promoAddress?.match(EVM_ADDRESS_REGEXP));
+    const hasValidPromoCode = !!(bonusAndDiscountContract && promoAddress?.match(EVM_ADDRESS_REGEXP));
     const canGetDiscount = hasValidPromoCode && USDPrice > 100;
 
     const finalProductPriceInUSD = canGetDiscount ? USDPrice - 50 : USDPrice;
@@ -318,7 +318,7 @@ const Product = ({ id }: ProductProps) => {
       {description && <p>{description}</p>}
       {paidFor && <p>You already have this product</p>}
 
-      {/* {!paidFor && (
+      {!paidFor && (
         <>
           <span
             className={`promoCodeText ${wantToEnterPromoCode ? "active" : ""}`}
@@ -343,13 +343,13 @@ const Product = ({ id }: ProductProps) => {
                 name="BSC"
                 icon={bscIcon}
                 alt="binance smart chain button"
-                onClick={switchToBinance}
+                onClick={() => switchToNetwork(NETWORKS[SupportedChainId.BINANCE_SMART_CHAIN].chainId)}
                 inactive={isBSCNetwork}
               />
             </span>
           )}
         </>
-      )} */}
+      )}
       <button
         className={`primaryBtn paymentBtn ${paymentPending ? "pending" : ""}`}
         disabled={!paymentAvailable}
@@ -376,7 +376,7 @@ const Product = ({ id }: ProductProps) => {
               )
             </p>
           </li>
-          
+
         </ul>
         <h4 className="youWillGetTitle">Additional (contact support for prices):</h4>
         <ul className="youWillGetItems">
@@ -388,7 +388,7 @@ const Product = ({ id }: ProductProps) => {
           </li>
         </ul>
       </div>
-      {/* <BonusNotice switchToNetwork={switchToNetwork} /> */}
+      <BonusNotice switchToNetwork={switchToNetwork} />
     </div>
   );
 };
