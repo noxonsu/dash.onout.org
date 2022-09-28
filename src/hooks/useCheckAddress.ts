@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "../helpers/axios";
 import { getLocal, saveLocal } from "../helpers/storage";
-import { ONE_MONTH, SUBSCRIPTION_POSTFIX_KEY } from "../constants";
+import {ONE_HOUR, ONE_MONTH, SUBSCRIPTION_POSTFIX_KEY } from "../constants";
 
 
 export const useCheckAddress = (address: string) => {
@@ -30,7 +30,16 @@ export const useCheckAddress = (address: string) => {
         });
       } catch (err) {
         console.error(`Error: Can't check subscription. Description: ${err}`);
-        setErrors(["Can't check subscription. Please, update page or try later."])
+
+        // give user access to the marketplace on 1 hour if API is broke
+        saveLocal({
+          key: `${address}${SUBSCRIPTION_POSTFIX_KEY}`,
+          value: (Date.now() + ONE_HOUR).toString()
+        });
+        setIsSubscribed(true);
+
+        // hide error display
+        // setErrors(["Can't check subscription. Please, update page or try later."])
       } finally {
         setIsCheckLoading(false);
       }
