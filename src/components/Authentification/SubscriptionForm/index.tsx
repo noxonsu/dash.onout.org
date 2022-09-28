@@ -56,12 +56,12 @@ const SubscriptionForm = ({
     }
 
     try {
-      const response = await axios.put("/subscribe", subscribeData);
-      if (response?.data?.statusText === "Successfully subscribed!") {
-        toggleSubscribed();
-      }
+      await axios.put("/subscribe", subscribeData);
     } catch (error) {
       console.log(error);
+    } finally {
+      // give user access to products in all cases, even in case of an error
+      toggleSubscribed();
     }
   };
 
