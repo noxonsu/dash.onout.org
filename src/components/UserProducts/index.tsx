@@ -64,6 +64,9 @@ const ACCOUNTS: { [key: string]: string[] } = {
   "0xf04383105574506daaf28f6c235e785278ca0967": [
     "definance",
   ],
+  "0x0d71d87bd6dde205a56781512040c663e88473ba": [
+    "multicurrencywallet",
+  ],
 };
 
 const UserProducts = () => {
