@@ -26,6 +26,9 @@ const ACCOUNTS: { [key: string]: string[] } = {
   "0xa29ac293edaa5edf46f6af3c5b8885cf98bc5c8e": [
     "multicurrencywallet",
   ],
+  "0x873351e707257C28eC6fAB1ADbc850480f6e0633": [
+    "crosschain"
+  ],
   "0x2122ec95a2c2173ddd4f0ecc79006a0fb9e1d588": [
     "crosschain",
     "multicurrencywallet",
