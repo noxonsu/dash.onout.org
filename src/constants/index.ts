@@ -340,7 +340,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     docsLink: "",
     codecanyonLink: "",
     lables: ["new"],
-    price: 600,
+    price: 650,
   },
 };
 
