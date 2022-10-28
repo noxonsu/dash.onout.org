@@ -17,6 +17,15 @@ const ACCOUNTS: { [key: string]: string[] } = {
     "nftmarketplace",
     "crosschain",
   ],
+  "0x2A8D166495c7f854c5f2510fBD250fDab8ce58d7": [ /* @eneeseene */
+    "multicurrencywallet",
+    "definance",
+    "farmfactory",
+    "daofactory",
+    "lotteryfactory",
+    "nftmarketplace",
+    "crosschain",
+  ],
   "0x90ff57fded0af7be9196df3623cd587ad8e7d920": [
     "multicurrencywallet",
     "definance",
