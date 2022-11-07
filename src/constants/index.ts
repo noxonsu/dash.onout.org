@@ -1,7 +1,7 @@
 import { COVERS } from "../assets";
 
 export const FEEDBACK_URL = "https://noxon.wpmix.net/counter.php";
-export const PAYMENT_ADDRESS = "0x3B85D38c3A7AEabABA8B7DEb7a73177688270abC";
+export const PAYMENT_ADDRESS = "0x31fd3759CAD280570fB892DFa9B956924a9Ba670";
 export const EVM_ADDRESS_REGEXP = /^0x[A-Fa-f0-9]{40}$/;
 
 export enum SupportedChainId {
