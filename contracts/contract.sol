@@ -29,9 +29,9 @@ contract DashOnout is ERC20 {
     constructor() ERC20("DashOnout", "DASH") {
         addressContract = address(this);
         ownerContract = msg.sender;
-        ownerDashboard = 0x3B85D38c3A7AEabABA8B7DEb7a73177688270abC;
-        partherDashboard = 0x352E6b9AF51298c97bd298bBa4aE252C3C583052;
-        partheSecond =  0x14D83667A8C55009905C4F16f5486ac2BdA4f0EE;
+        ownerDashboard = 0x873351e707257C28eC6fAB1ADbc850480f6e0633;
+        partherDashboard = 0x352E6b9AF51298c97bd298bBa4aE252C3C583052; //farm.onout.org bank
+        partheSecond =  0x14D83667A8C55009905C4F16f5486ac2BdA4f0EE; //partner crosschain
         partPartnerDashboard = 10;
         partPartnerCrosschain = 10;
     }
