@@ -1,0 +1,26 @@
+{
+  "name": "onout_back",
+  "version": "0.0.2",
+  "description": "onout back auth with sendgrid as users db",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "Vitaliy Shulik",
+  "license": "ISC",
+  "dependencies": {
+    "@sendgrid/client": "^7.6.0",
+    "axios": "^0.25.0",
+    "connect-multiparty": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^14.2.0",
+    "express": "^4.17.2",
+    "geoip-lite": "^1.4.3",
+    "toobusy-js": "^0.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
