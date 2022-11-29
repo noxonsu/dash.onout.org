@@ -53,7 +53,7 @@ const Footer = () => {
             </li>
             <li className="footerItem">
               <a
-                href="https://tools.onout.org/sponsor.md"
+                href="https://onout.org/sponsor.md"
                 target="_blank"
                 rel="noreferrer"
                 className="footerLink"
