@@ -44,13 +44,13 @@ const Footer = () => {
     <footer>
       {signed && subscribed && (
         <div>
-          <Referal />
+          {/* <Referal /> */}
           <ul className="footerItems">
-            <li className="footerItem">
+            {/* <li className="footerItem">
               <Link to="/statistics" className="footerLink">
                 Stats
               </Link>
-            </li>
+            </li> */}
             <li className="footerItem">
               <a
                 href="https://onout.org/sponsor.md"
