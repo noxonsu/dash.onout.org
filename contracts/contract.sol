@@ -5,115 +5,152 @@ pragma solidity ^0.8.13;
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol";
 
 contract DashOnout is ERC20 {
-    address public addressContract;
-    address public ownerContract;
-    address public partherDashboard;
-    address public partheSecond;
-    address public ownerDashboard;
-    uint8   public partPartnerDashboard;
-    uint8   public partPartnerCrosschain;
-    uint256 public cashback = 50*10**18;
-    uint256 public bonusPromoCode = 50*10**18;
-    uint256 public minAmount = 1*10**18;
-    uint8   public productIdSecondParther = 1;
+    // Declare contract address and owner
+    address public contractAddress;
+    address public contractOwner;
+    // Declare dashboard owner and partners
+    address public dashboardOwner;
+    address public dashboardPartner;
+    address public crosschainPartner;
+    // Declare percentage of transaction value to be transferred to partners
+    uint8 public percentageForDashboardPartner;
+    uint8 public percentageForCrosschainPartner;
+    // Declare cashback and bonus promo code amounts
+    uint256 public cashbackAmount = 50 * 10 ** 18;
+    uint256 public bonusPromoCodeAmount = 50 * 10 ** 18;
+    // Declare minimum transaction amount
+    uint256 public minTransactionAmount = 1 * 10 ** 18;
+    // Declare product ID for crosschain partner
+    uint8 public productIdForCrosschainPartner = 1;
 
-    struct referalInfo {
+    // Declare struct to store referral information
+    struct ReferralInfo {
         address promoCodeAddress;
         uint256 promoCodeUserBalance;
-        uint256 promoCodeUserReferals;
+        uint256 promoCodeUserReferrals;
     }
 
-    mapping(address => referalInfo) users;
-    address[] public usersIds;
+    // Declare mapping and array for users
+    mapping(address => ReferralInfo) public users;
+    address[] public userIds;
 
+    // Constructor function
     constructor() ERC20("DashOnout", "DASH") {
-        addressContract = address(this);
-        ownerContract = msg.sender;
-        ownerDashboard = 0x873351e707257C28eC6fAB1ADbc850480f6e0633;
-        partherDashboard = 0x352E6b9AF51298c97bd298bBa4aE252C3C583052; //farm.onout.org bank
-        partheSecond =  0x14D83667A8C55009905C4F16f5486ac2BdA4f0EE; //partner crosschain
-        partPartnerDashboard = 10;
-        partPartnerCrosschain = 10;
+        contractAddress = address(this);
+        contractOwner = msg.sender;
+        dashboardOwner = 0x873351e707257C28eC6fAB1ADbc850480f6e0633;
+        dashboardPartner = 0x352E6b9AF51298c97bd298bBa4aE252C3C583052;
+        crosschainPartner = 0x14D83667A8C55009905C4F16f5486ac2BdA4f0EE;
+        percentageForDashboardPartner = 10;
+        percentageForCrosschainPartner = 10;
     }
 
+    // Modifier to restrict function execution to contract owner or dashboard owner
     modifier onlyOwner() {
-        require(ownerContract == msg.sender || ownerDashboard == msg.sender, "I'm sorry you're not the owner");
+        require(contractOwner == msg.sender || dashboardOwner == msg.sender, "I'm sorry you're not the owner");
         _;
     }
-    function editOwnerDashboard(address _newOwner) public onlyOwner {
-        ownerDashboard = _newOwner;
+
+    // Functions to edit contract parameters
+    function editDashboardOwner(address newOwner) public onlyOwner {
+        dashboardOwner = newOwner;
     }
-    function editPartnerDashboard(address _newPartner) public onlyOwner {
-        partherDashboard = _newPartner;
+    function editDashboardPartner(address newPartner) public onlyOwner {
+        dashboardPartner = newPartner;
     }
-    function editPartnerCrosschain(address _newPartnerCrosschain) public onlyOwner {
-        partheSecond = _newPartnerCrosschain;
+    function editCrosschainPartner(address newPartner) public onlyOwner {
+        crosschainPartner = newPartner;
     }
-    function editCashback(uint256 _newCashbackAmount) public onlyOwner {
-        cashback = _newCashbackAmount * 10 ** 18;
+    function editCashbackAmount(uint256 newAmount) public onlyOwner {
+        cashbackAmount = newAmount * 10 ** 18;
     }
-    function editBonusPromoCode(uint256 _bonusPromoCode) public onlyOwner {
-        bonusPromoCode = _bonusPromoCode * 10 ** 18;
+    function editBonusPromoCodeAmount(uint256 newAmount) public onlyOwner {
+        bonusPromoCodeAmount = newAmount * 10 ** 18;
     }
-    function editMinAmount(uint256 _newMinAmount) public onlyOwner {
-        minAmount = _newMinAmount * 10 ** 18;
+    function editMinTransactionAmount(uint256 newAmount) public onlyOwner {
+        minTransactionAmount = newAmount * 10 ** 18;
     }
-    function editPartPartnerDashboard(uint8 _partPartnerDash) public onlyOwner {
-        partPartnerDashboard = _partPartnerDash;
+    function editPercentageForDashboardPartner(uint8 newPercentage) public onlyOwner {
+        percentageForDashboardPartner = newPercentage;
     }
-    function editPartPartnerCrosschain(uint8 _partPartnerCrosscain) public onlyOwner {
-        partPartnerCrosschain = _partPartnerCrosscain;
+    function editPercentageForCrosschainPartner(uint8 newPercentage) public onlyOwner {
+        percentageForCrosschainPartner = newPercentage;
     }
-    function editProductIdSecondParther(uint8 _productIdSecondParther) public onlyOwner {
-        productIdSecondParther = _productIdSecondParther;
+    function editProductIdForCrosschainPartner(uint8 newProductId) public onlyOwner {
+        productIdForCrosschainPartner = newProductId;
     }
 
-    function transferErc20(IERC20 bonusTokenAddress, address clientAddress,  uint productId) public payable {
-        require(msg.value >= minAmount, "LESS_THAN_MIN_AMOUNT");
-        address payable _ownerDashboard = payable(ownerDashboard);
-        address payable _partner = payable(partherDashboard);
-        address payable _partPartnerCrosschain = payable(partheSecond);
-
-        if (productId == productIdSecondParther) {
-            _partPartnerCrosschain.transfer((addressContract.balance * partPartnerCrosschain) / 100);
+    // Function to transfer tokens and provide cashback
+    function transferErc20(IERC20 bonusTokenAddress, address clientAddress, uint productId) public payable {
+        // Check if transaction value meets minimum amount requirement
+        require(msg.value >= minTransactionAmount, "LESS_THAN_MIN_AMOUNT");
+        // Declare payable versions of partner addresses
+        address payable dashboardPartnerPayable = payable(dashboardPartner);
+        address payable crosschainPartnerPayable = payable(crosschainPartner);
+        // Transfer percentage of transaction value to appropriate partner
+        if (productId == productIdForCrosschainPartner) {
+            crosschainPartnerPayable.transfer((contractAddress.balance * percentageForCrosschainPartner) / 100);
         } else {
-            _partner.transfer((addressContract.balance * partPartnerDashboard) / 100);
+            dashboardPartnerPayable.transfer((contractAddress.balance * percentageForDashboardPartner) / 100);
         }
-        _ownerDashboard.transfer(addressContract.balance); 
-
-        if (bonusTokenAddress.balanceOf(addressContract) >= cashback) {
-            bonusTokenAddress.transfer(clientAddress, cashback);
+        // Transfer remaining balance to dashboard owner
+        payable(dashboardOwner).transfer(contractAddress.balance); 
+        // Check if contract has sufficient balance to provide cashback
+        if (bonusTokenAddress.balanceOf(contractAddress) >= cashbackAmount) {
+            // Transfer cashback to client
+            bonusTokenAddress.transfer(clientAddress, cashbackAmount);
         }
     }
 
+    // Function to transfer tokens using promo code and provide cashback and bonus
     function transferPromoErc20(IERC20 bonusTokenAddress, address clientAddress, address promoCode, uint productId) public payable {
-        require(msg.value >= minAmount, "LESS_THAN_MIN_AMOUNT");
-        address payable _ownerDashboard = payable(ownerDashboard);
-        address payable _partner = payable(partherDashboard);
-        address payable _partPartnerCrosschain = payable(partheSecond);
-
-        if (productId == productIdSecondParther) {
-            _partPartnerCrosschain.transfer((addressContract.balance * partPartnerCrosschain) / 100);
+        // Check if transaction value meets minimum amount requirement
+        require(msg.value >= minTransactionAmount, "LESS_THAN_MIN_AMOUNT");
+        // Check if promo code is valid
+        require(users[promoCode].promoCodeAddress == promoCode, "INVALID_PROMO_CODE");
+        // Declare payable versions of partner addresses
+        address payable dashboardPartnerPayable = payable(dashboardPartner);
+        address payable crosschainPartnerPayable = payable(crosschainPartner);
+        // Transfer percentage of transaction value to appropriate partner
+        if (productId == productIdForCrosschainPartner) {
+            crosschainPartnerPayable.transfer((contractAddress.balance * percentageForCrosschainPartner) / 100);
         } else {
-            _partner.transfer((addressContract.balance * partPartnerDashboard) / 100);
+            dashboardPartnerPayable.transfer((contractAddress.balance * percentageForDashboardPartner) / 100);
         }
-        _ownerDashboard.transfer(addressContract.balance);
-
-
-        referalInfo storage newReferalInfo = users[promoCode];
-        newReferalInfo.promoCodeAddress = promoCode;
-        newReferalInfo.promoCodeUserBalance += bonusPromoCode;
-        newReferalInfo.promoCodeUserReferals += 1;
-        usersIds.push(promoCode);
-
-        if (bonusTokenAddress.balanceOf(addressContract) >= cashback + bonusPromoCode ) {
-            bonusTokenAddress.transfer(clientAddress, cashback);
-            bonusTokenAddress.transfer(promoCode, bonusPromoCode);
+        // Transfer remaining balance to dashboard owner
+        payable(dashboardOwner).transfer(contractAddress.balance); 
+        // Check if contract has sufficient balance to provide cashback and bonus
+        if (bonusTokenAddress.balanceOf(contractAddress) >= cashbackAmount + bonusPromoCodeAmount) {
+            // Transfer cashback and bonus to client
+            bonusTokenAddress.transfer(clientAddress, cashbackAmount + bonusPromoCodeAmount);
         }
+        // Update referral information for promo code owner
+        users[promoCode].promoCodeUserBalance += msg.value;
+        users[promoCode].promoCodeUserReferrals += 1;
     }
-    
-    function getReferalInfo(address userId) public view returns (address, uint256, uint256){
-        referalInfo storage s = users[userId];
-        return (s.promoCodeAddress, s.promoCodeUserBalance, s.promoCodeUserReferals);
+
+    // Function to add a new promo code
+    function addPromoCode(address promoCode, address owner) public onlyOwner {
+        // Check if promo code has already been added
+        require(users[promoCode].promoCodeAddress != promoCode, "PROMO_CODE_ALREADY_EXISTS");
+        // Add new promo code to mapping
+        users[promoCode] = ReferralInfo(promoCode, 0, 0);
+        // Add promo code owner to user IDs array
+        userIds.push(owner);
+    }
+
+    // Function to retrieve referral information for a promo code
+    function getPromoCodeInfo(address promoCode) public view returns (address, uint256, uint256) {
+        return (users[promoCode].promoCodeAddress, users[promoCode].promoCodeUserBalance, users[promoCode].promoCodeUserReferrals);
+    }
+
+    // Function to retrieve total number of promo codes
+    function getTotalPromoCodes() public view returns (uint) {
+        return userIds.length;
+    }
+
+    // Function to retrieve IDs of all users
+    function getAllUsers() public view returns (address[]) {
+        return userIds;
     }
 }
