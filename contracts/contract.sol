@@ -5,115 +5,120 @@ pragma solidity ^0.8.13;
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol";
 
 contract DashOnout is ERC20 {
-    address public addressContract;
-    address public ownerContract;
-    address public partherDashboard;
-    address public partheSecond;
-    address public ownerDashboard;
-    uint8   public partPartnerDashboard;
-    uint8   public partPartnerCrosschain;
-    uint256 public cashback = 50*10**18;
-    uint256 public bonusPromoCode = 50*10**18;
-    uint256 public minAmount = 1*10**18;
-    uint8   public productIdSecondParther = 1;
+    address public contractAddress;
+    address public contractOwner;
+    address public partnerDashboard;
+    address public partnerCrosschain;
+    address public dashboardOwner;
+    uint8   public partnerPercentageDashboard;
+    uint8   public partnerPercentageCrosschain;
+    uint256 public cashbackAmount = 50*10**18;
+    uint256 public promoCodeBonus = 50*10**18;
+    uint256 public minimumAmount = 1*10**18;
+    uint8   public productIdForSecondPartner = 1;
 
-    struct referalInfo {
-        address promoCodeAddress;
-        uint256 promoCodeUserBalance;
-        uint256 promoCodeUserReferals;
+    struct referralInfo {
+        address promoCode;
+        uint256 balance;
+        uint256 referrals;
     }
 
-    mapping(address => referalInfo) users;
-    address[] public usersIds;
+    mapping(address => referralInfo) users;
+    address[] public userIds;
 
     constructor() ERC20("DashOnout", "DASH") {
-        addressContract = address(this);
-        ownerContract = msg.sender;
-        ownerDashboard = 0x873351e707257C28eC6fAB1ADbc850480f6e0633;
-        partherDashboard = 0x352E6b9AF51298c97bd298bBa4aE252C3C583052; //farm.onout.org bank
-        partheSecond =  0x14D83667A8C55009905C4F16f5486ac2BdA4f0EE; //partner crosschain
-        partPartnerDashboard = 10;
-        partPartnerCrosschain = 10;
+        contractAddress = address(this);
+        contractOwner = msg.sender;
+        dashboardOwner = 0x873351e707257C28eC6fAB1ADbc850480f6e0633;
+        partnerDashboard = 0x352E6b9AF51298c97bd298bBa4aE252C3C583052; //farm.onout.org bank
+        partnerCrosschain =  0x14D83667A8C55009905C4F16f5486ac2BdA4f0EE; //partner crosschain
+        partnerPercentageDashboard = 10;
+        partnerPercentageCrosschain = 10;
     }
 
     modifier onlyOwner() {
-        require(ownerContract == msg.sender || ownerDashboard == msg.sender, "I'm sorry you're not the owner");
+        require(contractOwner == msg.sender || dashboardOwner == msg.sender, "I'm sorry you're not the owner");
         _;
     }
-    function editOwnerDashboard(address _newOwner) public onlyOwner {
-        ownerDashboard = _newOwner;
+    function editDashboardOwner(address newOwner) public onlyOwner {
+        dashboardOwner = newOwner;
     }
-    function editPartnerDashboard(address _newPartner) public onlyOwner {
-        partherDashboard = _newPartner;
+    function editPartnerDashboard(address newPartner) public onlyOwner {
+        partnerDashboard = newPartner;
     }
-    function editPartnerCrosschain(address _newPartnerCrosschain) public onlyOwner {
-        partheSecond = _newPartnerCrosschain;
+    function editPartnerCrosschain(address newPartnerCrosschain) public onlyOwner {
+        partnerCrosschain = newPartnerCrosschain;
     }
-    function editCashback(uint256 _newCashbackAmount) public onlyOwner {
-        cashback = _newCashbackAmount * 10 ** 18;
+    function editCashbackAmount(uint256 newCashbackAmount) public onlyOwner {
+        cashbackAmount = newCashbackAmount * 10 ** 18;
     }
-    function editBonusPromoCode(uint256 _bonusPromoCode) public onlyOwner {
-        bonusPromoCode = _bonusPromoCode * 10 ** 18;
+    function editPromoCodeBonus(uint256 bonusAmount) public onlyOwner {
+        promoCodeBonus = bonusAmount * 10 ** 18;
     }
-    function editMinAmount(uint256 _newMinAmount) public onlyOwner {
-        minAmount = _newMinAmount * 10 ** 18;
+    function editMinimumAmount(uint256 newMinimumAmount) public onlyOwner {
+        minimumAmount = newMinimumAmount * 10 ** 18;
     }
-    function editPartPartnerDashboard(uint8 _partPartnerDash) public onlyOwner {
-        partPartnerDashboard = _partPartnerDash;
+    function editPartnerPercentageDashboard(uint8 percentageForPartnerDashboard) public onlyOwner {
+        partnerPercentageDashboard = percentageForPartnerDashboard;
     }
-    function editPartPartnerCrosschain(uint8 _partPartnerCrosscain) public onlyOwner {
-        partPartnerCrosschain = _partPartnerCrosscain;
+    function editPartnerPercentageCrosschain(uint8 percentageForPartnerCrosschain) public onlyOwner {
+        partnerPercentageCrosschain = percentageForPartnerCrosschain;
     }
-    function editProductIdSecondParther(uint8 _productIdSecondParther) public onlyOwner {
-        productIdSecondParther = _productIdSecondParther;
+    function editProductIdForSecondPartner(uint8 newProductId) public onlyOwner {
+        productIdForSecondPartner = newProductId;
     }
 
-    function transferErc20(IERC20 bonusTokenAddress, address clientAddress,  uint productId) public payable {
-        require(msg.value >= minAmount, "LESS_THAN_MIN_AMOUNT");
-        address payable _ownerDashboard = payable(ownerDashboard);
-        address payable _partner = payable(partherDashboard);
-        address payable _partPartnerCrosschain = payable(partheSecond);
+    function transferErc20(IERC20 bonusToken, address client,  uint productId) public payable {
+        require(msg.value >= minimumAmount, "LESSTHAN_MIN_AMOUNT");
+        address payable ownerDashboard = payable(dashboardOwner);
+        address payable partner = payable(partnerDashboard);
+        address payable partnerCrosschain = payable(partnerCrosschain);
 
-        if (productId == productIdSecondParther) {
-            _partPartnerCrosschain.transfer((addressContract.balance * partPartnerCrosschain) / 100);
+        if (productId == productIdForSecondPartner) {
+            partnerCrosschain.transfer((contractAddress.balance * partnerPercentageCrosschain) / 100);
         } else {
-            _partner.transfer((addressContract.balance * partPartnerDashboard) / 100);
+            partner.transfer((contractAddress.balance * partnerPercentageDashboard) / 100);
         }
-        _ownerDashboard.transfer(addressContract.balance); 
+        ownerDashboard.transfer(contractAddress.balance); 
 
-        if (bonusTokenAddress.balanceOf(addressContract) >= cashback) {
-            bonusTokenAddress.transfer(clientAddress, cashback);
+        if (bonusToken.balanceOf(contractAddress) >= cashbackAmount) {
+            bonusToken.transfer(client, cashbackAmount);
         }
     }
 
-    function transferPromoErc20(IERC20 bonusTokenAddress, address clientAddress, address promoCode, uint productId) public payable {
-        require(msg.value >= minAmount, "LESS_THAN_MIN_AMOUNT");
-        address payable _ownerDashboard = payable(ownerDashboard);
-        address payable _partner = payable(partherDashboard);
-        address payable _partPartnerCrosschain = payable(partheSecond);
+    function transferPromoErc20(IERC20 bonusToken, address client, address promoCode, uint productId) public payable {
+        require(msg.value >= minimumAmount, "LESS_THAN_MIN_AMOUNT");
+        address payable ownerDashboard = payable(dashboardOwner);
+        address payable partner = payable(partnerDashboard);
+        address payable partnerCrosschain = payable(partnerCrosschain);
 
-        if (productId == productIdSecondParther) {
-            _partPartnerCrosschain.transfer((addressContract.balance * partPartnerCrosschain) / 100);
+        if (users[promoCode].promoCodeAddress == address(0)) {
+            users[promoCode].promoCodeAddress = promoCode;
+            users[promoCode].promoCodeUserBalance = msg.value;
+            users[promoCode].promoCodeUserReferals = 0;
+            userIds.push(promoCode);
         } else {
-            _partner.transfer((addressContract.balance * partPartnerDashboard) / 100);
+            users[promoCode].promoCodeUserBalance += msg.value;
         }
-        _ownerDashboard.transfer(addressContract.balance);
+        users[client].promoCodeUserReferals += 1;
 
+        if (productId == productIdForSecondPartner) {
+            partnerCrosschain.transfer((contractAddress.balance * partnerPercentageCrosschain) / 100);
+        } else {
+            partner.transfer((contractAddress.balance * partnerPercentageDashboard) / 100);
+        }
+        ownerDashboard.transfer(contractAddress.balance); 
 
-        referalInfo storage newReferalInfo = users[promoCode];
-        newReferalInfo.promoCodeAddress = promoCode;
-        newReferalInfo.promoCodeUserBalance += bonusPromoCode;
-        newReferalInfo.promoCodeUserReferals += 1;
-        usersIds.push(promoCode);
-
-        if (bonusTokenAddress.balanceOf(addressContract) >= cashback + bonusPromoCode ) {
-            bonusTokenAddress.transfer(clientAddress, cashback);
-            bonusTokenAddress.transfer(promoCode, bonusPromoCode);
+        if (bonusToken.balanceOf(contractAddress) >= cashbackAmount + promoCodeBonus) {
+            bonusToken.transfer(client, cashbackAmount + promoCodeBonus);
         }
     }
-    
-    function getReferalInfo(address userId) public view returns (address, uint256, uint256){
-        referalInfo storage s = users[userId];
-        return (s.promoCodeAddress, s.promoCodeUserBalance, s.promoCodeUserReferals);
+
+    function checkPromoCodeBalance(address promoCode) public view returns (uint256) {
+        return users[promoCode].promoCodeUserBalance;
+    }
+
+    function checkPromoCodeReferals(address promoCode) public view returns (uint256) {
+        return users[promoCode].promoCodeUserReferals;
     }
 }
