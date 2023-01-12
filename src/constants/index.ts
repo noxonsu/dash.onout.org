@@ -342,6 +342,25 @@ export const PRODUCTS: { [id: string]: Product } = {
     lables: ["new"],
     price: 650,
   },
+  nftstaking: {
+    id: "nftstaking",
+    productId: 10,
+    name: "NFTStack",
+    status: "development",
+    demo: "-",
+    //videos: "-",
+    description: "White-label NFTStack Platform",
+    howToEarn: "NFT staking is a new way to earn passive income in the crypto world. It lets NFT holders lock their assets in DeFi platforms to receive rewards. All without the need to sell their NFT collections",
+    adminCanEdit: "Logo, title, colors, social links",
+    imgSrc: COVERS.nftstackCover,
+    imgAlt: "NFTStack promo",
+    promoPage: "OnOut NFTStack",
+    promoPageLink: "https://onout.org/nftstack/",
+    docsLink: "",
+    codecanyonLink: "",
+    lables: ["new"],
+    price: 1000,
+  },
 };
 
 interface Idea {
