@@ -7,7 +7,7 @@ import daoCover from "./images/dao-cover.jpg";
 import crossChainCover from "./images/cross-chain-cover.jpg";
 import lendaCover from "./images/lenda-cover.jpg";
 import launchpadCover from "./images/launchpad-cover.png";
-import nftstackCover from "./images/nftstack-cover.png";
+import nftstakCover from "./images/nftstak-cover.png";
 
 import ETHEREUM from "./images/ethereum.svg";
 import BSC from "./images/bsc.svg";
@@ -45,7 +45,7 @@ export const COVERS: { [k: string]: string } = {
   crossChainCover,
   lendaCover,
   launchpadCover,
-  nftstackCover,
+  nftstakCover,
 };
 
 export const IMAGES: { [k: string]: string } = {
