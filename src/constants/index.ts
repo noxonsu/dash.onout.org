@@ -347,7 +347,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     productId: 10,
     name: "NFTStake",
     status: "development",
-    demo: "-",
+    demo: "https://shendel.github.io/nftstakedemo/",
     //videos: "-",
     description: "White-label NFTStake Platform",
     howToEarn: "NFT staking is a new way to earn passive income in the crypto world. It lets NFT holders lock their assets in DeFi platforms to receive rewards. All without the need to sell their NFT collections",
@@ -359,7 +359,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     docsLink: "",
     codecanyonLink: "",
     lables: ["new"],
-    price: 1000,
+    price: 500,
   },
 };
 
