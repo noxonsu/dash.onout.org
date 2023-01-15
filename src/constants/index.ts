@@ -348,7 +348,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     name: "NFTStake",
     status: "development",
     demo: "https://shendel.github.io/nftstakedemo/",
-    //videos: "-",
+    videos: "https://www.youtube.com/watch?v=jXwLpPIrDVQ&list=PLLtijyRvdwnbPVFWQHma7IwPniAKOWN0h&index=1&ab_channel=Onouttools",
     description: "White-label NFTStake Platform",
     howToEarn: "NFT staking is a new way to earn passive income in the crypto world. It lets NFT holders lock their assets in DeFi platforms to receive rewards. All without the need to sell their NFT collections",
     adminCanEdit: "Logo, title, colors, social links",
