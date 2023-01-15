@@ -303,15 +303,25 @@ const Product = ({ id }: ProductProps) => {
           </a>
         )}
         {demo && (
-          <a
-            className="secondaryBtn externalLink"
-            type="button"
-            href={demo}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Demo 👀
-          </a>
+          <>
+            {demo === `-` ? (
+              <span
+                className="secondaryBtn externalLink"
+              >
+                Demo coming soon
+              </span>
+            ) : (
+              <a
+                className="secondaryBtn externalLink"
+                type="button"
+                href={demo}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Demo 👀
+              </a>
+            )}
+          </>
         )}
       </div>
 

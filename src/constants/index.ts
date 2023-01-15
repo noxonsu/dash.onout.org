@@ -342,6 +342,25 @@ export const PRODUCTS: { [id: string]: Product } = {
     lables: ["new"],
     price: 650,
   },
+  nftstaking: {
+    id: "nftstaking",
+    productId: 10,
+    name: "NFTStake",
+    status: "development",
+    demo: "https://shendel.github.io/nftstakedemo/",
+    videos: "https://www.youtube.com/watch?v=jXwLpPIrDVQ&list=PLLtijyRvdwnbPVFWQHma7IwPniAKOWN0h&index=1&ab_channel=Onouttools",
+    description: "White-label NFTStake Platform",
+    howToEarn: "NFT staking is a new way to earn passive income in the crypto world. It lets NFT holders lock their assets in DeFi platforms to receive rewards. All without the need to sell their NFT collections",
+    adminCanEdit: "Logo, title, colors, social links",
+    imgSrc: COVERS.nftstakCover,
+    imgAlt: "NFTStake promo",
+    promoPage: "OnOut NFTStake",
+    promoPageLink: "https://onout.org/nftstake/",
+    docsLink: "",
+    codecanyonLink: "",
+    lables: ["new"],
+    price: 500,
+  },
 };
 
 interface Idea {
