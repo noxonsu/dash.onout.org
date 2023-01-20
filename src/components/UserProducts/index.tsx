@@ -87,7 +87,7 @@ const ACCOUNTS: { [key: string]: string[] } = {
     "lenda",
     "definance",
     "multicurrencywallet",
-    "farmfactory",
+    "nftmarketplace",
   ]
 };
 
