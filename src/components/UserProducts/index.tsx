@@ -82,6 +82,13 @@ const ACCOUNTS: { [key: string]: string[] } = {
   "0x9e64211be5614a8056d79aa906a65de0a14a3457": [
     "lotteryfactory",
   ],
+  "0x390f647b859f2af6581631312bfa5b85ebb6f3ee": [
+    "lotteryfactory",
+    "lenda",
+    "definance",
+    "multicurrencywallet",
+    "nftmarketplace",
+  ]
 };
 
 const UserProducts = () => {
