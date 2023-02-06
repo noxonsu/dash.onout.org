@@ -88,7 +88,10 @@ const ACCOUNTS: { [key: string]: string[] } = {
     "definance",
     "multicurrencywallet",
     "nftmarketplace",
-  ]
+  ],
+  "0xaa2f282cd68c6bb6e71dbffb962d295a0ae31a3e": [
+    "definance",
+  ],
 };
 
 const UserProducts = () => {
