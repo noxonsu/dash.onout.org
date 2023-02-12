@@ -377,7 +377,7 @@ const Product = ({ id }: ProductProps) => {
           <h4 className="youWillGetTitle">
             Free or ~{USDPrice} USD
           </h4>
-          {freeDesc && (<p dangerouslySetInnerHTML={{ __html: description }} />)}
+          {freeDesc && (<p dangerouslySetInnerHTML={{ __html: freeDesc }} />)}
 
           {static_link && (
             <div className="downloadLinkHolder">
