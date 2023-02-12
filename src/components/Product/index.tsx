@@ -375,17 +375,18 @@ const Product = ({ id }: ProductProps) => {
       {isFee ? (
         <>
           <h4 className="youWillGetTitle">
-            Free version
+            Free or ~{USDPrice} USD
           </h4>
-          {freeDesc && (<p>{freeDesc}</p>)}
+          {freeDesc && (<p dangerouslySetInnerHTML={{ __html: description }} />)}
+
+          {static_link && (
+            <div className="downloadLinkHolder">
+              <a className="downloadLink" target="_blank" href={static_link}>Static version (RECOMMENDED)</a>
+            </div>
+          )}
           {wp_link && (
             <div className="downloadLinkHolder">
               <a className="downloadLink" target="_blank" href={wp_link}>WP version</a>
-            </div>
-          )}
-          {static_link && (
-            <div className="downloadLinkHolder">
-              <a className="downloadLink" target="_blank" href={static_link}>Static version</a>
             </div>
           )}
         </>

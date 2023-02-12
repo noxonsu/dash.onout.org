@@ -310,7 +310,9 @@ export const PRODUCTS: { [id: string]: Product } = {
       "https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064",
     lables: [],
     price: 1500,
-    freeDesc: `The free version of the lottery tool can be downloaded and once installed on your domain, you have the option to purchase the premium version through the admin dashboard.`,
+    freeDesc: `As an administrator, you have two options to manage the fees associated with the lottery service:<br><br>
+    1) Service fee: You have the option to set a service fee for each round of the lottery. The service fee is transferred to your wallet address, and a portion of this fee, equal to 1/5 of the service fee, is deducted as the "onout.org" fee. This fee can be removed by purchasing the premium version of the lottery service.<br><br>
+    2) Unclaimed funds: You have the option to withdraw unclaimed funds from the bank after two months have passed since the last round of the lottery. However, please be aware that a portion of the withdrawal, equal to 1/5 of the total amount, will be deducted as the OnOut fee. If you wish to avoid this fee, you can purchase the premium version of the lottery service.`,
     isFee: true,
     static_link: `https://github.com/appsource/StaticLotteryBuilded`,
   },
