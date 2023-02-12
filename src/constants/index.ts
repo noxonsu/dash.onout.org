@@ -169,6 +169,10 @@ export interface Product {
   adminCanEdit?: string;
   videos?: string;
   lables: string[];
+  isFee?: boolean;
+  freeDesc?: string;
+  static_link?: string;
+  wp_link?: string;
 }
 
 export const PRODUCTS: { [id: string]: Product } = {
@@ -306,6 +310,9 @@ export const PRODUCTS: { [id: string]: Product } = {
       "https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064",
     lables: [],
     price: 1500,
+    freeDesc: `The free version of the lottery tool can be downloaded and once installed on your domain, you have the option to purchase the premium version through the admin dashboard.`,
+    isFee: true,
+    static_link: `https://github.com/appsource/StaticLotteryBuilded`,
   },
   nftmarketplace: {
     id: "nftmarketplace",
