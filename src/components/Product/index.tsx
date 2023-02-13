@@ -381,12 +381,13 @@ const Product = ({ id }: ProductProps) => {
 
           {static_link && (
             <div className="downloadLinkHolder">
-              <a className="downloadLink" target="_blank" href={static_link}>Static version (RECOMMENDED)</a>
+              <a className="downloadLink" target="_blank" href={static_link}>Run static version (RECOMMENDED)</a>
             </div>
           )}
+
           {wp_link && (
             <div className="downloadLinkHolder">
-              <a className="downloadLink" target="_blank" href={wp_link}>WP version</a>
+              <a className="downloadLink" target="_blank" href={wp_link}>Download WordPress version</a>
             </div>
           )}
         </>
