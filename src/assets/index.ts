@@ -33,6 +33,8 @@ import multicurrencywallet from "./plugins/multicurrencywallet.zip";
 import nftmarketplace from "./plugins/nftmarketplace.zip";
 //@ts-ignore
 import crosschainStatic from "./plugins/static_crosschain.zip";
+//@ts-ignore
+import launchpadStatic from "./plugins/static_launchpad.zip";
 
 
 export const COVERS: { [k: string]: string } = {
@@ -68,4 +70,5 @@ export const PLUGINS: { [id: string]: string } = {
   multicurrencywallet,
   nftmarketplace,
   crosschainStatic,
+  launchpadStatic,
 };
