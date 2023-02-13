@@ -48,7 +48,19 @@ const Product = ({ id }: ProductProps) => {
   const [wantToEnterPromoCode, setWantToEnterPromoCode] = useState(false);
   const [promoAddress, setPromoAddress] = useState("");
 
-  const { name, promoPageLink, description, price: USDPrice, productId, demo, videos } = PRODUCTS[id];
+  const {
+    name,
+    promoPageLink,
+    description,
+    price: USDPrice,
+    productId,
+    demo,
+    videos,
+    isFee,
+    freeDesc,
+    static_link,
+    wp_link,
+  } = PRODUCTS[id];
 
   useEffect(() => {
     const inProducts = !!products.length && products.find((product) => product.id === id);
@@ -360,16 +372,42 @@ const Product = ({ id }: ProductProps) => {
           )}
         </>
       )} */}
-      <button
-        className={`primaryBtn paymentBtn ${paymentPending ? "pending" : ""}`}
-        disabled={!paymentAvailable}
-        onClick={openPaymentModal}
-      >
-        Buy
-      </button>
+      {isFee ? (
+        <>
+          <h4 className="youWillGetTitle">
+            Free or ~{USDPrice} USD
+          </h4>
+          {freeDesc && (<p dangerouslySetInnerHTML={{ __html: freeDesc }} />)}
+
+          {static_link && (
+            <div className="downloadLinkHolder">
+              <a className="downloadLink" target="_blank" href={static_link}>Run static version (RECOMMENDED)</a>
+            </div>
+          )}
+
+          {wp_link && (
+            <div className="downloadLinkHolder">
+              <a className="downloadLink" target="_blank" href={wp_link}>Download WordPress version</a>
+            </div>
+          )}
+        </>
+      ) : (
+        <button
+          className={`primaryBtn paymentBtn ${paymentPending ? "pending" : ""}`}
+          disabled={!paymentAvailable}
+          onClick={openPaymentModal}
+        >
+          Buy
+        </button>
+      )}
 
       <div className="youWillGet">
-        <h4 className="youWillGetTitle">Item support includes:</h4>
+        <h4 className="youWillGetTitle">
+          {isFee
+            ? `Premium version support includes:`
+            : `Item support includes:`
+          }
+        </h4>
         <ul className="youWillGetItems">
           <li className="youWillGetItem">
             <p className="youWillGetText">Any future update made available by the team is included with every purchase.</p>

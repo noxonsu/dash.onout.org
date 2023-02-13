@@ -29,6 +29,7 @@ const ProductCard = (props: { id: string }) => {
     imgAlt,
     price,
     lables,
+    isFee,
   } = PRODUCTS[id];
 
   return (
@@ -75,7 +76,7 @@ const ProductCard = (props: { id: string }) => {
       {price && (
         <div className='boxLink'>
           <Link to={`/products/${id}`}  className="primaryBtn buyBtn">
-            {`Buy for $${price}`}
+            {isFee ? `Try it Free` : `Buy for $${price}`}
           </Link>
         </div>
       )}
