@@ -212,7 +212,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     docsLink: "https://support.onout.org/hc/1331700057/category/9",
     codecanyonLink: "https://codecanyon.net/item/idofactory-crypto-launchpad-create-ido-pools-with-token-lockers-on/39882380",
     lables: ["new"],
-    price: 650,
+    price: 950,
   },
   crosschain: {
     id: "crosschain",
