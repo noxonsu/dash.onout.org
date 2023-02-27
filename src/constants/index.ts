@@ -351,25 +351,6 @@ export const PRODUCTS: { [id: string]: Product } = {
     lables: [],
     price: 500,
   },
-  lenda: {
-    id: "lenda",
-    productId: 8,
-    name: "Lenda",
-    status: "development",
-    demo: "https://lenda.onout.xyz",
-    videos: "https://www.youtube.com/playlist?list=PLLtijyRvdwnYZF6BKEtUutrzNLw3p78FO",
-    description: "",
-    howToEarn: "Use your own token for a collateral",
-    adminCanEdit: "Logo, colors, styles, list of assets (ETH, Tokens)",
-    imgSrc: COVERS.lendaCover,
-    imgAlt: "Lenda promo",
-    promoPage: "OnOut lenda",
-    promoPageLink: "https://onout.org/lenda/",
-    docsLink: "",
-    codecanyonLink: "",
-    lables: ["new"],
-    price: 1000,
-  },
 };
 
 interface Idea {
