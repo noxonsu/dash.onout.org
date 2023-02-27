@@ -85,7 +85,6 @@ const ACCOUNTS: { [key: string]: string[] } = {
   ],
   "0x390f647b859f2af6581631312bfa5b85ebb6f3ee": [
     "lotteryfactory",
-    "lenda",
     "definance",
     "multicurrencywallet",
     "nftmarketplace",

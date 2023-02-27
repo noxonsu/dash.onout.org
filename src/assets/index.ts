@@ -5,7 +5,6 @@ import farmingCover from "./images/farming-cover.jpg";
 import dexCover from "./images/dex-cover.jpg";
 import daoCover from "./images/dao-cover.jpg";
 import crossChainCover from "./images/cross-chain-cover.jpg";
-import lendaCover from "./images/lenda-cover.jpg";
 import launchpadCover from "./images/launchpad-cover.png";
 import nftstakCover from "./images/nftstak-cover.png";
 
@@ -36,7 +35,6 @@ import crosschainStatic from "./plugins/static_crosschain.zip";
 //@ts-ignore
 import launchpadStatic from "./plugins/static_launchpad.zip";
 
-
 export const COVERS: { [k: string]: string } = {
   walletCover,
   nftsyCover,
@@ -45,14 +43,13 @@ export const COVERS: { [k: string]: string } = {
   dexCover,
   daoCover,
   crossChainCover,
-  lendaCover,
   launchpadCover,
   nftstakCover,
 };
 
 export const IMAGES: { [k: string]: string } = {
   newProduct,
-}
+};
 
 export const NETWORKS: { [k: number]: string } = {
   1: ETHEREUM,
