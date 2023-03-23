@@ -15,7 +15,11 @@ const BonusNotice = ({ switchToNetwork }: { switchToNetwork: (chainId: string) =
 
   const importSwapToken = () => {
     if (networkId) {
-      importToken(cashbackTokenAddresses[networkId], address);
+      const cashbackToken = cashbackTokenAddresses[networkId]
+
+      if (cashbackToken) {
+        importToken(cashbackToken, address);
+      }
     }
   };
 

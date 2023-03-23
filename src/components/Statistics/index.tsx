@@ -99,7 +99,7 @@ const Statistics = () => {
         const getMonthTransactions = async (startMonth: any, finishMonth: any) => {
           return await transactionsResults.filter((transactionData: any) => {
             return (
-              transactionData.to === bonusAndDiscountContractsByNetworkId[urlData.networkId].toLowerCase() &&
+              transactionData.to === bonusAndDiscountContractsByNetworkId[urlData.networkId]?.toLowerCase() &&
               transactionData.timeStamp * millisecund >= startMonth &&
               transactionData.timeStamp * millisecund <= finishMonth &&
               transactionData.value > 0
