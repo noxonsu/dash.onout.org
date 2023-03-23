@@ -8,9 +8,12 @@ export enum SupportedChainId {
   MAINNET = 1,
   BINANCE_SMART_CHAIN = 56,
   // POLYGON = 137,
+  // POLYGON_TESTNET = 80001,
 }
 
-export const bonusAndDiscountContractsByNetworkId = {
+export const bonusAndDiscountContractsByNetworkId: {
+  [k in SupportedChainId]?: string
+} = {
 //   [SupportedChainId.POLYGON]: "0xd9f89Dec54CbF10011FDc8D9FA06E1f30c3F74d4",
   [SupportedChainId.BINANCE_SMART_CHAIN]: "0xB0A06daCa7F05D86D8fC1e289E08f734398EaE89",
   [SupportedChainId.MAINNET]: PAYMENT_ADDRESS,
@@ -44,9 +47,17 @@ export const statisticUrlsDataByNetwork: {
     apiKey: "RZ7N3TCPHFIU7Q4KA1V93MZWRN4X7F8HIT",
     apiDomain: "https://api.etherscan.io",
   },
+  // [SupportedChainId.POLYGON_TESTNET]: {
+  //   name: "POLYGON TESTNET",
+  //   networkId: SupportedChainId.POLYGON_TESTNET,
+  //   apiKey: "4JB4UXHBIE2I5285T18J8SSPUS2M3K7X3V",
+  //   apiDomain: "https://api-testnet.polygonscan.com", 
+  // },
 };
 
-export const cashbackTokenAddresses = {
+export const cashbackTokenAddresses: {
+  [k in SupportedChainId]?: string
+} = {
   // [SupportedChainId.POLYGON]: "0x654496319F438A59FEE9557940393cf818753ee9",
   [SupportedChainId.BINANCE_SMART_CHAIN]: "0x92648e4537CdFa1EE743A244465a31AA034B1ce8",
   [SupportedChainId.MAINNET]: "",
@@ -86,20 +97,6 @@ export interface Network {
 }
 
 export const NETWORKS: { [key in SupportedChainId]: Network } = {
-/* 4: {
-    id: 1,
-    name: "Rinkeby",
-    currency: {
-      id: "ethereum",
-      symbol: "ETH",
-    },
-    tokens: {
-      usdt: {
-        address: "",
-        id: "",
-      },
-    },
-  }, */
   [SupportedChainId.MAINNET]: {
     id: 1,
     chainId: `0x${(1).toString(16)}`,
@@ -147,6 +144,17 @@ export const NETWORKS: { [key in SupportedChainId]: Network } = {
   //       id: "",
   //     },
   //   },
+  // },
+  // [SupportedChainId.POLYGON_TESTNET]: {
+  //   id: SupportedChainId.POLYGON_TESTNET,
+  //   chainId: `0x${SupportedChainId.POLYGON_TESTNET.toString(16)}`,
+  //   name: "Polygon testnet",
+  //   currency: {
+  //     id: "blabla",
+  //     symbol: "MATIC",
+  //     binancePurchaseKey: "polygon-testnet-matic",
+  //   },
+  //   tokens: {},
   // },
 };
 
@@ -259,7 +267,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     productId: 3,
     name: "DeFinance (DEX)",
     status: "ready",
-    demo: "https://definance.wpmix.net",
+    demo: "https://dex.onout.org",
     videos: "https://www.youtube.com/playlist?list=PLLtijyRvdwnbsmFWRSktrBCLMovcPEb3b",
     howToEarn: "0.01% - 99% each trade",
     adminCanEdit: "Logo, colors, list of assets, links, fee percent, admin and fee addresses",
@@ -271,7 +279,9 @@ export const PRODUCTS: { [id: string]: Product } = {
     docsLink: "https://support.onout.org/hc/1331700057/category/2",
     codecanyonLink: "https://codecanyon.net/item/definance-ethereum-defi-plugin-for-wordpress/29099232",
     lables: [],
-    price: 899,
+    price: 1000,
+    isFee: true,
+    static_link: 'https://github.com/appsource/dex',
   },
   farmfactory: {
     id: "farmfactory",

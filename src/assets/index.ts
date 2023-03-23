@@ -25,8 +25,6 @@ import daofactoryStatic from "./plugins/static_daofactory.zip";
 //@ts-ignore
 import farmfactory from "./plugins/farmfactory.zip";
 //@ts-ignore
-import lotteryfactory from "./plugins/lotteryfactory.zip";
-//@ts-ignore
 import multicurrencywallet from "./plugins/multicurrencywallet.zip";
 //@ts-ignore
 import nftmarketplace from "./plugins/nftmarketplace.zip";
@@ -63,7 +61,6 @@ export const PLUGINS: { [id: string]: string } = {
   daofactory,
   daofactoryStatic,
   farmfactory,
-  lotteryfactory,
   multicurrencywallet,
   nftmarketplace,
   crosschainStatic,
