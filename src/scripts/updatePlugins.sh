@@ -2,10 +2,10 @@
 
 # TODO: make it work on Windows
 # TODO: how to make key-value structure?
-SOURCES=("noxonsu" "noxonsu" "noxonsu" "noxonsu" "swaponline" "noxonsu" "noxonsu" "VitaliyShulik")
-REPO_NAMES=("DAOwidget" "definance" "farmfactory" "LotteryFactory" "multi-currency-wallet-pro" "NFTsy" "anyswap-crosschain" "launchpad")
-PROJECT_IDS=("daofactory" "definance" "farmfactory" "lotteryfactory" "multicurrencywallet" "nftmarketplace" "crosschain" "launchpad")
-PRUGIN_IDS=("daofactory" "definance" "farmfactory" "lotteryfactory" "multicurrencywallet" "nftmarketplace" "" "")
+SOURCES=("noxonsu" "noxonsu" "noxonsu" "swaponline" "noxonsu" "noxonsu" "VitaliyShulik")
+REPO_NAMES=("DAOwidget" "definance" "farmfactory" "multi-currency-wallet-pro" "NFTsy" "anyswap-crosschain" "launchpad")
+PROJECT_IDS=("daofactory" "definance" "farmfactory" "multicurrencywallet" "nftmarketplace" "crosschain" "launchpad")
+PRUGIN_IDS=("daofactory" "definance" "farmfactory" "multicurrencywallet" "nftmarketplace" "" "")
 # paths relative to the root of the repository
 # empty string means there is no build or we don't have the static version (or i didn't find it o_o)
 # NFT TODO: check the VUE app (vendor/dist) for NFT repo and add the path
