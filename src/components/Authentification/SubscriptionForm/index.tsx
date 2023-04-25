@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import GA from 'react-ga';
+import GA from "react-ga";
 import axios from "../../../helpers/axios";
 import { isValidEmail } from "../../../helpers/email";
 
@@ -7,10 +7,7 @@ import "../index.css";
 
 type SubscriptionFormProps = { address: string; toggleSubscribed: () => void };
 
-const SubscriptionForm = ({
-  address,
-  toggleSubscribed,
-}: SubscriptionFormProps) => {
+const SubscriptionForm = ({ address, toggleSubscribed }: SubscriptionFormProps) => {
   const [email, setEmail] = useState("");
   const [emailNews, setEmailNews] = useState(false);
   const [investmentOpportunities, setInvestmentOpportunities] = useState(false);
@@ -68,7 +65,6 @@ const SubscriptionForm = ({
   return (
     <form className="subscriptionForm">
       <div className="sf-row sf-rowColumn">
-        <label htmlFor="email">Email </label>
         <input
           className="primaryInput"
           id="email"
@@ -76,6 +72,7 @@ const SubscriptionForm = ({
           value={email}
           name="email"
           onChange={onChangeInput}
+          placeholder="Email address"
         />
       </div>
       <div className="sf-row">
@@ -87,7 +84,7 @@ const SubscriptionForm = ({
           checked={emailNews}
           onChange={onChangeInput}
         />
-        <label htmlFor="emailNews">Email me news about your products</label>
+        <label htmlFor="emailNews">Send me news about your products.</label>
       </div>
       <div className="sf-row">
         <input
@@ -99,8 +96,7 @@ const SubscriptionForm = ({
           onChange={onChangeInput}
         />
         <label htmlFor="investmentOpportunities">
-          I am also interested in investment opportunities such as launchpads,
-          farming, etc.
+          I am also interested in investment opportunities such as launchpads, agriculture, etc.
         </label>
       </div>
       <div className="sf-row">
@@ -110,8 +106,8 @@ const SubscriptionForm = ({
           onClick={() => {
             handleSubmit();
             GA.event({
-              category: 'Subscription',
-              action: 'Press on Subscribe button',
+              category: "Subscription",
+              action: "Press on Subscribe button",
             });
           }}
         >
@@ -126,6 +122,10 @@ const SubscriptionForm = ({
             </div>
           );
         })}
+
+      <div className="sf-row">
+        <strong className="trustLabel">Trusted by 1000+ webmasters</strong>
+      </div>
     </form>
   );
 };
