@@ -35,7 +35,7 @@ const ProductCard = (props: { id: string }) => {
   return (
     <div
       key={id}
-      className="productCard"
+      className={`productCard ${id}ProductCard`}
       onClick={() => {
       window.location.assign(`#/products/${id}`);
         openDetails();
@@ -46,7 +46,7 @@ const ProductCard = (props: { id: string }) => {
       }}
     >
       <>
-        <img src={imgSrc} alt={imgAlt} />
+        <img src={imgSrc} alt={imgAlt} className="promoImage" />
         {lables.includes('new') && (
           <div className='newProduct'>
             <img
