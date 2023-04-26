@@ -33,6 +33,8 @@ import nftmarketplace from "./plugins/nftmarketplace.zip";
 import crosschainStatic from "./plugins/static_crosschain.zip";
 //@ts-ignore
 import launchpadStatic from "./plugins/static_launchpad.zip";
+//@ts-ignore
+import aigramStatic from "./plugins/static_aigram.zip";
 
 export const COVERS: { [k: string]: string } = {
   walletCover,
@@ -67,4 +69,5 @@ export const PLUGINS: { [id: string]: string } = {
   nftmarketplace,
   crosschainStatic,
   launchpadStatic,
+  aigramStatic,
 };
