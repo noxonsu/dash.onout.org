@@ -54,8 +54,8 @@ const CheckAddress = ({ account }: CheckAddressProps) => {
   if (isSubscribed === undefined) return <></>;
 
   return isSubscribed || haveSubscribed ? null : (
-    <div style={{ margin: "0 1rem" }}>
-      <h3>Please enter your email to complete registration</h3>
+    <div className="checkAddressWrapper">
+      <h3 className="checkAddressTitle">Please enter your email to complete registration</h3>
 
       <SubscriptionForm
         address={account.address}

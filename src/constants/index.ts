@@ -12,9 +12,9 @@ export enum SupportedChainId {
 }
 
 export const bonusAndDiscountContractsByNetworkId: {
-  [k in SupportedChainId]?: string
+  [k in SupportedChainId]?: string;
 } = {
-//   [SupportedChainId.POLYGON]: "0xd9f89Dec54CbF10011FDc8D9FA06E1f30c3F74d4",
+  //   [SupportedChainId.POLYGON]: "0xd9f89Dec54CbF10011FDc8D9FA06E1f30c3F74d4",
   [SupportedChainId.BINANCE_SMART_CHAIN]: "0xB0A06daCa7F05D86D8fC1e289E08f734398EaE89",
   [SupportedChainId.MAINNET]: PAYMENT_ADDRESS,
 };
@@ -51,12 +51,12 @@ export const statisticUrlsDataByNetwork: {
   //   name: "POLYGON TESTNET",
   //   networkId: SupportedChainId.POLYGON_TESTNET,
   //   apiKey: "4JB4UXHBIE2I5285T18J8SSPUS2M3K7X3V",
-  //   apiDomain: "https://api-testnet.polygonscan.com", 
+  //   apiDomain: "https://api-testnet.polygonscan.com",
   // },
 };
 
 export const cashbackTokenAddresses: {
-  [k in SupportedChainId]?: string
+  [k in SupportedChainId]?: string;
 } = {
   // [SupportedChainId.POLYGON]: "0x654496319F438A59FEE9557940393cf818753ee9",
   [SupportedChainId.BINANCE_SMART_CHAIN]: "0x92648e4537CdFa1EE743A244465a31AA034B1ce8",
@@ -104,7 +104,7 @@ export const NETWORKS: { [key in SupportedChainId]: Network } = {
     currency: {
       id: "ethereum",
       symbol: "ETH",
-      binancePurchaseKey: 'ethereum',
+      binancePurchaseKey: "ethereum",
     },
     tokens: {
       usdt: {
@@ -120,7 +120,7 @@ export const NETWORKS: { [key in SupportedChainId]: Network } = {
     currency: {
       id: "binancecoin",
       symbol: "BNB",
-      binancePurchaseKey: 'BNB',
+      binancePurchaseKey: "BNB",
     },
     tokens: {
       usdt: {
@@ -183,16 +183,22 @@ export interface Product {
   wp_link?: string;
 }
 
-export const PRODUCTS: { [id: string]: Product } = {
+export interface Category {
+  [id: string]: Product;
+}
+
+export const WEB3_PRODUCTS: Category = {
   nftstaking: {
     id: "nftstaking",
     productId: 10,
     name: "NFTStake",
     status: "ready",
     demo: "https://shendel.github.io/nftstakedemo/",
-    videos: "https://www.youtube.com/watch?v=jXwLpPIrDVQ&list=PLLtijyRvdwnbPVFWQHma7IwPniAKOWN0h&index=1&ab_channel=Onouttools",
+    videos:
+      "https://www.youtube.com/watch?v=jXwLpPIrDVQ&list=PLLtijyRvdwnbPVFWQHma7IwPniAKOWN0h&index=1&ab_channel=Onouttools",
     description: "White-label NFTStake Platform",
-    howToEarn: "NFT staking is a new way to earn passive income in the crypto world. It lets NFT holders lock their assets in DeFi platforms to receive rewards. All without the need to sell their NFT collections",
+    howToEarn:
+      "NFT staking is a new way to earn passive income in the crypto world. It lets NFT holders lock their assets in DeFi platforms to receive rewards. All without the need to sell their NFT collections",
     adminCanEdit: "Logo, title, colors, social links",
     imgSrc: COVERS.nftstakCover,
     imgAlt: "NFTStake promo",
@@ -218,7 +224,8 @@ export const PRODUCTS: { [id: string]: Product } = {
     promoPage: "OnOut IDOFactory",
     promoPageLink: "https://onout.org/launchpad/",
     docsLink: "https://support.onout.org/hc/1331700057/category/9",
-    codecanyonLink: "https://codecanyon.net/item/idofactory-crypto-launchpad-create-ido-pools-with-token-lockers-on/39882380",
+    codecanyonLink:
+      "https://codecanyon.net/item/idofactory-crypto-launchpad-create-ido-pools-with-token-lockers-on/39882380",
     lables: ["new"],
     price: 950,
   },
@@ -230,7 +237,8 @@ export const PRODUCTS: { [id: string]: Product } = {
     demo: "https://crosschain.onout.org",
     videos: "https://www.youtube.com/playlist?list=PLLtijyRvdwnYqXwOpiiDvS55NCp13ZqGT",
     howToEarn: "Set up commission on all your multichain liquidity pair of tokens and each trade between them",
-    adminCanEdit: "Project name, logo, colors, social links, list of assets, tokens' swap config (includes fee percent)",
+    adminCanEdit:
+      "Project name, logo, colors, social links, list of assets, tokens' swap config (includes fee percent)",
     description: "",
     imgSrc: COVERS.crossChainCover,
     imgAlt: "crosschain bridge promo",
@@ -281,7 +289,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     lables: [],
     price: 1000,
     isFee: true,
-    static_link: 'https://github.com/appsource/dex',
+    static_link: "https://github.com/appsource/dex",
   },
   farmfactory: {
     id: "farmfactory",
@@ -343,7 +351,7 @@ export const PRODUCTS: { [id: string]: Product } = {
     1) Service fee: You have the option to set a service fee for each round of the lottery. The service fee is transferred to your wallet address, and a portion of this fee, equal to 1/5 of the service fee, is deducted as the "onout.org" fee. This fee can be removed by purchasing the premium version of the lottery service.<br><br>
     2) Unclaimed funds: You have the option to withdraw unclaimed funds from the bank after one months have passed since the last round of the lottery. However, please be aware that a portion of the withdrawal, equal to 1/5 of the total amount, will be deducted as the OnOut fee. If you wish to avoid this fee, you can purchase the premium version of the lottery service.`,
     isFee: true,
-    static_link: `https://github.com/appsource/StaticLotteryBuilded`,
+    static_link: "https://github.com/appsource/StaticLotteryBuilded",
   },
   nftmarketplace: {
     id: "nftmarketplace",
@@ -362,6 +370,36 @@ export const PRODUCTS: { [id: string]: Product } = {
     price: 500,
   },
 };
+
+export const AI_PRODUCTS: Category = {
+  aigram: {
+    id: "aigram",
+    productId: 11,
+    name: "AiGram",
+    status: "ready",
+    demo: "",
+    description: "AiGram - a simple and fast way to deploy your own ChatGPT bot on Telegram",
+    howToEarn: "You can charge for access to the bot, offer premium features for a fee.",
+    adminCanEdit: "Amount of free messages, payment source, activation code",
+    videos: "https://www.youtube.com/watch?v=sQBNriNoMY4&list=PLLtijyRvdwnas9R43VIhD8r2cdT2dyEW2&index=3",
+    imgSrc: COVERS.aigram,
+    imgAlt: "AiGram promo",
+    promoPage: "OnOut AiGram",
+    promoPageLink: "https://onout.org/AiGram/",
+    docsLink: "https://support.onout.org/hc/1331700057/category/10",
+    lables: ["new"],
+    price: 100,
+  },
+};
+
+export const PRODUCTS_BY_CATEGORY = {
+  WEB3_PRODUCTS,
+  AI_PRODUCTS,
+};
+
+export const PRODUCTS = Object.values(PRODUCTS_BY_CATEGORY).reduce((acc, category) => {
+  return { ...acc, ...category };
+}, {});
 
 interface Idea {
   id: string;

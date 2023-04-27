@@ -9,10 +9,8 @@ const Authentification = () => {
 
   return (
     <div className="auth">
-      {isWeb3Loading ? (
-        <></>
-      ) : !account.address ? (
-        <span>Please connect your wallet for access the products</span>
+      {isWeb3Loading ? null : !account.address ? (
+        <strong>Please connect your wallet for access the products</strong>
       ) : (
         <CheckAddress account={account} />
       )}

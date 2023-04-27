@@ -19,6 +19,7 @@ const ACCOUNTS: { [key: string]: string[] } = {
     "launchpad",
   ],
   "0x2a8d166495c7f854c5f2510fbd250fdab8ce58d7": [ /* @eneeseene */
+    "aigram",
     "multicurrencywallet",
     "definance",
     "farmfactory",
@@ -91,6 +92,16 @@ const ACCOUNTS: { [key: string]: string[] } = {
   ],
   "0xaa2f282cd68c6bb6e71dbffb962d295a0ae31a3e": [
     "definance",
+  ],
+  "0x3df823dafbf37fd4d64d3dbf07332518274a3c43": [ /* NotEternal */
+    "aigram",
+    "multicurrencywallet",
+    "definance",
+    "farmfactory",
+    "daofactory",
+    "lotteryfactory",
+    "nftmarketplace",
+    "crosschain",
   ],
 };
 

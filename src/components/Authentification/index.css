@@ -9,8 +9,21 @@
   margin: 2vh 0 0 0;
 }
 
+.checkAddressWrapper {
+  max-width: 460px;
+  margin: 0 1rem;
+}
+
+.checkAddressTitle {
+  margin-bottom: 42px;
+  font-size: 26px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
 .subscriptionForm {
   max-width: 38rem;
+  letter-spacing: 1px;
 }
 
 .sf-row {
@@ -28,11 +41,25 @@
 }
 
 .sf-row input[type="checkbox"] {
-  margin-right: 0.7rem;
+  margin-right: 0.5rem;
   margin-top: 0.4rem;
   min-width: 5%;
 }
 
-.input {
-  width: auto;
+.sf-row .primaryInput {
+  padding: 12px 16px;
+  width: 90%;
+  margin: 0 auto 20px;
+}
+
+.sf-row .primaryBtn {
+  width: 98%;
+  margin: 16px auto 0;
+}
+
+.sf-row .trustLabel {
+  margin: 28px auto 0;
+  font-weight: 400;
+  text-align: center;
+  color: var(--color-notice);
 }

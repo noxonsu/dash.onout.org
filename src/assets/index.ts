@@ -7,6 +7,7 @@ import daoCover from "./images/dao-cover.jpg";
 import crossChainCover from "./images/cross-chain-cover.jpg";
 import launchpadCover from "./images/launchpad-cover.png";
 import nftstakCover from "./images/nftstak-cover.png";
+import aigram from "./images/aigram-cover.jpg";
 
 import ETHEREUM from "./images/ethereum.svg";
 import BSC from "./images/bsc.svg";
@@ -32,6 +33,8 @@ import nftmarketplace from "./plugins/nftmarketplace.zip";
 import crosschainStatic from "./plugins/static_crosschain.zip";
 //@ts-ignore
 import launchpadStatic from "./plugins/static_launchpad.zip";
+//@ts-ignore
+import aigramStatic from "./plugins/static_aigram.zip";
 
 export const COVERS: { [k: string]: string } = {
   walletCover,
@@ -43,6 +46,7 @@ export const COVERS: { [k: string]: string } = {
   crossChainCover,
   launchpadCover,
   nftstakCover,
+  aigram,
 };
 
 export const IMAGES: { [k: string]: string } = {
@@ -65,4 +69,5 @@ export const PLUGINS: { [id: string]: string } = {
   nftmarketplace,
   crosschainStatic,
   launchpadStatic,
+  aigramStatic,
 };

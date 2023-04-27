@@ -7,7 +7,6 @@ import Sections from "./components/Sections";
 import Footer from "./components/Footer";
 import { GA_TRACKING_ID } from './constants'
 import { HashRouter } from "react-router-dom";
-import Referal from "./components/Referal";
 
 function App() {
 
