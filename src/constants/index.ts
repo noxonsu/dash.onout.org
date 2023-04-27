@@ -183,26 +183,11 @@ export interface Product {
   wp_link?: string;
 }
 
-export const PRODUCTS: { [id: string]: Product } = {
-  aigram: {
-    id: "aigram",
-    productId: 11,
-    name: "AiGram",
-    status: "ready",
-    demo: "",
-    description: "AiGram - a simple and fast way to deploy your own ChatGPT bot on Telegram",
-    howToEarn:
-      "You can charge for access to the bot, offer premium features for a fee.",
-    adminCanEdit: "Amount of free messages, payment source, activation code",
-    videos: "https://www.youtube.com/watch?v=sQBNriNoMY4&list=PLLtijyRvdwnas9R43VIhD8r2cdT2dyEW2&index=3",
-    imgSrc: COVERS.aigram,
-    imgAlt: "AiGram promo",
-    promoPage: "OnOut AiGram",
-    promoPageLink: "https://onout.org/AiGram/",
-    docsLink: "https://support.onout.org/hc/1331700057/category/10",
-    lables: ["new"],
-    price: 100,
-  },
+export interface Category {
+  [id: string]: Product;
+}
+
+export const WEB3_PRODUCTS: Category = {
   nftstaking: {
     id: "nftstaking",
     productId: 10,
@@ -385,6 +370,36 @@ export const PRODUCTS: { [id: string]: Product } = {
     price: 500,
   },
 };
+
+export const AI_PRODUCTS: Category = {
+  aigram: {
+    id: "aigram",
+    productId: 11,
+    name: "AiGram",
+    status: "ready",
+    demo: "",
+    description: "AiGram - a simple and fast way to deploy your own ChatGPT bot on Telegram",
+    howToEarn: "You can charge for access to the bot, offer premium features for a fee.",
+    adminCanEdit: "Amount of free messages, payment source, activation code",
+    videos: "https://www.youtube.com/watch?v=sQBNriNoMY4&list=PLLtijyRvdwnas9R43VIhD8r2cdT2dyEW2&index=3",
+    imgSrc: COVERS.aigram,
+    imgAlt: "AiGram promo",
+    promoPage: "OnOut AiGram",
+    promoPageLink: "https://onout.org/AiGram/",
+    docsLink: "https://support.onout.org/hc/1331700057/category/10",
+    lables: ["new"],
+    price: 100,
+  },
+};
+
+export const PRODUCTS_BY_CATEGORY = {
+  WEB3_PRODUCTS,
+  AI_PRODUCTS,
+};
+
+export const PRODUCTS = Object.values(PRODUCTS_BY_CATEGORY).reduce((acc, category) => {
+  return { ...acc, ...category };
+}, {});
 
 interface Idea {
   id: string;

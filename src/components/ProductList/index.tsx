@@ -1,34 +1,36 @@
 import { useLocation } from "react-router-dom";
-import { PRODUCTS } from "../../constants";
+import { PRODUCTS_BY_CATEGORY } from "../../constants";
 
 import IdeaList from "../IdeaList";
-import ProductCard from "./ProductCard";
+import ProductCategory from "./ProductCategory";
 
 import "./index.css";
 
 const ProductList = () => {
   const location = useLocation();
 
-  let status = "";
+  let currentStatus = "";
+
   if (location.pathname === "/presale") {
-    status = "development";
+    currentStatus = "development";
   } else if (location.pathname === "" || location.pathname === "/") {
-    status = "ready";
+    currentStatus = "ready";
   } else {
-    status = "";
+    currentStatus = "";
   }
 
   return (
-    <section>
+    <div>
       <div className="products">
-        {Object.keys(PRODUCTS).map((id, index) => {
-          if (PRODUCTS[id].status === status) return <ProductCard key={index} id={id} />;
-
-          return null;
-        })}
+        <ProductCategory
+          currentStatus={currentStatus}
+          title="Web3 Apps"
+          products={PRODUCTS_BY_CATEGORY.WEB3_PRODUCTS}
+        />
+        <ProductCategory currentStatus={currentStatus} title="AI Apps" products={PRODUCTS_BY_CATEGORY.AI_PRODUCTS} />
       </div>
-      {status === "development" && <IdeaList />}
-    </section>
+      {currentStatus === "development" && <IdeaList />}
+    </div>
   );
 };
 

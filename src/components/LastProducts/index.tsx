@@ -7,7 +7,7 @@ const LastProducts = ({ lastProductId, isStatisticsLoading }: any) => {
 
   const productLast = lastProducts.map((el: any) => {
     const findProduct = products.filter((product) => {
-      return product.productId == el.id;
+      return product.productId === el.id;
     });
     const newDate = new Date(el.date * 1000);
 
@@ -16,10 +16,11 @@ const LastProducts = ({ lastProductId, isStatisticsLoading }: any) => {
       date: newDate.toLocaleString(),
     };
   });
+
   return (
     <div>
       <div>
-        {isStatisticsLoading ? "" : (
+        {isStatisticsLoading ? null : (
           <div>
             <h3>Last sold products</h3>
             <div className="lastProducts">
