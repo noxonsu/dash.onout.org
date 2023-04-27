@@ -19,7 +19,7 @@
   height: 1px;
 }
 
-.productCategoryWrapper:not(:last-child) {
+.productCategoryWrapper {
   margin-bottom: 70px;
 }
 
