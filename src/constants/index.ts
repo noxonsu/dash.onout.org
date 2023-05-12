@@ -247,7 +247,7 @@ export const WEB3_PRODUCTS: Category = {
     docsLink: "https://support.onout.org/hc/1331700057/category/7",
     codecanyonLink: "",
     lables: [],
-    price: 1000,
+    price: 2000,
   },
   multicurrencywallet: {
     id: "multicurrencywallet",
