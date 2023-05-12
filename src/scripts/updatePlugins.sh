@@ -2,7 +2,7 @@
 
 # TODO: make it work on Windows
 # TODO: how to make key-value structure?
-SOURCES=("noxonsu" "noxonsu" "noxonsu" "swaponline" "noxonsu" "noxonsu" "VitaliyShulik" "noxonsu")
+SOURCES=("noxonsu" "noxonsu" "noxonsu" "swaponline" "noxonsu" "noxonsu" "noxonsu" "noxonsu")
 REPO_NAMES=("DAOwidget" "definance" "farmfactory" "multi-currency-wallet-pro" "NFTsy" "anyswap-crosschain" "launchpad" "ChatGPT-Telegram-Workers")
 PROJECT_IDS=("daofactory" "definance" "farmfactory" "multicurrencywallet" "nftmarketplace" "crosschain" "launchpad" "aigram")
 PLUGIN_IDS=("daofactory" "definance" "farmfactory" "multicurrencywallet" "nftmarketplace" "" "" "")
