@@ -387,6 +387,7 @@ export const AI_PRODUCTS: Category = {
     promoPage: "OnOut AiGram",
     promoPageLink: "https://onout.org/AiGram/",
     docsLink: "https://support.onout.org/hc/1331700057/category/10",
+    license: "3ea24aed-98bd-4587-9280-25d251a8ca10",
     lables: ["new"],
     price: 100,
   },
