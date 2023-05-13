@@ -11,6 +11,7 @@ export enum SupportedChainId {
   // POLYGON_TESTNET = 80001,
 }
 
+
 export const bonusAndDiscountContractsByNetworkId: {
   [k in SupportedChainId]?: string;
 } = {
