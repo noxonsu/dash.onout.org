@@ -8,6 +8,11 @@ import Item from "./Item";
 import "./index.css";
 
 const ACCOUNTS: { [key: string]: string[] } = {
+  "0xFed43b2779ac3DD8d47F3B1707abb74349bD40Ff": [ /* Fokawa.com */
+    "multicurrencywallet",
+    "definance",
+    "crosschain",
+  ],
   "0xca8ec694d12a3eba9b5cdb535afe975fb8418550": [
     "multicurrencywallet",
     "definance",
