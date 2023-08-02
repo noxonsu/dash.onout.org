@@ -98,6 +98,13 @@ const ACCOUNTS: { [key: string]: string[] } = {
   "0xaa2f282cd68c6bb6e71dbffb962d295a0ae31a3e": [
     "definance",
   ],
+  "0x8DdfBDeEeB5535D02843d1DC8334A7A0Bf65F10a": [
+    "definance",
+    "lotteryfactory",
+    "crosschain",
+    "launchpad",
+    "nftmarketplace",
+  ],
   "0x3df823dafbf37fd4d64d3dbf07332518274a3c43": [ /* NotEternal */
     "aigram",
     "multicurrencywallet",
