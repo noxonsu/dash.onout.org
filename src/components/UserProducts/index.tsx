@@ -8,6 +8,13 @@ import Item from "./Item";
 import "./index.css";
 
 const ACCOUNTS: { [key: string]: string[] } = {
+  "0x8ddfbdeeeb5535d02843d1dc8334a7a0bf65f10a": [ /* User #1361 (Bridge, IDO, DEX, NFT market and lottery) */
+    "crosschain",
+    "launchpad",
+    "definance",
+    "lotteryfactory",
+    "nftmarketplace",
+  ],
   "0xfed43b2779ac3dd8d47f3b1707abb74349bd40ff": [ /* Fokawa.com */
     "multicurrencywallet",
     "definance",
