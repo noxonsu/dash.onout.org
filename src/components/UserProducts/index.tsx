@@ -121,6 +121,10 @@ const ACCOUNTS: { [key: string]: string[] } = {
     "lotteryfactory",
     "nftmarketplace",
     "crosschain",
+    "launchpad",
+  ],
+  "0x69ee075c1528ca469ad1ff8ea05ea695692f5e30": [
+    "launchpad",
   ],
 };
 
