@@ -20,7 +20,7 @@ export const useCheckAddress = (address: string) => {
       try {
         setIsCheckLoading(true);
 
-        const _isSubscribed = await checkAddress(address);
+        const _isSubscribed = true; // temprorary no check emails  //await checkAddress(address);
 
         setIsSubscribed(_isSubscribed);
 
