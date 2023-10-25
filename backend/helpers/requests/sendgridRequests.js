@@ -1,3 +1,5 @@
+const { secureHeapUsed } = require("crypto");
+
 const addOrUpdateContact = async (client, data) => {
 
   const request = {
@@ -51,11 +53,14 @@ const getContactsByEvmAddress = async (client, evmAddress = '') => {
     "query": `lower(address_line_2) = '${evmAddress?.toLowerCase()}'`, // we use address_line_2 custom field as evm address
   };
 
+
   const request = {
     url: `/v3/marketing/contacts/search`,
     method: 'POST',
-    body: data
+    body: data,
+    timeout: 5000
   }
+  
 
   try {
     const [response, body] = await client.request(request)
