@@ -3,7 +3,7 @@
 # TODO: make it work on Windows
 # TODO: how to make key-value structure?
 SOURCES=("noxonsu" "noxonsu" "noxonsu" "swaponline" "noxonsu" "noxonsu" "noxonsu" "noxonsu")
-REPO_NAMES=("DAOwidget" "definance" "farmfactory" "multi-currency-wallet-pro" "NFTsy" "anyswap-crosschain" "launchpad" "ChatGPT-Telegram-Workers")
+REPO_NAMES=("DAOwidget" "definance" "farmfactory" "multi-currency-wallet-pro" "NFTsy" "anyswap-crosschain" "launchpad" "Sensorica")
 PROJECT_IDS=("daofactory" "definance" "farmfactory" "multicurrencywallet" "nftmarketplace" "crosschain" "launchpad" "aigram")
 PLUGIN_IDS=("daofactory" "definance" "farmfactory" "multicurrencywallet" "nftmarketplace" "" "" "")
 # paths relative to the root of the repository
