@@ -20,12 +20,6 @@ const Footer = () => {
       gaAction: "Write Email support",
     },
     {
-      to: "https://support.onout.org/chat/widget/form/3882717100",
-      title: "Online chat",
-      icon: <MdChat size="1.9rem" className="icon" />,
-      gaAction: "Open Online chat support",
-    },
-    {
       to: "https://t.me/onoutsupportbot",
       title: "Telegram",
       icon: <SiTelegram size="1.7rem" className="icon" />,
