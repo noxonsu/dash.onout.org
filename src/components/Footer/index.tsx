@@ -52,7 +52,7 @@ const Footer = () => {
                 rel="noreferrer"
                 className="footerLink"
               >
-                Become a sponsor
+                Request feature
               </a>
             </li>
             <li className="footerItem">
