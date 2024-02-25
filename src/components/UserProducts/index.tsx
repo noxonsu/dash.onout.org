@@ -6,7 +6,7 @@ import useUser from "../../hooks/useUser";
 import Item from "./Item";
 
 import "./index.css";
-
+// All addresses should be in lower case
 const ACCOUNTS: { [key: string]: string[] } = {
   "0x8ddfbdeeeb5535d02843d1dc8334a7a0bf65f10a": [ /* User #1361 (Bridge, IDO, DEX, NFT market and lottery) */
     "crosschain",
@@ -112,7 +112,7 @@ const ACCOUNTS: { [key: string]: string[] } = {
     "launchpad",
     "nftmarketplace",
   ],
-  "0x3df823dafbf37fd4d64d3dbf07332518274a3c43": [ /* NotEternal */
+  "0x3df823dafbf37fd4d64d3dbf07332518274a3c43": [ /* J94k */
     "aigram",
     "multicurrencywallet",
     "definance",
@@ -125,6 +125,9 @@ const ACCOUNTS: { [key: string]: string[] } = {
   ],
   "0x69ee075c1528ca469ad1ff8ea05ea695692f5e30": [
     "launchpad",
+  ],
+  "0xa4e5eb72c17701660cea9f8500cc65de00d6098f": [
+    "farmfactory",
   ],
 };
 
