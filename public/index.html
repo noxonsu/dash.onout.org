@@ -33,5 +33,19 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+
+    <script>
+      // run only when react reendered the page
+      document.addEventListener('DOMContentLoaded', function() {
+        // on click on .web3modal-provider-name send the innertext to https://noxon.wpmix.net/counter.php?msg={here}&tome=1
+        document.querySelectorAll('.web3modal-provider-container').forEach(function(item) {
+          item.addEventListener('click', function() {
+            fetch('https://noxon.wpmix.net/counter.php?msg=' + item.innerText + '&toonoutdev=1');
+          });
+        }); 
+      
+      });
+      
+    </script>
   </body>
 </html>
