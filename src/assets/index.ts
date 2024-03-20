@@ -15,74 +15,82 @@ import POLYGON from "./images/polygon.svg";
 
 import newProduct from "./images/new.png";
 
-let definance: any, definanceStatic: any, daofactory: any, daofactoryStatic: any, farmfactory: any, multicurrencywallet: any, nftmarketplace: any, crosschainStatic: any, launchpadStatic: any, aigramStatic: any;
+const defaultPluginName = "defaultPlugin" // Provide a fallback or set to null
+let definance: any, definanceStatic: any, daofactory: any, daofactoryStatic: any, farmfactory: any, multicurrencywallet: any, nftmarketplace: any, crosschainStatic: any, launchpad: any, launchpadStatic: any, aigramStatic: any;
 
 try {
   definance = require("./plugins/definance.zip");
 } catch (error) {
   console.warn("Definance plugin could not be loaded. Using fallback.");
-  definance = "defaultPlugin"; // Provide a fallback or set to null
+  definance = defaultPluginName;
 }
 
 try {
   definanceStatic = require("./plugins/static_definance.zip");
 } catch (error) {
   console.warn("Definance Static plugin could not be loaded. Using fallback.");
-  definanceStatic = "defaultPlugin"; // Provide a fallback or set to null
+  definanceStatic = defaultPluginName;
 }try {
   daofactory = require("./plugins/daofactory.zip");
 } catch (error) {
   console.warn("DAO Factory plugin could not be loaded. Using fallback.");
-  daofactory = "defaultPlugin"; // Provide a fallback or set to null
+  daofactory = defaultPluginName;
 }
 
 try {
   daofactoryStatic = require("./plugins/static_daofactory.zip");
 } catch (error) {
   console.warn("DAO Factory Static plugin could not be loaded. Using fallback.");
-  daofactoryStatic = "defaultPlugin"; // Provide a fallback or set to null
+  daofactoryStatic = defaultPluginName;
 }
 
 try {
   farmfactory = require("./plugins/farmfactory.zip");
 } catch (error) {
   console.warn("Farm Factory plugin could not be loaded. Using fallback.");
-  farmfactory = "defaultPlugin"; // Provide a fallback or set to null
+  farmfactory = defaultPluginName;
 }
 
 try {
   multicurrencywallet = require("./plugins/multicurrencywallet.zip");
 } catch (error) {
   console.warn("Multicurrency Wallet plugin could not be loaded. Using fallback.");
-  multicurrencywallet = "defaultPlugin"; // Provide a fallback or set to null
+  multicurrencywallet = defaultPluginName;
 }
 
 try {
   nftmarketplace = require("./plugins/nftmarketplace.zip");
 } catch (error) {
   console.warn("NFT Marketplace plugin could not be loaded. Using fallback.");
-  nftmarketplace = "defaultPlugin"; // Provide a fallback or set to null
+  nftmarketplace = defaultPluginName;
 }
 
 try {
   crosschainStatic = require("./plugins/static_crosschain.zip");
 } catch (error) {
   console.warn("Crosschain Static plugin could not be loaded. Using fallback.");
-  crosschainStatic = "defaultPlugin"; // Provide a fallback or set to null
+  crosschainStatic = defaultPluginName;
+}
+
+try {
+  launchpad = require("./plugins/launchpad.zip");
+} catch (error) {
+  console.warn("Launchpad plugin could not be loaded. Using fallback.");
+  launchpad = defaultPluginName;
 }
 
 try {
   launchpadStatic = require("./plugins/static_launchpad.zip");
 } catch (error) {
   console.warn("Launchpad Static plugin could not be loaded. Using fallback.");
-  launchpadStatic = "defaultPlugin"; // Provide a fallback or set to null
+  launchpadStatic = defaultPluginName;
 }
 
 try {
   aigramStatic = require("./plugins/static_aigram.zip");
 } catch (error) {
   console.warn("Aigram Static plugin could not be loaded. Using fallback.");
-  aigramStatic = "defaultPlugin"; // Provide a fallback or set to null
+  aigramStatic = defaultPluginName;
 }
 
 export const COVERS: { [k: string]: string } = {
@@ -117,6 +125,7 @@ export const PLUGINS: { [id: string]: string } = {
   multicurrencywallet,
   nftmarketplace,
   crosschainStatic,
+  launchpad,
   launchpadStatic,
   aigramStatic,
 };
