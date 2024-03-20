@@ -129,6 +129,9 @@ const ACCOUNTS: { [key: string]: string[] } = {
   "0xa4e5eb72c17701660cea9f8500cc65de00d6098f": [
     "farmfactory",
   ],
+  "0xff8cf5130e771e19d181389c1d6af22b463d5a34": [
+    "launchpad",
+  ],
 };
 
 const UserProducts = () => {
