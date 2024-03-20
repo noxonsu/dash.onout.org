@@ -1,16 +1,18 @@
 #!/bin/sh
 
-# TODO: make it work on Windows
-# TODO: how to make key-value structure?
-SOURCES=("noxonsu" "noxonsu" "noxonsu" "swaponline" "noxonsu" "noxonsu" "noxonsu" "noxonsu")
-REPO_NAMES=("DAOwidget" "definance" "farmfactory" "multi-currency-wallet-pro" "NFTsy" "anyswap-crosschain" "launchpad" "Sensorica")
+# Used as the beginning of a path for some user or organization (ex. https://github.com/<SOURCE>)
+SOURCES=("noxonsu" "noxonsu" "noxonsu" "swaponline" "noxonsu" "appsource" "noxonsu" "noxonsu")
+# Used to interact with Git repo (ex. https://github.com/source/<NAME>)
+REPO_NAMES=("DAOwidget" "definance" "farmfactory" "multi-currency-wallet-pro" "NFTsy" "crosschain" "launchpad" "SensoricaBackend")
+# Used as a product identifier in the app and for the local file name
 PROJECT_IDS=("daofactory" "definance" "farmfactory" "multicurrencywallet" "nftmarketplace" "crosschain" "launchpad" "aigram")
-PLUGIN_IDS=("daofactory" "definance" "farmfactory" "multicurrencywallet" "nftmarketplace" "" "" "")
-# paths relative to the root of the repository
-# empty string means there is no build or we don't have the static version (or i didn't find it o_o)
-# NFT TODO: check the VUE app (vendor/dist) for NFT repo and add the path
+# Used to make a WP plugin files
+PLUGIN_IDS=("daofactory" "definance" "farmfactory" "multicurrencywallet" "nftmarketplace" "" "launchpad" "")
+# Used to make a static version files
+# Paths relative to the root of the repository
+# empty string means there is no build or we don't have the static version
 # MCW pro TODO: we don't have index.html in a build directory - vendors/swap
-BUILD_PATH=("build" "vendor_source" "" "" "" "app" "build" "dist")
+BUILD_PATH=("build" "vendor_source" "" "" "" "crosschain" "<TODO: launchpad static files>" "dist")
 
 if [[ ! -d ../assets/plugins ]]; then
   mkdir -p ../assets/plugins
@@ -24,12 +26,10 @@ for ((i = 0; i < ${#REPO_NAMES[@]}; i++)); do
   BUILD=${BUILD_PATH[$i]}
 
   echo ""
-  echo "Update: $NAME.git"
-  echo "ID: $ID"
-
+  echo "Update: $NAME.git; ID: $ID"
   git clone "https://github.com/$SOURCE/$NAME.git"
 
-  # if build path not empty
+  # If build path not empty we'll pack a static version
   if [[ ! -z "$BUILD" ]]; then
     mkdir -p "static_$ID"
     cp -r $NAME/$BUILD/* "static_$ID"
@@ -38,7 +38,7 @@ for ((i = 0; i < ${#REPO_NAMES[@]}; i++)); do
 
     rm -rf "static_$ID"
   fi
-
+  # If plugin ID not empty we'll pack a WP version
   if [[ ! -z "$PLUGIN_ID" ]]; then
     zip -9 -q -r $ID.zip ./$NAME -x '*.git*'
     mv $ID.zip ../assets/plugins/
