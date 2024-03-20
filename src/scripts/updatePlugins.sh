@@ -1,16 +1,21 @@
 #!/bin/sh
 
-# TODO: make it work on Windows
-# TODO: how to make key-value structure?
 SOURCES=("noxonsu" "noxonsu" "noxonsu" "swaponline" "noxonsu" "noxonsu" "noxonsu" "noxonsu")
 REPO_NAMES=("DAOwidget" "definance" "farmfactory" "multi-currency-wallet-pro" "NFTsy" "anyswap-crosschain" "launchpad" "Sensorica")
 PROJECT_IDS=("daofactory" "definance" "farmfactory" "multicurrencywallet" "nftmarketplace" "crosschain" "launchpad" "aigram")
-PLUGIN_IDS=("daofactory" "definance" "farmfactory" "multicurrencywallet" "nftmarketplace" "" "" "")
+PLUGIN_IDS=("daofactory" "definance" "farmfactory" "multicurrencywallet" "nftmarketplace" "" "launchpad" "")
 # paths relative to the root of the repository
 # empty string means there is no build or we don't have the static version (or i didn't find it o_o)
 # NFT TODO: check the VUE app (vendor/dist) for NFT repo and add the path
 # MCW pro TODO: we don't have index.html in a build directory - vendors/swap
 BUILD_PATH=("build" "vendor_source" "" "" "" "app" "build" "dist")
+
+# Quick download single source. Comment code above and uncomment this:
+# SOURCES=("")
+# REPO_NAMES=("")
+# PROJECT_IDS=("")
+# PLUGIN_IDS=("")
+# BUILD_PATH=("")
 
 if [[ ! -d ../assets/plugins ]]; then
   mkdir -p ../assets/plugins
@@ -24,9 +29,7 @@ for ((i = 0; i < ${#REPO_NAMES[@]}; i++)); do
   BUILD=${BUILD_PATH[$i]}
 
   echo ""
-  echo "Update: $NAME.git"
-  echo "ID: $ID"
-
+  echo "Update: $NAME.git; ID: $ID"
   git clone "https://github.com/$SOURCE/$NAME.git"
 
   # if build path not empty
