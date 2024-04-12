@@ -1,13 +1,14 @@
 import { useContext } from "react";
 import { Web3ConnecStateContext } from "../WithWeb3Connect";
+import { keysToLowercase } from '../../helpers/format'
 import { PRODUCTS } from "../../constants";
 import { UserActions } from "../UserProvider";
 import useUser from "../../hooks/useUser";
 import Item from "./Item";
 
 import "./index.css";
-// All addresses should be in lower case
-const ACCOUNTS: { [key: string]: string[] } = {
+
+const ACCOUNTS: { [key: string]: string[] } = keysToLowercase({
   "0x8ddfbdeeeb5535d02843d1dc8334a7a0bf65f10a": [ /* User #1361 (Bridge, IDO, DEX, NFT market and lottery) */
     "crosschain",
     "launchpad",
@@ -134,11 +135,11 @@ const ACCOUNTS: { [key: string]: string[] } = {
   "0xff8cf5130e771e19d181389c1d6af22b463d5a34": [
     "launchpad",
   ],
-  "0x08282E1DAE05DE50479a37eFbBFb88086B025b89": [
+  "0x08282e1dae05de50479a37efbbfb88086b025b89": [
     "launchpad",
     "lotteryfactory"
   ],
-};
+})
 
 const UserProducts = () => {
   const { state, dispatch } = useUser();
